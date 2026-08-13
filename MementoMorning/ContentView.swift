@@ -9,6 +9,7 @@ struct ContentView: View {
                 .font(.title2)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
+            LifeCalendarPage()
         }
     }
 }
