@@ -1,12 +1,82 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Are you keeping it?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "守れてますか?"
+          }
+        }
+      }
+    },
+    "Check tonight against this morning's answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝の回答と答え合わせしましょう"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        }
+      }
+    },
+    "I did" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やれた"
+          }
+        }
+      }
+    },
     "If today were your last day, what would you want to do?" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
+    "No answer this morning yet." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝の回答はまだありません"
+          }
+        }
+      }
+    },
+    "Not yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やれていない"
+          }
+        }
+      }
+    },
+    "Recorded: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録済み: %@"
           }
         }
       }
