@@ -17,6 +17,10 @@ struct AlarmSettingPage: View {
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
+    /// 保存処理 (再スケジュール完了待ち) の実行中かどうか。
+    /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
+    /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
+    @State private var isSaving: Bool = false
 
     var body: some View {
         Form {
@@ -38,6 +42,7 @@ struct AlarmSettingPage: View {
                 Button(String(localized: "Save")) {
                     save()
                 }
+                .disabled(isSaving)
             }
         }
         // ja: 保存に失敗しました
@@ -65,6 +70,8 @@ struct AlarmSettingPage: View {
 
     /// 入力内容を保存して再スケジュールする
     private func save() {
+        guard !isSaving else { return }
+        isSaving = true
         let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: time)
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
@@ -81,6 +88,7 @@ struct AlarmSettingPage: View {
             // reschedule がその未保存の値を fetch してしまうため、変更を破棄してから中断する
             modelContext.rollback()
             saveError = "\(error)"
+            isSaving = false
             return
         }
         Task {
@@ -89,6 +97,7 @@ struct AlarmSettingPage: View {
             // 再スケジュールの完了を待ってから、失敗時は画面を閉じずにエラーを表示する
             if let error = UserDefaults.standard.string(forKey: .lastRescheduleError) {
                 saveError = error
+                isSaving = false
             } else {
                 dismiss()
             }
