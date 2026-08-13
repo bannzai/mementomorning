@@ -1,12 +1,32 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Answered" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答済み"
+          }
+        }
+      }
+    },
     "If today were your last day, what would you want to do?" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
+    "Not answered" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未回答"
           }
         }
       }

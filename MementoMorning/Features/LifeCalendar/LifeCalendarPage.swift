@@ -24,16 +24,37 @@ struct LifeCalendarPage: View {
     var body: some View {
         let calendar = Calendar.current
         let answeredDays = Set(answers.map { calendar.startOfDay(for: $0.answeredDate) })
-        ScrollView {
-            // 粒の大きさ 12pt・間隔 8pt はデザイン反映 (issue #12) までの仮の値
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(12), spacing: 8), count: 7), spacing: 8) {
-                ForEach(lifeCalendarDays(answeredDates: answers.map(\.answeredDate), today: .now, calendar: calendar), id: \.self) { day in
-                    Circle()
-                        .fill(answeredDays.contains(day) ? HierarchicalShapeStyle.primary : HierarchicalShapeStyle.quaternary)
-                        .frame(width: 12, height: 12)
+        let days = lifeCalendarDays(answeredDates: answers.map(\.answeredDate), today: .now, calendar: calendar)
+        ScrollViewReader { proxy in
+            ScrollView {
+                // 粒の大きさ 12pt・間隔 8pt はデザイン反映 (issue #12) までの仮の値
+                LazyVGrid(columns: Array(repeating: GridItem(.fixed(12), spacing: 8), count: 7), spacing: 8) {
+                    ForEach(days, id: \.self) { day in
+                        Circle()
+                            .fill(answeredDays.contains(day) ? HierarchicalShapeStyle.primary : HierarchicalShapeStyle.quaternary)
+                            .frame(width: 12, height: 12)
+                            .accessibilityLabel(
+                                // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す
+                                Text(verbatim: day.formatted(date: .complete, time: .omitted) + ", "
+                                    + (answeredDays.contains(day)
+                                        // ja: 回答済み
+                                        ? String(localized: "Answered")
+                                        // ja: 未回答
+                                        : String(localized: "Not answered")))
+                            )
+                            .id(day)
+                    }
+                }
+                .padding(.vertical, 16)
+            }
+            // 履歴が画面を超えても今日の週 (末尾) が初期表示されるようにする。
+            // defaultScrollAnchor(.bottom) はコンテンツが画面より小さい時にグリッドが下寄せになり
+            // 問いとの間に大きな空白ができるため、初回スクロールだけを行う
+            .onAppear {
+                if let lastDay = days.last {
+                    proxy.scrollTo(lastDay, anchor: .bottom)
                 }
             }
-            .padding(.vertical, 16)
         }
     }
 }
