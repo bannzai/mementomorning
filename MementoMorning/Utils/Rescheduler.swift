@@ -30,9 +30,11 @@ func reschedule(modelContext: ModelContext) async {
     let previousTask = latestRescheduleTask
     let task = Task {
         await previousTask?.value
-        // 初回起動時は認可が未決定のままスケジュールに進むと全件失敗するため、ここでリクエストする
+        // 有効なアラーム設定がある場合だけ認可を要求する。設定が無い/OFF の状態で拒否されると、
+        // 後から設定を保存してもシステムの認可ダイアログは再表示できず、以降の登録が全件失敗し続けるため
         // (production の認可導線。拒否された場合は後続の schedule が throw し、エラーとして可視化される)
-        if AlarmKitManager.authorizationState == .notDetermined {
+        let alarmSetting = (try? modelContext.fetch(FetchDescriptor<AlarmSetting>()))?.first
+        if let alarmSetting, alarmSetting.isEnabled, AlarmKitManager.authorizationState == .notDetermined {
             _ = try? await AlarmKitManager.requestAuthorization()
         }
         // キュー待ち・認可ダイアログ表示の間に時刻が進んでいる可能性があるため、現在時刻は実行直前に取得する

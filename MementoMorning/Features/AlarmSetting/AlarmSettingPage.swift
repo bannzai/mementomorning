@@ -77,12 +77,22 @@ struct AlarmSettingPage: View {
         do {
             try modelContext.save()
         } catch {
-            // 永続化されていない変更で AlarmKit を更新すると、再起動後に設定と実登録が食い違うため中断する
+            // 永続化されていない変更を mainContext に残すと、次回の foreground 復帰で
+            // reschedule がその未保存の値を fetch してしまうため、変更を破棄してから中断する
+            modelContext.rollback()
             saveError = "\(error)"
             return
         }
-        Task { await reschedule(modelContext: modelContext) }
-        dismiss()
+        Task {
+            await reschedule(modelContext: modelContext)
+            // dismiss 後は lastRescheduleError の表示先 (この画面) が無くなるため、
+            // 再スケジュールの完了を待ってから、失敗時は画面を閉じずにエラーを表示する
+            if let error = UserDefaults.standard.string(forKey: .lastRescheduleError) {
+                saveError = error
+            } else {
+                dismiss()
+            }
+        }
     }
 }
 
