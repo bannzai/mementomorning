@@ -1,0 +1,54 @@
+name: MementoMorning
+options:
+  bundleIdPrefix: com.bannzai
+  deploymentTarget:
+    iOS: "26.0"
+  developmentLanguage: en
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    DEVELOPMENT_TEAM: TQPN82UBBY
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: "1.0"
+targets:
+  MementoMorning:
+    type: application
+    platform: iOS
+    sources:
+      - MementoMorning
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: MementoMorning/Info.plist
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
+        STRING_CATALOG_GENERATE_SYMBOLS: YES
+  MementoMorningTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - MementoMorningTests
+    dependencies:
+      - target: MementoMorning
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorningTests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  MementoMorning:
+    build:
+      targets:
+        MementoMorning: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - MementoMorningTests
