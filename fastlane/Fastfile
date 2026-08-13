@@ -1,0 +1,24 @@
+default_platform(:ios)
+
+platform :ios do
+  # metadata と screenshots を App Store Connect へ同期する (binary は上げない)
+  lane :metadata_upload do
+    ENV['FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS'] = 'true'
+    upload_to_app_store(
+      # force is true means skip check with preview.html
+      force: true,
+      # https://docs.fastlane.tools/actions/deliver/
+      # Sync screenshots with local ones. This is currently beta option so set true to 'FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS' environment variable as well
+      sync_screenshots: true,
+      run_precheck_before_submit: false,
+      automatic_release: true,
+      phased_release: true,
+      reset_ratings: false,
+      metadata_path: 'fastlane/metadata',
+      screenshots_path: 'fastlane/screenshots',
+      skip_binary_upload: true,
+      submit_for_review: false,
+      ignore_language_directory_validation: true
+    )
+  end
+end
