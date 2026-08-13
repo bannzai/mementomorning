@@ -40,6 +40,10 @@ struct AnswerLogPage: View {
                                 Text(answer.text)
                                     .font(.body)
                             }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            // plain スタイルの Button はラベルの描画領域しかタップに反応しないため、
+                            // 行全体に広げた透明領域もヒット対象にして行のどこを押しても共有カードを開けるようにする
+                            .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
                     }
