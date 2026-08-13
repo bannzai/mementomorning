@@ -74,14 +74,13 @@ struct DebugMenuPage: View {
         answer = todayAnswer()
     }
 
-    /// 検証用の夜リマインドを 1 分後に登録する。同じ識別子の保留中通知を削除してから登録するため、何度押しても保留は 1 本に保たれる
+    /// 検証用の夜リマインドを 1 分後に登録する。同一識別子の add は保留中の既存リクエストを置換するため、事前削除なしでも何度押しても保留は 1 本に保たれる
     private func scheduleNightReminderForTest() async {
         let center = UNUserNotificationCenter.current()
         do {
             guard try await center.requestAuthorization(options: [.alert, .sound, .badge]) else {
                 return
             }
-            center.removePendingNotificationRequests(withIdentifiers: [Self.testRequestIdentifier])
             try await center.add(
                 UNNotificationRequest(
                     identifier: Self.testRequestIdentifier,

@@ -31,6 +31,16 @@
         }
       }
     },
+    "Failed to save. Please try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存に失敗しました。もう一度お試しください"
+          }
+        }
+      }
+    },
     "I did" : {
       "localizations" : {
         "ja" : {

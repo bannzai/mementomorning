@@ -11,6 +11,9 @@ final class NotificationRouter {
 
     /// 夜の振り返り画面を提示中かどうか
     var isNightReflectionPresented = false
+
+    /// 夜リマインドが配信された日時。日付が変わってからタップしても通知当日の回答を振り返れるよう保持する
+    var nightReflectionNotificationDate = Date.now
 }
 
 /// UNUserNotificationCenter のデリゲート。受け取った通知を NotificationRouter の状態へ変換する
@@ -38,6 +41,7 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
             return
         }
         await MainActor.run {
+            NotificationRouter.shared.nightReflectionNotificationDate = response.notification.date
             NotificationRouter.shared.isNightReflectionPresented = true
         }
     }

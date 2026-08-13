@@ -25,7 +25,7 @@ private struct RootView: View {
     var body: some View {
         ContentView()
             .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
-                NightReflectionPage()
+                NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
             }
             .task {
                 await NightReminder.requestAuthorizationAndSchedule()

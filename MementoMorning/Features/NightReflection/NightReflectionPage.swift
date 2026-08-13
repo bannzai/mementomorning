@@ -6,7 +6,12 @@ struct NightReflectionPage: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
+    /// 振り返りの対象日を決める、夜リマインドが配信された日時。日付が変わってからタップされてもこの日時の回答を振り返る
+    let notificationDate: Date
+
     @State private var answer: MorningAnswer?
+    /// 直前の記録が保存に失敗したかどうか。true の間はエラーを表示したまま画面に留まり、再タップで再試行できる
+    @State private var isSaveFailed = false
 
     var body: some View {
         VStack(spacing: 32) {
@@ -47,6 +52,15 @@ struct NightReflectionPage: View {
                             .frame(maxWidth: .infinity)
                     }
                     .accessibilityIdentifier("night_reflection_not_fulfilled_button")
+
+                    if isSaveFailed {
+                        // ja: 保存に失敗しました。もう一度お試しください
+                        Text(String(localized: "Failed to save. Please try again."))
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("night_reflection_save_error")
+                    }
                 }
                 .buttonStyle(.bordered)
                 .tint(.secondary)
@@ -70,23 +84,29 @@ struct NightReflectionPage: View {
         }
         .padding(.horizontal, 24)
         .onAppear {
-            answer = todayAnswer()
+            answer = notificationDayAnswer()
         }
     }
 
-    /// 今日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
-    private func todayAnswer() -> MorningAnswer? {
-        let today = Calendar.current.startOfDay(for: .now)
-        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
+    /// 通知が配信された日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
+    private func notificationDayAnswer() -> MorningAnswer? {
+        let notificationDay = Calendar.current.startOfDay(for: notificationDate)
+        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == notificationDay })
         descriptor.fetchLimit = 1
         return try? modelContext.fetch(descriptor).first
     }
 
-    /// 夜の振り返りを記録して画面を閉じる
+    /// 夜の振り返りを記録して画面を閉じる。保存に失敗した時は記録できたと誤解させないよう閉じずにエラーを表示する
     private func record(isFulfilled: Bool) {
+        isSaveFailed = false
         answer?.setFulfilled(isFulfilled: isFulfilled)
-        try? modelContext.save()
-        dismiss()
+        do {
+            try modelContext.save()
+            dismiss()
+        } catch {
+            print("[NightReflectionPage] failed to save night reflection: \(error)")
+            isSaveFailed = true
+        }
     }
 }
 
@@ -100,7 +120,7 @@ struct NightReflectionPage_Previews: PreviewProvider {
         )
         let _ = try! modelContext.save()
 
-        NightReflectionPage()
+        NightReflectionPage(notificationDate: .now)
             .modelContainer(container)
     }
 }

@@ -41,7 +41,8 @@ enum NightReminder {
 
     /// 通知の認可をリクエストし、許可されていれば夜リマインドを登録する
     ///
-    /// 同じ識別子の保留中通知を削除してから登録するため、何度呼んでも保留中の夜リマインドは 1 本に保たれる。
+    /// 同一識別子の add は保留中の既存リクエストを置換するため事前削除は不要で、何度呼んでも保留中の夜リマインドは 1 本に保たれる。
+    /// 事前削除しないことで、登録に失敗しても既存のスケジュールが残る。
     /// 主機能である AlarmKit のスケジュールを妨げないよう、UserNotifications 側のエラーは throw せず関数内で捕捉する
     static func requestAuthorizationAndSchedule() async {
         let center = UNUserNotificationCenter.current()
@@ -49,7 +50,6 @@ enum NightReminder {
             guard try await center.requestAuthorization(options: [.alert, .sound, .badge]) else {
                 return
             }
-            center.removePendingNotificationRequests(withIdentifiers: [requestIdentifier])
             try await center.add(makeRequest())
         } catch {
             print("[NightReminder] failed to schedule night reminder: \(error)")
