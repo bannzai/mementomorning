@@ -1,0 +1,110 @@
+import AlarmKit
+import Foundation
+import SwiftData
+
+/// 直近の reschedule タスク。
+/// reschedule は await 中に中断されるため、複数呼び出しが交錯すると cancelAll / delete / schedule が
+/// 重複実行され、アラームの重複登録や ScheduledAlarm の不整合が起きる。
+/// タスクを連結して直列実行するためのグローバル状態 (MainActor 上でのみ触る)
+@MainActor
+private var latestRescheduleTask: Task<Void, Never>?
+
+extension String {
+    /// 直近の再スケジュールで発生したエラーを保存する UserDefaults キー。
+    /// 成功時は削除される。AlarmSettingPage が @AppStorage で監視して失敗を可視化する
+    static let lastRescheduleError = "lastRescheduleError"
+}
+
+/// 1 回の再スケジュールで AlarmKit へ登録する最大件数。
+/// AlarmKit の上限値は非公開 (AlarmError.maximumLimitReached が存在する) なため、
+/// UserNotifications の 64 件制限を参考に半分程度へ抑える定数設計 (.claude/rules/ios-alarmkit-constraints.md)
+let maxScheduledAlarmCount = 30
+
+/// エンジンの出力に従い「全キャンセル → 全再登録」を実行し、ScheduledAlarm 記録を更新する。
+/// foreground 復帰時・設定変更時に手続的に呼ぶ (リアクティブな自動実行はしない。
+/// 状態変化検知の自動実行は不意の解除・登録がアンコントローラブルになるため避ける)。
+/// 全キャンセル → 全再登録の冪等方式のため、同じ状態で何度呼んでも結果は同じになる。
+/// 並行呼び出しはタスク連結で直列化される (後勝ちで最終状態は最後の呼び出し時点の設定を反映する)
+@MainActor
+func reschedule(modelContext: ModelContext) async {
+    let previousTask = latestRescheduleTask
+    let task = Task {
+        await previousTask?.value
+        // 初回起動時は認可が未決定のままスケジュールに進むと全件失敗するため、ここでリクエストする
+        // (production の認可導線。拒否された場合は後続の schedule が throw し、エラーとして可視化される)
+        if AlarmKitManager.authorizationState == .notDetermined {
+            _ = try? await AlarmKitManager.requestAuthorization()
+        }
+        // キュー待ち・認可ダイアログ表示の間に時刻が進んでいる可能性があるため、現在時刻は実行直前に取得する
+        // (待機がアラーム設定時刻を跨ぐと、古い now では過去の発火日時を生成してしまう)
+        await performReschedule(now: .now, modelContext: modelContext)
+    }
+    latestRescheduleTask = task
+    await task.value
+}
+
+/// reschedule の本体。直列化のため reschedule 経由でのみ呼ぶ。
+/// 設定の読み取り・既存アラームの全キャンセルに失敗した場合は、既存状態を壊さないよう中断する (fail-closed)。
+/// 失敗内容は lastRescheduleError キーで UserDefaults に保存し、アラーム設定画面で可視化する
+@MainActor
+private func performReschedule(now: Date, modelContext: ModelContext) async {
+    let alarmSetting: AlarmSetting?
+    do {
+        // アラーム設定は単一レコード運用のため先頭 1 件を使う
+        alarmSetting = try modelContext.fetch(FetchDescriptor<AlarmSetting>()).first
+    } catch {
+        // 読み取り失敗を「設定が無い」と誤認すると全アラームを代替なしで消してしまうため中断する
+        UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
+        return
+    }
+
+    let existing = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
+    let planned = planAlarms(now: now, alarmSetting: alarmSetting)
+
+    do {
+        try AlarmKitManager.cancelAll()
+    } catch {
+        // 途中まで消えている可能性があるため実際の残数で判断する。
+        // 残っていれば中断 (fail-closed。次回 foreground の再スケジュールで自己修復する)。
+        // 全て消えていれば発火済み等の無害なエラーとみなして続行する
+        if AlarmKitManager.hasRemainingAlarms {
+            UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
+            return
+        }
+    }
+
+    for scheduled in existing {
+        modelContext.delete(scheduled)
+    }
+
+    var scheduleErrors: [String] = []
+    // AlarmKit の件数上限に達した場合に直近のアラームが優先されるよう、発火日時の近い順に登録し、
+    // maxScheduledAlarmCount で 1 回の再スケジュールあたりの登録件数にキャップをかける
+    for plan in planned.sorted(by: { $0.fireDate < $1.fireDate }).prefix(maxScheduledAlarmCount) {
+        let alarmID = UUID()
+        do {
+            // ja: 今日死ぬとしたら、何をやりたいか
+            let title = LocalizedStringResource("If today were your last day, what would you want to do?")
+            try await AlarmKitManager.schedule(id: alarmID, fireDate: plan.fireDate, title: title)
+        } catch {
+            // 一部のアラームだけ登録に失敗するケース (件数上限等) も沈黙させず記録する
+            scheduleErrors.append("\(error)")
+            continue
+        }
+
+        modelContext.insert(ScheduledAlarm(id: alarmID, fireDate: plan.fireDate, origin: plan.origin))
+    }
+
+    do {
+        try modelContext.save()
+    } catch {
+        // OS アラームは登録済みなのに記録が残らないと UI が古い状態を表示し続けるため、成功扱いにしない
+        scheduleErrors.append("\(error)")
+    }
+
+    if scheduleErrors.isEmpty {
+        UserDefaults.standard.removeObject(forKey: .lastRescheduleError)
+    } else {
+        UserDefaults.standard.set(scheduleErrors.joined(separator: "\n"), forKey: .lastRescheduleError)
+    }
+}
