@@ -5,3 +5,4 @@ build/
 DerivedData/
 tmp/
 .claude/settings.local.json
+.envrc
