@@ -12,6 +12,8 @@ final class MorningAnswer {
     private(set) var answeredDate: Date
     /// 回答本文 (ユーザーの自由入力)
     private(set) var text: String
+    /// 夜の振り返りの記録。true = やれた / false = やれていない / nil = 未記録。180 日の節目「まだ、やれていないこと」の原資データ
+    private(set) var isFulfilled: Bool?
 
     init(id: UUID = .init(), answeredDate: Date, text: String) {
         self.id = id
@@ -22,6 +24,12 @@ final class MorningAnswer {
     /// text を更新する
     func setText(text: String) {
         self.text = text
+        self.updatedDateTime = .now
+    }
+
+    /// 夜の振り返りの記録を更新する
+    func setFulfilled(isFulfilled: Bool) {
+        self.isFulfilled = isFulfilled
         self.updatedDateTime = .now
     }
 }
