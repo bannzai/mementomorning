@@ -61,6 +61,29 @@ struct DebugMenuPage: View {
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
             }
+            Section {
+                Text(verbatim: "Alarm fired: \(alarmFiredStateText)")
+                    .accessibilityIdentifier("debug_alarm_fired_state")
+
+                Button {
+                    // 発火記録は「直近の発火日時に収束する」冪等な操作。再実行しても記録が今に更新されるだけ
+                    recordAlarmFired(date: .now)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "Record alarm fired now")
+                }
+                .accessibilityIdentifier("debug_record_alarm_fired")
+
+                Button(role: .destructive) {
+                    UserDefaults.standard.removeObject(forKey: .lastAlarmFiredDate)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "Clear alarm fired record")
+                }
+                .accessibilityIdentifier("debug_clear_alarm_fired")
+            } header: {
+                Text(verbatim: "Morning Question (issue #4)")
+            }
         }
         .navigationTitle(Text(verbatim: "Developer Menu"))
         .navigationBarTitleDisplayMode(.inline)
@@ -77,10 +100,15 @@ struct DebugMenuPage: View {
         return "\(answer.text) (isFulfilled: \(answer.isFulfilled?.description ?? "nil"))"
     }
 
+    /// アラーム発火記録の表示用の文字列
+    private var alarmFiredStateText: String {
+        lastAlarmFiredDate()?.formatted(.iso8601) ?? "none"
+    }
+
     /// 回答件数と今日の回答の表示を最新化する
     private func refreshAnswerStates() {
         morningAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
-        answer = todayAnswer()
+        answer = fetchMorningAnswer(answeredDate: .now, modelContext: modelContext)
     }
 
     /// 全回答を削除する (空の状態からやり直すためのデバッグ操作。空なら何もせず冪等)
@@ -93,17 +121,9 @@ struct DebugMenuPage: View {
         }
     }
 
-    /// 今日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
-    private func todayAnswer() -> MorningAnswer? {
-        let today = Calendar.current.startOfDay(for: .now)
-        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
-        descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
-    }
-
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
     private func seedTodayAnswer() {
-        guard todayAnswer() == nil else {
+        guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
         modelContext.insert(
