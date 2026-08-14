@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><style>body{margin:0;background:#18181a;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased}a{color:#c2a183;text-decoration:none}a:hover{color:#e9e7e2}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(255,255,255,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#e9e7e2;color:#18181a;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 sans-serif;color:#e9e7e2}.dv-intro{max-width:720px;font:12px/1.9 sans-serif;color:rgba(255,255,255,.55);margin:0 0 28px}.dv-opts{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(255,255,255,.12);color:#e9e7e2;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 sans-serif;color:rgba(255,255,255,.55)}.dv-card{max-width:100%;background:#0b0c0e;border:1px solid rgba(255,255,255,.12);border-radius:28px;box-shadow:0 12px 40px rgba(0,0,0,.5);overflow:hidden}.dv-opt:target .dv-oid{background:#c2a183;color:#18181a}.dv-next{margin:26px 0 0;font:12px/1.6 sans-serif;color:rgba(255,255,255,.45)}</style></helmet>
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">別方向の探索 — 縦書き・鏡・夜明け・80年</span></div>
+<p class="dv-intro">ターン1(<a class="dv-oid" href="#t1">下</a>)はそのまま。ここでは軸を変えた案: <a class="dv-oid" href="#2a">2a</a> 縦書きの問い(墨・和の静けさ)、<a class="dv-oid" href="#2b">2b</a> 円い鏡としてのカメラ、<a class="dv-oid" href="#2c">2c</a> 夜明けの地平線を待つホーム、<a class="dv-oid" href="#2d">2d</a> 80年の人生カレンダー、<a class="dv-oid" href="#2e">2e</a> 節目30日「一ヶ月の手紙」、<a class="dv-oid" href="#2f">2f</a> 日付を消して言葉だけを流すジャーナル。</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>朝の問い — 縦書き・墨</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 42% 42%, #26282c 0%, #16171a 55%, #0b0c0e 100%)"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 42% 42%, rgba(214,208,198,.55) 0%, rgba(120,116,110,.25) 55%, rgba(40,40,42,.1) 100%);opacity:{{ camLight }}"></div>
+<div style="position:absolute;top:46%;left:0;right:80px;text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.15em;color:rgba(233,231,226,.28)">( インカメラ映像 )</div>
+<div style="position:absolute;inset:0;background:linear-gradient(270deg,rgba(11,12,14,.7) 0%,rgba(11,12,14,.2) 30%,rgba(11,12,14,0) 50%),linear-gradient(180deg,rgba(11,12,14,0) 62%,rgba(11,12,14,.8) 100%)"></div>
+<div style="position:relative;display:flex;flex-direction:column;height:100%">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>5:52</span></div>
+<div style="position:absolute;top:88px;right:34px;writing-mode:vertical-rl;font-size:30px;font-weight:300;line-height:2.1;letter-spacing:.28em;text-shadow:0 1px 24px rgba(11,12,14,.7)">今日死ぬとしたら、<br>何をやりたいか</div>
+<div style="position:absolute;bottom:206px;left:34px;font-size:10px;letter-spacing:.08em;line-height:1.8;color:rgba(233,231,226,.45)">If today were your last day,<br>what would you want to do?</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:16px;padding-bottom:44px">
+<div style="width:84px;height:84px;border-radius:50%;border:1.5px solid rgba(233,231,226,.85);display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;border-radius:50%;background:#e9e7e2"></div></div>
+<span style="font-size:13px;letter-spacing:.12em;color:rgba(233,231,226,.8)">話して、答える</span>
+</div></div></div></div></div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>朝の問い — 円い鏡・独白</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;align-items:center;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;width:100%;box-sizing:border-box;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>5:52</span></div>
+<div style="text-align:center;padding:64px 40px 0;display:flex;flex-direction:column;gap:12px">
+<div style="font-size:24px;font-weight:300;line-height:1.75;letter-spacing:.06em">今日死ぬとしたら、<br>何をやりたいか</div>
+<span style="font-size:11px;letter-spacing:.06em;color:rgba(233,231,226,.4)">If today were your last day, what would you want to do?</span>
+</div>
+<div style="margin-top:52px;width:264px;height:264px;border-radius:50%;position:relative;overflow:hidden;box-shadow:0 0 0 1px rgba(233,231,226,.15),0 0 60px rgba(194,161,131,.08)">
+<div style="position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 40%, #2a2c31 0%, #17181b 60%, #0e0f11 100%)"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 40%, rgba(214,208,198,.55) 0%, rgba(120,116,110,.25) 60%, rgba(40,40,42,.1) 100%);opacity:{{ camLight }}"></div>
+<div style="position:absolute;top:47%;left:0;right:0;text-align:center;font:10px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(233,231,226,.3)">( 鏡 / mirror )</div>
+</div>
+<span style="padding-top:22px;font-size:11px;letter-spacing:.1em;color:rgba(233,231,226,.4)">鏡に向かって、独りごとのように</span>
+<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:16px;padding-bottom:44px">
+<div style="width:84px;height:84px;border-radius:50%;border:1.5px solid rgba(233,231,226,.85);display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;border-radius:50%;background:#e9e7e2"></div></div>
+<span style="font-size:12px;letter-spacing:.08em;color:rgba(233,231,226,.45);border-bottom:1px solid rgba(233,231,226,.2);padding-bottom:2px">キーボードで答える</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>ホーム — 夜明けを待つ地平線</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="position:absolute;left:0;right:0;bottom:0;height:390px;background:radial-gradient(140% 100% at 50% 100%, rgba(194,161,131,.26) 0%, rgba(160,120,110,.1) 45%, rgba(11,12,14,0) 75%)"></div>
+<div style="position:absolute;left:0;right:0;bottom:290px;height:1px;background:linear-gradient(90deg,rgba(194,161,131,0),rgba(194,161,131,.6),rgba(194,161,131,0))"></div>
+<div style="position:relative;display:flex;flex-direction:column;height:100%">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>21:04</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:132px">
+<span style="font-size:10px;letter-spacing:.26em;color:rgba(233,231,226,.45)">夜明けまで · UNTIL DAWN</span>
+<div style="font-size:96px;font-weight:200;line-height:1">5:50</div>
+<span style="font-size:12px;letter-spacing:.08em;color:rgba(233,231,226,.4)">あと 8 時間 46 分</span>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:26px;padding-bottom:56px">
+<span style="font-size:12px;letter-spacing:.1em;color:rgba(233,231,226,.55)">明日の問いは、鳴ってから。</span>
+<div style="display:flex;gap:36px;font-size:13px;letter-spacing:.1em;color:rgba(233,231,226,.6)"><span>ジャーナル</span><span>人生カレンダー</span></div>
+</div></div></div></div></div>
+
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>人生カレンダー — 80年の全景</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="text-align:center;padding:44px 0 6px;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:500;letter-spacing:.14em">人生カレンダー</span><span style="font-size:9px;letter-spacing:.26em;color:rgba(233,231,226,.4)">YOUR LIFE IN WEEKS · 80 YEARS</span></div>
+<div style="text-align:center;font-size:11px;letter-spacing:.06em;color:rgba(233,231,226,.4);padding:4px 40px 0">1行が1年。いま、32年目の夏。</div>
+<div style="display:flex;justify-content:center;padding-top:26px">
+<div style="position:relative;width:312px;height:560px">
+<div style="position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(233,231,226,.10) 0 4px,transparent 4px 6px),repeating-linear-gradient(0deg,rgba(233,231,226,.10) 0 4px,transparent 4px 7px)"></div>
+<div style="position:absolute;left:0;right:0;top:0;height:224px;background-image:repeating-linear-gradient(90deg,rgba(233,231,226,.34) 0 4px,transparent 4px 6px),repeating-linear-gradient(0deg,rgba(233,231,226,.34) 0 4px,transparent 4px 7px);background-color:#0b0c0e"></div>
+<div style="position:absolute;left:186px;top:217px;width:34px;height:4px;background:#e9e7e2;box-shadow:0 0 10px rgba(233,231,226,.4)"></div>
+<span style="position:absolute;left:228px;top:212px;font-size:9px;letter-spacing:.1em;color:#c2a183;white-space:nowrap">← 答えた朝</span>
+</div></div>
+<div style="margin-top:auto;text-align:center;padding-bottom:44px;display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.1em;color:rgba(233,231,226,.55)">残り、およそ 2,480 週</span><span style="font-size:10px;letter-spacing:.08em;color:rgba(233,231,226,.32)">About 2,480 weeks remain</span></div>
+</div></div></div>
+
+<div class="dv-opt" id="2e"><div class="dv-olabel"><a class="dv-oid" href="#2e">2e</a>節目 30日 — 一ヶ月の手紙</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="padding:88px 40px 0;display:flex;flex-direction:column;gap:26px">
+<span style="font-size:10px;letter-spacing:.24em;color:#c2a183">30日目の朝に</span>
+<div style="font-size:23px;font-weight:300;line-height:2.1;letter-spacing:.04em">この30日、<br>あなたが最も繰り返した言葉は<br>「家族」でした。</div>
+<div style="font-size:14px;font-weight:300;line-height:2.3;letter-spacing:.03em;color:rgba(233,231,226,.65)">30の朝のうち、24の朝に答えました。<br>「やれた」と言えた夜は、17日。<br>空白の6日も、そのまま残してあります。</div>
+</div>
+<div style="padding:40px 40px 0;font-size:12px;letter-spacing:.1em;color:rgba(233,231,226,.4)">— Memento Morning</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:0 32px 48px">
+<div style="border:1px solid rgba(233,231,226,.28);border-radius:999px;padding:15px;text-align:center;font-size:14px;letter-spacing:.1em;color:rgba(233,231,226,.85)">手紙を閉じる</div>
+<span style="text-align:center;font-size:10px;letter-spacing:.06em;color:rgba(233,231,226,.3)">A letter after one month</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="2f"><div class="dv-olabel"><a class="dv-oid" href="#2f">2f</a>ジャーナル — 日付を消して、言葉だけ</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="text-align:center;padding:44px 0 10px;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:500;letter-spacing:.14em">ジャーナル</span><span style="font-size:9px;letter-spacing:.26em;color:rgba(233,231,226,.4)">WORDS, NOT DATES</span></div>
+<div style="flex:1;overflow:hidden;padding:26px 40px 0;display:flex;flex-direction:column;gap:34px">
+<sc-for list="{{ journal }}" as="j" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:20px;font-weight:300;line-height:1.8;letter-spacing:.04em">{{ j.t }}</span><span style="font-size:9px;letter-spacing:.18em;color:rgba(233,231,226,.28)">{{ j.d }}</span></div>
+</sc-for>
+</div>
+<div style="text-align:center;padding:18px 0 34px;font-size:10px;letter-spacing:.08em;color:rgba(233,231,226,.3)">下へたどるほど、過去の朝へ</div>
+</div></div></div>
+
+</div>
+<p class="dv-next">次の一手: 「<a class="dv-oid" href="#2a">2a</a>の縦書きをコアに全画面を再構成」 · 「<a class="dv-oid" href="#2c">2c</a>の地平線をホームと夜の振り返りで共通言語に」 · 「<a class="dv-oid" href="#2d">2d</a>に誕生日入力のオンボーディングを追加」</p>
+</section>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Memento Morning — 全9画面 初稿(日英併記)</span></div>
+<p class="dv-intro">方針: 墨 #0B0C0E の地に温白 #E9E7E2、夜明けの微光 #C2A183 は各画面一点まで。タイポは SF Pro / Hiragino Sans の細ウェイト+広め字間、サンセリフのみ。アイコン・炎・バッジは使わず、唯一のグラフィックは「墨の粒」。コア画面 <a class="dv-oid" href="#1a">1a</a>–<a class="dv-oid" href="#1c">1c</a> は問いのオーバーレイ配置・タイポ違いの3案(<a class="dv-oid" href="#1c">1c</a> は英語レイアウト検証、<a class="dv-oid" href="#1b">1b</a> は録画中状態)。右上の Tweaks で「明るい寝室」でのコントラスト検証と粒の形を切り替えられます。共有カード <a class="dv-oid" href="#1k">1k</a> のみ実装済みコード(AnswerShareCardView)に合わせセリフ体。</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>朝の問い A — 中央の問い・鏡の独白</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 50% 38%, #26282c 0%, #16171a 55%, #0b0c0e 100%)"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 50% 38%, rgba(214,208,198,.55) 0%, rgba(120,116,110,.25) 55%, rgba(40,40,42,.1) 100%);opacity:{{ camLight }}"></div>
+<div style="position:absolute;top:46%;left:0;right:0;text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.15em;color:rgba(233,231,226,.28)">( インカメラ映像 / front camera )</div>
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,14,.72) 0%,rgba(11,12,14,.25) 26%,rgba(11,12,14,0) 42%,rgba(11,12,14,0) 62%,rgba(11,12,14,.78) 100%)"></div>
+<div style="position:relative;display:flex;flex-direction:column;height:100%">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>5:52</span><span style="font-size:11px;font-weight:400;letter-spacing:.1em;color:rgba(233,231,226,.5)">8月14日</span></div>
+<div style="padding:64px 36px 0;text-align:center;display:flex;flex-direction:column;gap:14px">
+<div style="font-size:27px;font-weight:300;line-height:1.65;letter-spacing:.05em;text-shadow:0 1px 24px rgba(11,12,14,.6)">今日死ぬとしたら、<br>何をやりたいか</div>
+<div style="font-size:11px;letter-spacing:.06em;line-height:1.7;color:rgba(233,231,226,.5);text-shadow:0 1px 12px rgba(11,12,14,.6)">If today were your last day,<br>what would you want to do?</div>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:18px;padding-bottom:44px">
+<div style="width:84px;height:84px;border-radius:50%;border:1.5px solid rgba(233,231,226,.85);display:flex;align-items:center;justify-content:center"><div style="width:64px;height:64px;border-radius:50%;background:#e9e7e2"></div></div>
+<div style="text-align:center;display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;letter-spacing:.1em;color:rgba(233,231,226,.85)">話して、答える</span><span style="font-size:10px;letter-spacing:.08em;color:rgba(233,231,226,.4)">SPEAK YOUR ANSWER</span></div>
+<span style="font-size:12px;letter-spacing:.08em;color:rgba(233,231,226,.45);border-bottom:1px solid rgba(233,231,226,.2);padding-bottom:2px">キーボードで答える</span>
+</div></div></div></div></div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>朝の問い B — 字幕型・録画中の状態</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 50% 34%, #26282c 0%, #16171a 55%, #0b0c0e 100%)"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(130% 90% at 50% 34%, rgba(214,208,198,.55) 0%, rgba(120,116,110,.25) 55%, rgba(40,40,42,.1) 100%);opacity:{{ camLight }}"></div>
+<div style="position:absolute;top:38%;left:0;right:0;text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.15em;color:rgba(233,231,226,.28)">( インカメラ映像 / front camera )</div>
+<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,12,14,.4) 0%,rgba(11,12,14,0) 18%,rgba(11,12,14,0) 48%,rgba(11,12,14,.86) 78%,rgba(11,12,14,.94) 100%)"></div>
+<div style="position:relative;display:flex;flex-direction:column;height:100%">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0"><span style="font-size:14px;font-weight:600;color:rgba(233,231,226,.8)">5:52</span><span style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#e9e7e2;opacity:.9"></span><span style="font:12px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(233,231,226,.7)">0:12</span></span></div>
+<div style="margin-top:auto;padding:0 32px;display:flex;flex-direction:column;gap:12px">
+<div style="font-size:31px;font-weight:300;line-height:1.55;letter-spacing:.04em">今日死ぬとしたら、<br>何をやりたいか</div>
+<div style="font-size:11px;letter-spacing:.06em;color:rgba(233,231,226,.45)">If today were your last day, what would you want to do?</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:36px 0 44px">
+<div style="width:84px;height:84px;border-radius:50%;border:1.5px solid rgba(233,231,226,.85);display:flex;align-items:center;justify-content:center"><div style="width:34px;height:34px;border-radius:8px;background:#e9e7e2"></div></div>
+<span style="font-size:12px;letter-spacing:.12em;color:rgba(233,231,226,.55)">止めると、アラームも止まります</span>
+</div></div></div></div></div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>朝の問い C — 帯(レターボックス)・英語検証</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="flex:none;padding:56px 36px 30px;display:flex;flex-direction:column;gap:12px;text-align:center;background:#0b0c0e">
+<span style="font-size:10px;letter-spacing:.22em;color:rgba(233,231,226,.4)">AUGUST 14 · 5:52</span>
+<div style="font-size:23px;font-weight:300;line-height:1.55;letter-spacing:.02em">If today were your last day,<br>what would you want to do?</div>
+</div>
+<div style="flex:1;position:relative;overflow:hidden">
+<div style="position:absolute;inset:0;background:radial-gradient(140% 110% at 50% 40%, #26282c 0%, #16171a 60%, #0e0f11 100%)"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(140% 110% at 50% 40%, rgba(214,208,198,.55) 0%, rgba(120,116,110,.25) 60%, rgba(40,40,42,.1) 100%);opacity:{{ camLight }}"></div>
+<div style="position:absolute;top:50%;left:0;right:0;text-align:center;font:11px ui-monospace,Menlo,monospace;letter-spacing:.15em;color:rgba(233,231,226,.28)">( front camera )</div>
+</div>
+<div style="flex:none;background:#0b0c0e;display:flex;flex-direction:column;align-items:center;gap:14px;padding:28px 0 40px">
+<div style="width:78px;height:78px;border-radius:50%;border:1.5px solid rgba(233,231,226,.85);display:flex;align-items:center;justify-content:center"><div style="width:60px;height:60px;border-radius:50%;background:#e9e7e2"></div></div>
+<span style="font-size:12px;letter-spacing:.14em;color:rgba(233,231,226,.55)">SPEAK, AND THE ALARM ENDS</span>
+<span style="font-size:11px;letter-spacing:.08em;color:rgba(233,231,226,.35);border-bottom:1px solid rgba(233,231,226,.18);padding-bottom:2px">Type instead</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>文字起こし確認 — 儀式の余韻</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>5:53</span></div>
+<div style="padding:84px 36px 0;display:flex;flex-direction:column;gap:26px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:10px;letter-spacing:.22em;color:rgba(233,231,226,.4)">今朝のことば · TRANSCRIPT</span><span style="font-size:11px;letter-spacing:.06em;color:rgba(233,231,226,.35)">8月14日 5:52</span></div>
+<div style="font-size:26px;font-weight:300;line-height:1.8;letter-spacing:.03em">家族と海を見に行く<span style="display:inline-block;width:2px;height:26px;background:#c2a183;vertical-align:-4px;margin-left:6px"></span></div>
+<span style="font-size:12px;line-height:1.8;color:rgba(233,231,226,.45)">音声から書き起こしました。テキストをタップすると直せます。<br><span style="font-size:10px;letter-spacing:.05em;color:rgba(233,231,226,.35)">Transcribed from your voice. Tap to edit.</span></span>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:14px;padding:0 32px 44px">
+<div style="background:#e9e7e2;color:#0b0c0e;border-radius:999px;padding:17px;text-align:center;font-size:15px;letter-spacing:.1em">これで確定する</div>
+<div style="text-align:center;font-size:13px;letter-spacing:.08em;color:rgba(233,231,226,.55)">書き直す</div>
+<div style="text-align:center;font-size:11px;letter-spacing:.05em;color:rgba(233,231,226,.32);margin-top:8px">動画は写真アプリに保存されました · Video saved to Photos</div>
+</div></div></div></div>
+
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>ホーム / アラーム設定 — 設定要素は最小限</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>21:04</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:110px">
+<span style="font-size:10px;letter-spacing:.26em;color:rgba(233,231,226,.45)">次の朝 · NEXT MORNING</span>
+<div style="font-size:96px;font-weight:200;letter-spacing:.01em;line-height:1">5:50</div>
+<span style="font-size:12px;letter-spacing:.08em;color:rgba(233,231,226,.4)">あと 8 時間 46 分 · 時刻をタップして変更</span>
+<div style="margin-top:26px;width:56px;height:34px;border-radius:999px;background:rgba(233,231,226,.14);position:relative"><div style="position:absolute;top:3px;right:3px;width:28px;height:28px;border-radius:50%;background:#e9e7e2"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:84px">
+<div style="display:grid;grid-template-columns:repeat(14,10px);gap:8px"><sc-for list="{{ strip14 }}" as="d" hint-placeholder-count="14"><span style="width:10px;height:10px;border-radius:{{ grainRadius }};background:{{ d.bg }};box-shadow:{{ d.ring }};display:block"></span></sc-for></div>
+<span style="font-size:11px;letter-spacing:.1em;color:rgba(233,231,226,.4)">答えた朝 {{ answeredCount }} · mornings answered</span>
+</div>
+<div style="margin-top:auto;display:flex;justify-content:center;gap:36px;padding-bottom:52px;font-size:13px;letter-spacing:.1em;color:rgba(233,231,226,.6)"><span>ジャーナル</span><span>人生カレンダー</span><span>問いのデッキ</span></div>
+</div></div></div>
+
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>ジャーナル — 無料は直近7日</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>21:04</span></div>
+<div style="text-align:center;padding:26px 0 8px;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:500;letter-spacing:.14em">ジャーナル</span><span style="font-size:9px;letter-spacing:.26em;color:rgba(233,231,226,.4)">JOURNAL</span></div>
+<div style="flex:1;overflow:hidden;padding:8px 32px 0;display:flex;flex-direction:column">
+<sc-for list="{{ journal }}" as="j" hint-placeholder-count="7">
+<div style="padding:19px 0;border-bottom:1px solid rgba(233,231,226,.08);display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;letter-spacing:.1em;color:rgba(233,231,226,.38)">{{ j.d }}</span><span style="font-size:17px;font-weight:300;letter-spacing:.03em;line-height:1.6">{{ j.t }}</span></div>
+</sc-for>
+<div style="text-align:center;padding:26px 0;display:flex;flex-direction:column;gap:5px"><span style="font-size:12px;letter-spacing:.08em;color:rgba(233,231,226,.45)">7日より前の朝は、プレミアムで。</span><span style="font-size:10px;letter-spacing:.06em;color:rgba(233,231,226,.3)">Older mornings unlock with Premium.</span></div>
+</div></div></div></div>
+
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>人生カレンダー — 墨の粒(13週)</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>21:04</span></div>
+<div style="text-align:center;padding:26px 0 6px;display:flex;flex-direction:column;gap:3px"><span style="font-size:15px;font-weight:500;letter-spacing:.14em">人生カレンダー</span><span style="font-size:9px;letter-spacing:.26em;color:rgba(233,231,226,.4)">LIFE IN WEEKS</span></div>
+<div style="text-align:center;font-size:11px;letter-spacing:.06em;line-height:1.8;color:rgba(233,231,226,.4);padding:6px 40px 0">1行が一週間。答えた朝が、墨として残る。<br>Each row is a week. Answered mornings remain as ink.</div>
+<div style="display:grid;grid-template-columns:repeat(7,13px);gap:11px;justify-content:center;padding-top:38px"><sc-for list="{{ calDots }}" as="d" hint-placeholder-count="28"><span style="width:13px;height:13px;border-radius:{{ grainRadius }};background:{{ d.bg }};box-shadow:{{ d.ring }};display:block"></span></sc-for></div>
+<div style="margin-top:auto;text-align:center;padding-bottom:48px;display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;letter-spacing:.1em;color:rgba(233,231,226,.55)">答えた朝 {{ answeredCount }}</span><span style="font-size:11px;letter-spacing:.08em;color:rgba(233,231,226,.32)">空白は、空白のまま。</span></div>
+</div></div></div>
+
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>節目 7日 — 七つの朝</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="padding:76px 36px 0;display:flex;flex-direction:column;gap:8px">
+<span style="font-size:10px;letter-spacing:.24em;color:#c2a183">7日目の朝に</span>
+<div style="font-size:30px;font-weight:300;letter-spacing:.06em">七つの朝</div>
+<span style="font-size:10px;letter-spacing:.26em;color:rgba(233,231,226,.4)">SEVEN MORNINGS</span>
+</div>
+<div style="padding:30px 36px 0;display:flex;flex-direction:column">
+<sc-for list="{{ seven }}" as="s" hint-placeholder-count="7">
+<div style="display:flex;gap:18px;align-items:baseline;padding:13px 0;border-bottom:1px solid rgba(233,231,226,.07)"><span style="font:11px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(233,231,226,.35)">{{ s.n }}</span><span style="font-size:15px;font-weight:300;letter-spacing:.03em;line-height:1.6">{{ s.t }}</span></div>
+</sc-for>
+</div>
+<div style="margin-top:auto;padding:0 32px 44px;display:flex;flex-direction:column;gap:12px">
+<div style="border:1px solid rgba(233,231,226,.28);border-radius:999px;padding:15px;text-align:center;font-size:14px;letter-spacing:.1em;color:rgba(233,231,226,.85)">この七日を、一枚に</div>
+<span style="text-align:center;font-size:10px;letter-spacing:.06em;color:rgba(233,231,226,.32)">Share these seven mornings as one card</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="1i"><div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>節目 90日 — 問い直し</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="padding:76px 36px 0;display:flex;flex-direction:column;gap:10px">
+<span style="font-size:10px;letter-spacing:.24em;color:#c2a183">90日目の朝に</span>
+<div style="font-size:25px;font-weight:300;line-height:1.7;letter-spacing:.04em">あなたの答えは、<br>変わりましたか。</div>
+<span style="font-size:10px;letter-spacing:.1em;color:rgba(233,231,226,.4)">HAS YOUR ANSWER CHANGED?</span>
+</div>
+<div style="display:flex;padding:56px 28px 0;gap:0">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;padding-right:22px"><span style="font-size:10px;letter-spacing:.2em;color:rgba(233,231,226,.4)">1日目 · 5月17日</span><span style="font-size:18px;font-weight:300;line-height:1.8;letter-spacing:.02em;color:rgba(233,231,226,.75)">会社を辞める勇気を持つ</span></div>
+<div style="width:1px;background:linear-gradient(180deg,rgba(233,231,226,0),rgba(233,231,226,.2),rgba(233,231,226,0))"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:14px;padding-left:22px"><span style="font-size:10px;letter-spacing:.2em;color:#c2a183">90日目 · 今日</span><span style="font-size:18px;font-weight:300;line-height:1.8;letter-spacing:.02em">家族と過ごす時間を増やす</span></div>
+</div>
+<div style="margin-top:auto;text-align:center;padding-bottom:52px"><span style="font-size:13px;letter-spacing:.1em;color:rgba(233,231,226,.55);border-bottom:1px solid rgba(233,231,226,.2);padding-bottom:3px">そのまま、今日の問いへ</span></div>
+</div></div></div>
+
+<div class="dv-opt" id="1j"><div class="dv-olabel"><a class="dv-oid" href="#1j">1j</a>夜の振り返り — 守れてますか?</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="display:flex;justify-content:space-between;padding:16px 28px 0;font-size:14px;font-weight:600;color:rgba(233,231,226,.8)"><span>21:30</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:30px;padding:110px 36px 0">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:21px;font-weight:300;letter-spacing:.08em">守れてますか?</span><span style="font-size:10px;letter-spacing:.2em;color:rgba(233,231,226,.4)">ARE YOU KEEPING IT?</span></div>
+<div style="font-size:25px;font-weight:300;line-height:1.8;letter-spacing:.03em">家族と海を見に行く</div>
+<span style="font-size:11px;letter-spacing:.1em;color:rgba(233,231,226,.4)">今朝 5:52 のあなた · 動画を見返す</span>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:14px;padding:0 32px 52px">
+<div style="background:#e9e7e2;color:#0b0c0e;border-radius:999px;padding:16px;text-align:center;font-size:15px;letter-spacing:.14em">やれた</div>
+<div style="border:1px solid rgba(233,231,226,.25);border-radius:999px;padding:15px;text-align:center;font-size:15px;letter-spacing:.14em;color:rgba(233,231,226,.7)">やれていない</div>
+<span style="text-align:center;font-size:10px;letter-spacing:.06em;color:rgba(233,231,226,.3);padding-top:4px">I did · Not yet — 空白は空白のまま残ります</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="1k"><div class="dv-olabel"><a class="dv-oid" href="#1k">1k</a>共有カード — 1080px正方(実装準拠・セリフ体)</div><div class="dv-card" style="width:360px;border-radius:4px"><div style="width:360px;height:360px;background:#000;color:#fff;display:flex;flex-direction:column;padding:36px;box-sizing:border-box;font-family:Georgia,'Hiragino Mincho ProN',serif">
+<div style="font-size:12px;text-align:center;line-height:1.7;color:rgba(255,255,255,.6)">今日死ぬとしたら、何をやりたいか</div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;font-weight:500;line-height:1.8;letter-spacing:.04em">家族と海を見に行く</div>
+<div style="display:flex;flex-direction:column;gap:6px;text-align:center"><span style="font-size:12px;color:rgba(255,255,255,.6)">2026年8月14日</span><span style="font-size:11px;letter-spacing:.15em;color:rgba(255,255,255,.35)">Memento Morning</span></div>
+</div></div></div>
+
+<div class="dv-opt" id="1l"><div class="dv-olabel"><a class="dv-oid" href="#1l">1l</a>ペイウォール — 静かな課金訴求</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="padding:88px 36px 0;display:flex;flex-direction:column;gap:10px">
+<div style="font-size:27px;font-weight:300;line-height:1.7;letter-spacing:.04em">すべての朝を、<br>残すために。</div>
+<span style="font-size:10px;letter-spacing:.2em;color:rgba(233,231,226,.4)">KEEP EVERY MORNING</span>
+</div>
+<div style="padding:36px 36px 0;display:flex;flex-direction:column">
+<sc-for list="{{ paywall }}" as="p" hint-placeholder-count="4">
+<div style="padding:15px 0;border-bottom:1px solid rgba(233,231,226,.07);display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:300;letter-spacing:.05em">{{ p.t }}</span><span style="font-size:11px;letter-spacing:.03em;color:rgba(233,231,226,.4)">{{ p.s }}</span></div>
+</sc-for>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:0 32px 40px">
+<div style="background:#e9e7e2;color:#0b0c0e;border-radius:999px;padding:16px;text-align:center;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;letter-spacing:.08em">年 ¥3,600</span><span style="font-size:10px;letter-spacing:.05em;opacity:.6">ひと月 ¥300 · Yearly</span></div>
+<div style="border:1px solid rgba(233,231,226,.25);border-radius:999px;padding:14px;text-align:center;font-size:14px;letter-spacing:.08em;color:rgba(233,231,226,.75)">月 ¥480</div>
+<span style="text-align:center;font-size:10px;letter-spacing:.05em;line-height:1.7;color:rgba(233,231,226,.32)">いつでも解約できます。回答はこの端末に残ります。<br>Cancel anytime. Your answers stay on this device.</span>
+</div></div></div></div>
+
+<div class="dv-opt" id="1m"><div class="dv-olabel"><a class="dv-oid" href="#1m">1m</a>オンボーディング — 夜明けの一枚目</div><div class="dv-card" style="width:390px"><div style="width:390px;height:844px;background:#0b0c0e;color:#e9e7e2;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif">
+<div style="position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,rgba(194,161,131,0) 0%,rgba(194,161,131,.14) 70%,rgba(194,161,131,.22) 100%)"></div>
+<div style="position:absolute;left:0;right:0;bottom:216px;height:1px;background:linear-gradient(90deg,rgba(194,161,131,0),rgba(194,161,131,.55),rgba(194,161,131,0))"></div>
+<div style="position:relative;display:flex;flex-direction:column;height:100%">
+<div style="padding:150px 40px 0;display:flex;flex-direction:column;gap:20px">
+<div style="font-size:29px;font-weight:300;line-height:1.85;letter-spacing:.06em">死を想ってから、<br>朝を始める。</div>
+<span style="font-size:12px;letter-spacing:.06em;line-height:1.9;color:rgba(233,231,226,.5)">Remember death.<br>Then begin your morning.</span>
+<span style="font-size:12px;line-height:2;color:rgba(233,231,226,.45);padding-top:14px">毎朝ひとつの問いに答えて、アラームを止める。<br>答えは、あなたの人生のジャーナルになる。</span>
+</div>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:14px;padding:0 32px 48px">
+<div style="background:#e9e7e2;color:#0b0c0e;border-radius:999px;padding:17px;text-align:center;font-size:15px;letter-spacing:.14em">はじめる</div>
+<span style="text-align:center;font-size:10px;letter-spacing:.05em;line-height:1.7;color:rgba(233,231,226,.32)">次の画面でアラームと通知の許可をお願いします<br>Alarm &amp; notification permissions are requested next</span>
+</div></div></div></div></div>
+
+</div>
+<p class="dv-next">次の一手: 「<a class="dv-oid" href="#1b">1b</a>の字幕型で全画面のトーンを統一」 · 「人生カレンダーを誕生日起点の80年グリッドに」 · 「選んだ問い画面を動くプロトタイプに」</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;brightRoom&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;検証&quot;, &quot;description&quot;: &quot;明るい寝室でのカメラ映像を想定し、問いのコントラストを検証&quot;}, &quot;grain&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;丸&quot;, &quot;角&quot;], &quot;default&quot;: &quot;丸&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;検証&quot;, &quot;description&quot;: &quot;墨の粒の形&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const bright = this.props.brightRoom ?? false;
+    const grain = this.props.grain ?? '丸';
+    const filled = '#E9E7E2', empty = 'rgba(233,231,226,.09)';
+    const dots = [];
+    for (let i = 0; i < 91; i++) {
+      const seed = (i * 37 + 11) % 17;
+      let on;
+      if (i >= 70) on = seed !== 3 && seed !== 9;
+      else if (i >= 42) on = seed % 3 !== 0;
+      else on = seed % 5 === 0;
+      if (i === 90) on = true;
+      dots.push({ bg: on ? filled : empty, ring: i === 90 ? '0 0 0 3px rgba(194,161,131,.35)' : 'none', on });
+    }
+    const journal = [
+      { d: '8月14日 · AUG 14', t: '家族と海を見に行く' },
+      { d: '8月13日', t: '友人に手紙を書く' },
+      { d: '8月12日', t: '何も予定を入れない一日をつくる' },
+      { d: '8月11日', t: '母に電話する' },
+      { d: '8月10日', t: '山の空気を吸いに行く' },
+      { d: '8月9日', t: '子どもと朝ごはんをつくる' },
+      { d: '8月8日', t: '書きかけの文章を仕上げる' },
+    ];
+    return {
+      camLight: bright ? 1 : 0,
+      grainRadius: grain === '丸' ? '50%' : '2px',
+      calDots: dots,
+      strip14: dots.slice(77),
+      answeredCount: dots.filter(d => d.on).length,
+      journal,
+      seven: journal.slice().reverse().map((j, i) => ({ n: '0' + (i + 1), t: j.t })),
+      paywall: [
+        { t: '無限追撃アラーム', s: '答えるまで、鳴りやまない' },
+        { t: 'すべての履歴', s: '7日を越えて、すべての朝を' },
+        { t: '30・90・180日の節目', s: '過去の自分と再会する日' },
+        { t: '問いのデッキ', s: '「今日死ぬとしたら」の先へ' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
