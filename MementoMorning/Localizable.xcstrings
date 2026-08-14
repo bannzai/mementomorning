@@ -11,6 +11,56 @@
         }
       }
     },
+    "Alarm & Notifications": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームと通知の許可"
+          }
+        }
+      }
+    },
+    "Alarm & notification permissions are requested next": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の画面でアラームと通知の許可をお願いします"
+          }
+        }
+      }
+    },
+    "Allow": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可する"
+          }
+        }
+      }
+    },
+    "Allowed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可済み"
+          }
+        }
+      }
+    },
+    "Answer one question each morning to stop the alarm.\nYour answers become the journal of your life.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝ひとつの問いに答えて、アラームを止める。\n答えは、あなたの人生のジャーナルになる。"
+          }
+        }
+      }
+    },
     "Answered": {
       "localizations": {
         "ja": {
@@ -31,12 +81,82 @@
         }
       }
     },
+    "Are you keeping it?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "守れてますか?"
+          }
+        }
+      }
+    },
+    "Begin": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
+          }
+        }
+      }
+    },
+    "Check tonight against this morning's answer.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝の回答と答え合わせしましょう"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つづける"
+          }
+        }
+      }
+    },
     "Failed to save": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "保存に失敗しました"
+          }
+        }
+      }
+    },
+    "Failed to save. Please try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存に失敗しました。もう一度お試しください"
+          }
+        }
+      }
+    },
+    "I did": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やれた"
           }
         }
       }
@@ -61,12 +181,42 @@
         }
       }
     },
+    "Night reminder": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "夜のリマインド"
+          }
+        }
+      }
+    },
+    "No answer this morning yet.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝の回答はまだありません"
+          }
+        }
+      }
+    },
     "Not answered": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "未回答"
+          }
+        }
+      }
+    },
+    "Not yet": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やれていない"
           }
         }
       }
@@ -81,12 +231,62 @@
         }
       }
     },
+    "Open Settings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        }
+      }
+    },
+    "Recorded: %@": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録済み: %@"
+          }
+        }
+      }
+    },
+    "Remember death.\nThen begin your morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "死を想ってから、\n朝を始める。"
+          }
+        }
+      }
+    },
+    "Rings at your time, even in silent mode.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定した時刻に、サイレントモードでも鳴ります"
+          }
+        }
+      }
+    },
     "Save": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "保存"
+          }
+        }
+      }
+    },
+    "Set alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームをセットする"
           }
         }
       }
@@ -131,12 +331,32 @@
         }
       }
     },
+    "The alarm keeps returning until you answer.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えるまで、アラームは鳴り続けます"
+          }
+        }
+      }
+    },
     "Time": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "時刻"
+          }
+        }
+      }
+    },
+    "You can change permissions in the Settings app.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可は設定アプリから変更できます"
           }
         }
       }
@@ -151,82 +371,12 @@
         }
       }
     },
-    "Are you keeping it?": {
+    "Your first alarm": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "守れてますか?"
-          }
-        }
-      }
-    },
-    "Check tonight against this morning's answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答と答え合わせしましょう"
-          }
-        }
-      }
-    },
-    "Close": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "閉じる"
-          }
-        }
-      }
-    },
-    "Failed to save. Please try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存に失敗しました。もう一度お試しください"
-          }
-        }
-      }
-    },
-    "I did": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれた"
-          }
-        }
-      }
-    },
-    "No answer this morning yet.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答はまだありません"
-          }
-        }
-      }
-    },
-    "Not yet": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれていない"
-          }
-        }
-      }
-    },
-    "Recorded: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録済み: %@"
+            "value": "最初のアラーム"
           }
         }
       }

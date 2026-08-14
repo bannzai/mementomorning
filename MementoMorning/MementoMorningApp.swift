@@ -33,19 +33,32 @@ struct MementoMorningApp: App {
     }
 }
 
-/// ルート画面。通知から開く画面の提示と、夜リマインドの登録を担う
+/// ルート画面。オンボーディングとホームの切り替え、通知から開く画面の提示、夜リマインドの登録を担う
 private struct RootView: View {
     @Bindable private var notificationRouter = NotificationRouter.shared
+    /// オンボーディング完了済みかどうか。未完了の間はオンボーディングを表示し、
+    /// 通知の認可リクエストもオンボーディング側の許可ステップに委ねる (起動直後にダイアログを出さない)
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
 
     var body: some View {
-        ContentView()
-            .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
-                NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+        ZStack {
+            if hasCompletedOnboarding {
+                ContentView()
+                    .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
+                        NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+                    }
+                    .task {
+                        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
+                        if isUnitTest { return }
+                        // オンボーディングの許可ステップで認可済み (または拒否済み) のため、ここではダイアログなしで夜リマインドの登録だけが走る
+                        await NightReminder.requestAuthorizationAndSchedule()
+                    }
+            } else {
+                OnboardingPage()
+                    .transition(.opacity)
             }
-            .task {
-                // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
-                if isUnitTest { return }
-                await NightReminder.requestAuthorizationAndSchedule()
-            }
+        }
+        // オンボーディング完了時はスライドではなくフェードでホームへ切り替える (デザインの画面遷移規約)
+        .animation(.easeInOut(duration: 0.6), value: hasCompletedOnboarding)
     }
 }
