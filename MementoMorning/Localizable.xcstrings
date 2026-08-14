@@ -171,42 +171,12 @@
         }
       }
     },
-    "Meet your past self again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "過去の自分と、再会する"
-          }
-        }
-      }
-    },
-    "Milestones at 30, 90, and 180 days": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "30・90・180 日の節目"
-          }
-        }
-      }
-    },
     "Monthly %@": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "月 %@"
-          }
-        }
-      }
-    },
-    "More ways to ask the morning question.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝の問いに、別の切り口を"
           }
         }
       }
@@ -311,22 +281,22 @@
         }
       }
     },
-    "Question decks": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "問いのデッキ"
-          }
-        }
-      }
-    },
     "Recorded: %@": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "記録済み: %@"
+          }
+        }
+      }
+    },
+    "Reload prices": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "料金を再読み込み"
           }
         }
       }

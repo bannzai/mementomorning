@@ -30,7 +30,9 @@ struct AnswerLogPage: View {
 
     var body: some View {
         Group {
-            if visibleAnswers.isEmpty {
+            // 空状態の判定は取得件数 (answers) で行う。visibleAnswers で判定すると、全回答が無料枠外 (8 日以上前) の時に
+            // 「まだ回答がない」ように見え、ロック行 (ペイウォール導線) にも到達できない (PR #30 レビュー指摘)
+            if answers.isEmpty {
                 // ja: 回答は、ひと朝ずつここに集まっていきます
                 Text("Your answers will gather here, one morning at a time.")
                     .font(.callout)

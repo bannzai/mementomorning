@@ -27,9 +27,12 @@ struct MementoMorningApp: App {
             // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
             if isUnitTest { return }
             guard newValue == .active else { return }
-            // ユーザーがアプリを開けた (openAppWhenRun の成功または手動起動) なら追撃ループから抜けられているため、
-            // issue #2 スパイクの連続追撃カウントをリセットする
-            UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+            // 連続追撃カウントは今日の回答が済んでいる時だけリセットする。
+            // openAppWhenRun による foreground 復帰でもここは走るため、無条件のリセットだと
+            // 未回答のまま停止するたびにカウントが 0 に戻り、無料枠のスヌーズ上限に到達しない (PR #30 レビュー指摘)
+            if hasTodayAnswer(modelContext: PersistenceController.shared.container.mainContext) {
+                UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+            }
             Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
         }
     }

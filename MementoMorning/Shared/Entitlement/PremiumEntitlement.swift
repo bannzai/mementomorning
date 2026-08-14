@@ -16,6 +16,9 @@ enum PremiumEntitlement {
     /// RevenueCat の entitlement 識別子。#15 で登録する entitlement の lookup_key と一致させる
     static let entitlementIdentifier = "premium"
 
+    /// ペイウォールが表示する offering の識別子。#15 で登録する offering の lookup_key と一致させる
+    static let offeringIdentifier = "default"
+
     /// RevenueCat の iOS 用 public API key (appl_...)。
     /// RevenueCat プロジェクトの作成と商品登録は #15 で行うため、それまでは空にして configure をスキップする
     static let revenueCatAPIKey = ""

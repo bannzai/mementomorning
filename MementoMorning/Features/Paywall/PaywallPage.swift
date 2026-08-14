@@ -14,6 +14,8 @@ struct PaywallPage: View {
     @State private var offering: Offering?
     /// 購入・復元の処理中かどうか。二重実行を防ぎ、ボタンを無効化する
     @State private var isPurchasing = false
+    /// offering の取得に失敗したかどうか。再読み込みの導線を出す
+    @State private var offeringLoadFailed = false
     /// 購入・復元の失敗をユーザーへ伝えるメッセージ。nil 以外でアラート表示する
     @State private var purchaseError: String?
 
@@ -36,54 +38,60 @@ struct PaywallPage: View {
                         description: Text("It won't stop ringing until you answer.")
                     )
                     Divider()
+                    // 特典の記載は現時点で実際に解放される機能 (無限追撃・全履歴) だけに絞る。
+                    // 30/90/180 日の節目・問いのデッキは design handoff §9 の掲載項目だが未実装のため、各機能の実装時に追加する (PR #30 レビュー指摘)
                     featureRow(
                         // ja: すべての履歴
                         title: Text("All your history"),
                         // ja: 直近 7 日を超えた、すべての回答
                         description: Text("Every answer, beyond the last 7 days.")
                     )
-                    Divider()
-                    featureRow(
-                        // ja: 30・90・180 日の節目
-                        title: Text("Milestones at 30, 90, and 180 days"),
-                        // ja: 過去の自分と、再会する
-                        description: Text("Meet your past self again.")
-                    )
-                    Divider()
-                    featureRow(
-                        // ja: 問いのデッキ
-                        title: Text("Question decks"),
-                        // ja: 朝の問いに、別の切り口を
-                        description: Text("More ways to ask the morning question.")
-                    )
                 }
                 .padding(.horizontal, 24)
             }
 
             VStack(spacing: 12) {
-                Button {
-                    Task { await purchase(package: offering?.annual) }
-                } label: {
-                    // ja: 年 %@(ひと月 %@)
-                    Text("Yearly \(annualPriceText) (\(annualPerMonthPriceText) a month)")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .disabled(isPurchasing)
-                .accessibilityIdentifier("paywall_purchase_yearly")
+                // Storefront と異なる固定の円価格を見せないため、offering 取得までは購入ボタンを出さない (PR #30 レビュー指摘)。
+                // 未 configure (#15 前の開発ビルド・Preview) だけは目安価格の見本表示に倒す
+                if Purchases.isConfigured && offering == nil {
+                    if offeringLoadFailed {
+                        Button {
+                            Task { await loadOffering() }
+                        } label: {
+                            // ja: 料金を再読み込み
+                            Text("Reload prices")
+                        }
+                        .accessibilityIdentifier("paywall_reload_offering")
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                    }
+                } else {
+                    Button {
+                        Task { await purchase(package: offering?.annual) }
+                    } label: {
+                        // ja: 年 %@(ひと月 %@)
+                        Text("Yearly \(annualPriceText) (\(annualPerMonthPriceText) a month)")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .disabled(isPurchasing)
+                    .accessibilityIdentifier("paywall_purchase_yearly")
 
-                Button {
-                    Task { await purchase(package: offering?.monthly) }
-                } label: {
-                    // ja: 月 %@
-                    Text("Monthly \(monthlyPriceText)")
-                        .frame(maxWidth: .infinity)
+                    Button {
+                        Task { await purchase(package: offering?.monthly) }
+                    } label: {
+                        // ja: 月 %@
+                        Text("Monthly \(monthlyPriceText)")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .disabled(isPurchasing)
+                    .accessibilityIdentifier("paywall_purchase_monthly")
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-                .disabled(isPurchasing)
-                .accessibilityIdentifier("paywall_purchase_monthly")
 
                 Button {
                     dismiss()
@@ -164,10 +172,19 @@ struct PaywallPage: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// offering `default` を読み込む。未 configure (#15 前)・取得失敗時は nil のままにし、見本価格の表示に倒す
+    /// offering を読み込む。未 configure (#15 前) では何もしない (見本価格の表示に倒す)。
+    /// lookup_key (PremiumEntitlement.offeringIdentifier) の識別子で取得する。`.current` は Dashboard の
+    /// Current 指定に依存し、`default` が Current になっていない設定でも購入不能にならないようフォールバックにのみ使う (PR #30 レビュー指摘)
     private func loadOffering() async {
         guard Purchases.isConfigured else { return }
-        offering = try? await Purchases.shared.offerings().current
+        offeringLoadFailed = false
+        do {
+            let offerings = try await Purchases.shared.offerings()
+            offering = offerings.offering(identifier: PremiumEntitlement.offeringIdentifier) ?? offerings.current
+            offeringLoadFailed = offering == nil
+        } catch {
+            offeringLoadFailed = true
+        }
     }
 
     /// package を購入し、entitlement premium が有効になったら閉じる
