@@ -42,6 +42,14 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Delete all answers")
                 }
                 .accessibilityIdentifier("debug_delete_all_answers")
+
+                Button {
+                    // 削除は未設定でも成功する (冪等)。リセットすると回答 7 件以上なら ContentView が節目画面を再表示する
+                    UserDefaults.standard.removeObject(forKey: .isSevenMorningsMilestonePresented)
+                } label: {
+                    Text(verbatim: "Reset Seven Mornings milestone")
+                }
+                .accessibilityIdentifier("debug_reset_seven_mornings_milestone")
             }
             Section {
                 Button {
