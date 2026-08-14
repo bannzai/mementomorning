@@ -12,6 +12,21 @@ struct ContentView: View {
                     .padding(.horizontal, 24)
             }
             .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        AlarmSettingPage()
+                    } label: {
+                        Image(systemName: "alarm")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        AnswerLogPage()
+                    } label: {
+                        // ja: ジャーナル
+                        Label("Journal", systemImage: "book.closed")
+                    }
+                }
                 #if DEBUG
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink {

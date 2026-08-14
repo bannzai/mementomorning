@@ -5,6 +5,9 @@ import UserNotifications
 /// Memento Morning アプリのエントリポイント
 @main
 struct MementoMorningApp: App {
+    /// アプリのライフサイクル状態
+    @Environment(\.scenePhase) private var scenePhase
+
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
@@ -15,6 +18,15 @@ struct MementoMorningApp: App {
             RootView()
         }
         .modelContainer(PersistenceController.shared.container)
+        // initial: true でコールドローンチ時 (既に .active で onChange が発火しないケース) もカバーする。
+        // reschedule は冪等 + 直列化済みのため、初回に二重で呼ばれても問題ない
+        .onChange(of: scenePhase, initial: true) { _, newValue in
+            // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
+            // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
+            if isUnitTest { return }
+            guard newValue == .active else { return }
+            Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
+        }
     }
 }
 
@@ -28,6 +40,8 @@ private struct RootView: View {
                 NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
             }
             .task {
+                // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
+                if isUnitTest { return }
                 await NightReminder.requestAuthorizationAndSchedule()
             }
     }
