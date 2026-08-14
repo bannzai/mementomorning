@@ -6,11 +6,12 @@ private let termsURL = URL(string: "https://bannzai.github.io/mementomorning/Ter
 /// プライバシーポリシーページの URL (docs/ を GitHub Pages で配信している)
 private let privacyPolicyURL = URL(string: "https://bannzai.github.io/mementomorning/PrivacyPolicy-ja")!
 
-/// ペイウォール画面 (design handoff §9)。
-/// 世界観を壊さない静かな課金訴求: 機能 4 行 + 年額/月額ボタン + 「今はしない」だけで、バッジ・カウントダウン等の圧は置かない。
-/// 料金は RevenueCat の offering `default` の packages ($rc_annual / $rc_monthly) から表示し、購入・復元も RevenueCat 経由で行う (商品登録は #15)
+/// ペイウォール画面 (デザイン handoff 1l / プロトタイプ paywall)。静かな課金訴求。
+/// バッジ・カウントダウン等の圧は一切使わない。
+/// 料金は RevenueCat の offering (lookup_key: PremiumEntitlement.offeringIdentifier) の packages から表示し、
+/// 購入・復元も RevenueCat 経由で行う (商品登録は #15)
 struct PaywallPage: View {
-    /// RevenueCat の current offering。読み込み中・取得失敗・未 configure (#15 前) の間は nil で、料金は目安価格を見本表示する
+    /// RevenueCat の offering。読み込み中・取得失敗・未 configure (#15 前) の間は nil
     @State private var offering: Offering?
     /// 購入・復元の処理中かどうか。二重実行を防ぎ、ボタンを無効化する
     @State private var isPurchasing = false
@@ -23,112 +24,13 @@ struct PaywallPage: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    // ja: すべての朝を、残すために。
-                    Text("Keep every morning.")
-                        .font(.title.weight(.light))
-                        .padding(.top, 48)
-                        .padding(.bottom, 40)
-
-                    featureRow(
-                        // ja: 無限追撃アラーム
-                        title: Text("Endless follow-up alarm"),
-                        // ja: 答えるまで、鳴りやまない
-                        description: Text("It won't stop ringing until you answer.")
-                    )
-                    Divider()
-                    // 特典の記載は現時点で実際に解放される機能 (無限追撃・全履歴) だけに絞る。
-                    // 30/90/180 日の節目・問いのデッキは design handoff §9 の掲載項目だが未実装のため、各機能の実装時に追加する (PR #30 レビュー指摘)
-                    featureRow(
-                        // ja: すべての履歴
-                        title: Text("All your history"),
-                        // ja: 直近 7 日を超えた、すべての回答
-                        description: Text("Every answer, beyond the last 7 days.")
-                    )
-                }
-                .padding(.horizontal, 24)
-            }
-
-            VStack(spacing: 12) {
-                // Storefront と異なる固定の円価格を見せないため、offering 取得までは購入ボタンを出さない (PR #30 レビュー指摘)。
-                // 未 configure (#15 前の開発ビルド・Preview) だけは目安価格の見本表示に倒す
-                if Purchases.isConfigured && offering == nil {
-                    if offeringLoadFailed {
-                        Button {
-                            Task { await loadOffering() }
-                        } label: {
-                            // ja: 料金を再読み込み
-                            Text("Reload prices")
-                        }
-                        .accessibilityIdentifier("paywall_reload_offering")
-                    } else {
-                        ProgressView()
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                    }
-                } else {
-                    Button {
-                        Task { await purchase(package: offering?.annual) }
-                    } label: {
-                        // ja: 年 %@(ひと月 %@)
-                        Text("Yearly \(annualPriceText) (\(annualPerMonthPriceText) a month)")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .disabled(isPurchasing)
-                    .accessibilityIdentifier("paywall_purchase_yearly")
-
-                    Button {
-                        Task { await purchase(package: offering?.monthly) }
-                    } label: {
-                        // ja: 月 %@
-                        Text("Monthly \(monthlyPriceText)")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.large)
-                    .disabled(isPurchasing)
-                    .accessibilityIdentifier("paywall_purchase_monthly")
-                }
-
-                Button {
-                    dismiss()
-                } label: {
-                    // ja: 今はしない
-                    Text("Not now")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                }
-                .accessibilityIdentifier("paywall_not_now")
-                .padding(.top, 4)
-
-                // ja: いつでも解約できます。回答はこの端末に残ります。
-                Text("Cancel anytime. Your answers stay on this device.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-
-                HStack(spacing: 16) {
-                    Button {
-                        Task { await restore() }
-                    } label: {
-                        // ja: 購入を復元
-                        Text("Restore Purchases")
-                    }
-                    .disabled(isPurchasing)
-                    .accessibilityIdentifier("paywall_restore")
-                    // ja: 利用規約
-                    Link(destination: termsURL) { Text("Terms of Use") }
-                    // ja: プライバシーポリシー
-                    Link(destination: privacyPolicyURL) { Text("Privacy Policy") }
-                }
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
+            titleSection
+            featureListSection
+                .padding(.top, 32)
+            Spacer()
+            purchaseSection
         }
+        .background(Color.ink.ignoresSafeArea())
         .task {
             await loadOffering()
         }
@@ -141,35 +43,178 @@ struct PaywallPage: View {
         }
     }
 
-    /// 年額の表示価格。offering 未取得の間は PROJECT.md の目安価格を見本表示する
+    /// 見出しと英語サブラベル
+    private var titleSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            // ja: すべての朝を、残すために。
+            Text("To keep every morning.")
+                .font(.system(size: 27, weight: .light))
+                .tracking(1.08)
+                .lineSpacing(27 * 0.7)
+                .foregroundStyle(Color.warmWhite)
+            Text(verbatim: "KEEP EVERY MORNING")
+                .font(.system(size: 10))
+                .tracking(2.0)
+                .foregroundStyle(Color.warmWhite.opacity(0.4))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.top, 56)
+        .padding(.horizontal, 36)
+    }
+
+    /// プレミアムの機能一覧 (ヘアライン区切り)。
+    /// 特典の記載は現時点で実際に解放される機能 (無限追撃・全履歴) だけに絞る。
+    /// 30/90/180 日の節目・問いのデッキはデザイン handoff 1l の掲載項目だが未実装のため、各機能の実装時に行を追加する (PR #30 レビュー指摘)
+    private var featureListSection: some View {
+        VStack(spacing: 0) {
+            featureRow(
+                // ja: 無限追撃アラーム
+                title: Text("Endless follow-up alarms"),
+                // ja: 答えるまで、鳴りやまない
+                detail: Text("It keeps ringing until you answer.")
+            )
+            featureRow(
+                // ja: すべての履歴
+                title: Text("All your mornings"),
+                // ja: 7日を越えて、すべての朝を
+                detail: Text("Every morning, beyond the last 7 days.")
+            )
+        }
+        .padding(.horizontal, 36)
+    }
+
+    /// 機能 1 行 (タイトル 14pt + 説明 11pt/40%)
+    private func featureRow(title: Text, detail: Text) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            title
+                .font(.system(size: 14, weight: .light))
+                .tracking(0.7)
+                .foregroundStyle(Color.warmWhite)
+            detail
+                .font(.system(size: 11))
+                .tracking(0.33)
+                .foregroundStyle(Color.warmWhite.opacity(0.4))
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 14)
+        .overlay(alignment: .bottom) {
+            HairlineDivider()
+        }
+    }
+
+    /// 購入ボタンと注釈・復元・法務リンク
+    private var purchaseSection: some View {
+        VStack(spacing: 12) {
+            // Storefront と異なる固定の円価格を見せないため、offering 取得までは購入ボタンを出さない (PR #30 レビュー指摘)。
+            // 未 configure (#15 前の開発ビルド・Preview) だけは目安価格の見本表示に倒す
+            if Purchases.isConfigured && offering == nil {
+                if offeringLoadFailed {
+                    Button {
+                        Task { await loadOffering() }
+                    } label: {
+                        // ja: 料金を再読み込み
+                        Text("Reload prices")
+                            .font(.system(size: 14))
+                    }
+                    .buttonStyle(SecondaryPillButtonStyle())
+                    .accessibilityIdentifier("paywall_reload_offering")
+                } else {
+                    ProgressView()
+                        .tint(Color.warmWhite)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 24)
+                }
+            } else {
+                Button {
+                    Task { await purchase(package: offering?.annual) }
+                } label: {
+                    VStack(spacing: 2) {
+                        // ja: 年 %@
+                        Text("\(annualPriceText) / year")
+                            .font(.system(size: 15))
+                            .tracking(1.2)
+                        // ja: ひと月 %@
+                        Text("\(annualPerMonthPriceText) a month")
+                            .font(.system(size: 10))
+                            .tracking(0.5)
+                            .opacity(0.6)
+                    }
+                }
+                .buttonStyle(PrimaryPillButtonStyle())
+                .disabled(isPurchasing)
+                .accessibilityIdentifier("paywall_yearly_button")
+
+                Button {
+                    Task { await purchase(package: offering?.monthly) }
+                } label: {
+                    // ja: 月 %@
+                    Text("\(monthlyPriceText) / month")
+                        .font(.system(size: 14))
+                }
+                .buttonStyle(SecondaryPillButtonStyle())
+                .disabled(isPurchasing)
+                .accessibilityIdentifier("paywall_monthly_button")
+            }
+
+            Button {
+                dismiss()
+            } label: {
+                // ja: 今はしない
+                Text("Not now")
+                    .font(.system(size: 12))
+                    .tracking(1.2)
+                    .foregroundStyle(Color.warmWhite.opacity(0.4))
+                    .padding(8)
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("paywall_not_now_button")
+
+            // ja: いつでも解約できます。回答はこの端末に残ります。
+            Text("Cancel anytime. Your answers stay on this device.")
+                .font(.system(size: 10))
+                .tracking(0.5)
+                .foregroundStyle(Color.warmWhite.opacity(0.3))
+                .multilineTextAlignment(.center)
+
+            HStack(spacing: 16) {
+                Button {
+                    Task { await restore() }
+                } label: {
+                    // ja: 購入を復元
+                    Text("Restore Purchases")
+                }
+                .disabled(isPurchasing)
+                .accessibilityIdentifier("paywall_restore")
+                // ja: 利用規約
+                Link(destination: termsURL) { Text("Terms of Use") }
+                // ja: プライバシーポリシー
+                Link(destination: privacyPolicyURL) { Text("Privacy Policy") }
+            }
+            .font(.system(size: 10))
+            .tracking(0.5)
+            .foregroundStyle(Color.warmWhite.opacity(0.4))
+            .tint(Color.warmWhite.opacity(0.4))
+        }
+        .padding(.horizontal, 32)
+        .padding(.bottom, 24)
+    }
+
+    /// 年額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格を見本表示する
     private var annualPriceText: String {
         offering?.annual?.storeProduct.localizedPriceString ?? "¥3,600"
     }
 
     /// 年額プランのひと月あたり換算の表示価格。ストア価格を 12 (ヶ月) で割り、商品の通貨フォーマッタで整形する。
-    /// offering 未取得の間は PROJECT.md の目安価格 (¥3,600 / 12ヶ月 = ¥300) を見本表示する
+    /// offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格 (¥3,600 / 12ヶ月 = ¥300) を見本表示する
     private var annualPerMonthPriceText: String {
         guard let storeProduct = offering?.annual?.storeProduct else { return "¥300" }
         return storeProduct.priceFormatter?.string(from: storeProduct.price / 12 as NSDecimalNumber)
             ?? storeProduct.localizedPriceString
     }
 
-    /// 月額の表示価格。offering 未取得の間は PROJECT.md の目安価格を見本表示する
+    /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格を見本表示する
     private var monthlyPriceText: String {
         offering?.monthly?.storeProduct.localizedPriceString ?? "¥480"
-    }
-
-    /// 機能訴求の 1 行 (タイトル + 説明)
-    private func featureRow(title: Text, description: Text) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            title
-                .font(.subheadline)
-            description
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.vertical, 14)
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     /// offering を読み込む。未 configure (#15 前) では何もしない (見本価格の表示に倒す)。

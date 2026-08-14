@@ -44,6 +44,10 @@ private struct RootView: View {
 
     var body: some View {
         ContentView()
+            // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
+            // アクセントも温白に固定し、システム標準の青いリンク色を出さない
+            .preferredColorScheme(.dark)
+            .tint(Color.warmWhite)
             .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
                 NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
             }

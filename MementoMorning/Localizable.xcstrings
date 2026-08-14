@@ -1,6 +1,46 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ / month": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月 %@"
+          }
+        }
+      }
+    },
+    "%@ / year": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年 %@"
+          }
+        }
+      }
+    },
+    "%@ a month": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ひと月 %@"
+          }
+        }
+      }
+    },
+    "%lld mornings answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えた朝 %lld"
+          }
+        }
+      }
+    },
     "Alarm": {
       "localizations": {
         "ja": {
@@ -11,12 +51,32 @@
         }
       }
     },
-    "All your history": {
+    "Alarm is off · Tap the time to change": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームはオフ · 時刻をタップして変更"
+          }
+        }
+      }
+    },
+    "All your mornings": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "すべての履歴"
+          }
+        }
+      }
+    },
+    "Answer with the keyboard": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キーボードで答える"
           }
         }
       }
@@ -31,22 +91,32 @@
         }
       }
     },
-    "Answers older than 7 days unlock with Premium.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "8 日以上前の回答はプレミアムで解放されます"
-          }
-        }
-      }
-    },
     "Are you keeping it?": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "守れてますか?"
+          }
+        }
+      }
+    },
+    "Blank days remain blank.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "空白は空白のまま残ります"
+          }
+        }
+      }
+    },
+    "Blank stays blank.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "空白は、空白のまま。"
           }
         }
       }
@@ -81,6 +151,16 @@
         }
       }
     },
+    "Each row is a week. Answered mornings remain as ink.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1行が一週間。答えた朝が、墨として残る。"
+          }
+        }
+      }
+    },
     "Endless follow-up alarm": {
       "localizations": {
         "ja": {
@@ -91,12 +171,22 @@
         }
       }
     },
-    "Every answer, beyond the last 7 days.": {
+    "Endless follow-up alarms": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "直近 7 日を超えた、すべての回答"
+            "value": "無限追撃アラーム"
+          }
+        }
+      }
+    },
+    "Every morning, beyond the last 7 days.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7日を越えて、すべての朝を"
           }
         }
       }
@@ -141,7 +231,17 @@
         }
       }
     },
-    "It won't stop ringing until you answer.": {
+    "In %lld hr %lld min · Tap the time to change": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あと %lld 時間 %lld 分 · 時刻をタップして変更"
+          }
+        }
+      }
+    },
+    "It keeps ringing until you answer.": {
       "localizations": {
         "ja": {
           "stringUnit": {
@@ -161,22 +261,22 @@
         }
       }
     },
-    "Keep every morning.": {
+    "Life Calendar": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "すべての朝を、残すために。"
+            "value": "人生カレンダー"
           }
         }
       }
     },
-    "Monthly %@": {
+    "NEXT MORNING": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "月 %@"
+            "value": "次の朝 · NEXT MORNING"
           }
         }
       }
@@ -237,6 +337,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "OK"
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフ"
+          }
+        }
+      }
+    },
+    "Older mornings unlock with Premium.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7日より前の朝は、プレミアムで。"
+          }
+        }
+      }
+    },
+    "On": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オン"
           }
         }
       }
@@ -321,6 +451,26 @@
         }
       }
     },
+    "See every morning": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての朝を見る"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
+          }
+        }
+      }
+    },
     "Share": {
       "localizations": {
         "ja": {
@@ -337,6 +487,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "スヌーズ"
+          }
+        }
+      }
+    },
+    "Speak your answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "話して、答える"
           }
         }
       }
@@ -371,6 +531,26 @@
         }
       }
     },
+    "Stop, and the alarm stops too.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "止めると、アラームも止まります"
+          }
+        }
+      }
+    },
+    "Tap the time to set your alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時刻をタップして設定"
+          }
+        }
+      }
+    },
     "Terms of Use": {
       "localizations": {
         "ja": {
@@ -401,12 +581,42 @@
         }
       }
     },
+    "This morning's words": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことば"
+          }
+        }
+      }
+    },
     "Time": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "時刻"
+          }
+        }
+      }
+    },
+    "To keep every morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての朝を、残すために。"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
           }
         }
       }
@@ -427,16 +637,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld 回まで (無料)"
-          }
-        }
-      }
-    },
-    "Yearly %@ (%@ a month)": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "年 %1$@(ひと月 %2$@)"
           }
         }
       }
