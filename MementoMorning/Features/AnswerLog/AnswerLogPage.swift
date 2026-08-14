@@ -8,6 +8,16 @@ struct AnswerLogPage: View {
     /// 共有カードを表示する対象の回答
     @State private var shareTargetAnswer: MorningAnswer?
 
+    /// ペイウォールを表示中かどうか。無料枠で隠れている回答の案内行タップで開く
+    @State private var isPaywallPresented = false
+
+    /// RevenueCat の entitlement キャッシュ。値の変化で再描画を起こすために監視する (判定は PremiumEntitlement.isPremium が SSOT)
+    @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
+    #if DEBUG
+    /// 検証用のプレミアム強制フラグ。値の変化で再描画を起こすために監視する
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+    #endif
+
     /// fetchLimit 付きの FetchDescriptor を組み立てるため、明示的に init を定義する
     init() {
         var descriptor = FetchDescriptor<MorningAnswer>(
@@ -48,10 +58,16 @@ struct AnswerLogPage: View {
                         .buttonStyle(.plain)
                     }
                     if hiddenAnswerCount > 0 {
-                        // ja: 8 日以上前の回答はプレミアムで解放されます
-                        Text("Answers older than 7 days unlock with Premium.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                        // 無料枠で隠れている回答の案内。タップでペイウォールを開く (design handoff「ジャーナルのロック行タップ → ペイウォール」)
+                        Button {
+                            isPaywallPresented = true
+                        } label: {
+                            // ja: 8 日以上前の回答はプレミアムで解放されます
+                            Text("Answers older than 7 days unlock with Premium.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                        .accessibilityIdentifier("answer_log_locked_row")
                     }
                 }
                 .listStyle(.plain)
@@ -62,6 +78,9 @@ struct AnswerLogPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $shareTargetAnswer) { answer in
             AnswerShareCardPage(answer: answer)
+        }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallPage()
         }
     }
 

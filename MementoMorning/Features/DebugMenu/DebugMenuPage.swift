@@ -13,6 +13,9 @@ struct DebugMenuPage: View {
 
     @Environment(\.modelContext) private var modelContext
 
+    /// 検証用のプレミアム強制フラグ。課金状態のゲート (全履歴・無限追撃) の動作確認に使う (再実行しても壊れない冪等なトグル)
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
@@ -60,6 +63,22 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Schedule night reminder in 1 minute")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+            }
+            Section {
+                Text(verbatim: "isPremium: \(PremiumEntitlement.isPremium)")
+                    .accessibilityIdentifier("debug_premium_state")
+
+                Toggle(isOn: $debugPremiumOverride) {
+                    Text(verbatim: "Force premium (override)")
+                }
+                .accessibilityIdentifier("debug_premium_override_toggle")
+
+                NavigationLink {
+                    PaywallPage()
+                } label: {
+                    Text(verbatim: "Open paywall")
+                }
+                .accessibilityIdentifier("debug_open_paywall")
             }
         }
         .navigationTitle(Text(verbatim: "Developer Menu"))
