@@ -13,6 +13,9 @@ struct DebugMenuPage: View {
 
     @Environment(\.modelContext) private var modelContext
 
+    /// オンボーディング完了フラグ。false に戻すと RootView が即座にオンボーディングへ切り替わる
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
@@ -60,6 +63,17 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Schedule night reminder in 1 minute")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+            }
+            Section {
+                Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
+                    .accessibilityIdentifier("debug_onboarding_state")
+                // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
+                Button {
+                    hasCompletedOnboarding = false
+                } label: {
+                    Text(verbatim: "Reset onboarding")
+                }
+                .accessibilityIdentifier("debug_reset_onboarding")
             }
         }
         .navigationTitle(Text(verbatim: "Developer Menu"))
