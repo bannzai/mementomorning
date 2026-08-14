@@ -19,39 +19,41 @@ struct NightReflectionPage: View {
     var body: some View {
         VStack(spacing: 0) {
             if let answer {
-                VStack(spacing: 30) {
-                    VStack(spacing: 6) {
-                        // ja: 守れてますか?
-                        Text("Are you keeping it?")
-                            .font(.system(size: 21, weight: .light))
-                            .tracking(1.68)
+                // 回答は長さ制限のない自由入力のため、本文領域をスクロール可能にして全文を読めるようにする
+                ScrollView {
+                    VStack(spacing: 30) {
+                        VStack(spacing: 6) {
+                            // ja: 守れてますか?
+                            Text("Are you keeping it?")
+                                .font(.system(size: 21, weight: .light))
+                                .tracking(1.68)
+                                .foregroundStyle(Color.warmWhite)
+                            Text(verbatim: "ARE YOU KEEPING IT?")
+                                .font(.system(size: 10))
+                                .tracking(2.0)
+                                .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        }
+
+                        Text(answer.text)
+                            .font(.system(size: 25, weight: .light))
+                            .tracking(0.75)
+                            .lineSpacing(25 * 0.8)
                             .foregroundStyle(Color.warmWhite)
-                        Text(verbatim: "ARE YOU KEEPING IT?")
-                            .font(.system(size: 10))
-                            .tracking(2.0)
-                            .foregroundStyle(Color.warmWhite.opacity(0.4))
-                    }
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("night_reflection_answer_text")
 
-                    Text(answer.text)
-                        .font(.system(size: 25, weight: .light))
-                        .tracking(0.75)
-                        .lineSpacing(25 * 0.8)
-                        .foregroundStyle(Color.warmWhite)
-                        .multilineTextAlignment(.center)
-                        .accessibilityIdentifier("night_reflection_answer_text")
-
-                    if let isFulfilled = answer.isFulfilled {
-                        // ja: 記録済み: %@
-                        Text("Recorded: \(isFulfilled ? Text("I did") : Text("Not yet"))")
-                            .font(.system(size: 11))
-                            .tracking(1.1)
-                            .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        if let isFulfilled = answer.isFulfilled {
+                            // ja: 記録済み: %@
+                            Text("Recorded: \(isFulfilled ? Text("I did") : Text("Not yet"))")
+                                .font(.system(size: 11))
+                                .tracking(1.1)
+                                .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        }
                     }
+                    .padding(.top, 110)
+                    .padding(.horizontal, 36)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(.top, 110)
-                .padding(.horizontal, 36)
-
-                Spacer()
 
                 VStack(spacing: 14) {
                     Button {

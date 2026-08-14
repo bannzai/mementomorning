@@ -18,7 +18,10 @@ private var lifeCalendarAnswersDescriptor: FetchDescriptor<MorningAnswer> {
 /// デザイン handoff 1g / プロトタイプ calendar 準拠。
 /// 空白の日は空白のまま残す (streak 修復は作らない。documents/PROJECT.md の課金設計参照)
 struct LifeCalendarPage: View {
+    @Environment(\.modelContext) private var modelContext
     @Query(lifeCalendarAnswersDescriptor) private var answers: [MorningAnswer]
+    /// 全期間の回答数 (答えた朝 N)。グリッド用クエリは 2 年分に制限しているため、件数は fetchCount で全期間から取得する
+    @State private var answeredCount = 0
 
     var body: some View {
         let calendar = Calendar.current
@@ -74,7 +77,7 @@ struct LifeCalendarPage: View {
             }
             VStack(spacing: 6) {
                 // ja: 答えた朝 %lld
-                Text("\(answeredDays.count) mornings answered")
+                Text("\(answeredCount) mornings answered")
                     .font(.system(size: 12))
                     .tracking(1.2)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
@@ -87,6 +90,9 @@ struct LifeCalendarPage: View {
             .padding(.bottom, 24)
         }
         .background(Color.ink.ignoresSafeArea())
+        .onAppear {
+            answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack(spacing: 3) {

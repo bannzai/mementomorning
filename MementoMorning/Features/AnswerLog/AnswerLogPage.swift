@@ -23,7 +23,9 @@ struct AnswerLogPage: View {
 
     var body: some View {
         Group {
-            if visibleAnswers.isEmpty {
+            // 非表示回答だけが残っている場合 (無料枠で全件が 7 日より前) も、
+            // ペイウォール導線 (lockFooter) に到達できるようリスト側の分岐へ流す
+            if visibleAnswers.isEmpty && hiddenAnswerCount == 0 {
                 // ja: 回答は、ひと朝ずつここに集まっていきます
                 Text("Your answers will gather here, one morning at a time.")
                     .font(.system(size: 14, weight: .light))

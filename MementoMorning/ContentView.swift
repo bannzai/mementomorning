@@ -1,9 +1,29 @@
 import SwiftUI
 import SwiftData
 
-/// 起動直後に表示するルート画面 (ホーム)。デザイン handoff 1e / プロトタイプ home 準拠。
-/// 次の朝のアラーム時刻を中心に、今朝のことば・直近 14 日の粒ストリップ・各画面へのテキストリンクを置く
+/// 起動直後に表示するルート画面 (ホーム)。
+/// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
+    /// ホームの基準日 (今日の 0 時)。HomeContent のクエリ条件と粒ストリップの今日判定の基準になる
+    @State private var today = Calendar.current.startOfDay(for: .now)
+
+    var body: some View {
+        NavigationStack {
+            HomeContent(today: today)
+                // 基準日が変わったら @Query の predicate を組み直すため view ごと作り直す
+                .id(today)
+        }
+        .onChange(of: scenePhase) { _, newValue in
+            guard newValue == .active else { return }
+            today = Calendar.current.startOfDay(for: .now)
+        }
+    }
+}
+
+/// ホーム画面本体 (デザイン handoff 1e / プロトタイプ home 準拠)。
+/// 次の朝のアラーム時刻を中心に、今朝のことば・直近 14 日の粒ストリップ・各画面へのテキストリンクを置く
+private struct HomeContent: View {
     @Environment(\.modelContext) private var modelContext
     /// 保存済みのアラーム設定。単一レコード運用のため先頭 1 件のみ使う
     @Query private var alarmSettings: [AlarmSetting]
@@ -13,13 +33,16 @@ struct ContentView: View {
     @Query private var stripAnswers: [MorningAnswer]
     /// 全期間の回答数 (答えた朝 N)。件数だけ必要なため fetchCount で取得して保持する
     @State private var answeredCount = 0
+    /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
+    /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
+    @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
 
-    /// 今日 (0 時基準)。@Query の predicate 構築と粒ストリップの日付展開の基準にする
-    private let today = Calendar.current.startOfDay(for: .now)
+    /// ホームの基準日 (今日の 0 時)。ContentView が日付跨ぎで更新する
+    let today: Date
 
     /// 今日・直近 14 日の predicate は初期化時にしか組めないため、明示的に init を定義する
-    init() {
-        let today = Calendar.current.startOfDay(for: .now)
+    init(today: Date) {
+        self.today = today
         var todayDescriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
         // 1 日 1 件のため 1 件だけ取得する
         todayDescriptor.fetchLimit = 1
@@ -33,34 +56,32 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                nextMorningSection
-                todayAnswerSection
-                Spacer()
-                footerSection
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color.ink.ignoresSafeArea())
-            .toolbar {
-                #if DEBUG
-                ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink {
-                        DebugMenuPage()
-                    } label: {
-                        Label {
-                            Text(verbatim: "Developer Menu")
-                        } icon: {
-                            Image(systemName: "hammer")
-                        }
+        VStack(spacing: 0) {
+            nextMorningSection
+            todayAnswerSection
+            Spacer()
+            footerSection
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color.ink.ignoresSafeArea())
+        .toolbar {
+            #if DEBUG
+            ToolbarItem(placement: .topBarLeading) {
+                NavigationLink {
+                    DebugMenuPage()
+                } label: {
+                    Label {
+                        Text(verbatim: "Developer Menu")
+                    } icon: {
+                        Image(systemName: "hammer")
                     }
-                    .accessibilityIdentifier("debug_menu_link")
                 }
-                #endif
+                .accessibilityIdentifier("debug_menu_link")
             }
-            .onAppear {
-                answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
-            }
+            #endif
+        }
+        .onAppear {
+            answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
     }
 
@@ -98,6 +119,16 @@ struct ContentView: View {
                 }
                 alarmToggle(alarmSetting: alarmSetting)
                     .padding(.top, 26)
+                if let lastRescheduleError, !lastRescheduleError.isEmpty {
+                    // エラーメッセージはそのまま表示する (加工しない)。エラーも低彩度で表現する (デザイントークン参照)
+                    Text(lastRescheduleError)
+                        .font(.system(size: 11))
+                        .foregroundStyle(Color.warmWhite.opacity(0.55))
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 12)
+                        .padding(.horizontal, 36)
+                        .accessibilityIdentifier("home_reschedule_error")
+                }
             } else {
                 NavigationLink {
                     AlarmSettingPage()
@@ -229,7 +260,8 @@ struct ContentView: View {
         .padding(.bottom, 24)
     }
 
-    /// アラームの有効/無効を切り替えて再スケジュールする
+    /// アラームの有効/無効を切り替えて再スケジュールする。
+    /// 再スケジュールの失敗は Rescheduler が lastRescheduleError へ書き込み、@AppStorage 経由でトグル下に表示される
     private func toggleAlarm(alarmSetting: AlarmSetting) {
         alarmSetting.setIsEnabled(isEnabled: !alarmSetting.isEnabled)
         do {
