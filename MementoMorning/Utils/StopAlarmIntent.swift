@@ -32,8 +32,8 @@ public struct StopAlarmIntent: LiveActivityIntent {
     }
 
     /// アラームを停止し、issue #2 のスパイク検証として追撃アラームを再登録する。
-    /// 「未回答なら追撃」の本実装は回答状態の判定が前提になるため、
-    /// ここでは常に追撃を登録して schedule() が background で通るかだけを検証する (上限 stopIntentChaseCountLimit 回)。
+    /// 「未回答なら追撃」の本実装は回答状態の判定 (朝の問い画面) が前提になるため、ここでは回答状態を見ずに追撃を登録する。
+    /// 追撃の可否は課金状態で決める (無料: freeTierSnoozeLimit 回まで / プレミアム: 無限追撃。issue #9)。
     /// 追撃の途中経過は appendStopIntentSpikeLog で逐次記録し、途中で kill されても直前までの痕跡が残るようにする
     public func perform() async throws -> some IntentResult {
         // applicationState は MainActor 経由でのみ読める。
@@ -54,8 +54,8 @@ public struct StopAlarmIntent: LiveActivityIntent {
         }
 
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
-        guard chaseCount < stopIntentChaseCountLimit else {
-            appendStopIntentSpikeLog(message: "chase skipped: count limit reached (\(chaseCount))")
+        guard shouldChase(chaseCount: chaseCount, isPremium: PremiumEntitlement.isPremium) else {
+            appendStopIntentSpikeLog(message: "chase skipped: free tier snooze limit reached (\(chaseCount))")
             return .result()
         }
         UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
