@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 /// 起動直後に表示するルート画面。今日の問いを表示する
 struct ContentView: View {
@@ -10,6 +11,7 @@ struct ContentView: View {
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
+                LifeCalendarPage()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -49,5 +51,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .modelContainer(PersistenceController.shared.container)
     }
 }

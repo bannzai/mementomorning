@@ -11,6 +11,16 @@
         }
       }
     },
+    "Answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答済み"
+          }
+        }
+      }
+    },
     "Answers older than 7 days unlock with Premium.": {
       "localizations": {
         "ja": {
@@ -47,6 +57,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "ジャーナル"
+          }
+        }
+      }
+    },
+    "Not answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未回答"
           }
         }
       }
