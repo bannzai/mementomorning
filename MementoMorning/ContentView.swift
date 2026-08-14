@@ -2,11 +2,21 @@ import SwiftUI
 import SwiftData
 
 /// 起動直後に表示するルート画面 (ホーム)。
-/// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる
+/// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる。
+/// 回答が 7 件に達したら、7 日の節目「七つの朝」(SevenMorningsPage) を一度だけ表示する
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     /// ホームの基準日 (今日の 0 時)。HomeContent のクエリ条件と粒ストリップの今日判定の基準になる
     @State private var today = Calendar.current.startOfDay(for: .now)
+
+    /// 7 日の節目の表示判定用。判定は件数 (7 件に達したか) だけを見るため、取得条件は SevenMorningsPage と共有する
+    @Query(sevenMorningsAnswersDescriptor) private var sevenMorningsAnswers: [MorningAnswer]
+
+    /// 7 日の節目を表示済みかどうか。初回インストール時は未表示のため false から始める
+    @AppStorage(.isSevenMorningsMilestonePresented) private var isSevenMorningsMilestonePresented = false
+
+    /// 7 日の節目画面を表示中かどうか
+    @State private var isSevenMorningsPagePresented = false
 
     var body: some View {
         NavigationStack {
@@ -18,8 +28,31 @@ struct ContentView: View {
             guard newValue == .active else { return }
             today = Calendar.current.startOfDay(for: .now)
         }
+        .sheet(isPresented: $isSevenMorningsPagePresented) {
+            SevenMorningsPage()
+        }
+        .onChange(of: sevenMorningsAnswers.count, initial: true) { _, _ in
+            presentSevenMorningsIfNeeded()
+        }
+        // 表示済みフラグのリセット (DEBUG の開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
+        .onChange(of: isSevenMorningsMilestonePresented) { _, _ in
+            presentSevenMorningsIfNeeded()
+        }
+    }
+
+    /// 回答が 7 件に達していて未表示なら、7 日の節目画面を表示する
+    private func presentSevenMorningsIfNeeded() {
+        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に節目画面の表示とフラグの書き込みが走らないようここで打ち切る
+        if isUnitTest { return }
+        if shouldPresentSevenMorningsMilestone(
+            answerCount: sevenMorningsAnswers.count,
+            isPresented: isSevenMorningsMilestonePresented
+        ) {
+            isSevenMorningsPagePresented = true
+        }
     }
 }
+
 
 /// ホーム画面本体 (デザイン handoff 1e / プロトタイプ home 準拠)。
 /// 次の朝のアラーム時刻を中心に、今朝のことば・直近 14 日の粒ストリップ・各画面へのテキストリンクを置く
