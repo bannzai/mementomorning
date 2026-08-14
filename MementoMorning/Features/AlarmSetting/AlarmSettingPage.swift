@@ -17,6 +17,8 @@ struct AlarmSettingPage: View {
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
+    /// issue #2 スパイク検証の痕跡ログ。StopAlarmIntent.perform() が書き込む
+    @AppStorage(.stopIntentSpikeLog) private var stopIntentSpikeLog: String?
     /// 保存処理 (再スケジュール完了待ち) の実行中かどうか。
     /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
     /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
@@ -32,6 +34,23 @@ struct AlarmSettingPage: View {
                 // エラーメッセージはそのまま表示する (加工しない)
                 Text(lastRescheduleError)
                     .foregroundStyle(.red)
+            }
+            // issue #2 スパイク検証の結果を実機上で Mac なしに読むための一時セクション。
+            // 検証専用 UI のためローカライズ対象にしない (verbatim)。検証完了後にセクションごと削除する
+            if let stopIntentSpikeLog, !stopIntentSpikeLog.isEmpty {
+                Section {
+                    Text(verbatim: stopIntentSpikeLog)
+                        .font(.caption.monospaced())
+                        .textSelection(.enabled)
+                    Button(role: .destructive) {
+                        self.stopIntentSpikeLog = nil
+                        UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+                    } label: {
+                        Text(verbatim: "Clear Spike Log")
+                    }
+                } header: {
+                    Text(verbatim: "stopIntent Spike Log (issue #2)")
+                }
             }
         }
         // ja: アラーム
