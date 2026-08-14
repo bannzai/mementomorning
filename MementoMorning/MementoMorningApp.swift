@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 import UserNotifications
 
 /// Memento Morning アプリのエントリポイント
@@ -35,10 +36,28 @@ struct MementoMorningApp: App {
                 }
             case .background:
                 // アプリ内で今日の回答が作られた直後の状態を夜リマインドへ反映するため、離脱時にも登録し直す
-                Task { await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText()) }
+                scheduleNightReminderWithBackgroundTaskAssertion()
             default:
                 break
             }
+        }
+    }
+
+    /// バックグラウンド遷移後に夜リマインドを登録し直す。
+    /// 通常の Task はバックグラウンドで実行時間の保証がなく、認可状態の確認と通知の登録が終わる前にプロセスが停止し得るため、
+    /// background task assertion で完了までの実行時間を確保する
+    @MainActor private func scheduleNightReminderWithBackgroundTaskAssertion() {
+        var backgroundTaskIdentifier: UIBackgroundTaskIdentifier = .invalid
+        backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(withName: "night-reminder-schedule") {
+            UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
+            backgroundTaskIdentifier = .invalid
+        }
+        Task {
+            await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText())
+            // 期限切れの expirationHandler が先に終了させている場合があるため、二重に終了させないよう .invalid を見てから終了する
+            guard backgroundTaskIdentifier != .invalid else { return }
+            UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
+            backgroundTaskIdentifier = .invalid
         }
     }
 

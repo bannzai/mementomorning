@@ -3,7 +3,7 @@ import UserNotifications
 
 /// 夜リマインド (「守れてますか?」) のスケジュール。朝の回答と答え合わせしてループを閉じるリテンション装置
 enum NightReminder {
-    /// 夜リマインドの識別子の接頭辞。日付を後置した one-shot 通知を日数分登録し、登録し直す時はこの接頭辞で保留中の通知をまとめて掃除する
+    /// 夜リマインドの識別子の接頭辞。日付を後置した one-shot 通知を日数分登録し、登録し直した後にこの接頭辞で残った古い通知を掃除する
     /// (繰り返し通知 1 本だった頃の識別子 "night-reminder" もこの接頭辞に一致するため、同じ掃除で削除される)
     static let requestIdentifierPrefix = "night-reminder"
     /// 通知タップのルーティングに使う識別子。request identifier ではなくこちらで判定することで、simctl push で流し込んだ通知でも同じ経路を再現できる
@@ -86,7 +86,8 @@ enum NightReminder {
 
     /// 通知の認可をリクエストし、許可されていれば夜リマインドを登録し直す
     ///
-    /// 接頭辞に一致する保留中の通知を削除してから登録し直すため、何度呼んでも保留中の夜リマインドは scheduledDayCount 日分に保たれる。
+    /// 先に全件を登録し (同一識別子の add は保留中の既存リクエストを置換する)、全件の登録に成功してから今回登録しなかった古い分だけを削除する。
+    /// この順序により、途中で登録に失敗しても既存のスケジュールが残る (先に削除すると失敗時に夜リマインドが 1 本も無い状態になる)。
     /// 主機能である AlarmKit のスケジュールを妨げないよう、UserNotifications 側のエラーは throw せず関数内で捕捉する
     static func requestAuthorizationAndSchedule(todayAnswerText: String?) async {
         let center = UNUserNotificationCenter.current()
@@ -102,15 +103,18 @@ enum NightReminder {
             default:
                 break
             }
-            // 繰り返し通知 1 本だった頃の "night-reminder" もこの接頭辞で一緒に掃除される。デバッグ用は "debug-night-reminder" と別の名前空間にしてあるため巻き込まれない
-            center.removePendingNotificationRequests(
-                withIdentifiers: await center.pendingNotificationRequests()
-                    .map(\.identifier)
-                    .filter { $0.hasPrefix(requestIdentifierPrefix) }
-            )
-            for request in makeRequests(todayAnswerText: todayAnswerText, now: .now, calendar: .current) {
+            // 掃除の対象は登録前の保留分に限るため、add より先に控えておく。
+            // 繰り返し通知 1 本だった頃の "night-reminder" もこの接頭辞に一致するため一緒に掃除される。デバッグ用は "debug-night-reminder" と別の名前空間にしてあるため巻き込まれない
+            let existingIdentifiers = await center.pendingNotificationRequests()
+                .map(\.identifier)
+                .filter { $0.hasPrefix(requestIdentifierPrefix) }
+            let requests = makeRequests(todayAnswerText: todayAnswerText, now: .now, calendar: .current)
+            for request in requests {
                 try await center.add(request)
             }
+            center.removePendingNotificationRequests(
+                withIdentifiers: Array(Set(existingIdentifiers).subtracting(requests.map(\.identifier)))
+            )
         } catch {
             print("[NightReminder] failed to schedule night reminder: \(error)")
         }
