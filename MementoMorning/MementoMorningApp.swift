@@ -11,6 +11,8 @@ struct MementoMorningApp: App {
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
+        // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する
+        PremiumEntitlement.configureIfPossible()
     }
 
     var body: some Scene {
@@ -46,6 +48,10 @@ private struct RootView: View {
                 // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
                 if isUnitTest { return }
                 await NightReminder.requestAuthorizationAndSchedule()
+            }
+            .task {
+                // 購入・復元・期限切れを課金判定キャッシュへ反映し続ける (未 configure なら即 return する)
+                await PremiumEntitlement.observeCustomerInfo()
             }
     }
 }

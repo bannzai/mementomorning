@@ -14,12 +14,19 @@ settings:
     TARGETED_DEVICE_FAMILY: "1,2"
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: "1.0"
+packages:
+  # 課金 (issue #9)。purchases-ios ではなくバイナリ配布の purchases-ios-spm を使う (ビルド時間短縮。nikki と同じ選定)
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios-spm
+    from: 5.83.1
 targets:
   MementoMorning:
     type: application
     platform: iOS
     sources:
       - MementoMorning
+    dependencies:
+      - package: RevenueCat
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning
