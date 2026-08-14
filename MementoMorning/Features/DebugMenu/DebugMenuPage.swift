@@ -51,6 +51,23 @@ struct DebugMenuPage: View {
                 }
                 .accessibilityIdentifier("debug_reset_seven_mornings_milestone")
             }
+            // デザインシェル (機能配線前の画面) の描画確認用の導線。
+            // 朝の問いはアラーム停止 (#4)、ペイウォールはジャーナルのロック行からも開ける
+            Section {
+                NavigationLink {
+                    QuestionPage()
+                } label: {
+                    Text(verbatim: "Open QuestionPage (design shell)")
+                }
+                .accessibilityIdentifier("debug_open_question_page")
+
+                NavigationLink {
+                    PaywallPage()
+                } label: {
+                    Text(verbatim: "Open PaywallPage (design shell)")
+                }
+                .accessibilityIdentifier("debug_open_paywall_page")
+            }
             Section {
                 Button {
                     seedTodayAnswer()
