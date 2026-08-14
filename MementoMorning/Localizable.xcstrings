@@ -230,6 +230,26 @@
           }
         }
       }
+    },
+    "Seven Mornings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "七つの朝"
+          }
+        }
+      }
+    },
+    "Seven answers, together on one page for the first time.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "七日分の答えが、はじめて一枚に並びました"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
