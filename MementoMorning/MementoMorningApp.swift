@@ -40,6 +40,16 @@ private struct RootView: View {
     /// 通知の認可リクエストもオンボーディング側の許可ステップに委ねる (起動直後にダイアログを出さない)
     @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
 
+    /// フラグ導入前のバージョンから更新した既存インストールの移行。
+    /// キーが一度も書き込まれていない (nil) 場合に限り、アラーム設定済みなら完了扱いにしてオンボーディングへ戻さない。
+    /// デバッグメニューのリセットは false を明示的に書き込むため、この移行の対象にならない
+    init() {
+        guard UserDefaults.standard.object(forKey: .hasCompletedOnboarding) == nil else { return }
+        if ((try? PersistenceController.shared.container.mainContext.fetchCount(FetchDescriptor<AlarmSetting>())) ?? 0) > 0 {
+            UserDefaults.standard.set(true, forKey: .hasCompletedOnboarding)
+        }
+    }
+
     var body: some View {
         ZStack {
             if hasCompletedOnboarding {

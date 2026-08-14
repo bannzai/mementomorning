@@ -262,10 +262,13 @@ struct OnboardingPage: View {
             .frame(maxWidth: .infinity)
             .padding(.top, 20)
             if let saveError {
-                // エラーメッセージはそのまま表示する (加工しない)。低彩度の世界観に合わせて赤は使わない
+                // エラーメッセージはそのまま表示する (加工しない)。低彩度の世界観に合わせて赤は使わない。
+                // 全アラームの登録に失敗すると同種のエラーが件数分 (最大 30 件) 改行結合されるため、
+                // 行数を制限して下の「設定を開く」ボタンが画面外へ押し出されないようにする
                 Text(saveError)
                     .font(.system(size: 12))
                     .foregroundStyle(dawnColor)
+                    .lineLimit(4)
                     .padding(.top, 14)
                 if alarmAuthorizationState == .denied {
                     Button {
@@ -295,6 +298,17 @@ struct OnboardingPage: View {
         .padding(.horizontal, 36)
         .padding(.bottom, 48)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .onAppear {
+            // 既にアラーム設定がある場合 (デバッグメニューのリセット等でオンボーディングを再走した場合) は、
+            // 既定値 7:00 で既存の設定時刻を上書きしないよう DatePicker の初期値を復元する
+            guard let alarmSetting = alarmSettings.first else { return }
+            var components = Calendar.autoupdatingCurrent.dateComponents([.year, .month, .day], from: .now)
+            components.hour = alarmSetting.hour
+            components.minute = alarmSetting.minute
+            if let date = Calendar.autoupdatingCurrent.date(from: components) {
+                time = date
+            }
+        }
     }
 
     /// 許可 1 件分の説明行。isGranted は許可済みバッジの表示に使う
