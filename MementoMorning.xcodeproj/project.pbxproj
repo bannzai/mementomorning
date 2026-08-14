@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
+		158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */; };
+		15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */; };
+		2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */; };
+		2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */; };
 		3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFC6A063A59543493172A5 /* Assets.xcassets */; };
 		3EA4343A913B1E57883C9C28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715457F9DCAEABC482EBEB8B /* ContentView.swift */; };
 		5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
 		6AB81DA79C2FB33A8BFBA4BB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */; };
 		761AE3021FFE67D48666BC4D /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
+		7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784F14F17E87134C2E8E59A /* Rescheduler.swift */; };
+		8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */; };
 		B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */; };
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
 		C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */; };
+		E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */; };
+		F328E0FA68BE491644057169 /* StopAlarmIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AAFD27A7F0CB620CBDB0A9 /* StopAlarmIntent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,26 +37,37 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12AAFD27A7F0CB620CBDB0A9 /* StopAlarmIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopAlarmIntent.swift; sourceTree = "<group>"; };
 		1AFFC6A063A59543493172A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPage.swift; sourceTree = "<group>"; };
+		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
 		715457F9DCAEABC482EBEB8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmKitManager.swift; sourceTree = "<group>"; };
+		8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngineTests.swift; sourceTree = "<group>"; };
 		8CD092B0CB02A35B27E659C0 /* MementoMorning.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MementoMorning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningApp.swift; sourceTree = "<group>"; };
 		9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSetting.swift; sourceTree = "<group>"; };
 		BD8A21C991EBF5E6F4360D79 /* MementoMorningTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MementoMorningTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswerTests.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
+		D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningAlarmMetadata.swift; sourceTree = "<group>"; };
+		D784F14F17E87134C2E8E59A /* Rescheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rescheduler.swift; sourceTree = "<group>"; };
 		F7B64203A853C06733EA5259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledAlarm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		230FCEEEF98E50E9707380B4 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */,
 				4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */,
 				9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */,
+				FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -64,17 +84,38 @@
 		2F30E2ECD62118F211A0B324 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */,
 				49B6C81E23F07A6153886744 /* Environments.swift */,
+				D784F14F17E87134C2E8E59A /* Rescheduler.swift */,
+				12AAFD27A7F0CB620CBDB0A9 /* StopAlarmIntent.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		2F9CAE3D5D8C5F2ACCAEA8DE /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				55B3D0486D3AB4787BCD5F25 /* AlarmSetting */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 		3295A11A6D2B5CEF3370B616 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */,
+				D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */,
 				230FCEEEF98E50E9707380B4 /* Entity */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		55B3D0486D3AB4787BCD5F25 /* AlarmSetting */ = {
+			isa = PBXGroup;
+			children = (
+				1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */,
+			);
+			path = AlarmSetting;
 			sourceTree = "<group>";
 		};
 		751D7CA08C8D341C408CB57E = {
@@ -95,6 +136,7 @@
 				F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */,
 				D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */,
 				92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */,
+				2F9CAE3D5D8C5F2ACCAEA8DE /* Features */,
 				3295A11A6D2B5CEF3370B616 /* Shared */,
 				2F30E2ECD62118F211A0B324 /* Utils */,
 			);
@@ -104,6 +146,7 @@
 		D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */ = {
 			isa = PBXGroup;
 			children = (
+				8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */,
 				C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */,
 			);
 			path = MementoMorningTests;
@@ -205,11 +248,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */,
+				2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */,
+				E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */,
+				090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */,
 				3EA4343A913B1E57883C9C28 /* ContentView.swift in Sources */,
 				761AE3021FFE67D48666BC4D /* Environments.swift in Sources */,
+				2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */,
 				C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */,
 				5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */,
 				B40935A41746441DA44580C1 /* Persistence.swift in Sources */,
+				7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */,
+				15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */,
+				F328E0FA68BE491644057169 /* StopAlarmIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */,
 				B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

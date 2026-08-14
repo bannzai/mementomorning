@@ -28,6 +28,7 @@ paths:
 4. **再スケジュールはリアクティブにせず手続的に明示呼び出しする。** 状態変化検知の自動実行は不意の解除・登録がアンコントローラブルになるため避ける
 5. **UserNotifications（夜リマインド等）と併用する場合、主（AlarmKit）のスケジュールを妨げないよう相手側のエラーは隔離する**
 6. **stopIntent の perform() 内からの `schedule()` が background でも通るかは実機未検証。** 実装着手時の最初の検証項目とし、検証結果をこのルールに追記する
+   - **検証結果 (2026-08-13、issue #3、シミュレータ)**: stopIntent の perform() 自体がシミュレータ上で一度も実行されなかったため、background 云々を検証する以前の段階でブロックされた。アラーム発火中に停止操作 (スワイプ/タップ) を行うと、unified log に `Could not find an intent with identifier StopAlarmIntent, mangledTypeName: ...` が出て型解決に失敗し、perform() は未実行・openAppWhenRun によるアプリ前面化も発生しない。`struct` を `public` にする既知の workaround (Apple Developer Forums: https://developer.apple.com/forums/thread/746696 ) を適用しても解消せず、debug dylib 分離の有無 (`ENABLE_DEBUG_DYLIB`) やアプリの完全アンインストール→クリーン再インストールでも解消しなかった (計 6 パターンで再現)。Widget Extension を追加すれば解決する可能性があるが未検証 (参考: bannzai/Alarmy は `AlarmyWidget` という Widget Extension を持ち、そのコメントに「AlarmMetadata 型は両ターゲット必須」とある)。実機でも同じ現象が起きるかは未検証。stopIntent の実装自体 (LiveActivityIntent 準拠 + openAppWhenRun = true) は完了しているが、実行経路の検証は issue #2 (stopIntent の perform() 内 schedule() が background で通るか実機検証) に引き継ぐ
 
 ## UserNotifications（夜リマインド用）の制約（事実）
 

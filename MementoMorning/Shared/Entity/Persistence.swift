@@ -7,6 +7,8 @@ struct PersistenceController {
     /// アプリで使用する全ての永続化モデルタイプ。新しいモデルを追加する際はここに追加する
     static let types: [any PersistentModel.Type] = [
         MorningAnswer.self,
+        AlarmSetting.self,
+        ScheduledAlarm.self,
     ]
 
     /// 全モデルから構築したスキーマ
