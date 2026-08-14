@@ -31,10 +31,11 @@ public struct StopAlarmIntent: LiveActivityIntent {
         self.alarmID = alarmID.uuidString
     }
 
-    /// アラームを停止し、issue #2 のスパイク検証として追撃アラームを再登録する。
-    /// 「未回答なら追撃」の本実装は回答状態の判定が前提になるため、
-    /// ここでは常に追撃を登録して schedule() が background で通るかだけを検証する (上限 stopIntentChaseCountLimit 回)。
-    /// 追撃の途中経過は appendStopIntentSpikeLog で逐次記録し、途中で kill されても直前までの痕跡が残るようにする
+    /// アラームを停止し、未回答なら追撃アラームを再登録する (「答えるまで止まらない」の中核)。
+    /// 回答完了の判定は「今日の MorningAnswer が成立しているか」だけに依存し、回答手段 (テキスト / 動画) に依存しない。
+    /// フル再スケジュールは行わず追撃 1 本の登録に留める (intent の実行時間予算の中で最小限にする。
+    /// 全体の計画は openAppWhenRun による foreground 復帰時の reschedule が担う)。
+    /// 途中経過は appendStopIntentSpikeLog で逐次記録し、途中で kill されても直前までの痕跡が残るようにする
     public func perform() async throws -> some IntentResult {
         // applicationState は MainActor 経由でのみ読める。
         // schedule() 実行時点で background だったかを判定する材料として最初に記録する
@@ -53,17 +54,21 @@ public struct StopAlarmIntent: LiveActivityIntent {
             appendStopIntentSpikeLog(message: "stop(id:) skipped: invalid alarmID=\(alarmID)")
         }
 
-        let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
-        guard chaseCount < stopIntentChaseCountLimit else {
-            appendStopIntentSpikeLog(message: "chase skipped: count limit reached (\(chaseCount))")
+        // 停止操作が届いた = アラームは発火済み。朝の問いの提示判定と追撃計画の起点として記録する
+        recordAlarmFired(date: .now)
+
+        let todayAnswered = await MainActor.run {
+            fetchMorningAnswer(answeredDate: .now, modelContext: PersistenceController.shared.container.mainContext) != nil
+        }
+        guard !todayAnswered else {
+            appendStopIntentSpikeLog(message: "chase skipped: today already answered")
             return .result()
         }
-        UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
 
-        // 追撃アラームは ScheduledAlarm へ記録しない (スパイクのため最小限にする)。
+        // 追撃アラームは ScheduledAlarm へ記録しない (intent 内での SwiftData 書き込みを避けて最小限にする)。
         // 記録が無くても次回 foreground の reschedule が cancelAll で OS 側から列挙して消すため残留しない
         let chaseAlarmID = UUID()
-        let chaseFireDate = Date.now.addingTimeInterval(stopIntentChaseInterval)
+        let chaseFireDate = Date.now.addingTimeInterval(TimeInterval(chaseAlarmIntervalMinutes * 60))
         appendStopIntentSpikeLog(message: "schedule() attempting chase id=\(chaseAlarmID) fireDate=\(chaseFireDate.formatted(.iso8601))")
         do {
             // ja: 今日死ぬとしたら、何をやりたいか

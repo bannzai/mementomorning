@@ -33,3 +33,12 @@ final class MorningAnswer {
         self.updatedDateTime = .now
     }
 }
+
+/// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
+@MainActor
+func fetchMorningAnswer(answeredDate: Date, modelContext: ModelContext, calendar: Calendar = .current) -> MorningAnswer? {
+    let day = calendar.startOfDay(for: answeredDate)
+    var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == day })
+    descriptor.fetchLimit = 1
+    return try? modelContext.fetch(descriptor).first
+}

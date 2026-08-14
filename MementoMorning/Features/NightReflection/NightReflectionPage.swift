@@ -84,16 +84,8 @@ struct NightReflectionPage: View {
         }
         .padding(.horizontal, 24)
         .onAppear {
-            answer = notificationDayAnswer()
+            answer = fetchMorningAnswer(answeredDate: notificationDate, modelContext: modelContext)
         }
-    }
-
-    /// 通知が配信された日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
-    private func notificationDayAnswer() -> MorningAnswer? {
-        let notificationDay = Calendar.current.startOfDay(for: notificationDate)
-        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == notificationDay })
-        descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
     }
 
     /// 夜の振り返りを記録して画面を閉じる。保存に失敗した時は記録できたと誤解させないよう閉じずにエラーを表示する

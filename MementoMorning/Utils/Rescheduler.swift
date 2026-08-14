@@ -61,7 +61,25 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     }
 
     let existing = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
-    let planned = planAlarms(now: now, alarmSetting: alarmSetting)
+
+    // 発火予定日時が過ぎた記録があれば、そのアラームは発火した (またはスワイプ消去された) とみなして発火日時を記録する。
+    // stopIntent の perform() が実行されない環境 (issue #3 のシミュレータ実測) やスワイプ消去でも、
+    // foreground 復帰時にここで発火を検知して朝の問いの提示・追撃の計画へ繋げる
+    if let firedDate = existing.map(\.fireDate).filter({ $0 <= now }).max() {
+        recordAlarmFired(date: firedDate)
+    }
+
+    // 回答済みの日はアラームを鳴らさない。今日より先の日はまだ回答できないため今日の回答だけ調べれば足りる
+    let answeredDates: Set<Date> = fetchMorningAnswer(answeredDate: now, modelContext: modelContext) != nil
+        ? [Calendar.current.startOfDay(for: now)]
+        : []
+
+    let planned = planAlarms(
+        now: now,
+        alarmSetting: alarmSetting,
+        answeredDates: answeredDates,
+        alarmFiredDate: lastAlarmFiredDate()
+    )
 
     do {
         try AlarmKitManager.cancelAll()
