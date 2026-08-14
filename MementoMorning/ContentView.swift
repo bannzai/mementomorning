@@ -14,6 +14,13 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
+                        AlarmSettingPage()
+                    } label: {
+                        Image(systemName: "alarm")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
                         AnswerLogPage()
                     } label: {
                         // ja: ジャーナル

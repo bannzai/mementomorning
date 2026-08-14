@@ -1,56 +1,136 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "Answers older than 7 days unlock with Premium." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "8 日以上前の回答はプレミアムで解放されます"
+  "sourceLanguage": "en",
+  "strings": {
+    "Alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラーム"
           }
         }
       }
     },
-    "If today were your last day, what would you want to do?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日死ぬとしたら、何をやりたいか"
+    "Answers older than 7 days unlock with Premium.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 日以上前の回答はプレミアムで解放されます"
           }
         }
       }
     },
-    "Journal" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ジャーナル"
+    "Failed to save": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存に失敗しました"
           }
         }
       }
     },
-    "Share" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "共有"
+    "If today were your last day, what would you want to do?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日死ぬとしたら、何をやりたいか"
           }
         }
       }
     },
-    "Your answers will gather here, one morning at a time." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "回答は、ひと朝ずつここに集まっていきます"
+    "Journal": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ジャーナル"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "共有"
+          }
+        }
+      }
+    },
+    "Stop": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "止める"
+          }
+        }
+      }
+    },
+    "Stop Alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームを止める"
+          }
+        }
+      }
+    },
+    "Stop the alarm and open Memento Morning": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームを停止して Memento Morning を開きます"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時刻"
+          }
+        }
+      }
+    },
+    "Your answers will gather here, one morning at a time.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答は、ひと朝ずつここに集まっていきます"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }
