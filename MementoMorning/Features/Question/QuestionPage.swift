@@ -131,37 +131,43 @@ struct QuestionPage: View {
             )
             .accessibilityIdentifier("question_record_button")
 
-            if isRecording {
+            // 状態の切り替えでこの領域の高さが変わると録画ボタンの位置が跳ねるため、
+            // 両状態を重ねて不透明度で切り替え、高さを常に維持する (遷移はフェードのみ)
+            ZStack {
+                VStack(spacing: 18) {
+                    VStack(spacing: 4) {
+                        // ja: 話して、答える
+                        Text("Speak your answer")
+                            .font(.system(size: 13))
+                            .tracking(1.3)
+                            .foregroundStyle(Color.warmWhite.opacity(0.85))
+                        Text(verbatim: "SPEAK YOUR ANSWER")
+                            .font(.system(size: 10))
+                            .tracking(0.8)
+                            .foregroundStyle(Color.warmWhite.opacity(0.4))
+                    }
+                    // ja: キーボードで答える
+                    Text("Answer with the keyboard")
+                        .font(.system(size: 12))
+                        .tracking(0.96)
+                        .foregroundStyle(Color.warmWhite.opacity(0.45))
+                        .overlay(alignment: .bottom) {
+                            Rectangle()
+                                .fill(Color.warmWhite.opacity(0.2))
+                                .frame(height: 1)
+                                .offset(y: 2)
+                        }
+                        // タップでの文字起こし確認 (キーボード入力) への遷移は issue #4 / #25 で配線する
+                }
+                .opacity(isRecording ? 0 : 1)
                 // ja: 止めると、アラームも止まります
                 Text("Stop, and the alarm stops too.")
                     .font(.system(size: 12))
                     .tracking(1.44)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
-            } else {
-                VStack(spacing: 4) {
-                    // ja: 話して、答える
-                    Text("Speak your answer")
-                        .font(.system(size: 13))
-                        .tracking(1.3)
-                        .foregroundStyle(Color.warmWhite.opacity(0.85))
-                    Text(verbatim: "SPEAK YOUR ANSWER")
-                        .font(.system(size: 10))
-                        .tracking(0.8)
-                        .foregroundStyle(Color.warmWhite.opacity(0.4))
-                }
-                // ja: キーボードで答える
-                Text("Answer with the keyboard")
-                    .font(.system(size: 12))
-                    .tracking(0.96)
-                    .foregroundStyle(Color.warmWhite.opacity(0.45))
-                    .overlay(alignment: .bottom) {
-                        Rectangle()
-                            .fill(Color.warmWhite.opacity(0.2))
-                            .frame(height: 1)
-                            .offset(y: 2)
-                    }
-                    // タップでの文字起こし確認 (キーボード入力) への遷移は issue #4 / #25 で配線する
+                    .opacity(isRecording ? 1 : 0)
             }
+            .animation(.easeInOut(duration: 0.35), value: isRecording)
         }
     }
 

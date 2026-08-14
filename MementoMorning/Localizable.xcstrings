@@ -540,6 +540,16 @@
           }
         }
       }
+    },
+    "Alarm is off · Tap the time to change": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームはオフ · 時刻をタップして変更"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

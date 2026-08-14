@@ -102,17 +102,26 @@ private struct HomeContent: View {
                         .foregroundStyle(Color.warmWhite)
                 }
                 .buttonStyle(.plain)
-                TimelineView(.everyMinute) { context in
-                    let remainingMinutes = Int(
-                        nextOccurrence(
-                            hour: alarmSetting.hour,
-                            minute: alarmSetting.minute,
-                            now: context.date,
-                            calendar: .current
-                        ).timeIntervalSince(context.date) / 60
-                    )
-                    // ja: あと %lld 時間 %lld 分 · 時刻をタップして変更
-                    Text("In \(remainingMinutes / 60) hr \(remainingMinutes % 60) min · Tap the time to change")
+                if alarmSetting.isEnabled {
+                    TimelineView(.everyMinute) { context in
+                        let remainingMinutes = Int(
+                            nextOccurrence(
+                                hour: alarmSetting.hour,
+                                minute: alarmSetting.minute,
+                                now: context.date,
+                                calendar: .current
+                            ).timeIntervalSince(context.date) / 60
+                        )
+                        // ja: あと %lld 時間 %lld 分 · 時刻をタップして変更
+                        Text("In \(remainingMinutes / 60) hr \(remainingMinutes % 60) min · Tap the time to change")
+                            .font(.system(size: 12))
+                            .tracking(0.96)
+                            .foregroundStyle(Color.warmWhite.opacity(0.4))
+                    }
+                } else {
+                    // OFF 中はアラームが 1 件もスケジュールされないため、発火予定があるかのようなカウントダウンは出さない
+                    // ja: アラームはオフ · 時刻をタップして変更
+                    Text("Alarm is off · Tap the time to change")
                         .font(.system(size: 12))
                         .tracking(0.96)
                         .foregroundStyle(Color.warmWhite.opacity(0.4))
@@ -187,16 +196,28 @@ private struct HomeContent: View {
                     .font(.system(size: 10))
                     .tracking(2.2)
                     .foregroundStyle(Color.dawn)
-                Text(todayAnswer.text)
-                    .font(.system(size: 17, weight: .light))
-                    .tracking(0.68)
-                    .foregroundStyle(Color.warmWhite)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 36)
+                // 回答は長さ制限のない自由入力のため、そのままでは収まらない長文だけ
+                // 残り高さの範囲でスクロールして全文を読めるようにする
+                ViewThatFits(in: .vertical) {
+                    todayAnswerText(todayAnswer: todayAnswer)
+                    ScrollView {
+                        todayAnswerText(todayAnswer: todayAnswer)
+                    }
+                }
             }
             .padding(.top, 56)
             .accessibilityIdentifier("home_today_answer")
         }
+    }
+
+    /// 今朝のことばの回答本文
+    private func todayAnswerText(todayAnswer: MorningAnswer) -> some View {
+        Text(todayAnswer.text)
+            .font(.system(size: 17, weight: .light))
+            .tracking(0.68)
+            .foregroundStyle(Color.warmWhite)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 36)
     }
 
     /// 直近 14 日の粒ストリップ + 答えた朝 N + テキストリンク行
