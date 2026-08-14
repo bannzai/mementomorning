@@ -154,6 +154,17 @@ struct PaywallPage: View {
                 .buttonStyle(SecondaryPillButtonStyle())
                 .disabled(isPurchasing)
                 .accessibilityIdentifier("paywall_monthly_button")
+
+                Button {
+                    Task { await purchase(package: offering?.lifetime) }
+                } label: {
+                    // ja: 一生 %@ (一度だけ)
+                    Text("\(lifetimePriceText) for life (one-time)")
+                        .font(.system(size: 14))
+                }
+                .buttonStyle(SecondaryPillButtonStyle())
+                .disabled(isPurchasing)
+                .accessibilityIdentifier("paywall_lifetime_button")
             }
 
             Button {
@@ -199,22 +210,27 @@ struct PaywallPage: View {
         .padding(.bottom, 24)
     }
 
-    /// 年額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格を見本表示する
+    /// 年額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥6,000/年) を見本表示する
     private var annualPriceText: String {
-        offering?.annual?.storeProduct.localizedPriceString ?? "¥3,600"
+        offering?.annual?.storeProduct.localizedPriceString ?? "¥6,000"
     }
 
     /// 年額プランのひと月あたり換算の表示価格。ストア価格を 12 (ヶ月) で割り、商品の通貨フォーマッタで整形する。
-    /// offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格 (¥3,600 / 12ヶ月 = ¥300) を見本表示する
+    /// offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥6,000 / 12ヶ月 = ¥500) を見本表示する
     private var annualPerMonthPriceText: String {
-        guard let storeProduct = offering?.annual?.storeProduct else { return "¥300" }
+        guard let storeProduct = offering?.annual?.storeProduct else { return "¥500" }
         return storeProduct.priceFormatter?.string(from: storeProduct.price / 12 as NSDecimalNumber)
             ?? storeProduct.localizedPriceString
     }
 
-    /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md の目安価格を見本表示する
+    /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥800/月) を見本表示する
     private var monthlyPriceText: String {
-        offering?.monthly?.storeProduct.localizedPriceString ?? "¥480"
+        offering?.monthly?.storeProduct.localizedPriceString ?? "¥800"
+    }
+
+    /// 一生プランの表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥9,800) を見本表示する
+    private var lifetimePriceText: String {
+        offering?.lifetime?.storeProduct.localizedPriceString ?? "¥9,800"
     }
 
     /// offering を読み込む。未 configure (#15 前) では何もしない (見本価格の表示に倒す)。

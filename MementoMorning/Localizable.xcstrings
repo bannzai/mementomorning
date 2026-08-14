@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@ for life (one-time)": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一生 %@ (一度だけ)"
+          }
+        }
+      }
+    },
     "%lld mornings answered": {
       "localizations": {
         "ja": {
