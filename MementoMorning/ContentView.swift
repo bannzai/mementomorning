@@ -19,6 +19,28 @@ struct ContentView: View {
                         Image(systemName: "alarm")
                     }
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        AnswerLogPage()
+                    } label: {
+                        // ja: ジャーナル
+                        Label("Journal", systemImage: "book.closed")
+                    }
+                }
+                #if DEBUG
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink {
+                        DebugMenuPage()
+                    } label: {
+                        Label {
+                            Text(verbatim: "Developer Menu")
+                        } icon: {
+                            Image(systemName: "hammer")
+                        }
+                    }
+                    .accessibilityIdentifier("debug_menu_link")
+                }
+                #endif
             }
         }
     }

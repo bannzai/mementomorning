@@ -6,3 +6,5 @@ DerivedData/
 tmp/
 .claude/settings.local.json
 .envrc
+# simtunnel mcp-config が worktree ごとに書き込む接続設定 (セッション固有のためコミットしない)
+.mcp.json
