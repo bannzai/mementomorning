@@ -21,6 +21,14 @@ final class MorningAnswer {
         self.text = text
     }
 
+    /// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
+    static func answer(day: Date, calendar: Calendar, modelContext: ModelContext) -> MorningAnswer? {
+        let startOfDay = calendar.startOfDay(for: day)
+        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == startOfDay })
+        descriptor.fetchLimit = 1
+        return try? modelContext.fetch(descriptor).first
+    }
+
     /// text を更新する
     func setText(text: String) {
         self.text = text

@@ -24,16 +24,35 @@ struct MementoMorningApp: App {
             // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
             // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
             if isUnitTest { return }
-            guard newValue == .active else { return }
-            // ユーザーがアプリを開けた (openAppWhenRun の成功または手動起動) なら追撃ループから抜けられているため、
-            // issue #2 スパイクの連続追撃カウントをリセットする
-            UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
-            Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
+            switch newValue {
+            case .active:
+                // ユーザーがアプリを開けた (openAppWhenRun の成功または手動起動) なら追撃ループから抜けられているため、
+                // issue #2 スパイクの連続追撃カウントをリセットする
+                UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+                Task {
+                    await reschedule(modelContext: PersistenceController.shared.container.mainContext)
+                    await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText())
+                }
+            case .background:
+                // アプリ内で今日の回答が作られた直後の状態を夜リマインドへ反映するため、離脱時にも登録し直す
+                Task { await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText()) }
+            default:
+                break
+            }
         }
+    }
+
+    /// 夜リマインドの本文に引用する、今日の回答の本文。未回答なら nil
+    @MainActor private func todayAnswerText() -> String? {
+        MorningAnswer.answer(
+            day: .now,
+            calendar: .current,
+            modelContext: PersistenceController.shared.container.mainContext
+        )?.text
     }
 }
 
-/// ルート画面。通知から開く画面の提示と、夜リマインドの登録を担う
+/// ルート画面。通知から開く画面の提示を担う
 private struct RootView: View {
     @Bindable private var notificationRouter = NotificationRouter.shared
 
@@ -41,11 +60,6 @@ private struct RootView: View {
         ContentView()
             .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
                 NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
-            }
-            .task {
-                // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
-                if isUnitTest { return }
-                await NightReminder.requestAuthorizationAndSchedule()
             }
     }
 }

@@ -230,6 +230,16 @@
           }
         }
       }
+    },
+    "This morning you said '%@'": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のあなた『%@』"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

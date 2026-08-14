@@ -6,8 +6,8 @@ import UserNotifications
 /// 開発者メニュー。動作確認・E2E テストで到達困難な状態を作るための DEBUG 限定ページ
 /// (.claude/rules/debug-menu-for-verification.md 参照。リモート simulator からも操作できるようアプリ内 UI で提供する)
 struct DebugMenuPage: View {
-    /// 検証用の夜リマインドの識別子。本番の夜リマインド (night-reminder) と分けて、互いのスケジュールを壊さないようにする
-    private static let testRequestIdentifier = "night-reminder-debug"
+    /// 検証用の夜リマインドの識別子。本番の夜リマインドは "night-reminder" 接頭辞に一致する保留中の通知を掃除してから登録し直すため、その接頭辞に一致しない別の名前空間にして巻き込まれないようにする
+    private static let testRequestIdentifier = "debug-night-reminder"
     /// 検証用の夜リマインドが発火するまでの秒数。アラーム発火の確認は「1〜2 分後」に登録して画面表示で判定する運用に合わせる
     private static let testTimeInterval: TimeInterval = 60
 
@@ -93,12 +93,9 @@ struct DebugMenuPage: View {
         }
     }
 
-    /// 今日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
+    /// 今日 (0 時基準) の回答を取得する
     private func todayAnswer() -> MorningAnswer? {
-        let today = Calendar.current.startOfDay(for: .now)
-        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
-        descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
+        MorningAnswer.answer(day: .now, calendar: Calendar.current, modelContext: modelContext)
     }
 
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
@@ -113,7 +110,8 @@ struct DebugMenuPage: View {
         refreshAnswerStates()
     }
 
-    /// 検証用の夜リマインドを 1 分後に登録する。同一識別子の add は保留中の既存リクエストを置換するため、事前削除なしでも何度押しても保留は 1 本に保たれる
+    /// 検証用の夜リマインドを 1 分後に登録する。今日の回答があれば本番と同じ引用つきの本文になるため、パーソナライズの表示をその場で確認できる。
+    /// 同一識別子の add は保留中の既存リクエストを置換するため、事前削除なしでも何度押しても保留は 1 本に保たれる
     private func scheduleNightReminderForTest() async {
         let center = UNUserNotificationCenter.current()
         do {
@@ -123,7 +121,7 @@ struct DebugMenuPage: View {
             try await center.add(
                 UNNotificationRequest(
                     identifier: Self.testRequestIdentifier,
-                    content: NightReminder.makeContent(),
+                    content: NightReminder.makeContent(answerText: todayAnswer()?.text),
                     trigger: UNTimeIntervalNotificationTrigger(timeInterval: Self.testTimeInterval, repeats: false)
                 )
             )
