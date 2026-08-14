@@ -93,9 +93,9 @@ struct DebugMenuPage: View {
         }
     }
 
-    /// 今日 (0 時基準) の回答を取得する
+    /// 今日 (0 時基準) の回答を取得する。表示とデバッグ操作の用途のため、取得に失敗した時は未回答と同じ扱い (none 表示) にする
     private func todayAnswer() -> MorningAnswer? {
-        MorningAnswer.answer(day: .now, calendar: Calendar.current, modelContext: modelContext)
+        try? MorningAnswer.answer(day: .now, calendar: Calendar.current, modelContext: modelContext)
     }
 
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない

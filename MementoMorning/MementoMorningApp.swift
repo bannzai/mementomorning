@@ -32,7 +32,12 @@ struct MementoMorningApp: App {
                 UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
                 Task {
                     await reschedule(modelContext: PersistenceController.shared.container.mainContext)
-                    await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText())
+                    do {
+                        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: try todayAnswerText())
+                    } catch {
+                        // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
+                        print("[MementoMorningApp] failed to fetch today's answer: \(error)")
+                    }
                 }
             case .background:
                 // アプリ内で今日の回答が作られた直後の状態を夜リマインドへ反映するため、離脱時にも登録し直す
@@ -53,7 +58,12 @@ struct MementoMorningApp: App {
             backgroundTaskIdentifier = .invalid
         }
         Task {
-            await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: todayAnswerText())
+            do {
+                await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: try todayAnswerText())
+            } catch {
+                // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
+                print("[MementoMorningApp] failed to fetch today's answer: \(error)")
+            }
             // 期限切れの expirationHandler が先に終了させている場合があるため、二重に終了させないよう .invalid を見てから終了する
             guard backgroundTaskIdentifier != .invalid else { return }
             UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
@@ -61,9 +71,9 @@ struct MementoMorningApp: App {
         }
     }
 
-    /// 夜リマインドの本文に引用する、今日の回答の本文。未回答なら nil
-    @MainActor private func todayAnswerText() -> String? {
-        MorningAnswer.answer(
+    /// 夜リマインドの本文に引用する、今日の回答の本文。未回答なら nil。取得に失敗した場合は未回答と区別できるよう throw する
+    @MainActor private func todayAnswerText() throws -> String? {
+        try MorningAnswer.answer(
             day: .now,
             calendar: .current,
             modelContext: PersistenceController.shared.container.mainContext
