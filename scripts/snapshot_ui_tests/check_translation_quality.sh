@@ -217,6 +217,8 @@ feature_count=0
 check_count=0
 issue_count=0
 analysis_failures=""
+issue_creation_failures=""
+missing_baselines=""
 
 # 繰り返しのupload処理では途中でエラーが起きても処理は継続して欲しい
 set +e
@@ -249,10 +251,12 @@ for feature_page_dir in $feature_pages; do
 
     sep "  Index: $index"
 
-    # ja.pngが存在するか確認
+    # ja.pngが存在するか確認。基準画像の欠落をスキップ (成功扱い) にすると
+    # 「比較言語だけ生成した状態でのチェック未実施」を問題なしと誤認するため、失敗として収集する
     ja_png="$index_dir/ja.png"
     if [ ! -f "$ja_png" ]; then
-      echo "  Warning: ja.png not found, skipping index $index"
+      echo "  Error: ja.png (基準画像) がありません: $index_dir"
+      missing_baselines+="  - ${feature_page}/${index}"$'\n'
       continue
     fi
 
@@ -431,13 +435,17 @@ issue-${lang}.md ファイルは作成せず、「翻訳に問題は見つかり
             continue
           fi
           sep "    Creating GitHub Issue from $issue_md_path"
-          issue_url=$(gh issue create \
+          if ! issue_url=$(gh issue create \
             --title "$issue_title" \
             --label "translation" \
-            --body-file "$issue_md_path") || {
-            echo "    Warning: Failed to create GitHub Issue"
+            --body-file "$issue_md_path"); then
+            # 検出済みの問題を Issue にできなかった場合は成功扱いにしない (最後に非ゼロで終了する)
+            echo "    Error: Failed to create GitHub Issue"
             echo "    Issue file preserved at: $issue_md_path"
-          }
+            issue_creation_failures+="  - ${feature_page}/${index}/${lang}"$'\n'
+            sleep 2
+            continue
+          fi
 
           if [ -n "$issue_url" ]; then
             echo "    Issue created: $issue_url"
@@ -475,10 +483,25 @@ sep "Translation quality check complete"
 echo "CLI used: $([ "$USE_CLAUDE" = true ] && echo "Claude" || echo "Codex")"
 echo "Total feature pages: $total_features"
 echo "Total checks performed: $check_count"
+check_failed=false
 if [ -n "$analysis_failures" ]; then
   sep "ERROR: The following comparisons could not be analyzed:"
   echo "$analysis_failures"
-  echo "未分析の比較を「問題なし」と扱わないため、非ゼロで終了します"
+  check_failed=true
+fi
+if [ -n "$missing_baselines" ]; then
+  sep "ERROR: Baseline (ja.png) missing for:"
+  echo "$missing_baselines"
+  echo "先に generate_snapshot_ui_test_screenshots.sh で ja を含めて生成してください"
+  check_failed=true
+fi
+if [ -n "$issue_creation_failures" ]; then
+  sep "ERROR: GitHub Issue creation failed for:"
+  echo "$issue_creation_failures"
+  check_failed=true
+fi
+if [ "$check_failed" = true ]; then
+  echo "未実施・未起票の検出結果を「問題なし」と扱わないため、非ゼロで終了します"
   exit 1
 fi
 if [ "$DRY_RUN" = false ]; then

@@ -79,6 +79,7 @@ MementoMorningSnapshotUITests を build-for-testing でビルド。
 - `-n N`: 実行するテスト数（デフォルト: 全て）
 - `-l LANGS`: 実行する言語をカンマ区切りで指定（例: `"ja,en"`、デフォルト: 全言語）
 - `--skip-build`: build-for-testingをスキップ（CI並列実行で既にビルド済みの場合）
+- `--overwrite`: 既存スクリーンショットを削除して再撮影（翻訳・画面の変更後に使う。未指定時は対象言語分が揃っているテストをスキップ）
 - `-h, --help`: ヘルプメッセージを表示
 
 **処理フロー:**

@@ -96,6 +96,7 @@ MAX_TESTS=""
 BEGIN_INDEX=1
 SKIP_BUILD=false
 LANGUAGES=""
+OVERWRITE=false
 while [[ $# -gt 0 ]]; do
   case $1 in
     -n)
@@ -114,6 +115,10 @@ while [[ $# -gt 0 ]]; do
       SKIP_BUILD=true
       shift
       ;;
+    --overwrite)
+      OVERWRITE=true
+      shift
+      ;;
     -h|--help)
       echo "Usage: $0 [OPTIONS]"
       echo ""
@@ -122,6 +127,7 @@ while [[ $# -gt 0 ]]; do
       echo "  -n N               実行するテスト数 (デフォルト: 全て)"
       echo "  -l LANGS           実行する言語をカンマ区切りで指定 (例: \"ja,en\", デフォルト: 全言語)"
       echo "  --skip-build       build-for-testing をスキップ (CI並列実行で既にビルド済みの場合)"
+      echo "  --overwrite        既存スクリーンショットを削除して再撮影 (翻訳・画面の変更後に使う)"
       echo "  -h, --help         このヘルプメッセージを表示"
       echo ""
       echo "Examples:"
@@ -232,6 +238,12 @@ for test_file in $test_files; do
   test_class=$(basename "$test_file" .swift)
   screenshot_dir="scripts/snapshot_ui_tests/screenshots/$test_class"
   
+  # --overwrite の場合は既存のスクリーンショットを削除して再撮影する
+  # (翻訳・画面の変更後に、古い画像がスキップ判定で残り続けないようにする)
+  if [ "$OVERWRITE" = true ]; then
+    rm -rf "$screenshot_dir"
+  fi
+
   # 対象言語分のスクリーンショット PNG が既に揃っている場合はスキップする。
   # ディレクトリの存在だけで判定すると、別言語での追加実行 (-l ja の後の -l en) や
   # 中断で部分的に残ったディレクトリが永続的な成功扱いになるため、PNG の実在で判定する

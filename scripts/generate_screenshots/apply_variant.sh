@@ -53,10 +53,39 @@ echo "==== Applying variant: $VARIANT_NAME ===="
 echo "==== Source: $VARIANT_DIR ===="
 echo "==== Destination: $FASTLANE_DIR ===="
 
-# バリアントに PNG が 1 枚も無い場合は適用しない (空の適用を成功にしない)
-if [ -z "$(find "$VARIANT_DIR" -name '*.png' -print -quit 2>/dev/null)" ]; then
-  echo "Error: バリアントに PNG がありません: $VARIANT_DIR"
-  echo "先に ./scripts/generate_screenshots/generate_appstore_screenshots.sh で生成してください"
+# バリアントの期待枚数 = このバリアントの番号帯に属するテストファイル数。
+# 一部だけ生成した状態 (-n "1" 等) で適用すると、適用先の完成済み一式を消して欠落した素材を作るため、
+# 各言語が期待枚数に達していることを削除前に検証する
+expected_count=0
+for test_file in AppStoreScreenshotsUITests/Features/AppStoreScreenshot/AppStoreScreenshot*PageSnapshotUITest.swift; do
+  [ -f "$test_file" ] || continue
+  screenshot_number=$(basename "$test_file" .swift | sed -E 's/AppStoreScreenshot([0-9]+)PageSnapshotUITest/\1/')
+  if [ "$(get_variant_name "$screenshot_number")" = "$VARIANT_NAME" ]; then
+    expected_count=$((expected_count + 1))
+  fi
+done
+
+if [ "$expected_count" -eq 0 ]; then
+  echo "Error: バリアント '$VARIANT_NAME' に対応するテストが見つかりません"
+  exit 1
+fi
+
+incomplete=""
+for lang_dir in "$VARIANT_DIR"/*/; do
+  [ -d "$lang_dir" ] || continue
+  lang=$(basename "$lang_dir")
+  actual_count=$(ls -1 "$lang_dir"*.png 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$actual_count" -ne "$expected_count" ]; then
+    incomplete+="  - ${lang}: ${actual_count}/${expected_count} 枚"$'\n'
+  fi
+done
+
+if [ -z "$(find "$VARIANT_DIR" -name '*.png' -print -quit 2>/dev/null)" ] || [ -n "$incomplete" ]; then
+  echo "Error: バリアントのスクリーンショットが揃っていません: $VARIANT_DIR"
+  if [ -n "$incomplete" ]; then
+    echo "$incomplete"
+  fi
+  echo "先に ./scripts/generate_screenshots/generate_appstore_screenshots.sh で全番号を生成してください"
   exit 1
 fi
 
