@@ -125,46 +125,52 @@ struct PaywallPage: View {
                         .padding(.vertical, 24)
                 }
             } else {
-                Button {
-                    Task { await purchase(package: offering?.annual) }
-                } label: {
-                    VStack(spacing: 2) {
-                        // ja: 年 %@
-                        Text("\(annualPriceText) / year")
-                            .font(.system(size: 15))
-                            .tracking(1.2)
-                        // ja: ひと月 %@
-                        Text("\(annualPerMonthPriceText) a month")
-                            .font(.system(size: 10))
-                            .tracking(0.5)
-                            .opacity(0.6)
+                if shouldShowPlan(package: offering?.annual) {
+                    Button {
+                        Task { await purchase(package: offering?.annual) }
+                    } label: {
+                        VStack(spacing: 2) {
+                            // ja: 年 %@
+                            Text("\(annualPriceText) / year")
+                                .font(.system(size: 15))
+                                .tracking(1.2)
+                            // ja: ひと月 %@
+                            Text("\(annualPerMonthPriceText) a month")
+                                .font(.system(size: 10))
+                                .tracking(0.5)
+                                .opacity(0.6)
+                        }
                     }
+                    .buttonStyle(PrimaryPillButtonStyle())
+                    .disabled(isPurchasing)
+                    .accessibilityIdentifier("paywall_yearly_button")
                 }
-                .buttonStyle(PrimaryPillButtonStyle())
-                .disabled(isPurchasing)
-                .accessibilityIdentifier("paywall_yearly_button")
 
-                Button {
-                    Task { await purchase(package: offering?.monthly) }
-                } label: {
-                    // ja: 月 %@
-                    Text("\(monthlyPriceText) / month")
-                        .font(.system(size: 14))
+                if shouldShowPlan(package: offering?.monthly) {
+                    Button {
+                        Task { await purchase(package: offering?.monthly) }
+                    } label: {
+                        // ja: 月 %@
+                        Text("\(monthlyPriceText) / month")
+                            .font(.system(size: 14))
+                    }
+                    .buttonStyle(SecondaryPillButtonStyle())
+                    .disabled(isPurchasing)
+                    .accessibilityIdentifier("paywall_monthly_button")
                 }
-                .buttonStyle(SecondaryPillButtonStyle())
-                .disabled(isPurchasing)
-                .accessibilityIdentifier("paywall_monthly_button")
 
-                Button {
-                    Task { await purchase(package: offering?.lifetime) }
-                } label: {
-                    // ja: 一生 %@ (一度だけ)
-                    Text("\(lifetimePriceText) for life (one-time)")
-                        .font(.system(size: 14))
+                if shouldShowPlan(package: offering?.lifetime) {
+                    Button {
+                        Task { await purchase(package: offering?.lifetime) }
+                    } label: {
+                        // ja: 一生 %@ (一度だけ)
+                        Text("\(lifetimePriceText) for life (one-time)")
+                            .font(.system(size: 14))
+                    }
+                    .buttonStyle(SecondaryPillButtonStyle())
+                    .disabled(isPurchasing)
+                    .accessibilityIdentifier("paywall_lifetime_button")
                 }
-                .buttonStyle(SecondaryPillButtonStyle())
-                .disabled(isPurchasing)
-                .accessibilityIdentifier("paywall_lifetime_button")
             }
 
             Button {
@@ -208,6 +214,16 @@ struct PaywallPage: View {
         }
         .padding(.horizontal, 32)
         .padding(.bottom, 24)
+    }
+
+    /// そのプランのボタンを描画してよいか。
+    /// configure 済みなら package が実在する時だけ描画する。offering は取得できても個別の package が
+    /// StoreKit から解決できないこと (商品の反映待ち等) があり、その時に見本価格を代わりに出すと
+    /// Storefront によっては実際と異なる価格を見せてしまうため (実測: US storefront のシミュレータで
+    /// 年額・月額が未解決のまま円の見本価格が表示された)。
+    /// 未 configure (キーを持たない開発ビルド・Preview) では、デザイン確認のため見本価格で描画する
+    private func shouldShowPlan(package: Package?) -> Bool {
+        !Purchases.isConfigured || package != nil
     }
 
     /// 年額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥6,000/年) を見本表示する
