@@ -1,15 +1,17 @@
 import Foundation
 import OSLog
 
-// issue #2 のスパイク検証 (stopIntent の perform() 内 schedule() が background で通るか実機検証) 用の計測コード。
-// 検証完了後は本実装 (未回答判定つき追撃再スケジュール) に置き換えて削除する
+// issue #2 のスパイク検証 (stopIntent の perform() 内 schedule() が background で通るか実機検証) 由来の痕跡ログ。
+// perform() の実行経路 (intent 型解決・background での schedule()) は実機で未検証のまま残っているため、
+// 本実装 (issue #4 の未回答判定つき追撃) でもログを残し続け、実機検証の完了後に削除する
 
 extension String {
-    /// stopIntent スパイク検証の痕跡ログを保存する UserDefaults キー。
+    /// stopIntent の痕跡ログを保存する UserDefaults キー。
     /// perform() の実行有無・appState・schedule() の成否を改行区切りで追記し、
     /// AlarmSettingPage が @AppStorage で監視して実機上でそのまま読めるようにする
     static let stopIntentSpikeLog = "stopIntentSpikeLog"
-    /// 連続追撃回数を保存する UserDefaults キー。アプリが foreground になったらリセットされる
+    /// 連続追撃回数 (スヌーズ消費数) を保存する UserDefaults キー。
+    /// 無料枠の判定 (shouldChase) に使い、今日の回答が成立した時に reschedule がリセットする
     static let stopIntentChaseCount = "stopIntentChaseCount"
 }
 

@@ -840,6 +840,56 @@
           }
         }
       }
+    },
+    "Will you do yesterday's answer today?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "昨日の回答を、今日やる?"
+          }
+        }
+      }
+    },
+    "I will": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やる"
+          }
+        }
+      }
+    },
+    "Write a different answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "別の答えを書く"
+          }
+        }
+      }
+    },
+    "Type here": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ここに書く"
+          }
+        }
+      }
+    },
+    "Make it today's answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これで確定する"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

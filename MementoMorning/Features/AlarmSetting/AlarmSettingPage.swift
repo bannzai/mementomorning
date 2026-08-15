@@ -75,8 +75,8 @@ struct AlarmSettingPage: View {
                 Text(lastRescheduleError)
                     .foregroundStyle(.red)
             }
-            // issue #2 スパイク検証の結果を実機上で Mac なしに読むための一時セクション。
-            // 検証専用 UI のためローカライズ対象にしない (verbatim)。検証完了後にセクションごと削除する
+            // stopIntent の実行痕跡を実機上で Mac なしに読むための一時セクション。
+            // 検証専用 UI のためローカライズ対象にしない (verbatim)。実機検証の完了後にセクションごと削除する
             if let stopIntentSpikeLog, !stopIntentSpikeLog.isEmpty {
                 Section {
                     Text(verbatim: stopIntentSpikeLog)
@@ -84,7 +84,6 @@ struct AlarmSettingPage: View {
                         .textSelection(.enabled)
                     Button(role: .destructive) {
                         self.stopIntentSpikeLog = nil
-                        UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
                     } label: {
                         Text(verbatim: "Clear Spike Log")
                     }

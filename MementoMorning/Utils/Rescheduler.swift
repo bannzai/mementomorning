@@ -72,16 +72,42 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     }
 
     let existing = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
-    let planned = planAlarms(now: now, alarmSetting: alarmSetting)
+
+    // 発火予定日時が過ぎた記録があれば、そのアラームは発火した (またはスワイプ消去された) とみなして発火日時を記録する。
+    // stopIntent の perform() が実行されない環境 (issue #3 のシミュレータ実測) やスワイプ消去でも、
+    // foreground 復帰時にここで発火を検知して朝の問い (MorningQuestionPage) の提示へ繋げる。
+    // 記録には main の発火日時だけを使う。バックアップは main より後 (+backupAlarmIntervalMinutes×n) のため
+    // 深夜のアラームでは日付を跨ぐことがあり、跨いだ日時で記録すると「前日の朝」の発火を翌日の問いとして
+    // 提示してしまう (バックアップが発火済みならその main も必ず発火予定日時を過ぎている)
+    if let firedDate = existing.filter({ $0.origin == ScheduledAlarmOrigin.main }).map(\.fireDate).filter({ $0 <= now }).max() {
+        recordAlarmFired(date: firedDate)
+    }
+
+    // 回答済みの日はアラームを鳴らさない。今日より先の日はまだ回答できないため今日の回答だけ調べれば足りる。
+    // 取得の失敗を未回答と誤認すると、回答済みの日のアラーム (発火済みの朝のバックアップ含む) を再登録してしまうため中断する (fail-closed)
+    let answeredDates: Set<Date>
+    do {
+        answeredDates = try MorningAnswer.answer(day: now, calendar: .current, modelContext: modelContext) != nil
+            ? [Calendar.current.startOfDay(for: now)]
+            : []
+    } catch {
+        UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
+        return
+    }
 
     // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
     // openAppWhenRun による foreground 復帰はこの reschedule を追撃の登録直後に走らせるため、
     // 無条件に消すと追撃が一度も発火しない (PR #30 レビュー指摘)。
     // 保護しない (記録も掃除する) のは次の 2 つの場合:
-    // - 今日の回答が済んでいる (回答後は追撃も止めてよい)
+    // - 今日の回答が済んでいる (回答後は追撃も止めてよい。連続追撃カウントもここでリセットし、翌朝のスヌーズ枠を戻す)
     // - アラーム設定が OFF (OFF 表示のまま追撃だけが鳴り続けるのを防ぐ。PR #30 レビュー指摘)
     let preservedAlarmIDs: Set<UUID>
-    if hasTodayAnswer(modelContext: modelContext) || alarmSetting?.isEnabled != true {
+    let todayAnswered = !answeredDates.isEmpty
+    if todayAnswered {
+        // 回答が成立した朝の追撃は役目を終えた。連続追撃カウント (スヌーズ消費数) もリセットし、翌朝の無料枠を戻す
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+    }
+    if todayAnswered || alarmSetting?.isEnabled != true {
         UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
         UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
         preservedAlarmIDs = []
@@ -94,6 +120,18 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
             )].compactMap { $0 }
         )
     }
+
+    // 発火済みの朝の残バックアップの復元 (planAlarms の alarmFiredDate) は、stopIntent を通らない
+    // スワイプ消去の保険に限定する。停止操作済みの朝 (追撃列が開始済み: スヌーズ消費あり、または未発火の追撃を保護中) に
+    // 復元すると、stopIntent が掃除したバックアップが復活して追撃列と併走し、無料枠 (スヌーズ 2 回まで) も超えてしまう
+    // (発火済みの古い追撃記録は保護対象にならないため、この判定を誤って翌朝の保険まで封じることはない)
+    let chaseStarted = UserDefaults.standard.integer(forKey: .stopIntentChaseCount) > 0 || !preservedAlarmIDs.isEmpty
+    let planned = planAlarms(
+        now: now,
+        alarmSetting: alarmSetting,
+        answeredDates: answeredDates,
+        alarmFiredDate: chaseStarted ? nil : lastAlarmFiredDate()
+    )
 
     do {
         try AlarmKitManager.cancelAll(preservedAlarmIDs: preservedAlarmIDs)

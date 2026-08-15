@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
+		0ECC3C0A25AA0B957B3CDF66 /* MorningQuestionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */; };
 		119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */; };
 		14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */; };
 		158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */; };
@@ -30,6 +31,7 @@
 		5057BDFC3BC96E468D89F110 /* NightReflectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A66F484F795E19FB4ADA23 /* NightReflectionPage.swift */; };
 		531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF5EE7BC099E438DC69AE6 /* OnboardingPermissionTests.swift */; };
 		53D975F01E22A25F72452BBD /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 61AF4AEDE590737CEF6A406E /* RevenueCat */; };
+		5620CC3AB5CFCD0BA965A10F /* MorningQuestionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */; };
 		5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
 		6189BCBCE907AB3868D5FD49 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF121C6617379EE6ED5B779 /* OnboardingPage.swift */; };
 		6A7B3C433CC99BF73EF3F096 /* AnswerLogVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA7248329B835442DD1C4C /* AnswerLogVisibility.swift */; };
@@ -44,6 +46,7 @@
 		A1740F3F9DA1C297DEE3CF33 /* LifeCalendarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */; };
 		A49FFCC78F204F74AA93AE42 /* SevenMorningsMilestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */; };
 		A65292123DE66BE8D09C6951 /* AnswerShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE8AEF7D7F93883504E8F6B /* AnswerShareCardView.swift */; };
+		A66354678A45B89032312EC3 /* MorningQuestionGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */; };
 		A6AE78F9CF0A620861452A5A /* SevenMorningsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA9A999052376DBC90A0D88 /* SevenMorningsPage.swift */; };
 		B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */; };
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
@@ -81,7 +84,6 @@
 		1FE8AEF7D7F93883504E8F6B /* AnswerShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerShareCardView.swift; sourceTree = "<group>"; };
 		368460825E5F8390F0948A64 /* SnoozeGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGateTests.swift; sourceTree = "<group>"; };
 		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
-		40450C2CC5ACAE9B3DD4818C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		45A743CD146712761B27B24D /* QuestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPage.swift; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestoneTests.swift; sourceTree = "<group>"; };
 		7BA9A999052376DBC90A0D88 /* SevenMorningsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsPage.swift; sourceTree = "<group>"; };
 		7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmKitManager.swift; sourceTree = "<group>"; };
+		7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionGate.swift; sourceTree = "<group>"; };
 		8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngineTests.swift; sourceTree = "<group>"; };
 		8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumEntitlementTests.swift; sourceTree = "<group>"; };
 		8CD092B0CB02A35B27E659C0 /* MementoMorning.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MementoMorning.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +112,7 @@
 		AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGate.swift; sourceTree = "<group>"; };
 		ACFA7248329B835442DD1C4C /* AnswerLogVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLogVisibility.swift; sourceTree = "<group>"; };
 		AE03BA5E48D851DD27B5A884 /* PaywallPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallPage.swift; sourceTree = "<group>"; };
+		B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionPage.swift; sourceTree = "<group>"; };
 		B3F1E8B900459AE8D91FBD56 /* AnswerLogPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLogPage.swift; sourceTree = "<group>"; };
 		B42C042B3EE358D4139B1493 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		BD8A21C991EBF5E6F4360D79 /* MementoMorningTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MementoMorningTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +125,7 @@
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
 		CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPage.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
+		D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionGateTests.swift; sourceTree = "<group>"; };
 		D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningAlarmMetadata.swift; sourceTree = "<group>"; };
 		D784F14F17E87134C2E8E59A /* Rescheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rescheduler.swift; sourceTree = "<group>"; };
 		E4A66F484F795E19FB4ADA23 /* NightReflectionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReflectionPage.swift; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 		F7B64203A853C06733EA5259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledAlarm.swift; sourceTree = "<group>"; };
+		FFEC9C7B159427582AA1852B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +204,7 @@
 				BF34306F551BB88A384C4CDF /* AnswerLog */,
 				6E885FD3AF6855E33EBCF9A0 /* DebugMenu */,
 				7D562EF7D3FEFFF2D7675537 /* LifeCalendar */,
+				AB32792BA96D4B30966EE086 /* MorningQuestion */,
 				9FC18C321010A448E4106E9C /* NightReflection */,
 				AFE2DBF2BECA6EF4A030247C /* Onboarding */,
 				3FE5287775BDB63173AF121F /* Paywall */,
@@ -214,6 +221,7 @@
 				3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */,
 				C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */,
 				D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */,
+				7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */,
 				AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */,
 				112B58E4F9934A156679AE30 /* DesignSystem */,
 				8895E6615F86901B22C844C7 /* Entitlement */,
@@ -251,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
-				9CCBCC4B78C2A2FFBCE2ACCC /* issue-11 */,
+				CE454F8FBFEF2EDD63DD5EE8 /* issue-4 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
 				C9B88CBCEA928A1FC6F3591C /* Frameworks */,
@@ -276,15 +284,6 @@
 			path = Entitlement;
 			sourceTree = "<group>";
 		};
-		9CCBCC4B78C2A2FFBCE2ACCC /* issue-11 */ = {
-			isa = PBXGroup;
-			children = (
-				40450C2CC5ACAE9B3DD4818C /* Config.xcconfig */,
-			);
-			name = "issue-11";
-			path = .;
-			sourceTree = "<group>";
-		};
 		9FC18C321010A448E4106E9C /* NightReflection */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +306,14 @@
 				2F30E2ECD62118F211A0B324 /* Utils */,
 			);
 			path = MementoMorning;
+			sourceTree = "<group>";
+		};
+		AB32792BA96D4B30966EE086 /* MorningQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */,
+			);
+			path = MorningQuestion;
 			sourceTree = "<group>";
 		};
 		AFE2DBF2BECA6EF4A030247C /* Onboarding */ = {
@@ -360,6 +367,15 @@
 			path = Question;
 			sourceTree = "<group>";
 		};
+		CE454F8FBFEF2EDD63DD5EE8 /* issue-4 */ = {
+			isa = PBXGroup;
+			children = (
+				FFEC9C7B159427582AA1852B /* Config.xcconfig */,
+			);
+			name = "issue-4";
+			path = .;
+			sourceTree = "<group>";
+		};
 		CEFE3E406AA9CCA261DD6356 /* ShareCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,6 +394,7 @@
 				5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */,
 				C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */,
 				C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */,
+				D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */,
 				16CA221981AFA9477D31763C /* NightReminderTests.swift */,
 				92CF5EE7BC099E438DC69AE6 /* OnboardingPermissionTests.swift */,
 				8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */,
@@ -541,6 +558,8 @@
 				2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */,
 				C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */,
 				5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */,
+				0ECC3C0A25AA0B957B3CDF66 /* MorningQuestionGate.swift in Sources */,
+				5620CC3AB5CFCD0BA965A10F /* MorningQuestionPage.swift in Sources */,
 				5057BDFC3BC96E468D89F110 /* NightReflectionPage.swift in Sources */,
 				21B8E5A48290F1D4BFC54F46 /* NightReminder.swift in Sources */,
 				237CBDEA18363BC7B7E7EAD8 /* NotificationRouter.swift in Sources */,
@@ -570,6 +589,7 @@
 				C5361C2165C329F2B583E2C1 /* ChaseAlarmTests.swift in Sources */,
 				119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */,
 				B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */,
+				A66354678A45B89032312EC3 /* MorningQuestionGateTests.swift in Sources */,
 				DB6AC38B5A4436AAE96F5830 /* NightReminderTests.swift in Sources */,
 				531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */,
 				2550886BD9FEB608B9138265 /* PremiumEntitlementTests.swift in Sources */,
@@ -697,7 +717,7 @@
 		};
 		6D8148AD7C6C10CE6404F6C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40450C2CC5ACAE9B3DD4818C /* Config.xcconfig */;
+			baseConfigurationReference = FFEC9C7B159427582AA1852B /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -783,7 +803,7 @@
 		};
 		94B07253134F816E7ED5852F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 40450C2CC5ACAE9B3DD4818C /* Config.xcconfig */;
+			baseConfigurationReference = FFEC9C7B159427582AA1852B /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;

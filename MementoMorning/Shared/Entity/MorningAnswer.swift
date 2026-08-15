@@ -42,3 +42,10 @@ final class MorningAnswer {
         self.updatedDateTime = .now
     }
 }
+
+/// 指定日 (0 時基準) の回答を取得する。取得の失敗は未回答と同じ扱い (nil) にする。
+/// 失敗と未回答を区別したい呼び出し側は MorningAnswer.answer(day:calendar:modelContext:) を使う
+@MainActor
+func fetchMorningAnswer(answeredDate: Date, modelContext: ModelContext, calendar: Calendar = .current) -> MorningAnswer? {
+    try? MorningAnswer.answer(day: answeredDate, calendar: calendar, modelContext: modelContext)
+}

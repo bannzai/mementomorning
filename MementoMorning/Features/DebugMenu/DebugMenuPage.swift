@@ -82,6 +82,13 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_seed_today_answer")
 
                 Button {
+                    seedYesterdayAnswer()
+                } label: {
+                    Text(verbatim: "Seed yesterday's answer")
+                }
+                .accessibilityIdentifier("debug_seed_yesterday_answer")
+
+                Button {
                     Task {
                         await scheduleNightReminderForTest()
                         refreshAnswerStates()
@@ -90,6 +97,29 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Schedule night reminder in 1 minute")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+            }
+            Section {
+                Text(verbatim: "Alarm fired: \(alarmFiredStateText)")
+                    .accessibilityIdentifier("debug_alarm_fired_state")
+
+                Button {
+                    // 発火記録は「直近の発火日時に収束する」冪等な操作。再実行しても記録が今に更新されるだけ
+                    recordAlarmFired(date: .now)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "Record alarm fired now")
+                }
+                .accessibilityIdentifier("debug_record_alarm_fired")
+
+                Button(role: .destructive) {
+                    UserDefaults.standard.removeObject(forKey: .lastAlarmFiredDate)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "Clear alarm fired record")
+                }
+                .accessibilityIdentifier("debug_clear_alarm_fired")
+            } header: {
+                Text(verbatim: "Morning Question (issue #4)")
             }
             Section {
                 Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
@@ -134,10 +164,15 @@ struct DebugMenuPage: View {
         return "\(answer.text) (isFulfilled: \(answer.isFulfilled?.description ?? "nil"))"
     }
 
+    /// アラーム発火記録の表示用の文字列
+    private var alarmFiredStateText: String {
+        lastAlarmFiredDate()?.formatted(.iso8601) ?? "none"
+    }
+
     /// 回答件数と今日の回答の表示を最新化する
     private func refreshAnswerStates() {
         morningAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
-        answer = todayAnswer()
+        answer = fetchMorningAnswer(answeredDate: .now, modelContext: modelContext)
     }
 
     /// 全回答を削除する (空の状態からやり直すためのデバッグ操作。空なら何もせず冪等)
@@ -150,14 +185,9 @@ struct DebugMenuPage: View {
         }
     }
 
-    /// 今日 (0 時基準) の回答を取得する。表示とデバッグ操作の用途のため、取得に失敗した時は未回答と同じ扱い (none 表示) にする
-    private func todayAnswer() -> MorningAnswer? {
-        try? MorningAnswer.answer(day: .now, calendar: Calendar.current, modelContext: modelContext)
-    }
-
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
     private func seedTodayAnswer() {
-        guard todayAnswer() == nil else {
+        guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
         modelContext.insert(
@@ -165,6 +195,27 @@ struct DebugMenuPage: View {
         )
         try? modelContext.save()
         refreshAnswerStates()
+    }
+
+    /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
+    /// 朝の問い画面の「昨日の回答を、今日やる?」の選択式入力は「昨日の回答あり + 今日未回答」でしか出ないため、
+    /// 今日の回答がある場合は Delete all answers → 本操作の順で状態を作る
+    private func seedYesterdayAnswer() {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+        guard fetchMorningAnswer(answeredDate: yesterday, modelContext: modelContext) == nil else {
+            return
+        }
+        modelContext.insert(
+            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: yesterday), text: "母に長い電話をかける")
+        )
+        do {
+            try modelContext.save()
+            refreshAnswerStates()
+        } catch {
+            // 保存失敗を握りつぶすと未投入なのに投入済みに見えるため、変更を破棄して開発中に気づけるよう落とす
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+        }
     }
 
     /// 検証用の夜リマインドを 1 分後に登録する。今日の回答があれば本番と同じ引用つきの本文になるため、パーソナライズの表示をその場で確認できる。
@@ -178,7 +229,7 @@ struct DebugMenuPage: View {
             try await center.add(
                 UNNotificationRequest(
                     identifier: Self.testRequestIdentifier,
-                    content: NightReminder.makeContent(answerText: todayAnswer()?.text),
+                    content: NightReminder.makeContent(answerText: fetchMorningAnswer(answeredDate: .now, modelContext: modelContext)?.text),
                     trigger: UNTimeIntervalNotificationTrigger(timeInterval: Self.testTimeInterval, repeats: false)
                 )
             )

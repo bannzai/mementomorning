@@ -18,8 +18,5 @@ func shouldChase(chaseCount: Int, isPremium: Bool) -> Bool {
 /// カウントが 0 に戻り、無料枠のスヌーズ上限 (freeTierSnoozeLimit) に到達しない
 @MainActor
 func hasTodayAnswer(modelContext: ModelContext, calendar: Calendar = .current, now: Date = .now) -> Bool {
-    let today = calendar.startOfDay(for: now)
-    var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
-    descriptor.fetchLimit = 1
-    return ((try? modelContext.fetchCount(descriptor)) ?? 0) > 0
+    fetchMorningAnswer(answeredDate: now, modelContext: modelContext, calendar: calendar) != nil
 }
