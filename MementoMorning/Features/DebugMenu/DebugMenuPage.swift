@@ -52,6 +52,13 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_seed_today_answer")
 
                 Button {
+                    seedYesterdayAnswer()
+                } label: {
+                    Text(verbatim: "Seed yesterday's answer")
+                }
+                .accessibilityIdentifier("debug_seed_yesterday_answer")
+
+                Button {
                     Task {
                         await scheduleNightReminderForTest()
                         refreshAnswerStates()
@@ -128,6 +135,21 @@ struct DebugMenuPage: View {
         }
         modelContext.insert(
             MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+        )
+        try? modelContext.save()
+        refreshAnswerStates()
+    }
+
+    /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。
+    /// 朝の問い画面の「昨日の回答を、今日やる?」の選択式入力は
+    /// 「昨日の回答あり + 今日未回答」でしか出ないため、その状態をタップ操作だけで作れるようにする
+    private func seedYesterdayAnswer() {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+        guard fetchMorningAnswer(answeredDate: yesterday, modelContext: modelContext) == nil else {
+            return
+        }
+        modelContext.insert(
+            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: yesterday), text: "母に長い電話をかける")
         )
         try? modelContext.save()
         refreshAnswerStates()
