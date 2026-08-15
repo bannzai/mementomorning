@@ -890,6 +890,66 @@
           }
         }
       }
+    },
+    "Answered with a video": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画で答えました"
+          }
+        }
+      }
+    },
+    "Try saving again": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存をやり直す"
+          }
+        }
+      }
+    },
+    "Answer in text": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テキストで答える"
+          }
+        }
+      }
+    },
+    "The camera isn't available, so answer in text.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラを使えないため、テキストで答えます"
+          }
+        }
+      }
+    },
+    "Stop recording and finish your answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "録画を止めて回答を確定する"
+          }
+        }
+      }
+    },
+    "Start recording": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "録画を始める"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
