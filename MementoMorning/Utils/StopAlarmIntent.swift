@@ -69,20 +69,24 @@ public struct StopAlarmIntent: LiveActivityIntent {
         let chaseAlarmID = UUID()
         let chaseFireDate = Date.now.addingTimeInterval(stopIntentChaseInterval)
         appendStopIntentSpikeLog(message: "schedule() attempting chase id=\(chaseAlarmID) fireDate=\(chaseFireDate.formatted(.iso8601))")
+        // openAppWhenRun による foreground 復帰の reschedule (全キャンセル) から発火前の追撃を保護するための記録。
+        // schedule() の完了後に書くと「OS 登録済み・記録前」の隙間で cancelAll に消される競合が残るため、
+        // 登録前に書いて失敗時に掃除する (未登録 ID の保護は cancelAll が読み飛ばすだけで無害。PR #30 レビュー指摘)
+        UserDefaults.standard.set(chaseAlarmID.uuidString, forKey: .stopIntentChaseAlarmID)
+        UserDefaults.standard.set(chaseFireDate.timeIntervalSince1970, forKey: .stopIntentChaseFireDate)
         do {
             // ja: 今日死ぬとしたら、何をやりたいか
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
             try await AlarmKitManager.schedule(id: chaseAlarmID, fireDate: chaseFireDate, title: title)
             // 登録に失敗した試行で無料枠を消費しないよう、カウントは schedule() の成功後に更新する (PR #30 レビュー指摘)
             UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
-            // openAppWhenRun による foreground 復帰の reschedule (全キャンセル) から
-            // 発火前の追撃を保護するため、ID と発火予定を記録する (PR #30 レビュー指摘)
-            UserDefaults.standard.set(chaseAlarmID.uuidString, forKey: .stopIntentChaseAlarmID)
-            UserDefaults.standard.set(chaseFireDate.timeIntervalSince1970, forKey: .stopIntentChaseFireDate)
             // schedule() が throw しなくても実登録に失敗している可能性を潰すため、OS 側の一覧で確認する
             let registered = ((try? AlarmManager.shared.alarms) ?? []).contains { $0.id == chaseAlarmID }
             appendStopIntentSpikeLog(message: "schedule() succeeded registeredInAlarms=\(registered)")
         } catch {
+            // 登録に失敗した追撃の記録を残すと、存在しない ID を保護し続けて掃除の判断を誤らせるため消す
+            UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
+            UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
             appendStopIntentSpikeLog(message: "schedule() failed error=\(error)")
         }
         return .result()

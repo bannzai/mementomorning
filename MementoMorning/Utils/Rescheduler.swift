@@ -66,9 +66,11 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
     // openAppWhenRun による foreground 復帰はこの reschedule を追撃の登録直後に走らせるため、
     // 無条件に消すと追撃が一度も発火しない (PR #30 レビュー指摘)。
-    // 今日の回答が済んでいる場合は追撃も止めてよいため保護せず、記録も掃除する
+    // 保護しない (記録も掃除する) のは次の 2 つの場合:
+    // - 今日の回答が済んでいる (回答後は追撃も止めてよい)
+    // - アラーム設定が OFF (OFF 表示のまま追撃だけが鳴り続けるのを防ぐ。PR #30 レビュー指摘)
     let preservedAlarmIDs: Set<UUID>
-    if hasTodayAnswer(modelContext: modelContext) {
+    if hasTodayAnswer(modelContext: modelContext) || alarmSetting?.isEnabled != true {
         UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
         UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
         preservedAlarmIDs = []
