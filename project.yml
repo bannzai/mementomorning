@@ -50,6 +50,11 @@ targets:
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        # 縦向き固定。デザインは縦持ち前提 (design_handoff_memento_morning) で、
+        # 動画回答の録画・プレビューの回転角 90° 固定 (VideoAnswerCamera) もこの設定を前提にする。
+        # iPad の縦向き固定に従来必要だった UIRequiresFullScreen は iOS 26 で deprecated
+        # (ビルド warning になり、将来無視される) のため宣言しない
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
   MementoMorningTests:

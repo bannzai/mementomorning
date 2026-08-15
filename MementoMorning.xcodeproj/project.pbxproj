@@ -19,6 +19,7 @@
 		1B4349AA97691B2ED56DE13D /* LifeCalendarDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */; };
 		215ACCCBE941CD80ACEDCFDF /* AppStoreScreenshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A3521B9362DA2665F05F0 /* AppStoreScreenshotHelper.swift */; };
 		21B8E5A48290F1D4BFC54F46 /* NightReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C037DFC7112D63C6A6E17C32 /* NightReminder.swift */; };
+		22C52EF86ADC9C19455FCCA8 /* VideoAnswerPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DCAE518E4646F494381B0 /* VideoAnswerPhotoLibrary.swift */; };
 		237CBDEA18363BC7B7E7EAD8 /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C042B3EE358D4139B1493 /* NotificationRouter.swift */; };
 		245AE39DF02A12698933D5DF /* PremiumEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F110A4C9E0036AE9F59DDE /* PremiumEntitlement.swift */; };
 		2550886BD9FEB608B9138265 /* PremiumEntitlementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */; };
@@ -47,10 +48,12 @@
 		53D975F01E22A25F72452BBD /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 61AF4AEDE590737CEF6A406E /* RevenueCat */; };
 		5620CC3AB5CFCD0BA965A10F /* MorningQuestionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */; };
 		5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
+		605C0F19958962FECC5CF766 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */; };
 		6189BCBCE907AB3868D5FD49 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF121C6617379EE6ED5B779 /* OnboardingPage.swift */; };
 		66C000CA2C8CF8A8CE31569C /* MockHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69B1B73C832A569BF7DBDA9 /* MockHomeScreen.swift */; };
 		6A7B3C433CC99BF73EF3F096 /* AnswerLogVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA7248329B835442DD1C4C /* AnswerLogVisibility.swift */; };
 		6AB81DA79C2FB33A8BFBA4BB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */; };
+		72AD46DE1066E5C75D102504 /* VideoAnswerGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */; };
 		761AE3021FFE67D48666BC4D /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
 		7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368460825E5F8390F0948A64 /* SnoozeGateTests.swift */; };
 		7D513E0EFC28AB38EF46B78B /* AnswerShareCardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D62A1161E864CA8A81EAAA /* AnswerShareCardPage.swift */; };
@@ -62,6 +65,7 @@
 		8AA325D7614FC522380C61C6 /* SnapshotUITestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E586E3F24AE03E11A7DC3 /* SnapshotUITestPage.swift */; };
 		8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */; };
 		90AE1F58DFDD1A534F02A974 /* DebugMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65D3164755F057F64140B0 /* DebugMenuPage.swift */; };
+		939A8E8262D62CD1915EFADF /* VideoAnswerCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */; };
 		94F807CA5C60E3513E8D6F45 /* AppStoreScreenshot4PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A962B9B52C49CE132D4AC /* AppStoreScreenshot4PageSnapshotUITest.swift */; };
 		96863AB1DF718AA374C01180 /* MockJournalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E85BA3B68068B127904EF /* MockJournalScreen.swift */; };
 		A03184E5CAA063BBE0CF849F /* AnswerLogPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3F88DDF209BEB0D0D0A93F /* AnswerLogPageSnapshotUITest.swift */; };
@@ -74,6 +78,7 @@
 		AB50FBE9397095C64DE873C5 /* QuestionPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C322778C1BA97DA75148B887 /* QuestionPageSnapshotUITest.swift */; };
 		B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */; };
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
+		B87A2AA4C1CBCFB612222763 /* VideoAnswerGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */; };
 		BD573C9988FFD160D9F402F7 /* ContentViewSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */; };
 		C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */; };
 		C38DCA5A434EE0A5B33CB7CB /* SnoozeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */; };
@@ -131,17 +136,20 @@
 		1AC1569FF56F53101A3EDBE4 /* StopIntentSpike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopIntentSpike.swift; sourceTree = "<group>"; };
 		1AFFC6A063A59543493172A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPage.swift; sourceTree = "<group>"; };
+		1D2DCAE518E4646F494381B0 /* VideoAnswerPhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerPhotoLibrary.swift; sourceTree = "<group>"; };
 		1FE8AEF7D7F93883504E8F6B /* AnswerShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerShareCardView.swift; sourceTree = "<group>"; };
 		23607D5E87586121695105C3 /* AppStoreScreenshotsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotsApp.swift; sourceTree = "<group>"; };
 		28234EF42768C8AB6A5ADDBB /* SevenMorningsPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		29A3E212867D42C48C384F52 /* AppStoreScreenshot6PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot6PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		2B910D0758DEF09E41E419FF /* AppStoreScreenshot3PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot3PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerCamera.swift; sourceTree = "<group>"; };
 		301D1F5532F4A8A6AEC68818 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		368460825E5F8390F0948A64 /* SnoozeGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGateTests.swift; sourceTree = "<group>"; };
 		36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewSnapshotUITest.swift; sourceTree = "<group>"; };
 		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
 		4014C038419472A776F31320 /* OnboardingPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		45A743CD146712761B27B24D /* QuestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPage.swift; sourceTree = "<group>"; };
+		4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
@@ -151,6 +159,7 @@
 		5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseAlarmTests.swift; sourceTree = "<group>"; };
 		5F8120F3F82F4D2EF01655B9 /* AppStoreScreenshotsRootPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotsRootPage.swift; sourceTree = "<group>"; };
 		5FF7772591D5B5491D85CAAB /* MockLifeCalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLifeCalendarScreen.swift; sourceTree = "<group>"; };
+		62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGate.swift; sourceTree = "<group>"; };
 		667A962B9B52C49CE132D4AC /* AppStoreScreenshot4PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot4PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		6EB94C934831139721BDE0F8 /* SampleAnswerSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAnswerSeeder.swift; sourceTree = "<group>"; };
 		6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDates.swift; sourceTree = "<group>"; };
@@ -201,6 +210,7 @@
 		C418C3D5ECE4F458975D2C92 /* LifeCalendarPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C438DE2A7A3786C83D405AF9 /* AlarmSettingPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
+		C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGateTests.swift; sourceTree = "<group>"; };
 		CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot2PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPage.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
@@ -553,6 +563,7 @@
 				1AFFC6A063A59543493172A5 /* Assets.xcassets */,
 				715457F9DCAEABC482EBEB8B /* ContentView.swift */,
 				F7B64203A853C06733EA5259 /* Info.plist */,
+				4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */,
 				F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */,
 				D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */,
 				92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */,
@@ -575,6 +586,9 @@
 			isa = PBXGroup;
 			children = (
 				B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */,
+				2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */,
+				62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */,
+				1D2DCAE518E4646F494381B0 /* VideoAnswerPhotoLibrary.swift */,
 			);
 			path = MorningQuestion;
 			sourceTree = "<group>";
@@ -665,6 +679,7 @@
 				368460825E5F8390F0948A64 /* SnoozeGateTests.swift */,
 				C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */,
 				97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */,
+				C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */,
 			);
 			path = MementoMorningTests;
 			sourceTree = "<group>";
@@ -865,6 +880,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */,
+				605C0F19958962FECC5CF766 /* InfoPlist.xcstrings in Resources */,
 				6AB81DA79C2FB33A8BFBA4BB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -950,6 +966,9 @@
 				C38DCA5A434EE0A5B33CB7CB /* SnoozeGate.swift in Sources */,
 				F328E0FA68BE491644057169 /* StopAlarmIntent.swift in Sources */,
 				36AD01AA3B3250F641B30D72 /* StopIntentSpike.swift in Sources */,
+				939A8E8262D62CD1915EFADF /* VideoAnswerCamera.swift in Sources */,
+				72AD46DE1066E5C75D102504 /* VideoAnswerGate.swift in Sources */,
+				22C52EF86ADC9C19455FCCA8 /* VideoAnswerPhotoLibrary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +990,7 @@
 				7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */,
 				D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */,
 				14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */,
+				B87A2AA4C1CBCFB612222763 /* VideoAnswerGateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1182,6 +1202,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1303,6 +1324,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

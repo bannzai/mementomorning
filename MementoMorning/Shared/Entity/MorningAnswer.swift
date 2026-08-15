@@ -14,11 +14,16 @@ final class MorningAnswer {
     private(set) var text: String
     /// 夜の振り返りの記録。true = やれた / false = やれていない / nil = 未記録。180 日の節目「まだ、やれていないこと」の原資データ
     private(set) var isFulfilled: Bool?
+    /// 動画回答で写真ライブラリへ保存した動画の PHAsset localIdentifier。テキスト回答では nil。
+    /// 文字起こし (issue #25) が音声トラックの取得に使う。Optional のプリミティブ型のため軽量マイグレーションで追加できる
+    private(set) var videoAssetIdentifier: String?
 
-    init(id: UUID = .init(), answeredDate: Date, text: String) {
+    // videoAssetIdentifier はテキスト回答の既存呼び出し側では常に nil のため、既定値付きで追加する
+    init(id: UUID = .init(), answeredDate: Date, text: String, videoAssetIdentifier: String? = nil) {
         self.id = id
         self.answeredDate = answeredDate
         self.text = text
+        self.videoAssetIdentifier = videoAssetIdentifier
     }
 
     /// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する。
@@ -33,6 +38,13 @@ final class MorningAnswer {
     /// text を更新する
     func setText(text: String) {
         self.text = text
+        self.updatedDateTime = .now
+    }
+
+    /// 動画回答の保存済み動画の localIdentifier を更新する (同じ日に動画で答え直した時は新しい動画で上書きする)。
+    /// nil で消去する (動画回答の後にテキストで答え直した時に、古い動画を指し続けないようにする)
+    func setVideoAssetIdentifier(videoAssetIdentifier: String?) {
+        self.videoAssetIdentifier = videoAssetIdentifier
         self.updatedDateTime = .now
     }
 

@@ -2,8 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<!-- 権限の説明文はアプリの基準言語 (英語) で書き、日本語は InfoPlist.xcstrings で提供する -->
 	<key>NSAlarmKitUsageDescription</key>
-	<string>設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します</string>
+	<string>Used to ring the alarm at your set time and stop it by answering today's question.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to record your video answer to the morning question with the front camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to record the audio of your video answer.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to save your recorded video answers to the 'Memento Morning' album in Photos.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>RevenueCatAPIKey</key>
