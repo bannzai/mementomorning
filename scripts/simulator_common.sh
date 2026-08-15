@@ -17,11 +17,13 @@ ensure_simulator_exists() {
 
   echo "シミュレータ確認: name=${sim_name}, OS=${os_version}"
 
-  # 該当シミュレータが存在するか確認
+  # 該当シミュレータが存在するか確認。
+  # 同名デバイスが別の iOS ランタイムにだけ存在するケースを「存在する」と誤判定しないよう、
+  # simctl の検索語で対象 OS のランタイム区分に絞ってから名前を照合する。
   # grep -q は最初のマッチで早期終了し、出力の多い環境では simctl 側が SIGPIPE で非0終了する。
   # 呼び出し元スクリプトが set -o pipefail のためパイプ全体が失敗扱いになり、
   # 既存シミュレータを「存在しない」と誤判定して重複作成してしまうので -q は使わない
-  if xcrun simctl list devices | grep "${sim_name} (" > /dev/null; then
+  if xcrun simctl list devices "iOS ${os_version}" | grep "${sim_name} (" > /dev/null; then
     echo "シミュレータ '${sim_name}' は既に存在します。作成をスキップします。"
     return 0
   fi

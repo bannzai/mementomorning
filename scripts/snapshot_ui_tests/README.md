@@ -148,11 +148,11 @@ MementoMorningSnapshotUITests を build-for-testing でビルド。
 1. `MementoMorning/Features/SnapshotUITest/SnapshotUITestPage.swift` に `SnapshotUITest<{PreviewType}>()` の行を追加
 2. `MementoMorningSnapshotUITests/Features/{Feature}/{Page}SnapshotUITest.swift` を既存ファイルを雛形に作成
 
-注意: SnapshotUITestPage は一覧描画の時点で全 Preview の `previews` body を評価するため、
-Preview 内のサンプルデータ挿入は撮影対象に関係なく全ページ分が同一プロセスで実行される。
-各 Preview のシーディングは「空の時だけ挿入」で冪等化しており、一覧の先頭 (ContentView) の
-サンプルデータが以降のページの共有状態になる。ページ固有のシード状態は撮影時には分離できない
-(翻訳チェックの用途では静的な UI 文言が写っていれば足りるため、この制約を受け入れている)。
+注意: 各 Preview は `PersistenceController.shared.container` (in-memory) を共有するため、
+SnapshotUITestPage の wrapper は Preview 本体の評価を表示時まで遅延させて
+(`SnapshotUITestLazyPreview`)、撮影対象以外のサンプルデータ挿入が走らないようにしている。
+新しい Preview が複数の Preview を持つ場合は wrapper の `previewCount` 引数に個数を渡す。
+Preview のシーディング自体も「空の時だけ挿入」で冪等化しておくこと (body の再評価対策)。
 
 ### 2. スクリーンショット生成
 

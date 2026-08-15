@@ -150,6 +150,30 @@ done
 # 進行ログを見やすく
 sep() { printf '\n==== %s ====\n' "$*"; }
 
+# 対象言語分のスクリーンショット PNG が揃っているかを判定する関数。
+# ディレクトリ構造 {テストクラス}/{インデックス}/{言語}.png のうち、現状すべてのテストが
+# Preview 1 件 (インデックス 0) のため、インデックス 0 の言語ファイルで判定する
+snapshot_screenshots_complete() {
+  local screenshot_dir=$1
+  [ -d "$screenshot_dir" ] || return 1
+
+  # 対象言語リスト (未指定時の全言語は MementoMorningSnapshotUITests/Languages.swift と揃える)
+  local target_languages
+  if [ -n "$LANGUAGES" ]; then
+    IFS=',' read -ra target_languages <<< "$LANGUAGES"
+  else
+    target_languages=(ja en)
+  fi
+
+  for lang in "${target_languages[@]}"; do
+    lang=$(echo "$lang" | tr -d ' ')
+    if [ ! -f "$screenshot_dir/0/${lang}.png" ]; then
+      return 1
+    fi
+  done
+  return 0
+}
+
 sep "Preparing screenshots directory"
 mkdir -p scripts/snapshot_ui_tests/screenshots
 
@@ -185,6 +209,7 @@ fi
 # テストを実行してartifactを収集
 test_count=0
 artifact_paths=()
+failed_tests=""
 
 # set -e は無効化（テストが失敗しても継続）
 set +e
@@ -228,8 +253,11 @@ for test_file in $test_files; do
     continue
   fi
 
-  # テスト実行（言語指定がある場合は第3引数として渡す）
-  ./scripts/snapshot_ui_tests/run_snapshot_ui_test.sh "$test_path" "$artifact_path" "$LANGUAGES"
+  # テスト実行（言語指定がある場合は第3引数として渡す）。
+  # 失敗しても残りのテストは継続するが、失敗を収集して最後に非ゼロで終了する
+  if ! ./scripts/snapshot_ui_tests/run_snapshot_ui_test.sh "$test_path" "$artifact_path" "$LANGUAGES"; then
+    failed_tests+="  - $test_class"$'\n'
+  fi
 
   # テスト実行直後にスクリーンショット抽出
   if [ -d "$artifact_path" ]; then
@@ -255,6 +283,14 @@ done
 
 # テスト実行後は set -e を再有効化
 set -e
+
+# 失敗したテストがある場合は、不完全な生成結果を翻訳チェック側へ成功として渡さないよう非ゼロで終了する
+if [ -n "$failed_tests" ]; then
+  sep "ERROR: The following tests failed:"
+  echo "$failed_tests"
+  sep "Partial screenshots saved to: scripts/snapshot_ui_tests/screenshots/"
+  exit 1
+fi
 
 sep "All done."
 sep "Screenshots saved to: scripts/snapshot_ui_tests/screenshots/"

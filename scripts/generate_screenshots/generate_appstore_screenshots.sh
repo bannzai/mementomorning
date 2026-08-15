@@ -216,6 +216,31 @@ is_test_complete() {
   return 0
 }
 
+# --overwrite 時に、対象テストの既存出力 (対象言語分) を削除する関数。
+# 古い出力が残っていると、テストが失敗しても is_test_complete が前回の生成物で
+# 成功と誤判定するため、実行前に消して今回の生成物だけで成否を判定できるようにする
+remove_test_outputs() {
+  local test_file=$1
+  local filename=$(basename "$test_file" .swift)
+  local screenshot_number=$(echo "$filename" | sed -E 's/AppStoreScreenshot([0-9]+)PageSnapshotUITest/\1/')
+  local variant_name=$(get_variant_name "$screenshot_number")
+  local variant_index=$(get_variant_index "$screenshot_number")
+  local expected_file="${variant_index}_APP_IPHONE_65_${variant_index}.png"
+
+  local target_languages
+  if [ -n "$LANGUAGES" ]; then
+    IFS=',' read -ra target_languages <<< "$LANGUAGES"
+  else
+    target_languages=(ja en)
+  fi
+
+  for lang in "${target_languages[@]}"; do
+    lang=$(echo "$lang" | tr -d ' ')
+    local fastlane_lang=$(map_language_to_fastlane "$lang")
+    rm -f "$VARIANT_OUTPUT_BASE_DIR/_variant-${variant_name}/${fastlane_lang}/${expected_file}"
+  done
+}
+
 # 1つのテストを実行して抽出・整理する関数（並列実行の単位）
 run_single_test() {
   local test_file=$1
@@ -313,10 +338,17 @@ total_count=$(echo "$test_files" | wc -l | tr -d ' ')
 sep "Found $total_count AppStore screenshot test(s), running with $PARALLEL parallel job(s)"
 
 # 並列実行ループ
-running=0
+# 並列数の制御は PID を FIFO で待つ方式にする (macOS 標準の Bash 3.2 には wait -n が無く、
+# `wait -n || true` は失敗が握り潰されて実際には待機しないため)
+job_pids=()
 test_count=0
 for test_file in $test_files; do
   test_count=$((test_count + 1))
+
+  # --overwrite の場合は既存出力を先に削除し、今回の生成物だけで成否を判定する
+  if [ "$OVERWRITE" = true ]; then
+    remove_test_outputs "$test_file"
+  fi
 
   # --overwrite でない場合、全言語分のファイルが揃っていればスキップ
   if [ "$OVERWRITE" = false ] && is_test_complete "$test_file"; then
@@ -325,12 +357,12 @@ for test_file in $test_files; do
   fi
 
   run_single_test "$test_file" "$test_count" "$total_count" "$TEMP_SCREENSHOTS_DIR" &
-  running=$((running + 1))
+  job_pids+=($!)
 
-  # 並列数上限に達したら1つ完了を待つ
-  if [ "$running" -ge "$PARALLEL" ]; then
-    wait -n 2>/dev/null || true
-    running=$((running - 1))
+  # 並列数上限に達したら最も古いジョブの完了を待つ
+  if [ "${#job_pids[@]}" -ge "$PARALLEL" ]; then
+    wait "${job_pids[0]}" 2>/dev/null || true
+    job_pids=(${job_pids[@]+"${job_pids[@]:1}"})
   fi
 done
 
@@ -376,14 +408,18 @@ for test_file in $test_files; do
   fi
 done
 
-if [ -n "$final_failed" ]; then
-  sep "WARNING: The following tests failed even after retry:"
-  echo "$final_failed" >&3
-  echo "$final_failed"
-fi
-
 # 一時ファイル・ディレクトリの最終クリーンアップ
 cleanup_temp_files
+
+# リトライ後も出力が揃わなかったテストがある場合は、欠落した一式を正常な素材として
+# 後続処理 (apply_variant / fastlane) に渡さないよう非ゼロで終了する
+if [ -n "$final_failed" ]; then
+  sep "ERROR: The following tests failed even after retry:"
+  echo "$final_failed" >&3
+  echo "$final_failed"
+  echo "ログファイル: $LOG_FILE" >&3
+  exit 1
+fi
 
 sep "All done."
 sep "App Store screenshots saved to: $VARIANT_OUTPUT_BASE_DIR/_variant-*/"

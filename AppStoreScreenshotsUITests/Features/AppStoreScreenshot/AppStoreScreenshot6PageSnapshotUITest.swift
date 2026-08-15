@@ -24,11 +24,13 @@ final class AppStoreScreenshot6PageSnapshotUITest: XCTestCase {
         let fileName = URL(fileURLWithPath: #file).deletingPathExtension().lastPathComponent
         let functionName = #function.replacingOccurrences(of: "()", with: "")
 
-        filteredLanguages().forEach { (language, _) in
+        filteredLanguages().forEach { (language, languageWithRegion) in
             debugPrint("Start: ", #file, #function, language)
 
             let app = XCUIApplication.instantiate()
             app.launchArguments += ["-AppleLanguages", "(\(language))"]
+            // 日付等のロケール依存表示を対象地域の形式で撮影するため、リージョン付きタグも渡す
+            app.launchArguments += ["-AppleLocale", languageWithRegion]
             app.launch()
 
             for index in (0..<previewCount) {
