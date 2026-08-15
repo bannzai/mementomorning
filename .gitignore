@@ -10,3 +10,10 @@ tmp/
 .mcp.json
 # RevenueCat の API key を持つローカル設定 (public リポジトリのため実値をコミットしない。既定値の Config.xcconfig は追跡する)
 Config.local.xcconfig
+
+# スクリーンショット生成の出力先 (取り込み元 bannzai/Focus と同じく生成物はコミットしない)
+artifacts/
+scripts/generate_screenshots/artifacts/
+scripts/generate_screenshots/temp_screenshots/
+scripts/snapshot_ui_tests/screenshots/
+fastlane/screenshots/
