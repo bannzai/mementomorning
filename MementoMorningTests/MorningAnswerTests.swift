@@ -17,6 +17,27 @@ final class MorningAnswerTests: XCTestCase {
         XCTAssertNil(MorningAnswer(answeredDate: .now, text: "家族と過ごす").isFulfilled)
     }
 
+    func testVideoAssetIdentifierIsNilOnTextAnswer() {
+        XCTAssertNil(MorningAnswer(answeredDate: .now, text: "家族と過ごす").videoAssetIdentifier)
+    }
+
+    func testInitStoresVideoAssetIdentifier() {
+        XCTAssertEqual(
+            MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-1").videoAssetIdentifier,
+            "asset-1"
+        )
+    }
+
+    func testSetVideoAssetIdentifierUpdatesIdentifierAndUpdatedDateTime() {
+        let answer = MorningAnswer(answeredDate: .now, text: "家族と過ごす")
+        let updatedDateTimeBeforeSet = answer.updatedDateTime
+
+        answer.setVideoAssetIdentifier(videoAssetIdentifier: "asset-2")
+
+        XCTAssertEqual(answer.videoAssetIdentifier, "asset-2")
+        XCTAssertGreaterThanOrEqual(answer.updatedDateTime, updatedDateTimeBeforeSet)
+    }
+
     func testSetFulfilledUpdatesIsFulfilledAndUpdatedDateTime() {
         let answer = MorningAnswer(answeredDate: .now, text: "家族と過ごす")
         let updatedDateTimeBeforeSet = answer.updatedDateTime
