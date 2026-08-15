@@ -13,6 +13,8 @@ struct DebugMenuPage: View {
 
     @Environment(\.modelContext) private var modelContext
 
+    /// オンボーディング完了フラグ。false に戻すと RootView が即座にオンボーディングへ切り替わる
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
     /// 検証用のプレミアム強制フラグ。課金状態のゲート (全履歴・無限追撃) の動作確認に使う (再実行しても壊れない冪等なトグル)
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
 
@@ -88,6 +90,17 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Schedule night reminder in 1 minute")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+            }
+            Section {
+                Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
+                    .accessibilityIdentifier("debug_onboarding_state")
+                // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
+                Button {
+                    hasCompletedOnboarding = false
+                } label: {
+                    Text(verbatim: "Reset onboarding")
+                }
+                .accessibilityIdentifier("debug_reset_onboarding")
             }
             Section {
                 Text(verbatim: "isPremium: \(PremiumEntitlement.isPremium)")

@@ -40,27 +40,52 @@ struct MementoMorningApp: App {
     }
 }
 
-/// ルート画面。通知から開く画面の提示と、夜リマインドの登録を担う
+/// ルート画面。オンボーディングとホームの切り替え、通知から開く画面の提示、夜リマインドの登録を担う
 private struct RootView: View {
     @Bindable private var notificationRouter = NotificationRouter.shared
+    /// オンボーディング完了済みかどうか。未完了の間はオンボーディングを表示し、
+    /// 通知の認可リクエストもオンボーディング側の許可ステップに委ねる (起動直後にダイアログを出さない)
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+
+    /// フラグ導入前のバージョンから更新した既存インストールの移行。
+    /// キーが一度も書き込まれていない (nil) 場合に限り、アラーム設定済みなら完了扱いにしてオンボーディングへ戻さない。
+    /// デバッグメニューのリセットは false を明示的に書き込むため、この移行の対象にならない
+    init() {
+        guard UserDefaults.standard.object(forKey: .hasCompletedOnboarding) == nil else { return }
+        if ((try? PersistenceController.shared.container.mainContext.fetchCount(FetchDescriptor<AlarmSetting>())) ?? 0) > 0 {
+            UserDefaults.standard.set(true, forKey: .hasCompletedOnboarding)
+        }
+    }
 
     var body: some View {
-        ContentView()
-            // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
-            // アクセントも温白に固定し、システム標準の青いリンク色を出さない
-            .preferredColorScheme(.dark)
-            .tint(Color.warmWhite)
-            .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
-                NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+        ZStack {
+            if hasCompletedOnboarding {
+                ContentView()
+                    .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
+                        NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+                    }
+                    .task {
+                        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
+                        if isUnitTest { return }
+                        // オンボーディングの許可ステップで認可済み (または拒否済み) のため、ここではダイアログなしで夜リマインドの登録だけが走る
+                        await NightReminder.requestAuthorizationAndSchedule()
+                    }
+            } else {
+                OnboardingPage()
+                    .transition(.opacity)
             }
-            .task {
-                // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
-                if isUnitTest { return }
-                await NightReminder.requestAuthorizationAndSchedule()
-            }
-            .task {
-                // 購入・復元・期限切れを課金判定キャッシュへ反映し続ける (未 configure なら即 return する)
-                await PremiumEntitlement.observeCustomerInfo()
-            }
+        }
+        // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
+        // アクセントも温白に固定し、システム標準の青いリンク色を出さない。
+        // オンボーディングも同じ世界観のため、ContentView ではなく両画面の親に当てる
+        .preferredColorScheme(.dark)
+        .tint(Color.warmWhite)
+        // オンボーディング完了時はスライドではなくフェードでホームへ切り替える (デザインの画面遷移規約)
+        .animation(.easeInOut(duration: 0.6), value: hasCompletedOnboarding)
+        .task {
+            // 購入・復元・期限切れを課金判定キャッシュへ反映し続ける (未 configure なら即 return する)。
+            // オンボーディング中も購読を切らさないよう、ContentView ではなく親で開始する
+            await PremiumEntitlement.observeCustomerInfo()
+        }
     }
 }

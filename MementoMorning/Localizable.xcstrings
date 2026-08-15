@@ -61,6 +61,26 @@
         }
       }
     },
+    "Alarm & Notifications": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームと通知の許可"
+          }
+        }
+      }
+    },
+    "Alarm & notification permissions are requested next": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次の画面でアラームと通知の許可をお願いします"
+          }
+        }
+      }
+    },
     "Alarm is off · Tap the time to change": {
       "localizations": {
         "ja": {
@@ -77,6 +97,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "すべての履歴"
+          }
+        }
+      }
+    },
+    "Allow": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可する"
+          }
+        }
+      }
+    },
+    "Allowed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可済み"
+          }
+        }
+      }
+    },
+    "Answer one question each morning to stop the alarm.\nYour answers become the journal of your life.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝ひとつの問いに答えて、アラームを止める。\n答えは、あなたの人生のジャーナルになる。"
           }
         }
       }
@@ -107,6 +157,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "守れてますか?"
+          }
+        }
+      }
+    },
+    "Begin": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "はじめる"
           }
         }
       }
@@ -157,6 +217,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "閉じる"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "つづける"
           }
         }
       }
@@ -291,6 +361,16 @@
         }
       }
     },
+    "Night reminder": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "夜のリマインド"
+          }
+        }
+      }
+    },
     "No answer this morning yet.": {
       "localizations": {
         "ja": {
@@ -381,6 +461,16 @@
         }
       }
     },
+    "Open Settings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を開く"
+          }
+        }
+      }
+    },
     "Premium": {
       "localizations": {
         "ja": {
@@ -441,12 +531,32 @@
         }
       }
     },
+    "Remember death.\nThen begin your morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "死を想ってから、\n朝を始める。"
+          }
+        }
+      }
+    },
     "Restore Purchases": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "購入を復元"
+          }
+        }
+      }
+    },
+    "Rings at your time, even in silent mode.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定した時刻に、サイレントモードでも鳴ります"
           }
         }
       }
@@ -471,12 +581,42 @@
         }
       }
     },
+    "Set alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームをセットする"
+          }
+        }
+      }
+    },
     "Settings": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "設定"
+          }
+        }
+      }
+    },
+    "Seven Mornings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "七つの朝"
+          }
+        }
+      }
+    },
+    "Seven answers, together on one page for the first time.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "七日分の答えが、はじめて一枚に並びました"
           }
         }
       }
@@ -571,6 +711,16 @@
         }
       }
     },
+    "The alarm keeps returning until you answer.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えるまで、アラームは鳴り続けます"
+          }
+        }
+      }
+    },
     "The purchase couldn't be completed.": {
       "localizations": {
         "ja": {
@@ -651,6 +801,16 @@
         }
       }
     },
+    "You can change permissions in the Settings app.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可は設定アプリから変更できます"
+          }
+        }
+      }
+    },
     "Your answers will gather here, one morning at a time.": {
       "localizations": {
         "ja": {
@@ -661,22 +821,12 @@
         }
       }
     },
-    "Seven Mornings": {
+    "Your first alarm": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "七つの朝"
-          }
-        }
-      }
-    },
-    "Seven answers, together on one page for the first time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "七日分の答えが、はじめて一枚に並びました"
+            "value": "最初のアラーム"
           }
         }
       }
