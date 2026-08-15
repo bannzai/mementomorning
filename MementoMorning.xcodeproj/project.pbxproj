@@ -34,6 +34,7 @@
 		53D975F01E22A25F72452BBD /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 61AF4AEDE590737CEF6A406E /* RevenueCat */; };
 		5620CC3AB5CFCD0BA965A10F /* MorningQuestionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B251AAB71E7F43C488C5CC83 /* MorningQuestionPage.swift */; };
 		5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
+		605C0F19958962FECC5CF766 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */; };
 		6189BCBCE907AB3868D5FD49 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF121C6617379EE6ED5B779 /* OnboardingPage.swift */; };
 		6A7B3C433CC99BF73EF3F096 /* AnswerLogVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACFA7248329B835442DD1C4C /* AnswerLogVisibility.swift */; };
 		6AB81DA79C2FB33A8BFBA4BB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */; };
@@ -91,6 +92,7 @@
 		368460825E5F8390F0948A64 /* SnoozeGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGateTests.swift; sourceTree = "<group>"; };
 		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
 		45A743CD146712761B27B24D /* QuestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPage.swift; sourceTree = "<group>"; };
+		4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				1AFFC6A063A59543493172A5 /* Assets.xcassets */,
 				715457F9DCAEABC482EBEB8B /* ContentView.swift */,
 				F7B64203A853C06733EA5259 /* Info.plist */,
+				4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */,
 				F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */,
 				D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */,
 				92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */,
@@ -519,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */,
+				605C0F19958962FECC5CF766 /* InfoPlist.xcstrings in Resources */,
 				6AB81DA79C2FB33A8BFBA4BB /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,6 +747,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -829,6 +834,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
