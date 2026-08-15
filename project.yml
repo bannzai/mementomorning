@@ -47,8 +47,13 @@ targets:
     platform: iOS
     sources:
       - MementoMorningTests
+      # SKTestSession(configurationFileNamed:) がテストバンドルから .storekit を読むため、
+      # scheme の run 用と同じファイルをリソースとして同梱する (StoreKitConfigurationTests)
+      - path: MementoMorning.storekit
+        buildPhase: resources
     dependencies:
       - target: MementoMorning
+      - sdk: StoreKitTest.framework
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorningTests

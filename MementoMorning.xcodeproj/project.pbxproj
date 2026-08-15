@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
 		119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */; };
+		14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */; };
 		158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */; };
 		15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */; };
 		1B4349AA97691B2ED56DE13D /* LifeCalendarDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */; };
@@ -21,7 +22,9 @@
 		334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */; };
 		36AD01AA3B3250F641B30D72 /* StopIntentSpike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1569FF56F53101A3EDBE4 /* StopIntentSpike.swift */; };
 		3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFC6A063A59543493172A5 /* Assets.xcassets */; };
+		3D9EE11995B8B3BAF2AD2304 /* StoreKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */; };
 		3EA4343A913B1E57883C9C28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715457F9DCAEABC482EBEB8B /* ContentView.swift */; };
+		46FBC9833205655F28AE4FCB /* MementoMorning.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */; };
 		4A32A22DDE1C69871CE53650 /* PaywallPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE03BA5E48D851DD27B5A884 /* PaywallPage.swift */; };
 		5057BDFC3BC96E468D89F110 /* NightReflectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A66F484F795E19FB4ADA23 /* NightReflectionPage.swift */; };
 		53D975F01E22A25F72452BBD /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 61AF4AEDE590737CEF6A406E /* RevenueCat */; };
@@ -78,6 +81,7 @@
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
+		5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */ = {isa = PBXFileReference; path = MementoMorning.storekit; sourceTree = "<group>"; };
 		6EB94C934831139721BDE0F8 /* SampleAnswerSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAnswerSeeder.swift; sourceTree = "<group>"; };
 		6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDates.swift; sourceTree = "<group>"; };
 		715457F9DCAEABC482EBEB8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,8 +93,10 @@
 		8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngineTests.swift; sourceTree = "<group>"; };
 		8CD092B0CB02A35B27E659C0 /* MementoMorning.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MementoMorning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningApp.swift; sourceTree = "<group>"; };
+		97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitConfigurationTests.swift; sourceTree = "<group>"; };
 		9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D21ECA983735868168CDBBD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKitTest.framework; path = System/Library/Frameworks/StoreKitTest.framework; sourceTree = SDKROOT; };
 		ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSetting.swift; sourceTree = "<group>"; };
 		AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGate.swift; sourceTree = "<group>"; };
 		ACFA7248329B835442DD1C4C /* AnswerLogVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLogVisibility.swift; sourceTree = "<group>"; };
@@ -115,6 +121,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A8FD1AF6B4E85B0E63F3313A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D9EE11995B8B3BAF2AD2304 /* StoreKitTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC734A178C013E4F8926E61C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -224,9 +238,11 @@
 		751D7CA08C8D341C408CB57E = {
 			isa = PBXGroup;
 			children = (
+				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
 				BC9C14203F595DE15AF9FE69 /* issue-9 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
+				C9B88CBCEA928A1FC6F3591C /* Frameworks */,
 				261CA245021353F8F1D32C5D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -299,6 +315,14 @@
 			path = AnswerLog;
 			sourceTree = "<group>";
 		};
+		C9B88CBCEA928A1FC6F3591C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CDB10AFF43EE8E1906FE2F6A /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,6 +361,7 @@
 				783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */,
 				368460825E5F8390F0948A64 /* SnoozeGateTests.swift */,
 				C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */,
+				97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */,
 			);
 			path = MementoMorningTests;
 			sourceTree = "<group>";
@@ -349,6 +374,8 @@
 			buildConfigurationList = 9CD84CBF6BBF0AD250A55F73 /* Build configuration list for PBXNativeTarget "MementoMorningTests" */;
 			buildPhases = (
 				735777BCB76C12AE08354823 /* Sources */,
+				6EC91105270F9FFB20D20BDD /* Resources */,
+				A8FD1AF6B4E85B0E63F3313A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -426,6 +453,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6EC91105270F9FFB20D20BDD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46FBC9833205655F28AE4FCB /* MementoMorning.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		854733A01958AA8759F5EB70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -490,6 +525,7 @@
 				C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */,
 				7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */,
 				D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */,
+				14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
