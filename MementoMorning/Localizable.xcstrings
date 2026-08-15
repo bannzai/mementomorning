@@ -831,6 +831,16 @@
         }
       }
     },
+    "This morning you said '%@'": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のあなた『%@』"
+          }
+        }
+      }
+    },
     "Will you do yesterday's answer today?": {
       "localizations": {
         "ja": {

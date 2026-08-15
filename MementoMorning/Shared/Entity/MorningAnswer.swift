@@ -21,6 +21,15 @@ final class MorningAnswer {
         self.text = text
     }
 
+    /// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する。
+    /// 取得の失敗を nil にせず throw するのは、呼び出し側が「取得に失敗した」と「その日は未回答」を区別できるようにするため
+    static func answer(day: Date, calendar: Calendar, modelContext: ModelContext) throws -> MorningAnswer? {
+        let startOfDay = calendar.startOfDay(for: day)
+        var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == startOfDay })
+        descriptor.fetchLimit = 1
+        return try modelContext.fetch(descriptor).first
+    }
+
     /// text を更新する
     func setText(text: String) {
         self.text = text
@@ -34,11 +43,9 @@ final class MorningAnswer {
     }
 }
 
-/// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する
+/// 指定日 (0 時基準) の回答を取得する。取得の失敗は未回答と同じ扱い (nil) にする。
+/// 失敗と未回答を区別したい呼び出し側は MorningAnswer.answer(day:calendar:modelContext:) を使う
 @MainActor
 func fetchMorningAnswer(answeredDate: Date, modelContext: ModelContext, calendar: Calendar = .current) -> MorningAnswer? {
-    let day = calendar.startOfDay(for: answeredDate)
-    var descriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == day })
-    descriptor.fetchLimit = 1
-    return try? modelContext.fetch(descriptor).first
+    try? MorningAnswer.answer(day: answeredDate, calendar: calendar, modelContext: modelContext)
 }
