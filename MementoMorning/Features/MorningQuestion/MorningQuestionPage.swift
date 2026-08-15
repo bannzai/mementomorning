@@ -24,27 +24,46 @@ struct MorningQuestionPage: View {
     @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
-        ZStack {
-            // 静かな世界観の墨色背景 (design_handoff_memento_morning/README.md の Design Tokens)
-            Color.ink
-                .ignoresSafeArea()
+        VStack(spacing: 0) {
+            // 回答本文 (昨日の回答・自由入力) は長さ制限のない自由入力のため、
+            // 本文領域をスクロール可能にして小さい端末や大きな Dynamic Type でも全文を読めるようにする。
+            // 操作ボタンはスクロール外の下部固定にして常に押せるようにする
+            ScrollView {
+                VStack(spacing: 40) {
+                    // ja: 今日死ぬとしたら、何をやりたいか
+                    Text(String(localized: "If today were your last day, what would you want to do?"))
+                        .font(.system(size: 27, weight: .light))
+                        .lineSpacing(10)
+                        .multilineTextAlignment(.center)
+                        .accessibilityIdentifier("morning_question_text")
 
-            VStack(spacing: 40) {
-                Spacer()
+                    if let yesterdayAnswer, !isYesterdayProposalDeclined {
+                        // ja: 昨日の回答を、今日やる?
+                        Text(String(localized: "Will you do yesterday's answer today?"))
+                            .font(.system(size: 15, weight: .medium))
+                            .foregroundStyle(.secondary)
 
-                // ja: 今日死ぬとしたら、何をやりたいか
-                Text(String(localized: "If today were your last day, what would you want to do?"))
-                    .font(.system(size: 27, weight: .light))
-                    .lineSpacing(10)
-                    .multilineTextAlignment(.center)
-                    .accessibilityIdentifier("morning_question_text")
-
-                if let yesterdayAnswer, !isYesterdayProposalDeclined {
-                    yesterdayProposalSection(yesterdayAnswer: yesterdayAnswer)
-                } else {
-                    freeInputSection
+                        Text(yesterdayAnswer.text)
+                            .font(.system(size: 25, weight: .light))
+                            .lineSpacing(12)
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("morning_question_yesterday_text")
+                    } else {
+                        // ja: ここに書く
+                        TextField(String(localized: "Type here"), text: $text, axis: .vertical)
+                            .font(.system(size: 25, weight: .light))
+                            .lineLimit(3...6)
+                            .multilineTextAlignment(.center)
+                            .focused($isTextFieldFocused)
+                            .accessibilityIdentifier("morning_question_text_field")
+                    }
                 }
+                .padding(.top, 110)
+                .padding(.horizontal, 32)
+                .frame(maxWidth: .infinity)
+            }
 
+            VStack(spacing: 16) {
                 if let saveError {
                     // エラーメッセージはそのまま表示する (加工しない)
                     Text(saveError)
@@ -54,77 +73,50 @@ struct MorningQuestionPage: View {
                         .accessibilityIdentifier("morning_question_save_error")
                 }
 
-                Spacer()
+                if let yesterdayAnswer, !isYesterdayProposalDeclined {
+                    Button {
+                        save(text: yesterdayAnswer.text)
+                    } label: {
+                        // ja: やる
+                        Text(String(localized: "I will"))
+                    }
+                    .buttonStyle(PrimaryPillButtonStyle())
+                    .disabled(isSaving)
+                    .accessibilityIdentifier("morning_question_yes_button")
+
+                    Button {
+                        isYesterdayProposalDeclined = true
+                        isTextFieldFocused = true
+                    } label: {
+                        // ja: 別の答えを書く
+                        Text(String(localized: "Write a different answer"))
+                    }
+                    .buttonStyle(SecondaryPillButtonStyle())
+                    .accessibilityIdentifier("morning_question_no_button")
+                } else {
+                    Button {
+                        save(text: text)
+                    } label: {
+                        // ja: これで確定する
+                        Text(String(localized: "Make it today's answer"))
+                    }
+                    .buttonStyle(PrimaryPillButtonStyle())
+                    .disabled(isSaving || text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .accessibilityIdentifier("morning_question_submit_button")
+                }
             }
             .padding(.horizontal, 32)
+            .padding(.bottom, 32)
         }
+        .frame(maxWidth: .infinity)
+        // 静かな世界観の墨色背景 (design_handoff_memento_morning/README.md の Design Tokens)
+        .background(Color.ink.ignoresSafeArea())
         .foregroundStyle(Color.warmWhite)
         .onAppear {
             yesterdayAnswer = fetchMorningAnswer(
                 answeredDate: Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now,
                 modelContext: modelContext
             )
-        }
-    }
-
-    /// 「昨日の回答を今日やる? YES / NO」の選択式入力 (寝起きでも扱える単純さを優先する)
-    private func yesterdayProposalSection(yesterdayAnswer: MorningAnswer) -> some View {
-        VStack(spacing: 24) {
-            // ja: 昨日の回答を、今日やる?
-            Text(String(localized: "Will you do yesterday's answer today?"))
-                .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(.secondary)
-
-            Text(yesterdayAnswer.text)
-                .font(.system(size: 25, weight: .light))
-                .lineSpacing(12)
-                .multilineTextAlignment(.center)
-                .accessibilityIdentifier("morning_question_yesterday_text")
-
-            VStack(spacing: 16) {
-                Button {
-                    save(text: yesterdayAnswer.text)
-                } label: {
-                    // ja: やる
-                    Text(String(localized: "I will"))
-                }
-                .buttonStyle(PrimaryPillButtonStyle())
-                .disabled(isSaving)
-                .accessibilityIdentifier("morning_question_yes_button")
-
-                Button {
-                    isYesterdayProposalDeclined = true
-                    isTextFieldFocused = true
-                } label: {
-                    // ja: 別の答えを書く
-                    Text(String(localized: "Write a different answer"))
-                }
-                .buttonStyle(SecondaryPillButtonStyle())
-                .accessibilityIdentifier("morning_question_no_button")
-            }
-        }
-    }
-
-    /// 自由入力での回答 (覚醒後の入力を想定した大きめのタイポグラフィ)
-    private var freeInputSection: some View {
-        VStack(spacing: 24) {
-            // ja: ここに書く
-            TextField(String(localized: "Type here"), text: $text, axis: .vertical)
-                .font(.system(size: 25, weight: .light))
-                .lineLimit(3...6)
-                .multilineTextAlignment(.center)
-                .focused($isTextFieldFocused)
-                .accessibilityIdentifier("morning_question_text_field")
-
-            Button {
-                save(text: text)
-            } label: {
-                // ja: これで確定する
-                Text(String(localized: "Make it today's answer"))
-            }
-            .buttonStyle(PrimaryPillButtonStyle())
-            .disabled(isSaving || text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-            .accessibilityIdentifier("morning_question_submit_button")
         }
     }
 

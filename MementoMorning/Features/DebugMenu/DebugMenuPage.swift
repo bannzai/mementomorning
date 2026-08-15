@@ -197,9 +197,9 @@ struct DebugMenuPage: View {
         refreshAnswerStates()
     }
 
-    /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。
-    /// 朝の問い画面の「昨日の回答を、今日やる?」の選択式入力は
-    /// 「昨日の回答あり + 今日未回答」でしか出ないため、その状態をタップ操作だけで作れるようにする
+    /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
+    /// 朝の問い画面の「昨日の回答を、今日やる?」の選択式入力は「昨日の回答あり + 今日未回答」でしか出ないため、
+    /// 今日の回答がある場合は Delete all answers → 本操作の順で状態を作る
     private func seedYesterdayAnswer() {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
         guard fetchMorningAnswer(answeredDate: yesterday, modelContext: modelContext) == nil else {
@@ -208,8 +208,14 @@ struct DebugMenuPage: View {
         modelContext.insert(
             MorningAnswer(answeredDate: Calendar.current.startOfDay(for: yesterday), text: "母に長い電話をかける")
         )
-        try? modelContext.save()
-        refreshAnswerStates()
+        do {
+            try modelContext.save()
+            refreshAnswerStates()
+        } catch {
+            // 保存失敗を握りつぶすと未投入なのに投入済みに見えるため、変更を破棄して開発中に気づけるよう落とす
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+        }
     }
 
     /// 検証用の夜リマインドを 1 分後に登録する。同一識別子の add は保留中の既存リクエストを置換するため、事前削除なしでも何度押しても保留は 1 本に保たれる

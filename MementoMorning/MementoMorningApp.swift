@@ -101,22 +101,36 @@ private struct RootView: View {
         .onChange(of: lastAlarmFiredDate) { _, _ in
             updateMorningQuestionPresentation()
         }
+        // 前面に表示したまま日付が変わったら判定をやり直す (問いは発火した日の朝のもの。跨いだら閉じる)
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            updateMorningQuestionPresentation()
+        }
     }
 
     /// 朝の問い画面の提示状態を最新化する。
-    /// 回答が成立する (MorningAnswer が保存される) と MorningQuestionPage 自身が dismiss するため、ここでは提示のみ行う
+    /// 提示 (未回答の朝) と解除 (日付跨ぎ・アラーム OFF・回答成立) の両方向へ反映する。
+    /// 回答の成立時は MorningQuestionPage 自身も dismiss する
     private func updateMorningQuestionPresentation() {
         // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
         // シミュレータに残った発火記録でテスト中に全画面カバーが提示されないよう打ち切る
         if isUnitTest { return }
         // オンボーディング中は fullScreenCover の提示先 (ContentView) が無く、朝の儀式より初期設定を優先する
         guard hasCompletedOnboarding else { return }
+        // アラームを明示的に OFF にしたユーザーを問いに閉じ込めない (回答するまで閉じられない画面のため、
+        // OFF の間は提示しない・提示中でも閉じる)
+        let alarmSetting = (try? modelContext.fetch(FetchDescriptor<AlarmSetting>()))?.first
+        guard let alarmSetting, alarmSetting.isEnabled else {
+            isMorningQuestionPresented = false
+            return
+        }
         let now = Date.now
         let answeredDates: Set<Date> = fetchMorningAnswer(answeredDate: now, modelContext: modelContext) != nil
             ? [Calendar.current.startOfDay(for: now)]
             : []
-        if isMorningQuestionPending(now: now, alarmFiredDate: MementoMorning.lastAlarmFiredDate(), answeredDates: answeredDates) {
-            isMorningQuestionPresented = true
-        }
+        isMorningQuestionPresented = isMorningQuestionPending(
+            now: now,
+            alarmFiredDate: MementoMorning.lastAlarmFiredDate(),
+            answeredDates: answeredDates
+        )
     }
 }

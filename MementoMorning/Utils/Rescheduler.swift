@@ -75,8 +75,11 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
 
     // 発火予定日時が過ぎた記録があれば、そのアラームは発火した (またはスワイプ消去された) とみなして発火日時を記録する。
     // stopIntent の perform() が実行されない環境 (issue #3 のシミュレータ実測) やスワイプ消去でも、
-    // foreground 復帰時にここで発火を検知して朝の問い (MorningQuestionPage) の提示へ繋げる
-    if let firedDate = existing.map(\.fireDate).filter({ $0 <= now }).max() {
+    // foreground 復帰時にここで発火を検知して朝の問い (MorningQuestionPage) の提示へ繋げる。
+    // 記録には main の発火日時だけを使う。バックアップは main より後 (+backupAlarmIntervalMinutes×n) のため
+    // 深夜のアラームでは日付を跨ぐことがあり、跨いだ日時で記録すると「前日の朝」の発火を翌日の問いとして
+    // 提示してしまう (バックアップが発火済みならその main も必ず発火予定日時を過ぎている)
+    if let firedDate = existing.filter({ $0.origin == ScheduledAlarmOrigin.main }).map(\.fireDate).filter({ $0 <= now }).max() {
         recordAlarmFired(date: firedDate)
     }
 
