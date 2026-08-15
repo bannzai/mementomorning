@@ -18,15 +18,29 @@ struct MementoMorningApp: App {
 
     var body: some Scene {
         WindowGroup {
+            #if DEBUG
+            if isSnapshotUITest {
+                // 多言語スクリーンショット撮影では本番のルート分岐 (オンボーディング・朝の問い提示) を通さず、
+                // 撮影対象 (本番画面の Preview) の一覧を直接表示する
+                SnapshotUITestPage()
+                    // 本番 RootView と同じテーマ (ダーク固定 + 温白アクセント) で撮影する
+                    .preferredColorScheme(.dark)
+                    .tint(Color.warmWhite)
+            } else {
+                RootView()
+            }
+            #else
             RootView()
+            #endif
         }
         .modelContainer(PersistenceController.shared.container)
         // initial: true でコールドローンチ時 (既に .active で onChange が発火しないケース) もカバーする。
         // reschedule は冪等 + 直列化済みのため、初回に二重で呼ばれても問題ない
         .onChange(of: scenePhase, initial: true) { _, newValue in
             // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
-            // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
-            if isUnitTest { return }
+            // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る。
+            // 多言語スクリーンショット撮影中も、撮影画面の上に認可ダイアログが被らないよう打ち切る
+            if isUnitTest || isSnapshotUITest { return }
             switch newValue {
             case .active:
                 // 連続追撃カウント (スヌーズ消費数) のリセットは reschedule が行う

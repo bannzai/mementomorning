@@ -177,6 +177,8 @@ struct AnswerLogPage_Previews: PreviewProvider {
         let modelContext = ModelContext(container)
         // 直近 7 日以内の回答 2 件 + 8 日以上前の回答 1 件 (無料状態では見えない) のサンプル
         let _ = {
+            // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
             modelContext.insert(MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く"))
             modelContext.insert(MorningAnswer(answeredDate: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, text: "友人に手紙を書く"))
             modelContext.insert(MorningAnswer(answeredDate: Calendar.current.date(byAdding: .day, value: -10, to: .now)!, text: "山に登る"))

@@ -172,8 +172,12 @@ struct AlarmSettingPage_Previews: PreviewProvider {
         let container = PersistenceController.shared.container
         let modelContext = ModelContext(container)
         // 毎朝 7:00 に鳴る有効なアラーム設定
-        let _ = modelContext.insert(AlarmSetting(hour: 7, minute: 0))
-        let _ = try! modelContext.save()
+        let _ = {
+            // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<AlarmSetting>())) == 0 else { return }
+            modelContext.insert(AlarmSetting(hour: 7, minute: 0))
+            try! modelContext.save()
+        }()
 
         NavigationStack {
             AlarmSettingPage()
