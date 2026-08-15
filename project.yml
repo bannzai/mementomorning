@@ -27,6 +27,11 @@ targets:
       - MementoMorning
     dependencies:
       - package: RevenueCat
+    # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
+    # Config.xcconfig 経由で渡す (実値は gitignore した Config.local.xcconfig で上書きする。issue #15)
+    configFiles:
+      Debug: Config.xcconfig
+      Release: Config.xcconfig
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning

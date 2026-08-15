@@ -20,8 +20,10 @@ enum PremiumEntitlement {
     static let offeringIdentifier = "default"
 
     /// RevenueCat の iOS 用 public API key (appl_...)。
-    /// RevenueCat プロジェクトの作成と商品登録は #15 で行うため、それまでは空にして configure をスキップする
-    static let revenueCatAPIKey = ""
+    /// 本リポジトリは public のためソースに実値を置かず、gitignore した Config.local.xcconfig から
+    /// Info.plist 経由で受け取る (手順は Config.xcconfig のコメント参照)。
+    /// キーを持たない環境 (CI・コントリビューターの手元) では空文字になり configure をスキップする
+    static let revenueCatAPIKey = Bundle.main.object(forInfoDictionaryKey: "RevenueCatAPIKey") as? String ?? ""
 
     /// 現在のユーザーがプレミアムかどうか。
     /// customerInfoStream が UserDefaults へ保存した最新の entitlement 判定を返す
