@@ -57,19 +57,20 @@ enum AlarmKitManager {
         }
     }
 
-    /// 登録済みアラームを全キャンセルする。
-    /// AlarmKit に cancelAll は存在しないため、alarms を全列挙して個別 cancel(id:) する
-    static func cancelAll() throws {
-        for alarm in try AlarmManager.shared.alarms {
+    /// 登録済みアラームを全キャンセルする (preservedAlarmIDs の ID は保護して残す)。
+    /// AlarmKit に cancelAll は存在しないため、alarms を全列挙して個別 cancel(id:) する。
+    /// 保護指定は未発火の追撃アラームを foreground 復帰の再スケジュールから守るために使う
+    static func cancelAll(preservedAlarmIDs: Set<UUID> = []) throws {
+        for alarm in try AlarmManager.shared.alarms where !preservedAlarmIDs.contains(alarm.id) {
             try AlarmManager.shared.cancel(id: alarm.id)
         }
     }
 
-    /// OS 側に登録済みのアラームが残っているかを返す。
+    /// OS 側に登録済みのアラームが残っているかを返す (preservedAlarmIDs の ID は残っていて正常なため数えない)。
     /// 一覧の取得自体に失敗した場合は「残っているかもしれない」として true を返す (fail-closed 用)
-    static var hasRemainingAlarms: Bool {
+    static func hasRemainingAlarms(preservedAlarmIDs: Set<UUID> = []) -> Bool {
         guard let alarms = try? AlarmManager.shared.alarms else { return true }
-        return !alarms.isEmpty
+        return alarms.contains { !preservedAlarmIDs.contains($0.id) }
     }
 
     /// 鳴動中アラームを停止する

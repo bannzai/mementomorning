@@ -12,6 +12,8 @@ struct MementoMorningApp: App {
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
+        // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する
+        PremiumEntitlement.configureIfPossible()
     }
 
     var body: some Scene {
@@ -27,9 +29,14 @@ struct MementoMorningApp: App {
             if isUnitTest { return }
             switch newValue {
             case .active:
-                // ユーザーがアプリを開けた (openAppWhenRun の成功または手動起動) なら追撃ループから抜けられているため、
-                // issue #2 スパイクの連続追撃カウントをリセットする
-                UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+                // 連続追撃カウントは今日の回答が済んでいる時だけリセットする。
+                // openAppWhenRun による foreground 復帰でもここは走るため、無条件のリセットだと
+                // 未回答のまま停止するたびにカウントが 0 に戻り、無料枠のスヌーズ上限に到達しない (PR #30 レビュー指摘)。
+                // 回答の保存フロー実装 (issue #4 / #25) 時は、保存完了時の「全アラームキャンセル + カウント直接リセット」へ
+                // 置き換える (回答を保存しても scenePhase は再発火せず、ここでは拾えないため。PR #30 レビュー指摘)
+                if hasTodayAnswer(modelContext: PersistenceController.shared.container.mainContext) {
+                    UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+                }
                 Task {
                     await reschedule(modelContext: PersistenceController.shared.container.mainContext)
                     do {
@@ -87,8 +94,16 @@ private struct RootView: View {
 
     var body: some View {
         ContentView()
+            // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
+            // アクセントも温白に固定し、システム標準の青いリンク色を出さない
+            .preferredColorScheme(.dark)
+            .tint(Color.warmWhite)
             .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
                 NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+            }
+            .task {
+                // 購入・復元・期限切れを課金判定キャッシュへ反映し続ける (未 configure なら即 return する)
+                await PremiumEntitlement.observeCustomerInfo()
             }
     }
 }

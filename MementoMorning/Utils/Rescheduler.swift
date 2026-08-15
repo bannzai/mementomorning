@@ -20,6 +20,21 @@ extension String {
 /// UserNotifications の 64 件制限を参考に半分程度へ抑える定数設計 (.claude/rules/ios-alarmkit-constraints.md)
 let maxScheduledAlarmCount = 30
 
+/// reschedule と同じ直列キューで任意のアラーム操作を実行する。
+/// StopAlarmIntent の追撃登録が reschedule (全キャンセル) と並行すると、
+/// 「reschedule が保護記録を読む → Intent が登録を完了する → 古い集合で cancelAll」の順序で
+/// 追撃が消される競合があるため、アラーム登録系の操作はこのキューへ連結して全順序を保証する (PR #30 レビュー指摘)
+@MainActor
+func performSerializedAlarmOperation(operation: @MainActor @escaping () async -> Void) async {
+    let previousTask = latestRescheduleTask
+    let task = Task {
+        await previousTask?.value
+        await operation()
+    }
+    latestRescheduleTask = task
+    await task.value
+}
+
 /// エンジンの出力に従い「全キャンセル → 全再登録」を実行し、ScheduledAlarm 記録を更新する。
 /// foreground 復帰時・設定変更時に手続的に呼ぶ (リアクティブな自動実行はしない。
 /// 状態変化検知の自動実行は不意の解除・登録がアンコントローラブルになるため避ける)。
@@ -27,9 +42,7 @@ let maxScheduledAlarmCount = 30
 /// 並行呼び出しはタスク連結で直列化される (後勝ちで最終状態は最後の呼び出し時点の設定を反映する)
 @MainActor
 func reschedule(modelContext: ModelContext) async {
-    let previousTask = latestRescheduleTask
-    let task = Task {
-        await previousTask?.value
+    await performSerializedAlarmOperation {
         // 有効なアラーム設定がある場合だけ認可を要求する。設定が無い/OFF の状態で拒否されると、
         // 後から設定を保存してもシステムの認可ダイアログは再表示できず、以降の登録が全件失敗し続けるため
         // (production の認可導線。拒否された場合は後続の schedule が throw し、エラーとして可視化される)
@@ -41,8 +54,6 @@ func reschedule(modelContext: ModelContext) async {
         // (待機がアラーム設定時刻を跨ぐと、古い now では過去の発火日時を生成してしまう)
         await performReschedule(now: .now, modelContext: modelContext)
     }
-    latestRescheduleTask = task
-    await task.value
 }
 
 /// reschedule の本体。直列化のため reschedule 経由でのみ呼ぶ。
@@ -63,13 +74,34 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     let existing = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
     let planned = planAlarms(now: now, alarmSetting: alarmSetting)
 
+    // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
+    // openAppWhenRun による foreground 復帰はこの reschedule を追撃の登録直後に走らせるため、
+    // 無条件に消すと追撃が一度も発火しない (PR #30 レビュー指摘)。
+    // 保護しない (記録も掃除する) のは次の 2 つの場合:
+    // - 今日の回答が済んでいる (回答後は追撃も止めてよい)
+    // - アラーム設定が OFF (OFF 表示のまま追撃だけが鳴り続けるのを防ぐ。PR #30 レビュー指摘)
+    let preservedAlarmIDs: Set<UUID>
+    if hasTodayAnswer(modelContext: modelContext) || alarmSetting?.isEnabled != true {
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
+        preservedAlarmIDs = []
+    } else {
+        preservedAlarmIDs = Set(
+            [protectedChaseAlarmID(
+                chaseAlarmID: UserDefaults.standard.string(forKey: .stopIntentChaseAlarmID).flatMap(UUID.init(uuidString:)),
+                chaseFireDate: (UserDefaults.standard.object(forKey: .stopIntentChaseFireDate) as? Double).map(Date.init(timeIntervalSince1970:)),
+                now: now
+            )].compactMap { $0 }
+        )
+    }
+
     do {
-        try AlarmKitManager.cancelAll()
+        try AlarmKitManager.cancelAll(preservedAlarmIDs: preservedAlarmIDs)
     } catch {
         // 途中まで消えている可能性があるため実際の残数で判断する。
         // 残っていれば中断 (fail-closed。次回 foreground の再スケジュールで自己修復する)。
         // 全て消えていれば発火済み等の無害なエラーとみなして続行する
-        if AlarmKitManager.hasRemainingAlarms {
+        if AlarmKitManager.hasRemainingAlarms(preservedAlarmIDs: preservedAlarmIDs) {
             UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
             return
         }

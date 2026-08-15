@@ -6,5 +6,7 @@
 	<string>設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
+	<key>RevenueCatAPIKey</key>
+	<string>$(REVENUECAT_API_KEY)</string>
 </dict>
 </plist>
