@@ -1,7 +1,8 @@
 import SwiftUI
 import SwiftData
 
-/// 夜の振り返り画面。夜リマインドから開き、今朝の回答と答え合わせしてループを閉じる
+/// 夜の振り返り画面。夜リマインドから開き、今朝の回答と答え合わせしてループを閉じる。
+/// デザイン handoff 1j / プロトタイプ night 準拠
 struct NightReflectionPage: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -12,77 +13,113 @@ struct NightReflectionPage: View {
     @State private var answer: MorningAnswer?
     /// 直前の記録が保存に失敗したかどうか。true の間はエラーを表示したまま画面に留まり、再タップで再試行できる
     @State private var isSaveFailed = false
+    /// やれた/やれていないの記録操作へハプティクスを添えるためのトリガー。記録のたびに増える
+    @State private var recordHapticTrigger = 0
 
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 0) {
             if let answer {
-                // ja: 守れてますか?
-                Text(String(localized: "Are you keeping it?"))
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
+                // 回答は長さ制限のない自由入力のため、本文領域をスクロール可能にして全文を読めるようにする
+                ScrollView {
+                    VStack(spacing: 30) {
+                        VStack(spacing: 6) {
+                            // ja: 守れてますか?
+                            Text("Are you keeping it?")
+                                .font(.system(size: 21, weight: .light))
+                                .tracking(1.68)
+                                .foregroundStyle(Color.warmWhite)
+                            Text(verbatim: "ARE YOU KEEPING IT?")
+                                .font(.system(size: 10))
+                                .tracking(2.0)
+                                .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        }
 
-                Text(answer.text)
-                    .font(.title3)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("night_reflection_answer_text")
+                        Text(answer.text)
+                            .font(.system(size: 25, weight: .light))
+                            .tracking(0.75)
+                            .lineSpacing(25 * 0.8)
+                            .foregroundStyle(Color.warmWhite)
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("night_reflection_answer_text")
 
-                if let isFulfilled = answer.isFulfilled {
-                    // ja: 記録済み: %@
-                    Text("Recorded: \(isFulfilled ? Text("I did") : Text("Not yet"))")
-                        .font(.footnote)
-                        .foregroundStyle(.tertiary)
+                        if let isFulfilled = answer.isFulfilled {
+                            // ja: 記録済み: %@
+                            Text("Recorded: \(isFulfilled ? Text("I did") : Text("Not yet"))")
+                                .font(.system(size: 11))
+                                .tracking(1.1)
+                                .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        }
+                    }
+                    .padding(.top, 110)
+                    .padding(.horizontal, 36)
+                    .frame(maxWidth: .infinity)
                 }
 
-                VStack(spacing: 12) {
+                VStack(spacing: 14) {
                     Button {
                         record(isFulfilled: true)
                     } label: {
                         // ja: やれた
-                        Text(String(localized: "I did"))
-                            .frame(maxWidth: .infinity)
+                        Text("I did")
                     }
+                    .buttonStyle(PrimaryPillButtonStyle())
                     .accessibilityIdentifier("night_reflection_fulfilled_button")
 
                     Button {
                         record(isFulfilled: false)
                     } label: {
                         // ja: やれていない
-                        Text(String(localized: "Not yet"))
-                            .frame(maxWidth: .infinity)
+                        Text("Not yet")
                     }
+                    .buttonStyle(SecondaryPillButtonStyle())
                     .accessibilityIdentifier("night_reflection_not_fulfilled_button")
 
                     if isSaveFailed {
                         // ja: 保存に失敗しました。もう一度お試しください
                         Text(String(localized: "Failed to save. Please try again."))
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .font(.system(size: 11))
+                            .foregroundStyle(Color.warmWhite.opacity(0.55))
                             .multilineTextAlignment(.center)
                             .accessibilityIdentifier("night_reflection_save_error")
                     }
+
+                    // ja: 空白は空白のまま残ります
+                    Text("Blank days remain blank.")
+                        .font(.system(size: 10))
+                        .tracking(0.6)
+                        .foregroundStyle(Color.warmWhite.opacity(0.3))
+                        .padding(.top, 4)
                 }
-                .buttonStyle(.bordered)
-                .tint(.secondary)
+                .padding(.horizontal, 32)
+                .padding(.bottom, 32)
             } else {
+                Spacer()
+
                 // ja: 今朝の回答はまだありません
                 Text(String(localized: "No answer this morning yet."))
-                    .font(.title3)
+                    .font(.system(size: 17, weight: .light))
+                    .tracking(0.68)
+                    .foregroundStyle(Color.warmWhite.opacity(0.55))
                     .multilineTextAlignment(.center)
-                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 36)
+
+                Spacer()
 
                 Button {
                     dismiss()
                 } label: {
                     // ja: 閉じる
                     Text(String(localized: "Close"))
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
-                .tint(.secondary)
+                .buttonStyle(SecondaryPillButtonStyle())
+                .padding(.horizontal, 32)
+                .padding(.bottom, 32)
             }
         }
-        .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity)
+        .background(Color.ink.ignoresSafeArea())
+        // 記録の操作に軽いハプティクスを添える (handoff の Interactions & Behavior)
+        .sensoryFeedback(.impact(flexibility: .rigid), trigger: recordHapticTrigger)
         .onAppear {
             answer = fetchMorningAnswer(answeredDate: notificationDate, modelContext: modelContext)
         }
@@ -90,6 +127,7 @@ struct NightReflectionPage: View {
 
     /// 夜の振り返りを記録して画面を閉じる。保存に失敗した時は記録できたと誤解させないよう閉じずにエラーを表示する
     private func record(isFulfilled: Bool) {
+        recordHapticTrigger += 1
         isSaveFailed = false
         answer?.setFulfilled(isFulfilled: isFulfilled)
         do {

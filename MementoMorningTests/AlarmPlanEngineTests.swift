@@ -87,74 +87,19 @@ final class AlarmPlanEngineTests: XCTestCase {
         XCTAssertFalse(planned.contains { calendar.startOfDay(for: $0.fireDate) == today })
     }
 
-    func testPlanAlarmsAddsChasesWhenFiredTodayAndUnanswered() {
+    func testPlanAlarmsSkipsTodayRemainderWhenAnsweredAfterFire() {
         let alarmSetting = AlarmSetting(hour: 7, minute: 0)
-        // 7:00 に発火 → 未回答のまま 7:10 に foreground 復帰した状況
-        let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10)
-
-        let planned = planAlarms(
-            now: now,
-            alarmSetting: alarmSetting,
-            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
-            calendar: calendar
-        )
-
-        let chases = planned.filter { $0.origin == ScheduledAlarmOrigin.chase }
-        // 定数から導かず件数を直接書く (定数を変えた時にテストが黙って追従せず、件数キャップの前提崩れに気づけるようにする)
-        XCTAssertEqual(chases.count, 3)
-        XCTAssertEqual(chases.map(\.fireDate), [
-            dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 12),
-            dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 14),
-            dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 16),
-        ])
-        XCTAssertLessThanOrEqual(planned.count, maxScheduledAlarmCount)
-    }
-
-    func testPlanAlarmsAddsNoChaseWhenAnswered() {
-        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
-        // 7:00 に発火 → 7:10 に回答が成立した状況。当日の全アラームが計画から消える
+        // 7:00 に発火 → 7:10 に回答が成立した状況。当日の残り (バックアップ含む) が計画から消え、翌朝から再開する
         let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10)
 
         let planned = planAlarms(
             now: now,
             alarmSetting: alarmSetting,
             answeredDates: [calendar.startOfDay(for: now)],
-            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
             calendar: calendar
         )
 
-        XCTAssertFalse(planned.contains { $0.origin == ScheduledAlarmOrigin.chase })
         XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0))
-    }
-
-    func testPlanAlarmsAddsNoChaseWhenFiredDateIsNotToday() {
-        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
-        // 昨日発火したが未回答のまま日を跨いだ状況。追撃は当日限りで持ち越さない
-        let now = dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0)
-
-        let planned = planAlarms(
-            now: now,
-            alarmSetting: alarmSetting,
-            alarmFiredDate: dateTime(year: 2026, month: 8, day: 12, hour: 7, minute: 0),
-            calendar: calendar
-        )
-
-        XCTAssertFalse(planned.contains { $0.origin == ScheduledAlarmOrigin.chase })
-    }
-
-    func testPlanAlarmsAddsNoChaseWhenDisabled() {
-        // 発火後でもアラーム設定を OFF にしたら追撃も止まる (ユーザーの明示的な停止手段)
-        let alarmSetting = AlarmSetting(hour: 7, minute: 0, isEnabled: false)
-        let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10)
-
-        let planned = planAlarms(
-            now: now,
-            alarmSetting: alarmSetting,
-            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
-            calendar: calendar
-        )
-
-        XCTAssertTrue(planned.isEmpty)
     }
 
     func testPlanAlarmsIsIdempotent() {

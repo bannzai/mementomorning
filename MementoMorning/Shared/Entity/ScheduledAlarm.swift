@@ -34,6 +34,4 @@ enum ScheduledAlarmOrigin {
     static let main = "main"
     /// スワイプ消去の保険として先行登録する追撃発火
     static let backup = "backup"
-    /// アラーム発火後も未回答の間、回答するまで鳴らし続ける追撃発火
-    static let chase = "chase"
 }

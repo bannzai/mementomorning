@@ -16,17 +16,6 @@ let backupAlarmCount = 2
 /// 一方でメインを止めて回答している最中に即座に重ねて鳴らさない程度の余裕も要るため 5 分を採る
 let backupAlarmIntervalMinutes = 5
 
-/// 未回答のまま foreground 復帰した時に先行登録する追撃アラームの本数。
-/// 根拠: 件数上限 (AlarmError.maximumLimitReached) に配慮して少数に抑える。
-/// 追撃を止める操作 (stopIntent) と foreground 復帰のたびに現在時刻起点で再チャージされるため、
-/// 少数でも回答するまで追撃は途切れない
-let chaseAlarmCount = 3
-
-/// 追撃アラームを現在時刻から何分間隔で登録するか。
-/// 根拠: 回答せず放置した二度寝を起こし直せる即応性を優先する。
-/// issue #2 スパイクの実測値 (2 分) と、CLAUDE.md の「アラーム発火の確認は 1〜2 分後のアラームで行う」検証運用に合わせる
-let chaseAlarmIntervalMinutes = 2
-
 /// スケジュールすべき 1 件のアラーム (エンジンの出力)
 struct PlannedAlarm: Equatable {
     /// 発火予定日時
@@ -44,14 +33,12 @@ struct PlannedAlarm: Equatable {
 /// - now より後 lookaheadDays 日以内の hour:minute の発火日時 (毎日) のうち、
 ///   answeredDates (回答済みの日の 0 時の集合) に含まれる日を除いて全て展開し、
 ///   各発火につきメイン 1 件 + backupAlarmIntervalMinutes 分刻みのバックアップ backupAlarmCount 件を返す
-/// - alarmFiredDate (直近のアラーム発火日時) が now と同じ日で、かつその日が未回答なら、
-///   now + chaseAlarmIntervalMinutes 分刻みの追撃 chaseAlarmCount 件を先頭に加える
-///   (「答えるまで止まらない」の中核。回答完了の判定は MorningAnswer の成立 = answeredDates だけに依存し、回答手段に依存しない)
+///   (回答の成立 = answeredDates で当日の発火が計画から消える。回答手段には依存しない。
+///   未回答時の追撃は本エンジンではなく StopAlarmIntent + SnoozeGate が担う: 無料はスヌーズ上限あり・プレミアムは無限)
 func planAlarms(
     now: Date,
     alarmSetting: AlarmSetting?,
     answeredDates: Set<Date> = [],
-    alarmFiredDate: Date? = nil,
     lookaheadDays: Int = planningLookaheadDays,
     calendar: Calendar = .current
 ) -> [PlannedAlarm] {
@@ -65,21 +52,7 @@ func planAlarms(
         calendar: calendar
     ).filter { !answeredDates.contains(calendar.startOfDay(for: $0)) }
 
-    let chases: [PlannedAlarm]
-    if let alarmFiredDate,
-       calendar.isDate(alarmFiredDate, inSameDayAs: now),
-       !answeredDates.contains(calendar.startOfDay(for: now)) {
-        chases = (1...chaseAlarmCount).map { index in
-            PlannedAlarm(
-                fireDate: now.addingTimeInterval(TimeInterval(index * chaseAlarmIntervalMinutes * 60)),
-                origin: ScheduledAlarmOrigin.chase
-            )
-        }
-    } else {
-        chases = []
-    }
-
-    return chases + occurrences.flatMap { fireDate -> [PlannedAlarm] in
+    return occurrences.flatMap { fireDate -> [PlannedAlarm] in
         let backups = (0..<backupAlarmCount).map { index in
             PlannedAlarm(
                 fireDate: fireDate.addingTimeInterval(TimeInterval((index + 1) * backupAlarmIntervalMinutes * 60)),

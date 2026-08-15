@@ -11,6 +11,8 @@ struct MementoMorningApp: App {
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
+        // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する
+        PremiumEntitlement.configureIfPossible()
     }
 
     var body: some Scene {
@@ -25,12 +27,14 @@ struct MementoMorningApp: App {
             // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
             if isUnitTest { return }
             guard newValue == .active else { return }
+            // 連続追撃カウント (スヌーズ消費数) のリセットは reschedule が行う
+            // (今日の回答が成立している時だけリセットする。回答の保存フローも同じ reschedule を通る)
             Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
         }
     }
 }
 
-/// ルート画面。通知から開く画面の提示と、朝の問いの提示、夜リマインドの登録を担う
+/// ルート画面。オンボーディングとホームの切り替え、通知から開く画面の提示、朝の問いの提示、夜リマインドの登録を担う
 private struct RootView: View {
     @Bindable private var notificationRouter = NotificationRouter.shared
     /// アプリのライフサイクル状態。foreground 復帰のたびに朝の問いの提示判定をやり直すために監視する
@@ -41,29 +45,62 @@ private struct RootView: View {
     @AppStorage(.lastAlarmFiredDate) private var lastAlarmFiredDate: Double = 0
     /// 朝の問い画面を提示中かどうか
     @State private var isMorningQuestionPresented = false
+    /// オンボーディング完了済みかどうか。未完了の間はオンボーディングを表示し、
+    /// 通知の認可リクエストもオンボーディング側の許可ステップに委ねる (起動直後にダイアログを出さない)
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+
+    /// フラグ導入前のバージョンから更新した既存インストールの移行。
+    /// キーが一度も書き込まれていない (nil) 場合に限り、アラーム設定済みなら完了扱いにしてオンボーディングへ戻さない。
+    /// デバッグメニューのリセットは false を明示的に書き込むため、この移行の対象にならない
+    init() {
+        guard UserDefaults.standard.object(forKey: .hasCompletedOnboarding) == nil else { return }
+        if ((try? PersistenceController.shared.container.mainContext.fetchCount(FetchDescriptor<AlarmSetting>())) ?? 0) > 0 {
+            UserDefaults.standard.set(true, forKey: .hasCompletedOnboarding)
+        }
+    }
 
     var body: some View {
-        ContentView()
-            .fullScreenCover(isPresented: $isMorningQuestionPresented) {
-                MorningQuestionPage()
+        ZStack {
+            if hasCompletedOnboarding {
+                ContentView()
+                    .fullScreenCover(isPresented: $isMorningQuestionPresented) {
+                        MorningQuestionPage()
+                    }
+                    .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
+                        NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+                    }
+                    .task {
+                        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
+                        if isUnitTest { return }
+                        // オンボーディングの許可ステップで認可済み (または拒否済み) のため、ここではダイアログなしで夜リマインドの登録だけが走る
+                        await NightReminder.requestAuthorizationAndSchedule()
+                    }
+            } else {
+                OnboardingPage()
+                    .transition(.opacity)
             }
-            .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
-                NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
-            }
-            .task {
-                // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
-                if isUnitTest { return }
-                await NightReminder.requestAuthorizationAndSchedule()
-            }
-            // initial: true でコールドローンチ直後 (openAppWhenRun による前面化を含む) も判定する
-            .onChange(of: scenePhase, initial: true) { _, newValue in
-                guard newValue == .active else { return }
-                updateMorningQuestionPresentation()
-            }
-            // foreground 中に StopAlarmIntent.perform() や Rescheduler が発火を記録した場合に追従する
-            .onChange(of: lastAlarmFiredDate) { _, _ in
-                updateMorningQuestionPresentation()
-            }
+        }
+        // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
+        // アクセントも温白に固定し、システム標準の青いリンク色を出さない。
+        // オンボーディングも同じ世界観のため、ContentView ではなく両画面の親に当てる
+        .preferredColorScheme(.dark)
+        .tint(Color.warmWhite)
+        // オンボーディング完了時はスライドではなくフェードでホームへ切り替える (デザインの画面遷移規約)
+        .animation(.easeInOut(duration: 0.6), value: hasCompletedOnboarding)
+        .task {
+            // 購入・復元・期限切れを課金判定キャッシュへ反映し続ける (未 configure なら即 return する)。
+            // オンボーディング中も購読を切らさないよう、ContentView ではなく親で開始する
+            await PremiumEntitlement.observeCustomerInfo()
+        }
+        // initial: true でコールドローンチ直後 (openAppWhenRun による前面化を含む) も判定する
+        .onChange(of: scenePhase, initial: true) { _, newValue in
+            guard newValue == .active else { return }
+            updateMorningQuestionPresentation()
+        }
+        // foreground 中に StopAlarmIntent.perform() や Rescheduler が発火を記録した場合に追従する
+        .onChange(of: lastAlarmFiredDate) { _, _ in
+            updateMorningQuestionPresentation()
+        }
     }
 
     /// 朝の問い画面の提示状態を最新化する。
@@ -72,6 +109,8 @@ private struct RootView: View {
         // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
         // シミュレータに残った発火記録でテスト中に全画面カバーが提示されないよう打ち切る
         if isUnitTest { return }
+        // オンボーディング中は fullScreenCover の提示先 (ContentView) が無く、朝の儀式より初期設定を優先する
+        guard hasCompletedOnboarding else { return }
         let now = Date.now
         let answeredDates: Set<Date> = fetchMorningAnswer(answeredDate: now, modelContext: modelContext) != nil
             ? [Calendar.current.startOfDay(for: now)]

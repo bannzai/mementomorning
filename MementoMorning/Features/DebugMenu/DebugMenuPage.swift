@@ -13,6 +13,11 @@ struct DebugMenuPage: View {
 
     @Environment(\.modelContext) private var modelContext
 
+    /// オンボーディング完了フラグ。false に戻すと RootView が即座にオンボーディングへ切り替わる
+    @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+    /// 検証用のプレミアム強制フラグ。課金状態のゲート (全履歴・無限追撃) の動作確認に使う (再実行しても壊れない冪等なトグル)
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
@@ -42,6 +47,31 @@ struct DebugMenuPage: View {
                     Text(verbatim: "Delete all answers")
                 }
                 .accessibilityIdentifier("debug_delete_all_answers")
+
+                Button {
+                    // 削除は未設定でも成功する (冪等)。リセットすると回答 7 件以上なら ContentView が節目画面を再表示する
+                    UserDefaults.standard.removeObject(forKey: .isSevenMorningsMilestonePresented)
+                } label: {
+                    Text(verbatim: "Reset Seven Mornings milestone")
+                }
+                .accessibilityIdentifier("debug_reset_seven_mornings_milestone")
+            }
+            // デザインシェル (機能配線前の画面) の描画確認用の導線。
+            // 朝の問いはアラーム停止 (#4)、ペイウォールはジャーナルのロック行からも開ける
+            Section {
+                NavigationLink {
+                    QuestionPage()
+                } label: {
+                    Text(verbatim: "Open QuestionPage (design shell)")
+                }
+                .accessibilityIdentifier("debug_open_question_page")
+
+                NavigationLink {
+                    PaywallPage()
+                } label: {
+                    Text(verbatim: "Open PaywallPage (design shell)")
+                }
+                .accessibilityIdentifier("debug_open_paywall_page")
             }
             Section {
                 Button {
@@ -90,6 +120,33 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_clear_alarm_fired")
             } header: {
                 Text(verbatim: "Morning Question (issue #4)")
+            }
+            Section {
+                Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
+                    .accessibilityIdentifier("debug_onboarding_state")
+                // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
+                Button {
+                    hasCompletedOnboarding = false
+                } label: {
+                    Text(verbatim: "Reset onboarding")
+                }
+                .accessibilityIdentifier("debug_reset_onboarding")
+            }
+            Section {
+                Text(verbatim: "isPremium: \(PremiumEntitlement.isPremium)")
+                    .accessibilityIdentifier("debug_premium_state")
+
+                Toggle(isOn: $debugPremiumOverride) {
+                    Text(verbatim: "Force premium (override)")
+                }
+                .accessibilityIdentifier("debug_premium_override_toggle")
+
+                NavigationLink {
+                    PaywallPage()
+                } label: {
+                    Text(verbatim: "Open paywall")
+                }
+                .accessibilityIdentifier("debug_open_paywall")
             }
         }
         .navigationTitle(Text(verbatim: "Developer Menu"))

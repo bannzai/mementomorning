@@ -10,7 +10,14 @@ extension String {
     /// perform() の実行有無・appState・schedule() の成否を改行区切りで追記し、
     /// AlarmSettingPage が @AppStorage で監視して実機上でそのまま読めるようにする
     static let stopIntentSpikeLog = "stopIntentSpikeLog"
+    /// 連続追撃回数 (スヌーズ消費数) を保存する UserDefaults キー。
+    /// 無料枠の判定 (shouldChase) に使い、今日の回答が成立した時に reschedule がリセットする
+    static let stopIntentChaseCount = "stopIntentChaseCount"
 }
+
+/// 追撃アラームの発火間隔 (秒)。
+/// 検証を短時間で回すため、CLAUDE.md の「アラーム発火の確認は 1〜2 分後のアラームで行う」に合わせて 2 分にする
+let stopIntentChaseInterval: TimeInterval = 120
 
 /// スパイク検証ログの unified log 出力先。
 /// UserDefaults の痕跡と二重化し、アプリが途中で kill されても Console / log collect で回収できるようにする

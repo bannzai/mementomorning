@@ -8,3 +8,5 @@ tmp/
 .envrc
 # simtunnel mcp-config が worktree ごとに書き込む接続設定 (セッション固有のためコミットしない)
 .mcp.json
+# RevenueCat の API key を持つローカル設定 (public リポジトリのため実値をコミットしない。既定値の Config.xcconfig は追跡する)
+Config.local.xcconfig
