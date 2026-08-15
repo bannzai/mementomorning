@@ -397,9 +397,10 @@ issue-${lang}.md ファイルは作成せず、「翻訳に問題は見つかり
         echo "    Running Codex CLI..."
         # Codex CLI実行（画像を含む）
         # NOTE: --image で画像を渡すとハングするので一旦諦めた。パスをpromptで渡してもうまく動く
+        # NOTE: --full-auto は codex-cli 0.147.0 で廃止されたため付けない (exec は元々非対話実行)
+        # stdin をパイプのままにすると codex が追加入力を待ってハングするため /dev/null を与える
         if ! codex exec "$prompt" \
-          --sandbox workspace-write \
-          --full-auto; then
+          --sandbox workspace-write < /dev/null; then
           analysis_failures+="  - ${feature_page}/${index}/${lang} (codex)"$'\n'
           echo "    Error: Codex CLI failed for ${feature_page}/${index}/${lang}"
           continue
