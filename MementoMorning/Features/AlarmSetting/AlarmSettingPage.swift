@@ -23,6 +23,15 @@ struct AlarmSettingPage: View {
     /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
     /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
     @State private var isSaving: Bool = false
+    /// ペイウォールを表示中かどうか。無料状態で「無限追撃アラーム」行のタップで開く
+    @State private var isPaywallPresented = false
+
+    /// RevenueCat の entitlement キャッシュ。値の変化で再描画を起こすために監視する (判定は PremiumEntitlement.isPremium が SSOT)
+    @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
+    #if DEBUG
+    /// 検証用のプレミアム強制フラグ。値の変化で再描画を起こすために監視する
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+    #endif
 
     var body: some View {
         Form {
@@ -30,6 +39,37 @@ struct AlarmSettingPage: View {
             Toggle(String(localized: "Alarm"), isOn: $isEnabled)
             // ja: 時刻
             DatePicker(String(localized: "Time"), selection: $time, displayedComponents: .hourAndMinute)
+            // スヌーズ (追撃) の無料枠と、プレミアムの無限追撃への導線 (design handoff §10。課金設計は documents/PROJECT.md)
+            if PremiumEntitlement.isPremium {
+                LabeledContent {
+                    // ja: 無制限
+                    Text("Unlimited")
+                } label: {
+                    // ja: スヌーズ
+                    Text("Snooze")
+                }
+            } else {
+                LabeledContent {
+                    // ja: %lld 回まで (無料)
+                    Text("Up to \(freeTierSnoozeLimit) times (free)")
+                } label: {
+                    // ja: スヌーズ
+                    Text("Snooze")
+                }
+                Button {
+                    isPaywallPresented = true
+                } label: {
+                    LabeledContent {
+                        // ja: プレミアム
+                        Text("Premium")
+                    } label: {
+                        // ja: 無限追撃アラーム
+                        Text("Endless follow-up alarm")
+                            .foregroundStyle(.primary)
+                    }
+                }
+                .accessibilityIdentifier("alarm_setting_endless_alarm_row")
+            }
             if let lastRescheduleError, !lastRescheduleError.isEmpty {
                 // エラーメッセージはそのまま表示する (加工しない)
                 Text(lastRescheduleError)
@@ -52,6 +92,9 @@ struct AlarmSettingPage: View {
                     Text(verbatim: "stopIntent Spike Log (issue #2)")
                 }
             }
+        }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallPage()
         }
         // ja: アラーム
         .navigationTitle(String(localized: "Alarm"))

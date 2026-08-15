@@ -1,222 +1,42 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Alarm": {
+    "%@ / month": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "アラーム"
+            "value": "月 %@"
           }
         }
       }
     },
-    "Answered": {
+    "%@ / year": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "回答済み"
+            "value": "年 %@"
           }
         }
       }
     },
-    "Failed to save": {
+    "%@ a month": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "保存に失敗しました"
+            "value": "ひと月 %@"
           }
         }
       }
     },
-    "If today were your last day, what would you want to do?": {
+    "%@ for life (one-time)": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日死ぬとしたら、何をやりたいか"
-          }
-        }
-      }
-    },
-    "Journal": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ジャーナル"
-          }
-        }
-      }
-    },
-    "Not answered": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未回答"
-          }
-        }
-      }
-    },
-    "OK": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
-          }
-        }
-      }
-    },
-    "Save": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存"
-          }
-        }
-      }
-    },
-    "Share": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "共有"
-          }
-        }
-      }
-    },
-    "Stop": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "止める"
-          }
-        }
-      }
-    },
-    "Stop Alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームを止める"
-          }
-        }
-      }
-    },
-    "Stop the alarm and open Memento Morning": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームを停止して Memento Morning を開きます"
-          }
-        }
-      }
-    },
-    "Time": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "時刻"
-          }
-        }
-      }
-    },
-    "Your answers will gather here, one morning at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答は、ひと朝ずつここに集まっていきます"
-          }
-        }
-      }
-    },
-    "Are you keeping it?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "守れてますか?"
-          }
-        }
-      }
-    },
-    "Check tonight against this morning's answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答と答え合わせしましょう"
-          }
-        }
-      }
-    },
-    "Close": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "閉じる"
-          }
-        }
-      }
-    },
-    "Failed to save. Please try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存に失敗しました。もう一度お試しください"
-          }
-        }
-      }
-    },
-    "I did": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれた"
-          }
-        }
-      }
-    },
-    "No answer this morning yet.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答はまだありません"
-          }
-        }
-      }
-    },
-    "Not yet": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれていない"
-          }
-        }
-      }
-    },
-    "Recorded: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録済み: %@"
+            "value": "一生 %@ (一度だけ)"
           }
         }
       }
@@ -227,6 +47,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "答えた朝 %lld"
+          }
+        }
+      }
+    },
+    "Alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラーム"
+          }
+        }
+      }
+    },
+    "Alarm is off · Tap the time to change": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームはオフ · 時刻をタップして変更"
           }
         }
       }
@@ -251,12 +91,22 @@
         }
       }
     },
-    "Beyond the one question you know.": {
+    "Answered": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "「今日死ぬとしたら」の先へ"
+            "value": "回答済み"
+          }
+        }
+      }
+    },
+    "Are you keeping it?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "守れてますか?"
           }
         }
       }
@@ -291,12 +141,22 @@
         }
       }
     },
-    "Days you meet your past self again.": {
+    "Check tonight against this morning's answer.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "過去の自分と再会する日"
+            "value": "今朝の回答と答え合わせしましょう"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閉じる"
           }
         }
       }
@@ -307,6 +167,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "1行が一週間。答えた朝が、墨として残る。"
+          }
+        }
+      }
+    },
+    "Endless follow-up alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無限追撃アラーム"
           }
         }
       }
@@ -331,6 +201,46 @@
         }
       }
     },
+    "Failed to save": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存に失敗しました"
+          }
+        }
+      }
+    },
+    "Failed to save. Please try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存に失敗しました。もう一度お試しください"
+          }
+        }
+      }
+    },
+    "I did": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やれた"
+          }
+        }
+      }
+    },
+    "If today were your last day, what would you want to do?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
     "In %lld hr %lld min · Tap the time to change": {
       "localizations": {
         "ja": {
@@ -351,22 +261,22 @@
         }
       }
     },
+    "Journal": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ジャーナル"
+          }
+        }
+      }
+    },
     "Life Calendar": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "人生カレンダー"
-          }
-        }
-      }
-    },
-    "Milestones at 30, 90, and 180 days": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "30・90・180日の節目"
           }
         }
       }
@@ -381,12 +291,62 @@
         }
       }
     },
+    "No answer this morning yet.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝の回答はまだありません"
+          }
+        }
+      }
+    },
+    "No purchases to restore were found.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "復元できる購入が見つかりませんでした。"
+          }
+        }
+      }
+    },
+    "Not answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未回答"
+          }
+        }
+      }
+    },
     "Not now": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "今はしない"
+          }
+        }
+      }
+    },
+    "Not yet": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やれていない"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
           }
         }
       }
@@ -421,12 +381,82 @@
         }
       }
     },
-    "Question decks": {
+    "Premium": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "問いのデッキ"
+            "value": "プレミアム"
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "Purchases aren't ready yet. Please try again later.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入はまだ準備できていません。しばらくしてからお試しください。"
+          }
+        }
+      }
+    },
+    "Purchases couldn't be restored.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を復元できませんでした。"
+          }
+        }
+      }
+    },
+    "Recorded: %@": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記録済み: %@"
+          }
+        }
+      }
+    },
+    "Reload prices": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "料金を再読み込み"
+          }
+        }
+      }
+    },
+    "Restore Purchases": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を復元"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
           }
         }
       }
@@ -451,12 +481,62 @@
         }
       }
     },
+    "Share": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "共有"
+          }
+        }
+      }
+    },
+    "Snooze": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スヌーズ"
+          }
+        }
+      }
+    },
     "Speak your answer": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "話して、答える"
+          }
+        }
+      }
+    },
+    "Stop": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "止める"
+          }
+        }
+      }
+    },
+    "Stop Alarm": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームを止める"
+          }
+        }
+      }
+    },
+    "Stop the alarm and open Memento Morning": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アラームを停止して Memento Morning を開きます"
           }
         }
       }
@@ -481,12 +561,52 @@
         }
       }
     },
+    "Terms of Use": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約"
+          }
+        }
+      }
+    },
+    "The purchase couldn't be completed.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を完了できませんでした。"
+          }
+        }
+      }
+    },
+    "The purchase finished, but Premium couldn't be confirmed. Please try restoring purchases later.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入は完了しましたが、プレミアムの反映を確認できませんでした。時間をおいて購入の復元をお試しください。"
+          }
+        }
+      }
+    },
     "This morning's words": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "今朝のことば"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時刻"
           }
         }
       }
@@ -511,42 +631,32 @@
         }
       }
     },
-    "¥3,600 / year": {
+    "Unlimited": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "年 ¥3,600"
+            "value": "無制限"
           }
         }
       }
     },
-    "¥300 a month": {
+    "Up to %lld times (free)": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ひと月 ¥300"
+            "value": "%lld 回まで (無料)"
           }
         }
       }
     },
-    "¥480 / month": {
+    "Your answers will gather here, one morning at a time.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "月 ¥480"
-          }
-        }
-      }
-    },
-    "Alarm is off · Tap the time to change": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームはオフ · 時刻をタップして変更"
+            "value": "回答は、ひと朝ずつここに集まっていきます"
           }
         }
       }

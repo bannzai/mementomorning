@@ -14,12 +14,34 @@ settings:
     TARGETED_DEVICE_FAMILY: "1,2"
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: "1.0"
+packages:
+  # 課金 (issue #9)。purchases-ios ではなくバイナリ配布の purchases-ios-spm を使う (ビルド時間短縮。nikki と同じ選定)
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios-spm
+    from: 5.83.1
 targets:
   MementoMorning:
     type: application
     platform: iOS
     sources:
       - MementoMorning
+    dependencies:
+      - package: RevenueCat
+    # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
+    # Config.xcconfig 経由で渡す (実値は gitignore した Config.local.xcconfig で上書きする。issue #15)
+    configFiles:
+      Debug: Config.xcconfig
+      Release: Config.xcconfig
+    # Release でキーが空のままだと課金が動かないアーカイブを配布してしまうため、ビルド時に検出して失敗させる。
+    # Debug はキー無しでも動く (configure スキップ + 見本価格) 仕様のため対象外 (PR #30 レビュー指摘)
+    preBuildScripts:
+      - name: Require REVENUECAT_API_KEY for Release
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "${CONFIGURATION}" = "Release" ] && [ -z "${REVENUECAT_API_KEY}" ]; then
+            echo "error: REVENUECAT_API_KEY が空です。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)"
+            exit 1
+          fi
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning
@@ -35,8 +57,13 @@ targets:
     platform: iOS
     sources:
       - MementoMorningTests
+      # SKTestSession(configurationFileNamed:) がテストバンドルから .storekit を読むため、
+      # scheme の run 用と同じファイルをリソースとして同梱する (StoreKitConfigurationTests)
+      - path: MementoMorning.storekit
+        buildPhase: resources
     dependencies:
       - target: MementoMorning
+      - sdk: StoreKitTest.framework
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorningTests
@@ -48,6 +75,10 @@ schemes:
         MementoMorning: all
     run:
       config: Debug
+      # 課金の動作確認を Sandbox Apple ID なしでローカル完結させる (issue #15)。
+      # RevenueCat は StoreKit Configuration file でのテストに対応しており、商品は
+      # RevenueCat 側に登録済みであればよい (返金・キャンセルのイベントだけは記録されない)
+      storeKitConfiguration: MementoMorning.storekit
     test:
       config: Debug
       targets:

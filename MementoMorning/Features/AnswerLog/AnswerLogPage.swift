@@ -11,6 +11,13 @@ struct AnswerLogPage: View {
     /// ペイウォールの表示状態。無料枠のロック行から開く
     @State private var isPaywallPresented = false
 
+    /// RevenueCat の entitlement キャッシュ。値の変化で再描画を起こすために監視する (判定は PremiumEntitlement.isPremium が SSOT)
+    @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
+    #if DEBUG
+    /// 検証用のプレミアム強制フラグ。値の変化で再描画を起こすために監視する
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+    #endif
+
     /// fetchLimit 付きの FetchDescriptor を組み立てるため、明示的に init を定義する
     init() {
         var descriptor = FetchDescriptor<MorningAnswer>(
