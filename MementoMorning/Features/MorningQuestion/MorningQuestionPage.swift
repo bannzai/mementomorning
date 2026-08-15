@@ -65,11 +65,14 @@ struct MorningQuestionPage: View {
 
             VStack(spacing: 16) {
                 if let saveError {
-                    // エラーメッセージはそのまま表示する (加工しない)
+                    // エラーメッセージはそのまま表示する (加工しない)。
+                    // 再スケジュール失敗時は最大で登録件数ぶんのエラーが連結されるため、
+                    // 行数を制限して操作ボタンを画面外へ押し出さない (全文はアラーム設定画面でも確認できる)
                     Text(saveError)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
+                        .lineLimit(4)
                         .accessibilityIdentifier("morning_question_save_error")
                 }
 

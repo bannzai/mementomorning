@@ -118,6 +118,9 @@ private struct RootView: View {
                 ContentView()
                     .fullScreenCover(isPresented: $isMorningQuestionPresented) {
                         MorningQuestionPage()
+                            // 「回答するまで閉じられない」を明示する。fullScreenCover は現状スワイプでは閉じられないが、
+                            // 意図をコードに固定し、提示方法を変えた時にもジェスチャで回避できないようにする
+                            .interactiveDismissDisabled()
                     }
                     .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
                         NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)

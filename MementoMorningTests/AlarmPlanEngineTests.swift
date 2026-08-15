@@ -102,6 +102,58 @@ final class AlarmPlanEngineTests: XCTestCase {
         XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0))
     }
 
+    func testPlanAlarmsKeepsFiredDayBackupsWhenUnanswered() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // 7:00 に発火 (スワイプ消去で stopIntent は実行されない) → 未回答のまま 7:03 に foreground 復帰した状況。
+        // 全再計画してもその朝の残バックアップ (7:05 / 7:10) は消えない
+        let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 3)
+
+        let planned = planAlarms(
+            now: now,
+            alarmSetting: alarmSetting,
+            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(planned[0].origin, ScheduledAlarmOrigin.backup)
+        XCTAssertEqual(planned[0].fireDate, dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 5))
+        XCTAssertEqual(planned[1].origin, ScheduledAlarmOrigin.backup)
+        XCTAssertEqual(planned[1].fireDate, dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10))
+        XCTAssertLessThanOrEqual(planned.count, maxScheduledAlarmCount)
+    }
+
+    func testPlanAlarmsDropsPastFiredDayBackups() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // 発火から時間が経ち、その朝のバックアップ (7:05 / 7:10) が全て過去になった状況。過去の発火日時は登録しない
+        let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 30)
+
+        let planned = planAlarms(
+            now: now,
+            alarmSetting: alarmSetting,
+            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
+            calendar: calendar
+        )
+
+        XCTAssertTrue(planned.allSatisfy { $0.fireDate > now })
+        XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0))
+    }
+
+    func testPlanAlarmsDropsFiredDayBackupsWhenAnswered() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // 7:00 に発火 → 7:03 に回答が成立した状況。回答の成立で当日分 (残バックアップ含む) は全て消える
+        let now = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 3)
+
+        let planned = planAlarms(
+            now: now,
+            alarmSetting: alarmSetting,
+            answeredDates: [calendar.startOfDay(for: now)],
+            alarmFiredDate: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0),
+            calendar: calendar
+        )
+
+        XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0))
+    }
+
     func testPlanAlarmsIsIdempotent() {
         let alarmSetting = AlarmSetting(hour: 7, minute: 0)
         let now = dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0)

@@ -91,7 +91,8 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     let planned = planAlarms(
         now: now,
         alarmSetting: alarmSetting,
-        answeredDates: answeredDates
+        answeredDates: answeredDates,
+        alarmFiredDate: lastAlarmFiredDate()
     )
 
     // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
