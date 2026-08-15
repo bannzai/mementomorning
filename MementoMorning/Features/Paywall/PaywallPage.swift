@@ -289,7 +289,7 @@ struct PaywallPage: View {
             if result.customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
-                UserDefaults.standard.set(true, forKey: .premiumEntitlementActive)
+                PremiumEntitlement.cacheEntitlement(customerInfo: result.customerInfo)
                 dismiss()
             } else {
                 // 商品と entitlement の紐付け不備・反映遅延で、購入が成功しても premium が有効にならないケースを黙殺しない
@@ -313,10 +313,11 @@ struct PaywallPage: View {
         isPurchasing = true
         defer { isPurchasing = false }
         do {
-            if try await Purchases.shared.restorePurchases().entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+            let customerInfo = try await Purchases.shared.restorePurchases()
+            if customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
-                UserDefaults.standard.set(true, forKey: .premiumEntitlementActive)
+                PremiumEntitlement.cacheEntitlement(customerInfo: customerInfo)
                 dismiss()
             } else {
                 // ja: 復元できる購入が見つかりませんでした。

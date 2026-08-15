@@ -54,13 +54,25 @@ public struct StopAlarmIntent: LiveActivityIntent {
             appendStopIntentSpikeLog(message: "stop(id:) skipped: invalid alarmID=\(alarmID)")
         }
 
+        // 追撃の登録・上限処理は reschedule (全キャンセル) と同じ直列キューで行う。
+        // 並行させると「reschedule が保護記録を読む → ここで登録が完了する → 古い集合で cancelAll」の
+        // 順序で追撃が消される競合があるため (PR #30 レビュー指摘)
+        await performSerializedAlarmOperation {
+            await handleChaseAfterStop()
+        }
+        return .result()
+    }
+
+    /// 停止後の追撃処理。performSerializedAlarmOperation のキュー内で実行する (perform() から直接呼ばない)
+    @MainActor
+    private func handleChaseAfterStop() async {
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
         guard shouldChase(chaseCount: chaseCount, isPremium: PremiumEntitlement.isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: free tier snooze limit reached (\(chaseCount))")
             // 先行登録済みのバックアップを放置すると無料枠 (freeTierSnoozeLimit) を超えて発火するため、
             // 上限到達時に当日分の残りをキャンセルする (PR #30 レビュー指摘)
-            await cancelRemainingBackupsAtSnoozeLimit()
-            return .result()
+            cancelTodaysBackupAlarms()
+            return
         }
 
         // 追撃アラームは ScheduledAlarm へ記録しない (スパイクのため最小限にする)。
@@ -69,9 +81,8 @@ public struct StopAlarmIntent: LiveActivityIntent {
         let chaseAlarmID = UUID()
         let chaseFireDate = Date.now.addingTimeInterval(stopIntentChaseInterval)
         appendStopIntentSpikeLog(message: "schedule() attempting chase id=\(chaseAlarmID) fireDate=\(chaseFireDate.formatted(.iso8601))")
-        // openAppWhenRun による foreground 復帰の reschedule (全キャンセル) から発火前の追撃を保護するための記録。
-        // schedule() の完了後に書くと「OS 登録済み・記録前」の隙間で cancelAll に消される競合が残るため、
-        // 登録前に書いて失敗時に掃除する (未登録 ID の保護は cancelAll が読み飛ばすだけで無害。PR #30 レビュー指摘)
+        // 追撃の保護記録は schedule() の前に書く。完了後に書くと「OS 登録済み・記録前」の隙間が残るため
+        // (直列化に加えた保険。未登録 ID の保護は cancelAll が読み飛ばすだけで無害。PR #30 レビュー指摘)
         UserDefaults.standard.set(chaseAlarmID.uuidString, forKey: .stopIntentChaseAlarmID)
         UserDefaults.standard.set(chaseFireDate.timeIntervalSince1970, forKey: .stopIntentChaseFireDate)
         do {
@@ -83,26 +94,30 @@ public struct StopAlarmIntent: LiveActivityIntent {
             // schedule() が throw しなくても実登録に失敗している可能性を潰すため、OS 側の一覧で確認する
             let registered = ((try? AlarmManager.shared.alarms) ?? []).contains { $0.id == chaseAlarmID }
             appendStopIntentSpikeLog(message: "schedule() succeeded registeredInAlarms=\(registered)")
+            // 追撃列が動き始めたら当日分のバックアップは不要になる。残すとプレミアム (上限なし) では
+            // バックアップ停止ごとに追撃列が増殖し、複数列が短い間隔で鳴り続ける (PR #30 レビュー指摘)。
+            // 追撃の登録に失敗した場合は、保険としてバックアップを残す
+            cancelTodaysBackupAlarms()
         } catch {
             // 登録に失敗した追撃の記録を残すと、存在しない ID を保護し続けて掃除の判断を誤らせるため消す
             UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
             UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
             appendStopIntentSpikeLog(message: "schedule() failed error=\(error)")
         }
-        return .result()
     }
 
-    /// スヌーズ上限に達した時、当日分の残バックアップアラームをキャンセルして記録からも消す。
+    /// 当日分の残バックアップアラームをキャンセルして記録からも消す。
+    /// 追撃列の開始時 (追撃が保険を兼ねる) とスヌーズ上限到達時 (無料枠超過の防止) に呼ぶ。
     /// キャンセル失敗は次回 reschedule の全キャンセルで回収されるため、ログに残して続行する
     @MainActor
-    private func cancelRemainingBackupsAtSnoozeLimit() {
+    private func cancelTodaysBackupAlarms() {
         let modelContext = PersistenceController.shared.container.mainContext
         let scheduledAlarms = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
-        for backup in backupAlarmsToCancelAtSnoozeLimit(scheduledAlarms: scheduledAlarms, now: .now) {
+        for backup in todaysBackupAlarmsToCancel(scheduledAlarms: scheduledAlarms, now: .now) {
             do {
                 try AlarmManager.shared.cancel(id: backup.id)
                 modelContext.delete(backup)
-                appendStopIntentSpikeLog(message: "backup cancelled at snooze limit id=\(backup.id)")
+                appendStopIntentSpikeLog(message: "backup cancelled id=\(backup.id)")
             } catch {
                 appendStopIntentSpikeLog(message: "backup cancel failed id=\(backup.id) error=\(error)")
             }

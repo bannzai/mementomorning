@@ -8,11 +8,11 @@ extension String {
     static let stopIntentChaseFireDate = "stopIntentChaseFireDate"
 }
 
-/// スヌーズ上限到達時に「当日分」のバックアップとみなす時間窓 (秒)。
+/// 停止操作の時点で「当日分」のバックアップとみなす時間窓 (秒)。
 /// バックアップの最終発火はメインの backupAlarmCount × backupAlarmIntervalMinutes = 10 分後で、
-/// 追撃 (stopIntentChaseInterval × freeTierSnoozeLimit ≒ 4 分) を挟んでも上限到達は発火から十数分以内に収まる。
+/// 追撃 (stopIntentChaseInterval × freeTierSnoozeLimit ≒ 4 分) を挟んでも停止操作は発火から十数分以内に収まる。
 /// 翌日分の先行登録 (約 24 時間後) を誤って含まないよう、十分な余裕を持つ 1 時間にする
-let snoozeLimitBackupCancelWindow: TimeInterval = 3600
+let todaysBackupCancelWindow: TimeInterval = 3600
 
 /// 再スケジュールの全キャンセルから保護すべき追撃アラームの UUID を返す。
 /// openAppWhenRun による foreground 復帰は追撃の登録直後に起きるため、無条件に全キャンセルすると
@@ -24,15 +24,16 @@ func protectedChaseAlarmID(chaseAlarmID: UUID?, chaseFireDate: Date?, now: Date)
     return chaseAlarmID
 }
 
-/// 無料枠のスヌーズ上限に達した時にキャンセルすべき、当日分の残バックアップアラームを返す。
-/// バックアップは課金状態に関係なく先行登録されるため、放置すると停止済みメインの 5 分後・10 分後にも発火し、
-/// 「スヌーズ 2 回まで」の無料枠を超えてしまう。
-/// snoozeLimitBackupCancelWindow 以内の未発火バックアップだけを対象にし、翌日以降の先行登録分は残す。
+/// 停止操作の後にキャンセルすべき、当日分の残バックアップアラームを返す。
+/// バックアップはスワイプ消去 (検知不可) の保険であり、停止操作が起きた朝は追撃列またはスヌーズ上限が
+/// 後続を受け持つため不要になる。放置すると無料枠では「スヌーズ 2 回まで」を超えて発火し、
+/// プレミアムではバックアップ停止ごとに追撃列が増殖する。
+/// todaysBackupCancelWindow 以内の未発火バックアップだけを対象にし、翌日以降の先行登録分は残す。
 /// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
-func backupAlarmsToCancelAtSnoozeLimit(scheduledAlarms: [ScheduledAlarm], now: Date) -> [ScheduledAlarm] {
+func todaysBackupAlarmsToCancel(scheduledAlarms: [ScheduledAlarm], now: Date) -> [ScheduledAlarm] {
     scheduledAlarms.filter { scheduledAlarm in
         scheduledAlarm.origin == ScheduledAlarmOrigin.backup
             && scheduledAlarm.fireDate > now
-            && scheduledAlarm.fireDate <= now.addingTimeInterval(snoozeLimitBackupCancelWindow)
+            && scheduledAlarm.fireDate <= now.addingTimeInterval(todaysBackupCancelWindow)
     }
 }

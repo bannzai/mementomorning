@@ -20,6 +20,21 @@ extension String {
 /// UserNotifications の 64 件制限を参考に半分程度へ抑える定数設計 (.claude/rules/ios-alarmkit-constraints.md)
 let maxScheduledAlarmCount = 30
 
+/// reschedule と同じ直列キューで任意のアラーム操作を実行する。
+/// StopAlarmIntent の追撃登録が reschedule (全キャンセル) と並行すると、
+/// 「reschedule が保護記録を読む → Intent が登録を完了する → 古い集合で cancelAll」の順序で
+/// 追撃が消される競合があるため、アラーム登録系の操作はこのキューへ連結して全順序を保証する (PR #30 レビュー指摘)
+@MainActor
+func performSerializedAlarmOperation(operation: @MainActor @escaping () async -> Void) async {
+    let previousTask = latestRescheduleTask
+    let task = Task {
+        await previousTask?.value
+        await operation()
+    }
+    latestRescheduleTask = task
+    await task.value
+}
+
 /// エンジンの出力に従い「全キャンセル → 全再登録」を実行し、ScheduledAlarm 記録を更新する。
 /// foreground 復帰時・設定変更時に手続的に呼ぶ (リアクティブな自動実行はしない。
 /// 状態変化検知の自動実行は不意の解除・登録がアンコントローラブルになるため避ける)。
@@ -27,9 +42,7 @@ let maxScheduledAlarmCount = 30
 /// 並行呼び出しはタスク連結で直列化される (後勝ちで最終状態は最後の呼び出し時点の設定を反映する)
 @MainActor
 func reschedule(modelContext: ModelContext) async {
-    let previousTask = latestRescheduleTask
-    let task = Task {
-        await previousTask?.value
+    await performSerializedAlarmOperation {
         // 有効なアラーム設定がある場合だけ認可を要求する。設定が無い/OFF の状態で拒否されると、
         // 後から設定を保存してもシステムの認可ダイアログは再表示できず、以降の登録が全件失敗し続けるため
         // (production の認可導線。拒否された場合は後続の schedule が throw し、エラーとして可視化される)
@@ -41,8 +54,6 @@ func reschedule(modelContext: ModelContext) async {
         // (待機がアラーム設定時刻を跨ぐと、古い now では過去の発火日時を生成してしまう)
         await performReschedule(now: .now, modelContext: modelContext)
     }
-    latestRescheduleTask = task
-    await task.value
 }
 
 /// reschedule の本体。直列化のため reschedule 経由でのみ呼ぶ。
