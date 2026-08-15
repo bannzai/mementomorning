@@ -46,7 +46,9 @@
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
 		C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */; };
 		C38DCA5A434EE0A5B33CB7CB /* SnoozeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */; };
+		C4872B88A829A562C2A4EA7F /* ChaseAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */; };
 		C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */; };
+		C5361C2165C329F2B583E2C1 /* ChaseAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */; };
 		D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */; };
 		DB6AC38B5A4436AAE96F5830 /* NightReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CA221981AFA9477D31763C /* NightReminderTests.swift */; };
 		E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */; };
@@ -82,6 +84,7 @@
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
 		5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */ = {isa = PBXFileReference; path = MementoMorning.storekit; sourceTree = "<group>"; };
+		5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseAlarmTests.swift; sourceTree = "<group>"; };
 		6EB94C934831139721BDE0F8 /* SampleAnswerSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAnswerSeeder.swift; sourceTree = "<group>"; };
 		6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDates.swift; sourceTree = "<group>"; };
 		715457F9DCAEABC482EBEB8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 		B42C042B3EE358D4139B1493 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		BD8A21C991EBF5E6F4360D79 /* MementoMorningTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MementoMorningTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C037DFC7112D63C6A6E17C32 /* NightReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReminder.swift; sourceTree = "<group>"; };
+		C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseAlarm.swift; sourceTree = "<group>"; };
 		C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDatesTests.swift; sourceTree = "<group>"; };
 		C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerShareCardRenderTests.swift; sourceTree = "<group>"; };
 		C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopIntentSpikeTests.swift; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */,
+				C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */,
 				D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */,
 				AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */,
 				112B58E4F9934A156679AE30 /* DesignSystem */,
@@ -355,6 +360,7 @@
 				8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */,
 				73D325B90BFCC5302543DF5E /* AnswerLogVisibilityTests.swift */,
 				C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */,
+				5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */,
 				C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */,
 				C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */,
 				16CA221981AFA9477D31763C /* NightReminderTests.swift */,
@@ -393,6 +399,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C94D5706A1151163EBFF173B /* Build configuration list for PBXNativeTarget "MementoMorning" */;
 			buildPhases = (
+				116167399829DBD1856B8A76 /* Require REVENUECAT_API_KEY for Release */,
 				57A0ED272D9BB198CA7A6DF2 /* Sources */,
 				854733A01958AA8759F5EB70 /* Resources */,
 				DC734A178C013E4F8926E61C /* Frameworks */,
@@ -472,6 +479,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		116167399829DBD1856B8A76 /* Require REVENUECAT_API_KEY for Release */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Require REVENUECAT_API_KEY for Release";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ] && [ -z \"${REVENUECAT_API_KEY}\" ]; then\n  echo \"error: REVENUECAT_API_KEY が空です。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)\"\n  exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		57A0ED272D9BB198CA7A6DF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -485,6 +514,7 @@
 				6A7B3C433CC99BF73EF3F096 /* AnswerLogVisibility.swift in Sources */,
 				7D513E0EFC28AB38EF46B78B /* AnswerShareCardPage.swift in Sources */,
 				A65292123DE66BE8D09C6951 /* AnswerShareCardView.swift in Sources */,
+				C4872B88A829A562C2A4EA7F /* ChaseAlarm.swift in Sources */,
 				3EA4343A913B1E57883C9C28 /* ContentView.swift in Sources */,
 				90AE1F58DFDD1A534F02A974 /* DebugMenuPage.swift in Sources */,
 				87E3F55F9195365C0A5ACFCB /* DesignSystem.swift in Sources */,
@@ -519,6 +549,7 @@
 				158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */,
 				E811FB96E3BDAB82CA491D23 /* AnswerLogVisibilityTests.swift in Sources */,
 				334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */,
+				C5361C2165C329F2B583E2C1 /* ChaseAlarmTests.swift in Sources */,
 				119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */,
 				B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */,
 				DB6AC38B5A4436AAE96F5830 /* NightReminderTests.swift in Sources */,

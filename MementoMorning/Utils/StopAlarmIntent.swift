@@ -1,5 +1,6 @@
 import AppIntents
 import AlarmKit
+import SwiftData
 import UIKit
 
 /// アラーム停止用の Intent。
@@ -56,12 +57,15 @@ public struct StopAlarmIntent: LiveActivityIntent {
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
         guard shouldChase(chaseCount: chaseCount, isPremium: PremiumEntitlement.isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: free tier snooze limit reached (\(chaseCount))")
+            // 先行登録済みのバックアップを放置すると無料枠 (freeTierSnoozeLimit) を超えて発火するため、
+            // 上限到達時に当日分の残りをキャンセルする (PR #30 レビュー指摘)
+            await cancelRemainingBackupsAtSnoozeLimit()
             return .result()
         }
-        UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
 
         // 追撃アラームは ScheduledAlarm へ記録しない (スパイクのため最小限にする)。
-        // 記録が無くても次回 foreground の reschedule が cancelAll で OS 側から列挙して消すため残留しない
+        // 未発火の間は reschedule の全キャンセルから UserDefaults の記録 (stopIntentChaseAlarmID) で保護され、
+        // 発火後は次回 foreground の reschedule が OS 側から列挙して消すため残留しない
         let chaseAlarmID = UUID()
         let chaseFireDate = Date.now.addingTimeInterval(stopIntentChaseInterval)
         appendStopIntentSpikeLog(message: "schedule() attempting chase id=\(chaseAlarmID) fireDate=\(chaseFireDate.formatted(.iso8601))")
@@ -69,6 +73,12 @@ public struct StopAlarmIntent: LiveActivityIntent {
             // ja: 今日死ぬとしたら、何をやりたいか
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
             try await AlarmKitManager.schedule(id: chaseAlarmID, fireDate: chaseFireDate, title: title)
+            // 登録に失敗した試行で無料枠を消費しないよう、カウントは schedule() の成功後に更新する (PR #30 レビュー指摘)
+            UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
+            // openAppWhenRun による foreground 復帰の reschedule (全キャンセル) から
+            // 発火前の追撃を保護するため、ID と発火予定を記録する (PR #30 レビュー指摘)
+            UserDefaults.standard.set(chaseAlarmID.uuidString, forKey: .stopIntentChaseAlarmID)
+            UserDefaults.standard.set(chaseFireDate.timeIntervalSince1970, forKey: .stopIntentChaseFireDate)
             // schedule() が throw しなくても実登録に失敗している可能性を潰すため、OS 側の一覧で確認する
             let registered = ((try? AlarmManager.shared.alarms) ?? []).contains { $0.id == chaseAlarmID }
             appendStopIntentSpikeLog(message: "schedule() succeeded registeredInAlarms=\(registered)")
@@ -76,6 +86,24 @@ public struct StopAlarmIntent: LiveActivityIntent {
             appendStopIntentSpikeLog(message: "schedule() failed error=\(error)")
         }
         return .result()
+    }
+
+    /// スヌーズ上限に達した時、当日分の残バックアップアラームをキャンセルして記録からも消す。
+    /// キャンセル失敗は次回 reschedule の全キャンセルで回収されるため、ログに残して続行する
+    @MainActor
+    private func cancelRemainingBackupsAtSnoozeLimit() {
+        let modelContext = PersistenceController.shared.container.mainContext
+        let scheduledAlarms = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
+        for backup in backupAlarmsToCancelAtSnoozeLimit(scheduledAlarms: scheduledAlarms, now: .now) {
+            do {
+                try AlarmManager.shared.cancel(id: backup.id)
+                modelContext.delete(backup)
+                appendStopIntentSpikeLog(message: "backup cancelled at snooze limit id=\(backup.id)")
+            } catch {
+                appendStopIntentSpikeLog(message: "backup cancel failed id=\(backup.id) error=\(error)")
+            }
+        }
+        try? modelContext.save()
     }
 
     /// applicationState をログ用の文字列にする

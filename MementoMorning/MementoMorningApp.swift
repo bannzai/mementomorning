@@ -29,7 +29,9 @@ struct MementoMorningApp: App {
             guard newValue == .active else { return }
             // 連続追撃カウントは今日の回答が済んでいる時だけリセットする。
             // openAppWhenRun による foreground 復帰でもここは走るため、無条件のリセットだと
-            // 未回答のまま停止するたびにカウントが 0 に戻り、無料枠のスヌーズ上限に到達しない (PR #30 レビュー指摘)
+            // 未回答のまま停止するたびにカウントが 0 に戻り、無料枠のスヌーズ上限に到達しない (PR #30 レビュー指摘)。
+            // 回答の保存フロー実装 (issue #4 / #25) 時は、保存完了時の「全アラームキャンセル + カウント直接リセット」へ
+            // 置き換える (回答を保存しても scenePhase は再発火せず、ここでは拾えないため。PR #30 レビュー指摘)
             if hasTodayAnswer(modelContext: PersistenceController.shared.container.mainContext) {
                 UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
             }

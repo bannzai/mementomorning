@@ -35,17 +35,20 @@ final class SnoozeGateTests: XCTestCase {
         )
         let modelContext = ModelContext(container)
         let calendar = Calendar.current
+        // 日付変更の境界で .now が assertion ごとにずれるとテストが不安定になるため、now を固定して全 assertion に渡す
+        let now = Date.now
+        let today = calendar.startOfDay(for: now)
 
-        XCTAssertFalse(hasTodayAnswer(modelContext: modelContext, calendar: calendar))
+        XCTAssertFalse(hasTodayAnswer(modelContext: modelContext, calendar: calendar, now: now))
 
         // 昨日の回答だけでは「今日の回答あり」にならない
-        let yesterday = calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: .now))!
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
         modelContext.insert(MorningAnswer(answeredDate: yesterday, text: "友人に手紙を書く"))
         try modelContext.save()
-        XCTAssertFalse(hasTodayAnswer(modelContext: modelContext, calendar: calendar))
+        XCTAssertFalse(hasTodayAnswer(modelContext: modelContext, calendar: calendar, now: now))
 
-        modelContext.insert(MorningAnswer(answeredDate: calendar.startOfDay(for: .now), text: "家族と海を見に行く"))
+        modelContext.insert(MorningAnswer(answeredDate: today, text: "家族と海を見に行く"))
         try modelContext.save()
-        XCTAssertTrue(hasTodayAnswer(modelContext: modelContext, calendar: calendar))
+        XCTAssertTrue(hasTodayAnswer(modelContext: modelContext, calendar: calendar, now: now))
     }
 }

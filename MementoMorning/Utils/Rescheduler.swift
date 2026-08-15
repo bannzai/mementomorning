@@ -63,13 +63,32 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     let existing = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
     let planned = planAlarms(now: now, alarmSetting: alarmSetting)
 
+    // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
+    // openAppWhenRun による foreground 復帰はこの reschedule を追撃の登録直後に走らせるため、
+    // 無条件に消すと追撃が一度も発火しない (PR #30 レビュー指摘)。
+    // 今日の回答が済んでいる場合は追撃も止めてよいため保護せず、記録も掃除する
+    let preservedAlarmIDs: Set<UUID>
+    if hasTodayAnswer(modelContext: modelContext) {
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
+        preservedAlarmIDs = []
+    } else {
+        preservedAlarmIDs = Set(
+            [protectedChaseAlarmID(
+                chaseAlarmID: UserDefaults.standard.string(forKey: .stopIntentChaseAlarmID).flatMap(UUID.init(uuidString:)),
+                chaseFireDate: (UserDefaults.standard.object(forKey: .stopIntentChaseFireDate) as? Double).map(Date.init(timeIntervalSince1970:)),
+                now: now
+            )].compactMap { $0 }
+        )
+    }
+
     do {
-        try AlarmKitManager.cancelAll()
+        try AlarmKitManager.cancelAll(preservedAlarmIDs: preservedAlarmIDs)
     } catch {
         // 途中まで消えている可能性があるため実際の残数で判断する。
         // 残っていれば中断 (fail-closed。次回 foreground の再スケジュールで自己修復する)。
         // 全て消えていれば発火済み等の無害なエラーとみなして続行する
-        if AlarmKitManager.hasRemainingAlarms {
+        if AlarmKitManager.hasRemainingAlarms(preservedAlarmIDs: preservedAlarmIDs) {
             UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
             return
         }

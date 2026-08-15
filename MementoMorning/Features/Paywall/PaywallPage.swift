@@ -249,16 +249,21 @@ struct PaywallPage: View {
         offering?.lifetime?.storeProduct.localizedPriceString ?? "¥9,800"
     }
 
-    /// offering を読み込む。未 configure (#15 前) では何もしない (見本価格の表示に倒す)。
-    /// lookup_key (PremiumEntitlement.offeringIdentifier) の識別子で取得する。`.current` は Dashboard の
-    /// Current 指定に依存し、`default` が Current になっていない設定でも購入不能にならないようフォールバックにのみ使う (PR #30 レビュー指摘)
+    /// offering を読み込む。未 configure (キーを持たない開発ビルド・Preview) では何もしない (見本価格の表示に倒す)。
+    /// lookup_key (PremiumEntitlement.offeringIdentifier) の識別子だけで取得する。`.current` へのフォールバックは
+    /// Dashboard の Current 指定次第で別キャンペーン用 offering の商品を売ってしまうため使わない (PR #30 レビュー指摘)。
+    /// offering は取得できても全 package が未解決 (商品の反映待ち等) なら購入手段が無いため、読み込み失敗として再読み込み導線に倒す (PR #30 レビュー指摘)
     private func loadOffering() async {
         guard Purchases.isConfigured else { return }
         offeringLoadFailed = false
         do {
-            let offerings = try await Purchases.shared.offerings()
-            offering = offerings.offering(identifier: PremiumEntitlement.offeringIdentifier) ?? offerings.current
-            offeringLoadFailed = offering == nil
+            let resolved = try await Purchases.shared.offerings().offering(identifier: PremiumEntitlement.offeringIdentifier)
+            if let resolved, resolved.annual != nil || resolved.monthly != nil || resolved.lifetime != nil {
+                offering = resolved
+            } else {
+                offering = nil
+                offeringLoadFailed = true
+            }
         } catch {
             offeringLoadFailed = true
         }
@@ -282,6 +287,9 @@ struct PaywallPage: View {
                 return
             }
             if result.customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+                // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
+                // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
+                UserDefaults.standard.set(true, forKey: .premiumEntitlementActive)
                 dismiss()
             } else {
                 // 商品と entitlement の紐付け不備・反映遅延で、購入が成功しても premium が有効にならないケースを黙殺しない
@@ -306,6 +314,9 @@ struct PaywallPage: View {
         defer { isPurchasing = false }
         do {
             if try await Purchases.shared.restorePurchases().entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+                // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
+                // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
+                UserDefaults.standard.set(true, forKey: .premiumEntitlementActive)
                 dismiss()
             } else {
                 // ja: 復元できる購入が見つかりませんでした。
