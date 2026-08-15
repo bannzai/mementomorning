@@ -48,7 +48,7 @@ description: 多言語スクリーンショットを比較して翻訳品質を�
 問題が検出された場合:
 
 1. スクリプトが GitHub Issue を作成する (Issue へのスクリーンショット添付には Cloudflare R2 の環境変数が必要。`scripts/snapshot_ui_tests/upload_to_r2.sh` のコメント参照)
-2. Issue の内容を確認し、`Localizable.xcstrings` を修正する
+2. Issue の内容を確認し、本番の `MementoMorning/Localizable.xcstrings` を修正する (App Store スクショのキャッチコピーは `AppStoreScreenshots/Localizable.xcstrings` が別カタログ)
 3. 修正後、再度スクリーンショットを生成してチェックする
 
 ## チェックリスト

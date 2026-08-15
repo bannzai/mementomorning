@@ -19,9 +19,9 @@
 #
 set -euo pipefail
 
-SCRIPT_DIR="$(cd `dirname $0` && pwd -P)"
-PROJECT_ROOT_DIR=$SCRIPT_DIR/../../
-cd $PROJECT_ROOT_DIR
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+PROJECT_ROOT_DIR="$SCRIPT_DIR/../../"
+cd "$PROJECT_ROOT_DIR"
 
 source scripts/generate_screenshots/appstore_screenshot_env.sh
 
@@ -53,6 +53,13 @@ echo "==== Applying variant: $VARIANT_NAME ===="
 echo "==== Source: $VARIANT_DIR ===="
 echo "==== Destination: $FASTLANE_DIR ===="
 
+# バリアントに PNG が 1 枚も無い場合は適用しない (空の適用を成功にしない)
+if [ -z "$(find "$VARIANT_DIR" -name '*.png' -print -quit 2>/dev/null)" ]; then
+  echo "Error: バリアントに PNG がありません: $VARIANT_DIR"
+  echo "先に ./scripts/generate_screenshots/generate_appstore_screenshots.sh で生成してください"
+  exit 1
+fi
+
 # 各言語ディレクトリを処理
 applied=0
 for lang_dir in "$VARIANT_DIR"/*/; do
@@ -64,9 +71,12 @@ for lang_dir in "$VARIANT_DIR"/*/; do
   dest_dir="$FASTLANE_DIR/$lang"
   mkdir -p "$dest_dir"
 
-  # バリアントのスクリーンショットを適用先にコピー（上書き）
+  # 適用先に残った過去の PNG と混ざった一式を作らないよう、適用言語の既存 PNG を先に削除する
+  find "$dest_dir" -maxdepth 1 -name '*.png' -delete 2>/dev/null || true
+
+  # バリアントのスクリーンショットを適用先にコピー
   cp -f "$lang_dir"*.png "$dest_dir/" 2>/dev/null || true
-  file_count=$(ls -1 "$lang_dir"*.png 2>/dev/null | wc -l | tr -d ' ')
+  file_count=$(ls -1 "$dest_dir"/*.png 2>/dev/null | wc -l | tr -d ' ')
   echo "Applied: $lang ($file_count files)"
   applied=$((applied + file_count))
 done

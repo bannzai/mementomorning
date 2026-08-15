@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd `dirname $0` && pwd -P)"
-PROJECT_ROOT_DIR=$SCRIPT_DIR/../../
-cd $PROJECT_ROOT_DIR
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+PROJECT_ROOT_DIR="$SCRIPT_DIR/../../"
+cd "$PROJECT_ROOT_DIR"
 
 source scripts/snapshot_ui_tests/snapshot_ui_test_env.sh
 
@@ -20,15 +20,12 @@ fi
 # Prevent: xcodebuild: error: Existing file at -resultBundlePath
 rm -rf "$RESULT_BUNDLE_PATH"
 
-# 言語が指定されている場合は設定ファイルに書き込む
-# UI testプロセスは環境変数を受け取れないため、ファイルベースで設定を渡す
+# 言語フィルタリング用環境変数を設定。
+# TEST_RUNNER_ プレフィックスにより、xcodebuild がテストランナープロセスに
+# SNAPSHOT_LANGUAGES として環境変数を引き渡す (Languages.swift の filteredLanguages が読む。
+# 素の export はランナープロセスへ届かず、フィルタが効かない)
 if [ -n "$LANGUAGES" ]; then
-  # macOSのtemporaryディレクトリを使用（FileManager.default.temporaryDirectoryと同じ場所）
-  TMPDIR="${TMPDIR:-/tmp}"
-  CONFIG_FILE="${TMPDIR}snapshot_languages.txt"
-  echo "$LANGUAGES" > "$CONFIG_FILE"
-  echo "==== Writing language config to: $CONFIG_FILE ===="
-  export SNAPSHOT_LANGUAGES="$LANGUAGES"
+  export TEST_RUNNER_SNAPSHOT_LANGUAGES="$LANGUAGES"
 fi
 
 xcodebuild test-without-building \
@@ -40,10 +37,5 @@ xcodebuild test-without-building \
   -resultBundlePath "$RESULT_BUNDLE_PATH" \
   -derivedDataPath "$DERIVED_DATA_PATH"
 
-# テスト完了後に設定ファイルを削除
-if [ -n "$CONFIG_FILE" ] && [ -f "$CONFIG_FILE" ]; then
-  rm -f "$CONFIG_FILE"
-  echo "==== Cleaned up language config file ===="
-fi
 
 echo "==== Test completed: $TEST ===="

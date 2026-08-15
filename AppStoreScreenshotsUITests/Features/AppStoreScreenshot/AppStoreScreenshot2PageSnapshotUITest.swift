@@ -34,7 +34,20 @@ final class AppStoreScreenshot2PageSnapshotUITest: XCTestCase {
             app.launch()
 
             for index in (0..<previewCount) {
-                app.buttons["\(previewType)_\(index)"].firstMatch.tap()
+                let button = app.buttons["\(previewType)_\(index)"].firstMatch
+                // 一覧の下部にあるボタンは初期表示領域外になり得るため、hittable になるまでスクロールしてからタップする
+                var swipeCount = 0
+                while !button.isHittable && swipeCount < 5 {
+                    app.swipeUp()
+                    swipeCount += 1
+                }
+                button.tap()
+                // 遷移先の Preview が表示されたことを確認してから撮影する (一覧のまま撮影して成功にしない)
+                XCTAssertTrue(
+                    app.descendants(matching: .any)["SnapshotPreview_\(previewType)_\(index)"]
+                        .waitForExistence(timeout: 5)
+                )
+                // push 遷移のアニメーションが完了してから撮影する
                 sleep(1)
 
                 let attachment = XCTAttachment(screenshot: app.screenshot())

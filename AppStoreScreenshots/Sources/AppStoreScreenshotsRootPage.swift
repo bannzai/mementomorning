@@ -64,5 +64,7 @@ struct SnapshotUITestLazyPreview<T: PreviewProvider>: View {
         T._allPreviews[index].content
             .navigationBarBackButtonHidden()
             .statusBarHidden()
+            // UITest が「遷移先の Preview が表示されてから撮影する」ための目印
+            .accessibilityIdentifier("SnapshotPreview_\(T.self)_\(index)")
     }
 }

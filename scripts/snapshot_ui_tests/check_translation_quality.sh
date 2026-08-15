@@ -30,9 +30,9 @@
 #
 set -euo pipefail
 
-SCRIPT_DIR="$(cd `dirname $0` && pwd -P)"
-PROJECT_ROOT_DIR=$SCRIPT_DIR/../../
-cd $PROJECT_ROOT_DIR
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+PROJECT_ROOT_DIR="$SCRIPT_DIR/../../"
+cd "$PROJECT_ROOT_DIR"
 
 SCREENSHOTS_DIR="scripts/snapshot_ui_tests/screenshots"
 
@@ -216,6 +216,7 @@ fi
 feature_count=0
 check_count=0
 issue_count=0
+analysis_failures=""
 
 # 繰り返しのupload処理では途中でエラーが起きても処理は継続して欲しい
 set +e
@@ -310,6 +311,12 @@ for feature_page_dir in $feature_pages; do
 - 未翻訳（日本語のまま）
 - 不自然な表現
 
+## 判定対象外: ユーザーの自由入力
+回答本文 (「家族と海を見に行く」等の朝の回答) はユーザーが入力した自由テキストで、
+Preview のサンプルデータとして日本語のまま保存されています。ローカライズ対象ではないため、
+どの言語のスクリーンショットに日本語の回答本文が写っていても「未翻訳」と判定しないでください。
+判定対象は UI 側の文言 (ラベル・ボタン・見出し・注釈) だけです。
+
 ## 重要な注意事項
 
 ### 1. 日付・時刻・ロケール依存表示について
@@ -371,43 +378,57 @@ labels: translation,i18n,quality
 ## 問題がない場合
 issue-${lang}.md ファイルは作成せず、「翻訳に問題は見つかりませんでした」と報告してください。繰り返しますが、問題が無いのならissue-${lang}.mdは作成しないでください"
 
-      if [ "$DRY_RUN" = true ]; then
-        if [ "$USE_CLAUDE" = true ]; then
-          echo "    [DRY RUN] Would check with Claude CLI"
-        else
-          echo "    [DRY RUN] Would check with Codex CLI"
+      # 翻訳分析は dry-run でも実行する (dry-run は Issue 作成・画像アップロードだけを省略する)。
+      # AI CLI の失敗 (認証切れ・API 障害・CLI 不在等) を「問題なし」と混同しないよう収集し、最後に非ゼロで終了する
+      if [ "$USE_CLAUDE" = true ]; then
+        echo "    Running Claude CLI..."
+        # Claude CLI実行
+        if ! claude \
+          --permission-mode acceptEdits \
+          --max-turns 20 \
+          --add-dir . \
+          -p "$prompt"; then
+          analysis_failures+="  - ${feature_page}/${index}/${lang} (claude)"$'\n'
+          echo "    Error: Claude CLI failed for ${feature_page}/${index}/${lang}"
+          continue
         fi
-        echo "    Prompt preview:"
-        echo "$prompt" | head -10
-        echo "    ..."
-        # dry-runでもカウントする（-n オプションの制限を正しく機能させるため）
-        issue_count=$((issue_count + 1))
+        echo "    Claude CLI check completed"
       else
-        if [ "$USE_CLAUDE" = true ]; then
-          echo "    Running Claude CLI..."
-          # Claude CLI実行
-          claude \
-            --permission-mode acceptEdits \
-            --max-turns 20 \
-            --add-dir . \
-            -p "$prompt"
-          echo "    Claude CLI check completed"
-        else
-          echo "    Running Codex CLI..."
-          # Codex CLI実行（画像を含む）
-          # NOTE: --image で画像を渡すとハングするので一旦諦めた。パスをpromptで渡してもうまく動く
-          codex exec "$prompt" \
-            --sandbox workspace-write \
-            --full-auto 
-          echo "    Codex CLI check completed"
+        echo "    Running Codex CLI..."
+        # Codex CLI実行（画像を含む）
+        # NOTE: --image で画像を渡すとハングするので一旦諦めた。パスをpromptで渡してもうまく動く
+        if ! codex exec "$prompt" \
+          --sandbox workspace-write \
+          --full-auto; then
+          analysis_failures+="  - ${feature_page}/${index}/${lang} (codex)"$'\n'
+          echo "    Error: Codex CLI failed for ${feature_page}/${index}/${lang}"
+          continue
         fi
+        echo "    Codex CLI check completed"
+      fi
 
+      if [ "$DRY_RUN" = true ]; then
+        # dry-run: 分析結果 (issue.md の有無) の報告のみ行い、Issue 作成・画像アップロードは省略する
+        if [ -f "$issue_md_path" ]; then
+          echo "    [DRY RUN] Issue file created (not submitted): $issue_md_path"
+          issue_count=$((issue_count + 1))
+        else
+          echo "    [DRY RUN] No issues found (issue.md not created)"
+        fi
+      else
         # issue.mdが作成されたかチェック
         if [ -f "$issue_md_path" ]; then
           echo "    Issue file created: $issue_md_path"
 
-          # GitHub Issueを作成
+          # GitHub Issueを作成。同じ対象の open Issue が既にある場合は重複作成しない (再実行の冪等性)
           issue_title="翻訳品質改善: ${feature_page} - ${lang} (Index: ${index})"
+          existing_issue=$(gh issue list --state open --label translation --search "in:title \"${issue_title}\"" --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          if [ -n "$existing_issue" ]; then
+            echo "    Skipping issue creation (open issue #${existing_issue} already exists): $issue_title"
+            issue_count=$((issue_count + 1))
+            sleep 2
+            continue
+          fi
           sep "    Creating GitHub Issue from $issue_md_path"
           issue_url=$(gh issue create \
             --title "$issue_title" \
@@ -453,6 +474,12 @@ sep "Translation quality check complete"
 echo "CLI used: $([ "$USE_CLAUDE" = true ] && echo "Claude" || echo "Codex")"
 echo "Total feature pages: $total_features"
 echo "Total checks performed: $check_count"
+if [ -n "$analysis_failures" ]; then
+  sep "ERROR: The following comparisons could not be analyzed:"
+  echo "$analysis_failures"
+  echo "未分析の比較を「問題なし」と扱わないため、非ゼロで終了します"
+  exit 1
+fi
 if [ "$DRY_RUN" = false ]; then
   echo "Issues potentially created: $issue_count"
   echo ""

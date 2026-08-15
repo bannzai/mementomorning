@@ -101,12 +101,31 @@ upload_to_r2() {
     return 1
   fi
 
-  # アップロード実行
-  curl -s -w "\n%{http_code}" -X PUT "$url" \
+  # 認証情報を argv に載せると同一ホストの他プロセスから ps 等で読めるため、
+  # 0600 の一時 curl 設定ファイル経由で渡し、リクエスト後に削除する
+  local curl_config
+  curl_config=$(mktemp) || return 1
+  chmod 600 "$curl_config"
+  printf 'user = "%s:%s"\n' "$R2_ACCESS_KEY_ID" "$R2_SECRET_ACCESS_KEY" > "$curl_config"
+
+  # アップロード実行。接続 10 秒・全体 120 秒で打ち切る (ハングした転送で撮影フロー全体を止めないための上限)
+  local response
+  response=$(curl -s -w "\n%{http_code}" -X PUT "$url" \
+    --connect-timeout 10 \
+    --max-time 120 \
     --aws-sigv4 "aws:amz:auto:s3" \
-    --user "${R2_ACCESS_KEY_ID}:${R2_SECRET_ACCESS_KEY}" \
+    --config "$curl_config" \
     -H "Content-Type: image/png" \
-    --data-binary "@${file_path}"
+    --data-binary "@${file_path}")
+  local curl_status=$?
+  rm -f "$curl_config"
+
+  echo "$response"
+  # curl は 403/500 でも exit 0 を返すため、最終行の HTTP ステータスでも成否を判定する
+  if [ $curl_status -ne 0 ] || [ "$(echo "$response" | tail -n1)" != "200" ]; then
+    return 1
+  fi
+  return 0
 }
 
 # コマンドラインから直接実行された場合
@@ -122,11 +141,8 @@ if [ "${BASH_SOURCE[0]}" -ef "$0" ]; then
     exit 1
   fi
 
-  upload_to_r2 "$1" "$2"
-  exit_code=$?
-
-  # HTTPステータスコードを確認
-  if [ $exit_code -eq 0 ]; then
+  # upload_to_r2 は curl の exit code と HTTP ステータス (非 200) の両方を検査して返す
+  if upload_to_r2 "$1" "$2"; then
     exit 0
   else
     exit 1

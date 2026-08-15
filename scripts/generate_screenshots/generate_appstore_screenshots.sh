@@ -36,9 +36,9 @@
 #
 set -euo pipefail
 
-SCRIPT_DIR="$(cd `dirname $0` && pwd -P)"
-PROJECT_ROOT_DIR=$SCRIPT_DIR/../../
-cd $PROJECT_ROOT_DIR
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+PROJECT_ROOT_DIR="$SCRIPT_DIR/../../"
+cd "$PROJECT_ROOT_DIR"
 
 source scripts/generate_screenshots/appstore_screenshot_env.sh
 

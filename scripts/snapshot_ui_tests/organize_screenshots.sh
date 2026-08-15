@@ -109,9 +109,18 @@ for test_class_dir in "$SCREENSHOTS_DIR"/*/; do
   test_file=$(find MementoMorningSnapshotUITests -type f -name "${test_class}.swift" 2>/dev/null | head -1)
 
   if [ -n "$test_file" ]; then
-    # ディレクトリパスを変換: MementoMorningSnapshotUITests -> MementoMorning
-    test_dir=$(dirname "$test_file")
-    source_dir=${test_dir/MementoMorningSnapshotUITests/MementoMorning}
+    # 撮影対象のソースを実在するファイルから特定する。
+    # テストディレクトリの単純置換では、Features 配下に無い画面 (ContentView 等) が
+    # 存在しないパスに変換されるため、{Page}.swift を本体ターゲットから検索する
+    page_name=${test_class%SnapshotUITest}
+    source_file=$(find MementoMorning -name "${page_name}.swift" -not -path "*/SnapshotUITest/*" 2>/dev/null | head -1)
+    if [ -n "$source_file" ]; then
+      source_dir=$(dirname "$source_file")
+    else
+      # 見つからない場合は従来のディレクトリ置換にフォールバックする
+      test_dir=$(dirname "$test_file")
+      source_dir=${test_dir/MementoMorningSnapshotUITests/MementoMorning}
+    fi
 
     # README.md を生成
     readme_file="$test_class_dir/README.md"

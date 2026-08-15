@@ -291,16 +291,6 @@
         }
       }
     },
-    "87 mornings answered": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えた朝 87"
-          }
-        }
-      }
-    },
     "Blank stays blank.": {
       "localizations": {
         "ja": {
@@ -407,6 +397,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "毎朝、死を想ってから\n起きる。"
+          }
+        }
+      }
+    },
+    "%lld mornings answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えた朝 %lld"
           }
         }
       }

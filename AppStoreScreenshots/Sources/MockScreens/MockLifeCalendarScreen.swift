@@ -57,8 +57,8 @@ struct MockLifeCalendarScreen: View {
             Spacer()
 
             VStack(spacing: 6) {
-                // ja: 答えた朝 87
-                Text("87 mornings answered")
+                // ja: 答えた朝 %lld
+                Text("\((0...todayIndex).filter { isAnswered(index: $0) }.count) mornings answered")
                     .font(.system(size: 12))
                     .tracking(1.2)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))

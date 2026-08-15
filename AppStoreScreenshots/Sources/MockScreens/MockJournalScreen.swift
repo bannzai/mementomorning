@@ -81,9 +81,14 @@ struct MockJournalScreen: View {
         .background(Color.ink)
     }
 
-    /// 今日から offset 日ずらした日付。日付表記のローカライズは Text の format に任せる
+    /// 固定の基準日から offset 日ずらした日付。日付表記のローカライズは Text の format に任せる。
+    /// .now を使うと生成のたびにストア素材へ無関係な差分が出るため、固定日 (2026-08-16) を基準にする
     private func day(offset: Int) -> Date {
-        Calendar.current.date(byAdding: .day, value: offset, to: .now)!
+        Calendar.current.date(
+            byAdding: .day,
+            value: offset,
+            to: Calendar.current.date(from: DateComponents(year: 2026, month: 8, day: 16))!
+        )!
     }
 
     /// 回答 1 行 (日付 + 夜の結果 + 回答本文、ヘアライン区切り)

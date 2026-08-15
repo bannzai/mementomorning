@@ -17,7 +17,14 @@ func filteredLanguages() -> [(String, String)] {
     if let languagesEnvironment = ProcessInfo.processInfo.environment["SNAPSHOT_LANGUAGES"],
        !languagesEnvironment.isEmpty {
         let targetLanguages = languagesEnvironment.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
-        return languageCodeAndLanguageWithRegion.filter { targetLanguages.contains($0.0) }
+        let filtered = languageCodeAndLanguageWithRegion.filter { targetLanguages.contains($0.0) }
+        // 未対応言語だけが指定された場合に空配列を返すと、テストが 1 枚も撮影せずに成功してしまう。
+        // 指定ミスを黙って成功にしないため、ここで落として指定内容を報告する
+        precondition(
+            !filtered.isEmpty,
+            "SNAPSHOT_LANGUAGES に対応していない言語が指定されています: \(languagesEnvironment) (対応言語: \(languageCodeAndLanguageWithRegion.map(\.0).joined(separator: ",")))"
+        )
+        return filtered
     }
     return languageCodeAndLanguageWithRegion
 }

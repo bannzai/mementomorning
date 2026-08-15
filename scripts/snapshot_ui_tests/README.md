@@ -100,7 +100,7 @@ MementoMorningSnapshotUITests を build-for-testing でビルド。
 # 全スクリーンショットをチェック
 ./scripts/snapshot_ui_tests/check_translation_quality.sh
 
-# 最初の3個のFeatureのみチェック（デバッグ用）
+# 検出 Issue 数の上限を 3 に制限（デバッグ用）
 ./scripts/snapshot_ui_tests/check_translation_quality.sh -n 3
 
 # Dry run（Issue作成なし、チェックのみ）
@@ -111,8 +111,8 @@ MementoMorningSnapshotUITests を build-for-testing でビルド。
 ```
 
 **オプション:**
-- `-n N`: チェックするFeature数（デフォルト: 全て）
-- `--dry-run`: Issue作成せずにチェックのみ実行
+- `-n N`: 作成する Issue 数の上限（デフォルト: 全て。上限に達した時点でチェックを打ち切る）
+- `--dry-run`: 分析は実行し、Issue 作成・画像アップロードだけを省略する
 - `-h, --help`: ヘルプメッセージを表示
 
 **処理フロー:**

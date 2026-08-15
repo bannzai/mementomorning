@@ -11,6 +11,16 @@ struct MementoMorningApp: App {
 
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
+        #if DEBUG
+        if isSnapshotUITest {
+            // 多言語スクリーンショットは SwiftData をメモリ内へ切り替えるが (isUITest)、UserDefaults は
+            // シミュレータに残った以前の状態 (課金フラグ・デバッグ上書き・直近エラー) を引き継ぐ。
+            // 撮影結果が端末の状態に依存しないよう、表示へ影響するキーを既知値 (未設定) へ戻す
+            UserDefaults.standard.removeObject(forKey: .premiumEntitlementActive)
+            UserDefaults.standard.removeObject(forKey: .debugPremiumOverride)
+            UserDefaults.standard.removeObject(forKey: .lastRescheduleError)
+        }
+        #endif
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
         // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する
         PremiumEntitlement.configureIfPossible()

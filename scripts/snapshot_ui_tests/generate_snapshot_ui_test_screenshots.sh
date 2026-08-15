@@ -44,11 +44,16 @@
 #
 set -euo pipefail
 
-SCRIPT_DIR="$(cd `dirname $0` && pwd -P)"
-PROJECT_ROOT_DIR=$SCRIPT_DIR/../../
-cd $PROJECT_ROOT_DIR
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+PROJECT_ROOT_DIR="$SCRIPT_DIR/../../"
+cd "$PROJECT_ROOT_DIR"
 
 source scripts/snapshot_ui_tests/snapshot_ui_test_env.sh
+
+# trap ハンドラーが参照する変数は、simulator 準備・ビルド中の Ctrl+C でも
+# unbound (set -u) にならないよう trap 登録前に初期化する
+artifact_paths=()
+failed_tests=""
 
 # Ctrl+C (SIGINT) でのクリーンアップ処理
 cleanup() {
@@ -208,8 +213,6 @@ fi
 
 # テストを実行してartifactを収集
 test_count=0
-artifact_paths=()
-failed_tests=""
 
 # set -e は無効化（テストが失敗しても継続）
 set +e
@@ -229,8 +232,10 @@ for test_file in $test_files; do
   test_class=$(basename "$test_file" .swift)
   screenshot_dir="scripts/snapshot_ui_tests/screenshots/$test_class"
   
-  # 既にスクリーンショットディレクトリが存在する場合はスキップ
-  if [ -d "$screenshot_dir" ]; then
+  # 対象言語分のスクリーンショット PNG が既に揃っている場合はスキップする。
+  # ディレクトリの存在だけで判定すると、別言語での追加実行 (-l ja の後の -l en) や
+  # 中断で部分的に残ったディレクトリが永続的な成功扱いになるため、PNG の実在で判定する
+  if snapshot_screenshots_complete "$screenshot_dir"; then
     sep "Skipping test: $test_file (screenshots already exist in $screenshot_dir)"
     continue
   fi
@@ -273,8 +278,15 @@ for test_file in $test_files; do
     # スクリーンショットを整理
     sep "Organizing screenshots"
     ./scripts/snapshot_ui_tests/organize_screenshots.sh scripts/snapshot_ui_tests/screenshots/ || true
+
+    # 抽出・整理の失敗 (xcresulttool の形式不整合等) は個別の exit code では拾い切れないため、
+    # 対象言語分の PNG が実際に揃ったかで最終検証し、欠落していれば失敗として収集する
+    if ! snapshot_screenshots_complete "$screenshot_dir"; then
+      failed_tests+="  - $test_class (missing screenshots after extraction)"$'\n'
+    fi
   else
     echo "Warning: Artifact not found: $artifact_path"
+    failed_tests+="  - $test_class (result bundle not found)"$'\n'
   fi
 
   # artifactパスを配列に追加（cleanup用）
