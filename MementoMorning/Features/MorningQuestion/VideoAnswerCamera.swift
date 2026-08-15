@@ -51,10 +51,33 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
                 session.addInput(cameraInput)
                 session.addInput(microphoneInput)
                 session.addOutput(movieOutput)
+                // 寝落ち等で録画が止まらないまま端末の空き容量を使い切らないよう上限を設ける。
+                // 3 分は朝のひと言の回答には十分な長さで、上限到達時は AVFoundation が録画を停止して
+                // 通常の完了デリゲート (成功扱い) を呼ぶため、そのまま回答として保存される
+                movieOutput.maxRecordedDuration = CMTime(seconds: 180, preferredTimescale: 600)
                 session.commitConfiguration()
+                // 実行中のセッションが復旧不能なエラーで止まった場合もテキスト入力へフォールバックさせる
+                NotificationCenter.default.addObserver(
+                    forName: AVCaptureSession.runtimeErrorNotification,
+                    object: session,
+                    queue: nil
+                ) { _ in
+                    Task { @MainActor in
+                        self.isSessionRunning = false
+                        self.onUnavailable?()
+                    }
+                }
             }
             session.startRunning()
-            Task { @MainActor in self.isSessionRunning = session.isRunning }
+            let isRunning = session.isRunning
+            Task { @MainActor in
+                self.isSessionRunning = isRunning
+                // 構成に成功しても起動に失敗する場合 (カメラの一時的な利用不可等) がある。
+                // プレビューも録画もできないため、権限拒否・デバイス無しと同じくフォールバックへ通知する
+                if !isRunning {
+                    self.onUnavailable?()
+                }
+            }
         }
     }
 
@@ -72,8 +95,8 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
         sessionQueue.async { [self] in
             guard session.isRunning, !movieOutput.isRecording else { return }
             if let connection = movieOutput.connection(with: .video) {
-                // 縦持ち前提のアプリのため、保存される動画も縦向き (90°) に固定する
-                // (未指定だと横向きで保存され、写真アプリで横倒しに再生される)
+                // アプリは縦向き固定 (project.yml の UISupportedInterfaceOrientations) のため、
+                // 保存される動画も縦向き (90°) に固定する (未指定だと横向きで保存され、写真アプリで横倒しに再生される)
                 if connection.isVideoRotationAngleSupported(90) {
                     connection.videoRotationAngle = 90
                 }
@@ -149,7 +172,8 @@ struct CameraPreviewView: UIViewRepresentable {
         let view = CameraPreviewUIView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
-        // 縦持ち前提のアプリのため、プレビューも縦向き (90°) に固定する (保存動画の向きと合わせる)
+        // アプリは縦向き固定 (project.yml の UISupportedInterfaceOrientations) のため、
+        // プレビューも縦向き (90°) に固定する (保存動画の向きと合わせる)
         if let connection = view.previewLayer.connection, connection.isVideoRotationAngleSupported(90) {
             connection.videoRotationAngle = 90
         }
