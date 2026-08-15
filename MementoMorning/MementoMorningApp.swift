@@ -171,7 +171,11 @@ private struct RootView: View {
         }
         // 前面に表示したまま日付が変わったら判定をやり直す (問いは発火した日の朝のもの。跨いだら閉じる)
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            if isUnitTest { return }
             updateMorningQuestionPresentation()
+            // 前日分の残バックアップ・追撃を掃除して新しい日の計画へ切り替える
+            // (問いを閉じた後に前日のバックアップが鳴り続けないようにする)
+            Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
         }
     }
 
@@ -192,9 +196,16 @@ private struct RootView: View {
             return
         }
         let now = Date.now
-        let answeredDates: Set<Date> = fetchMorningAnswer(answeredDate: now, modelContext: modelContext) != nil
-            ? [Calendar.current.startOfDay(for: now)]
-            : []
+        let answer: MorningAnswer?
+        do {
+            answer = try MorningAnswer.answer(day: now, calendar: .current, modelContext: modelContext)
+        } catch {
+            // 回答状態が不明のまま「回答するまで閉じられない画面」を出し入れしない。
+            // 現在の提示状態を維持し、次の再判定 (foreground 復帰・発火記録の変化・日付変更) に任せる
+            print("[RootView] failed to fetch today's answer: \(error)")
+            return
+        }
+        let answeredDates: Set<Date> = answer != nil ? [Calendar.current.startOfDay(for: now)] : []
         isMorningQuestionPresented = isMorningQuestionPending(
             now: now,
             alarmFiredDate: MementoMorning.lastAlarmFiredDate(),

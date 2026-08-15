@@ -83,10 +83,17 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
         recordAlarmFired(date: firedDate)
     }
 
-    // 回答済みの日はアラームを鳴らさない。今日より先の日はまだ回答できないため今日の回答だけ調べれば足りる
-    let answeredDates: Set<Date> = fetchMorningAnswer(answeredDate: now, modelContext: modelContext) != nil
-        ? [Calendar.current.startOfDay(for: now)]
-        : []
+    // 回答済みの日はアラームを鳴らさない。今日より先の日はまだ回答できないため今日の回答だけ調べれば足りる。
+    // 取得の失敗を未回答と誤認すると、回答済みの日のアラーム (発火済みの朝のバックアップ含む) を再登録してしまうため中断する (fail-closed)
+    let answeredDates: Set<Date>
+    do {
+        answeredDates = try MorningAnswer.answer(day: now, calendar: .current, modelContext: modelContext) != nil
+            ? [Calendar.current.startOfDay(for: now)]
+            : []
+    } catch {
+        UserDefaults.standard.set("\(error)", forKey: .lastRescheduleError)
+        return
+    }
 
     // 停止直後に登録された未発火の追撃アラームは全キャンセルから保護する。
     // openAppWhenRun による foreground 復帰はこの reschedule を追撃の登録直後に走らせるため、
@@ -95,7 +102,7 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     // - 今日の回答が済んでいる (回答後は追撃も止めてよい。連続追撃カウントもここでリセットし、翌朝のスヌーズ枠を戻す)
     // - アラーム設定が OFF (OFF 表示のまま追撃だけが鳴り続けるのを防ぐ。PR #30 レビュー指摘)
     let preservedAlarmIDs: Set<UUID>
-    let todayAnswered = hasTodayAnswer(modelContext: modelContext)
+    let todayAnswered = !answeredDates.isEmpty
     if todayAnswered {
         // 回答が成立した朝の追撃は役目を終えた。連続追撃カウント (スヌーズ消費数) もリセットし、翌朝の無料枠を戻す
         UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)

@@ -87,9 +87,10 @@ final class MorningQuestionGateTests: XCTestCase {
     }
 
     func testRecordAlarmFiredKeepsChaseCountWithinSameDay() {
+        // 同じ朝の発火記録がある状態で無料枠を消費した状況を作る
+        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0), calendar: calendar)
         UserDefaults.standard.set(2, forKey: .stopIntentChaseCount)
 
-        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0), calendar: calendar)
         // 同じ朝の中では無料枠の消費数を維持する (停止のたびにリセットされると上限に到達しない)
         recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10), calendar: calendar)
 
