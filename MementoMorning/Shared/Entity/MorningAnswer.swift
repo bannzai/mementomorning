@@ -41,8 +41,9 @@ final class MorningAnswer {
         self.updatedDateTime = .now
     }
 
-    /// 動画回答の保存済み動画の localIdentifier を更新する (同じ日に動画で答え直した時は新しい動画で上書きする)
-    func setVideoAssetIdentifier(videoAssetIdentifier: String) {
+    /// 動画回答の保存済み動画の localIdentifier を更新する (同じ日に動画で答え直した時は新しい動画で上書きする)。
+    /// nil で消去する (動画回答の後にテキストで答え直した時に、古い動画を指し続けないようにする)
+    func setVideoAssetIdentifier(videoAssetIdentifier: String?) {
         self.videoAssetIdentifier = videoAssetIdentifier
         self.updatedDateTime = .now
     }

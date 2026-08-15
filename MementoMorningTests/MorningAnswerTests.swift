@@ -38,6 +38,15 @@ final class MorningAnswerTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(answer.updatedDateTime, updatedDateTimeBeforeSet)
     }
 
+    func testSetVideoAssetIdentifierNilClearsIdentifier() {
+        // 動画回答の後にテキストで答え直した時、古い動画を指し続けない
+        let answer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-3")
+
+        answer.setVideoAssetIdentifier(videoAssetIdentifier: nil)
+
+        XCTAssertNil(answer.videoAssetIdentifier)
+    }
+
     func testSetFulfilledUpdatesIsFulfilledAndUpdatedDateTime() {
         let answer = MorningAnswer(answeredDate: .now, text: "家族と過ごす")
         let updatedDateTimeBeforeSet = answer.updatedDateTime

@@ -33,6 +33,9 @@ struct MorningQuestionPage: View {
     @State private var isVideoAnswerUnavailable = false
     /// 録画済みで写真ライブラリへの保存が未完了の動画ファイル。保存失敗時の再試行に使い、保存が成功したら削除して nil に戻す
     @State private var recordedVideoURL: URL?
+    /// 写真ライブラリへ保存済みで、回答の確定 (complete) が未完了の動画の localIdentifier。
+    /// 確定 (SwiftData 保存・reschedule) の失敗時に再録画・動画の重複保存をせず確定だけを再試行するために、確定が成功するまで保持する
+    @State private var savedVideoAssetIdentifier: String?
 
     var body: some View {
         Group {
@@ -111,10 +114,26 @@ struct MorningQuestionPage: View {
                         .disabled(isSaving)
                         .padding(.horizontal, 32)
                         .accessibilityIdentifier("morning_question_retry_save_button")
+                    } else if let savedVideoAssetIdentifier {
+                        // 動画は写真ライブラリへ保存済みで、回答の確定 (SwiftData 保存・reschedule) だけが失敗した状態。
+                        // 再録画も動画の重複保存もせず、確定だけを再試行する
+                        Button {
+                            retryCompleteVideoAnswer(videoAssetIdentifier: savedVideoAssetIdentifier)
+                        } label: {
+                            // ja: 保存をやり直す
+                            Text(String(localized: "Try saving again"))
+                        }
+                        .buttonStyle(PrimaryPillButtonStyle())
+                        .disabled(isSaving)
+                        .padding(.horizontal, 32)
+                        .accessibilityIdentifier("morning_question_retry_save_button")
                     } else {
                         recordButton
                     }
                     Button {
+                        // 録画中に切り替えた場合、放置された録画が完了して回答を確定しないよう明示的に止める
+                        // (完了コールバック側でも isTextInputSelected を見て無視する)
+                        camera.stopRecording()
                         isTextInputSelected = true
                     } label: {
                         // ja: テキストで答える
@@ -123,6 +142,8 @@ struct MorningQuestionPage: View {
                             .foregroundStyle(Color.warmWhite.opacity(0.55))
                             .underline()
                     }
+                    // 写真ライブラリへの保存・確定の実行中に切り替えると、テキスト入力中に動画回答が確定して画面が閉じてしまうため無効化する
+                    .disabled(isSaving)
                     .accessibilityIdentifier("morning_question_text_input_link")
                 }
                 .padding(.bottom, 32)
@@ -275,6 +296,12 @@ struct MorningQuestionPage: View {
     /// 権限が 1 つでも拒否されたらテキスト入力へフォールバックする (受け入れ条件)
     private func prepareVideoAnswer() async {
         camera.onFinished = { fileURL in
+            // テキスト入力へ切り替えた後に完了した録画 (切替時の停止・onDisappear の stopRunning による確定) は
+            // 回答にしない。放置すると入力中に動画回答が確定して画面が閉じてしまう
+            guard !isTextInputSelected else {
+                try? FileManager.default.removeItem(at: fileURL)
+                return
+            }
             saveVideoAnswer(fileURL: fileURL)
         }
         camera.onRecordingFailed = { message in
@@ -303,15 +330,31 @@ struct MorningQuestionPage: View {
                 // 一時ファイルの削除失敗は回答の成立に影響しないため無視する (temporaryDirectory は OS も掃除する)
                 try? FileManager.default.removeItem(at: fileURL)
                 recordedVideoURL = nil
-                // 回答本文は文字起こし (issue #25) が動画の音声トラックから埋めるまでの仮の文言。
-                // ホームの「今朝のことば」・ジャーナル・夜リマインドの引用にそのまま表示される
-                // ja: 動画で答えました
-                await complete(text: String(localized: "Answered with a video"), videoAssetIdentifier: assetIdentifier)
+                // 確定に失敗しても再録画・動画の重複保存なしで再試行できるよう、確定が成功するまで識別子を保持する
+                savedVideoAssetIdentifier = assetIdentifier
+                await complete(text: videoAnswerPlaceholderText, videoAssetIdentifier: assetIdentifier)
             } catch {
                 saveError = "\(error)"
                 isSaving = false
             }
         }
+    }
+
+    /// 写真ライブラリへ保存済みの動画で、回答の確定 (SwiftData 保存・reschedule) だけを再試行する
+    private func retryCompleteVideoAnswer(videoAssetIdentifier: String) {
+        guard !isSaving else { return }
+        isSaving = true
+        saveError = nil
+        Task {
+            await complete(text: videoAnswerPlaceholderText, videoAssetIdentifier: videoAssetIdentifier)
+        }
+    }
+
+    /// 動画回答の仮の回答本文。文字起こし (issue #25) が動画の音声トラックから置き換えるまでの文言で、
+    /// ホームの「今朝のことば」・ジャーナル・夜リマインドの引用にそのまま表示される
+    private var videoAnswerPlaceholderText: String {
+        // ja: 動画で答えました
+        String(localized: "Answered with a video")
     }
 
     /// テキスト入力の回答を確定する
@@ -336,9 +379,9 @@ struct MorningQuestionPage: View {
         do {
             if let answer = try MorningAnswer.answer(day: today, calendar: .current, modelContext: modelContext) {
                 answer.setText(text: text)
-                if let videoAssetIdentifier {
-                    answer.setVideoAssetIdentifier(videoAssetIdentifier: videoAssetIdentifier)
-                }
+                // nil (テキスト回答) も明示的にセットして消去する。動画の確定失敗後にテキストで答え直した時に
+                // 古い動画を指し続けると、文字起こし (issue #25) がテキスト回答を動画回答として扱ってしまう
+                answer.setVideoAssetIdentifier(videoAssetIdentifier: videoAssetIdentifier)
             } else {
                 modelContext.insert(MorningAnswer(answeredDate: today, text: text, videoAssetIdentifier: videoAssetIdentifier))
             }
