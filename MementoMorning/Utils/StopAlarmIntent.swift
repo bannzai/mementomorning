@@ -54,8 +54,16 @@ public struct StopAlarmIntent: LiveActivityIntent {
             appendStopIntentSpikeLog(message: "stop(id:) skipped: invalid alarmID=\(alarmID)")
         }
 
-        // 停止操作が届いた = アラームは発火済み。朝の問い画面 (MorningQuestionPage) の提示判定の起点として記録する
-        recordAlarmFired(date: .now)
+        // 停止操作が届いた = アラームは発火済み。朝の問い画面 (MorningQuestionPage) の提示判定の起点として、
+        // 発火済みの main アラームの発火予定日時を記録する。停止時刻 (.now) は使わない
+        // (深夜のバックアップ・追撃の停止が日付を跨ぐと「翌日の発火」として記録され、翌日の問いを誤提示するため)。
+        // 過去の main の記録が無い場合 (直前の reschedule が削除済み等) は、既存の発火記録が同じ朝を指しているため更新しない
+        await MainActor.run {
+            let scheduledAlarms = (try? PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<ScheduledAlarm>())) ?? []
+            if let firedDate = scheduledAlarms.filter({ $0.origin == ScheduledAlarmOrigin.main }).map(\.fireDate).filter({ $0 <= Date.now }).max() {
+                recordAlarmFired(date: firedDate)
+            }
+        }
 
         // 追撃の登録・上限処理は reschedule (全キャンセル) と同じ直列キューで行う。
         // 並行させると「reschedule が保護記録を読む → ここで登録が完了する → 古い集合で cancelAll」の

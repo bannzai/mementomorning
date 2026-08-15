@@ -19,10 +19,12 @@ final class MorningQuestionGateTests: XCTestCase {
     override func setUp() {
         super.setUp()
         UserDefaults.standard.removeObject(forKey: .lastAlarmFiredDate)
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
     }
 
     override func tearDown() {
         UserDefaults.standard.removeObject(forKey: .lastAlarmFiredDate)
+        UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
         super.tearDown()
     }
 
@@ -77,11 +79,32 @@ final class MorningQuestionGateTests: XCTestCase {
         let older = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0)
         let newer = dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 5)
 
-        recordAlarmFired(date: newer)
+        recordAlarmFired(date: newer, calendar: calendar)
         // 古い日時では上書きされない (発火検知が複数経路から重複しても直近の発火日時に収束する)
-        recordAlarmFired(date: older)
+        recordAlarmFired(date: older, calendar: calendar)
 
         XCTAssertEqual(lastAlarmFiredDate(), newer)
+    }
+
+    func testRecordAlarmFiredKeepsChaseCountWithinSameDay() {
+        UserDefaults.standard.set(2, forKey: .stopIntentChaseCount)
+
+        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0), calendar: calendar)
+        // 同じ朝の中では無料枠の消費数を維持する (停止のたびにリセットされると上限に到達しない)
+        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 10), calendar: calendar)
+
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: .stopIntentChaseCount), 2)
+    }
+
+    func testRecordAlarmFiredResetsChaseCountOnNewDay() {
+        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0), calendar: calendar)
+        // 前日の未回答で無料枠を使い切った状態
+        UserDefaults.standard.set(2, forKey: .stopIntentChaseCount)
+
+        recordAlarmFired(date: dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0), calendar: calendar)
+
+        // 新しい朝のアラームでは無料枠を使い直せる
+        XCTAssertEqual(UserDefaults.standard.integer(forKey: .stopIntentChaseCount), 0)
     }
 
     func testLastAlarmFiredDateIsNilWhenNotRecorded() {

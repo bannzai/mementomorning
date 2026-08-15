@@ -16,9 +16,16 @@ func lastAlarmFiredDate() -> Date? {
     return Date(timeIntervalSince1970: epochSeconds)
 }
 
-/// アラームの発火を記録する。既存の記録より古い日時では上書きしない (冪等。何度呼んでも直近の発火日時に収束する)
-func recordAlarmFired(date: Date) {
-    if let recorded = lastAlarmFiredDate(), recorded >= date { return }
+/// アラームの発火を記録する。既存の記録より古い日時では上書きしない (冪等。何度呼んでも直近の発火日時に収束する)。
+/// 記録が別の日へ進んだ時は連続追撃カウント (スヌーズ消費数) をリセットし、新しい朝のアラームでは無料枠を使い直せるようにする
+/// (未回答のまま日を跨ぐとカウントが残り続け、翌朝以降の追撃が回答するまで封じられてしまうため)
+func recordAlarmFired(date: Date, calendar: Calendar = .current) {
+    if let recorded = lastAlarmFiredDate() {
+        guard date > recorded else { return }
+        if !calendar.isDate(recorded, inSameDayAs: date) {
+            UserDefaults.standard.removeObject(forKey: .stopIntentChaseCount)
+        }
+    }
     UserDefaults.standard.set(date.timeIntervalSince1970, forKey: .lastAlarmFiredDate)
 }
 
