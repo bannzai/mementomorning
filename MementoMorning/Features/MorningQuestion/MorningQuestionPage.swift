@@ -132,14 +132,16 @@ struct MorningQuestionPage: View {
         isSaving = true
         saveError = nil
 
-        // 同じ日の回答は 1 件に保つ (再入・レース時は既存回答の更新にする)
+        // 同じ日の回答は 1 件に保つ (再入・レース時は既存回答の更新にする)。
+        // 既存回答の取得失敗を未回答と誤認すると同じ日の回答を重複挿入してしまうため、
+        // throwing 版で取得し、失敗は保存エラーと同じ扱いで中断する
         let today = Calendar.current.startOfDay(for: .now)
-        if let answer = fetchMorningAnswer(answeredDate: today, modelContext: modelContext) {
-            answer.setText(text: trimmed)
-        } else {
-            modelContext.insert(MorningAnswer(answeredDate: today, text: trimmed))
-        }
         do {
+            if let answer = try MorningAnswer.answer(day: today, calendar: .current, modelContext: modelContext) {
+                answer.setText(text: trimmed)
+            } else {
+                modelContext.insert(MorningAnswer(answeredDate: today, text: trimmed))
+            }
             try modelContext.save()
         } catch {
             // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため、

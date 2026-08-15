@@ -77,11 +77,19 @@ public struct StopAlarmIntent: LiveActivityIntent {
     /// 停止後の追撃処理。performSerializedAlarmOperation のキュー内で実行する (perform() から直接呼ばない)
     @MainActor
     private func handleChaseAfterStop() async {
-        // 回答が成立していたら追撃しない (回答完了の唯一の判定)。openAppWhenRun による foreground 復帰の
-        // reschedule でも当日分は消えるが、前面化が機能しない場合 (issue #3 のシミュレータ実測) に備えてここでも打ち切り、
-        // 残りのバックアップも掃除する
-        guard !hasTodayAnswer(modelContext: PersistenceController.shared.container.mainContext) else {
-            appendStopIntentSpikeLog(message: "chase skipped: today already answered")
+        // 追撃はアラームが発火した朝 (発火記録の日) 限り。日付を跨いで停止された場合は追撃列を終了する
+        // (跨いだ後は朝の問いが提示されず、回答で追撃を止める導線が無いまま鳴り続けてしまうため)
+        guard let firedDate = lastAlarmFiredDate(), Calendar.current.isDate(firedDate, inSameDayAs: .now) else {
+            appendStopIntentSpikeLog(message: "chase skipped: fired date is not today")
+            cancelTodaysBackupAlarms()
+            return
+        }
+
+        // 回答が成立していたら追撃しない (回答完了の唯一の判定)。判定の日は停止時刻ではなく発火記録の日を使う。
+        // openAppWhenRun による foreground 復帰の reschedule でも当日分は消えるが、
+        // 前面化が機能しない場合 (issue #3 のシミュレータ実測) に備えてここでも打ち切り、残りのバックアップも掃除する
+        guard fetchMorningAnswer(answeredDate: firedDate, modelContext: PersistenceController.shared.container.mainContext) == nil else {
+            appendStopIntentSpikeLog(message: "chase skipped: already answered")
             cancelTodaysBackupAlarms()
             return
         }
