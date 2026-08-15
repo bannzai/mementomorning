@@ -17,11 +17,6 @@ extension String {
 /// 検証を短時間で回すため、CLAUDE.md の「アラーム発火の確認は 1〜2 分後のアラームで行う」に合わせて 2 分にする
 let stopIntentChaseInterval: TimeInterval = 120
 
-/// 連続追撃の上限回数。
-/// openAppWhenRun が実機でも機能しない場合 (issue #3 のシミュレータ実測と同じ現象) に、
-/// 停止のたびに追撃が再登録されて鳴り続ける事態を防ぐ。検証には 1 回の追撃発火で十分なため少数に抑える
-let stopIntentChaseCountLimit = 3
-
 /// スパイク検証ログの unified log 出力先。
 /// UserDefaults の痕跡と二重化し、アプリが途中で kill されても Console / log collect で回収できるようにする
 private let stopIntentSpikeLogger = Logger(subsystem: "com.bannzai.MementoMorning", category: "StopIntentSpike")

@@ -20,13 +20,6 @@ func needsPermissionSettingsGuidance(
     alarmAuthorizationState == .denied || notificationAuthorizationStatus == .denied
 }
 
-/// 墨 (背景) #0B0C0E。design_handoff_memento_morning/README.md の Design Tokens に従う
-private let inkColor = Color(red: 11 / 255, green: 12 / 255, blue: 14 / 255)
-/// 温白 (前景) #E9E7E2
-private let warmWhiteColor = Color(red: 233 / 255, green: 231 / 255, blue: 226 / 255)
-/// 夜明けの微光 (アクセント) #C2A183。各画面 1 箇所までの制約があるため多用しない
-private let dawnColor = Color(red: 194 / 255, green: 161 / 255, blue: 131 / 255)
-
 /// 初回起動時のオンボーディング。
 /// コンセプト提示 → アラーム・通知の許可 → 最初のアラーム設定、の 3 ステップを 1 画面内のフェードで進める
 /// (デザイン: design_handoff_memento_morning の 1m「夜明けの一枚目」。画面遷移はフェードのみ)
@@ -71,7 +64,7 @@ struct OnboardingPage: View {
 
     var body: some View {
         ZStack {
-            inkColor.ignoresSafeArea()
+            Color.ink.ignoresSafeArea()
             dawnHorizon
             switch step {
             case .concept:
@@ -82,8 +75,7 @@ struct OnboardingPage: View {
                 alarmSettingStep.transition(.opacity)
             }
         }
-        // オンボーディングは夜明け前の墨色が前提のため、システム設定に関わらずダークで描画する
-        .preferredColorScheme(.dark)
+        // ダークテーマの指定は RootView が両画面の親でまとめて当てる
         .onChange(of: scenePhase) { _, newValue in
             // 設定アプリで許可を変更して戻ってきた場合に表示へ反映する
             guard newValue == .active else { return }
@@ -97,9 +89,9 @@ struct OnboardingPage: View {
             Spacer()
             LinearGradient(
                 stops: [
-                    .init(color: dawnColor.opacity(0), location: 0),
-                    .init(color: dawnColor.opacity(0.14), location: 0.7),
-                    .init(color: dawnColor.opacity(0.22), location: 1),
+                    .init(color: Color.dawn.opacity(0), location: 0),
+                    .init(color: Color.dawn.opacity(0.14), location: 0.7),
+                    .init(color: Color.dawn.opacity(0.22), location: 1),
                 ],
                 startPoint: .top,
                 endPoint: .bottom
@@ -109,7 +101,7 @@ struct OnboardingPage: View {
         .overlay(alignment: .bottom) {
             // 地平線。中央が最も明るい 1pt のライン
             LinearGradient(
-                colors: [dawnColor.opacity(0), dawnColor.opacity(0.55), dawnColor.opacity(0)],
+                colors: [Color.dawn.opacity(0), Color.dawn.opacity(0.55), Color.dawn.opacity(0)],
                 startPoint: .leading,
                 endPoint: .trailing
             )
@@ -135,7 +127,7 @@ struct OnboardingPage: View {
             Text("Answer one question each morning to stop the alarm.\nYour answers become the journal of your life.")
                 .font(.system(size: 12, weight: .light))
                 .lineSpacing(9)
-                .foregroundStyle(warmWhiteColor.opacity(0.45))
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
                 .padding(.top, 14)
             Spacer()
             VStack(spacing: 14) {
@@ -143,16 +135,17 @@ struct OnboardingPage: View {
                     withAnimation(.easeInOut(duration: 0.6)) { step = .permission }
                 } label: {
                     // ja: はじめる
-                    primaryButtonLabel(title: Text("Begin"))
+                    Text("Begin")
                 }
+                .buttonStyle(PrimaryPillButtonStyle())
                 .accessibilityIdentifier("onboarding_begin")
                 // ja: 次の画面でアラームと通知の許可をお願いします
                 Text("Alarm & notification permissions are requested next")
                     .font(.system(size: 10))
-                    .foregroundStyle(warmWhiteColor.opacity(0.32))
+                    .foregroundStyle(Color.warmWhite.opacity(0.32))
             }
         }
-        .foregroundStyle(warmWhiteColor)
+        .foregroundStyle(Color.warmWhite)
         .padding(.top, 130)
         .padding(.horizontal, 36)
         .padding(.bottom, 48)
@@ -174,7 +167,7 @@ struct OnboardingPage: View {
                     detail: Text("Rings at your time, even in silent mode."),
                     isGranted: alarmAuthorizationState == .authorized
                 )
-                Divider().overlay(warmWhiteColor.opacity(0.08))
+                HairlineDivider()
                 // ja: 夜のリマインド
                 // ja: 今朝の回答と答え合わせしましょう
                 permissionRow(
@@ -192,15 +185,16 @@ struct OnboardingPage: View {
                     // ja: 許可は設定アプリから変更できます
                     Text("You can change permissions in the Settings app.")
                         .font(.system(size: 12))
-                        .foregroundStyle(warmWhiteColor.opacity(0.45))
+                        .foregroundStyle(Color.warmWhite.opacity(0.45))
                     Button {
                         if let url = URL(string: UIApplication.openSettingsURLString) {
                             openURL(url)
                         }
                     } label: {
                         // ja: 設定を開く
-                        secondaryButtonLabel(title: Text("Open Settings"))
+                        Text("Open Settings")
                     }
+                    .buttonStyle(SecondaryPillButtonStyle())
                     .accessibilityIdentifier("onboarding_open_settings")
                 }
                 .padding(.top, 28)
@@ -211,8 +205,9 @@ struct OnboardingPage: View {
                     Task { await requestPermissions() }
                 } label: {
                     // ja: 許可する
-                    primaryButtonLabel(title: Text("Allow"))
+                    Text("Allow")
                 }
+                .buttonStyle(PrimaryPillButtonStyle())
                 .disabled(isRequestingPermissions)
                 .accessibilityIdentifier("onboarding_allow_permissions")
                 if hasRequestedPermissions {
@@ -222,14 +217,14 @@ struct OnboardingPage: View {
                         // ja: つづける
                         Text("Continue")
                             .font(.system(size: 13))
-                            .foregroundStyle(warmWhiteColor.opacity(0.55))
+                            .foregroundStyle(Color.warmWhite.opacity(0.55))
                             .underline()
                     }
                     .accessibilityIdentifier("onboarding_continue")
                 }
             }
         }
-        .foregroundStyle(warmWhiteColor)
+        .foregroundStyle(Color.warmWhite)
         .padding(.top, 130)
         .padding(.horizontal, 36)
         .padding(.bottom, 48)
@@ -249,7 +244,7 @@ struct OnboardingPage: View {
             // ja: 答えるまで、アラームは鳴り続けます
             Text("The alarm keeps returning until you answer.")
                 .font(.system(size: 12))
-                .foregroundStyle(warmWhiteColor.opacity(0.45))
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
                 .padding(.top, 14)
             DatePicker(
                 // ja: 時刻
@@ -267,7 +262,7 @@ struct OnboardingPage: View {
                 // 行数を制限して下の「設定を開く」ボタンが画面外へ押し出されないようにする
                 Text(saveError)
                     .font(.system(size: 12))
-                    .foregroundStyle(dawnColor)
+                    .foregroundStyle(Color.dawn)
                     .lineLimit(4)
                     .padding(.top, 14)
                 if alarmAuthorizationState == .denied {
@@ -277,8 +272,9 @@ struct OnboardingPage: View {
                         }
                     } label: {
                         // ja: 設定を開く
-                        secondaryButtonLabel(title: Text("Open Settings"))
+                        Text("Open Settings")
                     }
+                    .buttonStyle(SecondaryPillButtonStyle())
                     .accessibilityIdentifier("onboarding_alarm_open_settings")
                     .padding(.top, 14)
                 }
@@ -288,12 +284,13 @@ struct OnboardingPage: View {
                 save()
             } label: {
                 // ja: アラームをセットする
-                primaryButtonLabel(title: Text("Set alarm"))
+                Text("Set alarm")
             }
+            .buttonStyle(PrimaryPillButtonStyle())
             .disabled(isSaving)
             .accessibilityIdentifier("onboarding_set_alarm")
         }
-        .foregroundStyle(warmWhiteColor)
+        .foregroundStyle(Color.warmWhite)
         .padding(.top, 130)
         .padding(.horizontal, 36)
         .padding(.bottom, 48)
@@ -322,36 +319,14 @@ struct OnboardingPage: View {
                     // ja: 許可済み
                     Text("Allowed")
                         .font(.system(size: 11))
-                        .foregroundStyle(warmWhiteColor.opacity(0.4))
+                        .foregroundStyle(Color.warmWhite.opacity(0.4))
                 }
             }
             detail
                 .font(.system(size: 11))
-                .foregroundStyle(warmWhiteColor.opacity(0.4))
+                .foregroundStyle(Color.warmWhite.opacity(0.4))
         }
         .padding(.vertical, 16)
-    }
-
-    /// primary ボタン (温白地に墨文字の pill) のラベル
-    private func primaryButtonLabel(title: Text) -> some View {
-        title
-            .font(.system(size: 15))
-            .tracking(2.1)
-            .foregroundStyle(inkColor)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 17)
-            .background(warmWhiteColor, in: Capsule())
-    }
-
-    /// secondary ボタン (ヘアライン枠のみの pill) のラベル
-    private func secondaryButtonLabel(title: Text) -> some View {
-        title
-            .font(.system(size: 13))
-            .tracking(1.8)
-            .foregroundStyle(warmWhiteColor)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 15)
-            .overlay(Capsule().stroke(warmWhiteColor.opacity(0.18), lineWidth: 1))
     }
 
     /// アラーム・通知の許可を順にリクエストし、両方の結果が出たら次のステップへ進む。
