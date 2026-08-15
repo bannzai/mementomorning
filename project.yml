@@ -60,6 +60,10 @@ schemes:
         MementoMorning: all
     run:
       config: Debug
+      # 課金の動作確認を Sandbox Apple ID なしでローカル完結させる (issue #15)。
+      # RevenueCat は StoreKit Configuration file でのテストに対応しており、商品は
+      # RevenueCat 側に登録済みであればよい (返金・キャンセルのイベントだけは記録されない)
+      storeKitConfiguration: MementoMorning.storekit
     test:
       config: Debug
       targets:
