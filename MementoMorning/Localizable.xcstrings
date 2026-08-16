@@ -231,12 +231,12 @@
         }
       }
     },
-    "Each row is a week. Answered mornings remain as ink.": {
+    "Each row is a week. One dot for each answered morning.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。答えた朝が、墨として残る。"
+            "value": "1行が一週間。答えた朝が、一粒ずつ残る。"
           }
         }
       }
