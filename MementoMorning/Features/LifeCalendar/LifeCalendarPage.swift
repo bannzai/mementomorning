@@ -29,8 +29,8 @@ struct LifeCalendarPage: View {
         let days = lifeCalendarDays(answeredDates: answers.map(\.answeredDate), today: .now, calendar: calendar)
         let today = calendar.startOfDay(for: .now)
         VStack(spacing: 0) {
-            // ja: 1行が一週間。答えた朝が、一粒ずつ残る。
-            Text("Each row is a week. One dot for each answered morning.")
+            // ja: 1行が一週間。答えた朝が、点として残る。
+            Text("Each row is a week. Answered mornings remain as dots.")
                 .font(.system(size: 11))
                 .tracking(0.66)
                 .foregroundStyle(Color.warmWhite.opacity(0.4))
@@ -81,8 +81,8 @@ struct LifeCalendarPage: View {
                     .font(.system(size: 12))
                     .tracking(1.2)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
-                // ja: 空白は、空白のまま。
-                Text("Blank stays blank.")
+                // ja: 点は、いつかつながる。
+                Text("The dots will connect.")
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))

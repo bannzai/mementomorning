@@ -181,12 +181,12 @@
         }
       }
     },
-    "Blank stays blank.": {
+    "The dots will connect.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "空白は、空白のまま。"
+            "value": "点は、いつかつながる。"
           }
         }
       }
@@ -231,12 +231,12 @@
         }
       }
     },
-    "Each row is a week. One dot for each answered morning.": {
+    "Each row is a week. Answered mornings remain as dots.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。答えた朝が、一粒ずつ残る。"
+            "value": "1行が一週間。答えた朝が、点として残る。"
           }
         }
       }
