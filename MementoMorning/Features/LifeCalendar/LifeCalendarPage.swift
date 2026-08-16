@@ -16,7 +16,7 @@ private var lifeCalendarAnswersDescriptor: FetchDescriptor<MorningAnswer> {
 
 /// 答えた朝が一粒ずつ墨のように埋まっていく人生カレンダー (週単位グリッド)。1 行が 1 週間、1 マスが 1 日。
 /// デザイン handoff 1g / プロトタイプ calendar 準拠。
-/// 空白の日は空白のまま残す (streak 修復は作らない。documents/PROJECT.md の課金設計参照)
+/// streak 修復は作らない (documents/PROJECT.md の課金設計参照)
 struct LifeCalendarPage: View {
     @Environment(\.modelContext) private var modelContext
     @Query(lifeCalendarAnswersDescriptor) private var answers: [MorningAnswer]

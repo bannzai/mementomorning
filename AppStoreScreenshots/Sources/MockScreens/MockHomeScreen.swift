@@ -68,7 +68,7 @@ struct MockHomeScreen: View {
             HStack(spacing: 8) {
                 ForEach(0..<14, id: \.self) { index in
                     Circle()
-                        // 5 番目と 9 番目だけ未回答にして「空白は空白のまま」の思想を粒でも見せる
+                        // 5 番目と 9 番目だけ未回答にして、未回答の点が混ざる実際の見え方を再現する
                         .fill([5, 9].contains(index) ? Color.warmWhite.opacity(0.09) : Color.warmWhite)
                         .frame(width: 10, height: 10)
                         .overlay {

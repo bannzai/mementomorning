@@ -101,7 +101,7 @@ struct AnswerLogPage: View {
                     // 今日の行の日付だけ夜明け色 (アクセントは各画面 1 箇所まで)
                     .foregroundStyle(isToday ? Color.dawn : Color.warmWhite.opacity(0.38))
                     Spacer()
-                    // 過去の行の右端に夜の振り返りの結果を添える。未記録の空白は空白のまま
+                    // 過去の行の右端に夜の振り返りの結果を添える。未記録の行には何も表示しない
                     if !isToday, let isFulfilled = answer.isFulfilled {
                         Group {
                             if isFulfilled {
