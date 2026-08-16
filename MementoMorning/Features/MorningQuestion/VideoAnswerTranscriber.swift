@@ -120,6 +120,13 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     } catch {
         // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため破棄する
         modelContext.rollback()
+        return
+    }
+    // 夜リマインドは登録時点の回答本文を引用するため、文字起こしの完了前にアプリを離脱すると
+    // 当日分の通知が仮テキストを引用したまま残る。認識結果の保存に成功したら当日分を登録し直す
+    // (通知本文が「今日の回答」の引用である当日の適用時に限る)
+    if Calendar.current.isDateInToday(answeredDate) {
+        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: text)
     }
 }
 
