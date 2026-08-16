@@ -335,6 +335,9 @@ struct ContentView_Previews: PreviewProvider {
         let modelContext = ModelContext(container)
         // 毎朝 5:50 のアラーム + 今日と昨日の回答がある状態のサンプル
         let _ = {
+            // Preview の body は複数回評価される。共有 in-memory コンテナへの重複挿入で
+            // 回答が 7 件に達すると節目シートが開いてしまうため、挿入を冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
             let calendar = Calendar.current
             modelContext.insert(AlarmSetting(hour: 5, minute: 50))
             modelContext.insert(MorningAnswer(answeredDate: calendar.startOfDay(for: .now), text: "家族と海を見に行く"))

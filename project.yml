@@ -73,6 +73,50 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorningTests
         GENERATE_INFOPLIST_FILE: YES
+  # App Store スクリーンショット撮影専用のホストアプリ (issue #13)。
+  # 本番アプリとは独立させ、スクショ用のモック画面だけをリリース物に含めず保持する
+  AppStoreScreenshots:
+    type: application
+    platform: iOS
+    sources:
+      # 本番ソースは含めず自己完結させる (取り込み元 bannzai/Focus と同じ構成)。
+      # 同一ファイルを 2 ターゲットの sources に載せると xcodebuild が multiple groups の
+      # malformed project 警告を出すため、デザイントークンは Sources/DesignTokens.swift に複製する
+      - AppStoreScreenshots
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning.AppStoreScreenshots
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        # 起動画面の生成キーが無いと互換モード (レターボックス) で描画され、
+        # スクリーンショットがストア要求の px サイズにならない
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+  # App Store スクリーンショットを XCTAttachment で撮影する UITest (appstore-screenshot-builder skill の SnapshotUITest 方式)
+  AppStoreScreenshotsUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - AppStoreScreenshotsUITests
+    dependencies:
+      - target: AppStoreScreenshots
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning.AppStoreScreenshotsUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: AppStoreScreenshots
+  # 本番画面の多言語スクリーンショットを撮影する UITest (detect-mistranslation skill の snapshot_ui_tests 基盤)
+  MementoMorningSnapshotUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - MementoMorningSnapshotUITests
+    dependencies:
+      - target: MementoMorning
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorningSnapshotUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: MementoMorning
 schemes:
   MementoMorning:
     build:
@@ -88,3 +132,21 @@ schemes:
       config: Debug
       targets:
         - MementoMorningTests
+  AppStoreScreenshotsUITests:
+    build:
+      targets:
+        AppStoreScreenshots: all
+        AppStoreScreenshotsUITests: all
+    test:
+      config: Debug
+      targets:
+        - AppStoreScreenshotsUITests
+  MementoMorningSnapshotUITests:
+    build:
+      targets:
+        MementoMorning: all
+        MementoMorningSnapshotUITests: all
+    test:
+      config: Debug
+      targets:
+        - MementoMorningSnapshotUITests

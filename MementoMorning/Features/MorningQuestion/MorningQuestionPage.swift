@@ -413,15 +413,19 @@ struct MorningQuestionPage_Previews: PreviewProvider {
         let container = PersistenceController.shared.container
         let modelContext = ModelContext(container)
         // 昨日の回答がある状態のプレビュー (カメラの無い Preview 環境ではテキスト入力へフォールバックし、選択式入力から始まる)
-        let _ = modelContext.insert(
-            MorningAnswer(
-                answeredDate: Calendar.current.startOfDay(
-                    for: Calendar.current.date(byAdding: .day, value: -1, to: .now)!
-                ),
-                text: "家族と海を見に行く"
+        let _ = {
+            // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
+            modelContext.insert(
+                MorningAnswer(
+                    answeredDate: Calendar.current.startOfDay(
+                        for: Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+                    ),
+                    text: "家族と海を見に行く"
+                )
             )
-        )
-        let _ = try! modelContext.save()
+            try! modelContext.save()
+        }()
 
         MorningQuestionPage()
             .modelContainer(container)

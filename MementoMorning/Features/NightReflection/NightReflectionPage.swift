@@ -145,10 +145,14 @@ struct NightReflectionPage_Previews: PreviewProvider {
         let container = PersistenceController.shared.container
         let modelContext = ModelContext(container)
         // 今朝の回答がある状態のプレビュー
-        let _ = modelContext.insert(
-            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
-        )
-        let _ = try! modelContext.save()
+        let _ = {
+            // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
+            modelContext.insert(
+                MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+            )
+            try! modelContext.save()
+        }()
 
         NightReflectionPage(notificationDate: .now)
             .modelContainer(container)

@@ -78,6 +78,8 @@ struct SevenMorningsPage_Previews: PreviewProvider {
         let modelContext = ModelContext(container)
         // 6 日前から今日まで毎朝答えて 7 件に達した状態のサンプルデータ (回答本文はユーザーの自由入力値のためハードコード)
         let _ = {
+            // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
+            guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
             let sampleTexts = [
                 "家族と海を見に行く",
                 "母に長い電話をかける",

@@ -11,22 +11,50 @@ struct MementoMorningApp: App {
 
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
+        #if DEBUG
+        if isSnapshotUITest {
+            // 多言語スクリーンショットは SwiftData をメモリ内へ切り替えるが (isUITest)、UserDefaults は
+            // シミュレータに残った以前の状態 (課金フラグ・デバッグ上書き・直近エラー) を引き継ぐ。
+            // 撮影結果が端末の状態に依存しないよう、表示へ影響するキーを既知値 (未設定) へ戻す
+            UserDefaults.standard.removeObject(forKey: .premiumEntitlementActive)
+            UserDefaults.standard.removeObject(forKey: .debugPremiumOverride)
+            UserDefaults.standard.removeObject(forKey: .lastRescheduleError)
+        }
+        #endif
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
-        // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する
-        PremiumEntitlement.configureIfPossible()
+        // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する。
+        // 多言語スクリーンショット撮影中は configure しない (Config.local の API キー有無や通信状況で
+        // Paywall の表示が環境ごとに変わるため、未 configure の見本価格に固定する)
+        if !isSnapshotUITest {
+            PremiumEntitlement.configureIfPossible()
+        }
     }
 
     var body: some Scene {
         WindowGroup {
+            #if DEBUG
+            if isSnapshotUITest {
+                // 多言語スクリーンショット撮影では本番のルート分岐 (オンボーディング・朝の問い提示) を通さず、
+                // 撮影対象 (本番画面の Preview) の一覧を直接表示する
+                SnapshotUITestPage()
+                    // 本番 RootView と同じテーマ (ダーク固定 + 温白アクセント) で撮影する
+                    .preferredColorScheme(.dark)
+                    .tint(Color.warmWhite)
+            } else {
+                RootView()
+            }
+            #else
             RootView()
+            #endif
         }
         .modelContainer(PersistenceController.shared.container)
         // initial: true でコールドローンチ時 (既に .active で onChange が発火しないケース) もカバーする。
         // reschedule は冪等 + 直列化済みのため、初回に二重で呼ばれても問題ない
         .onChange(of: scenePhase, initial: true) { _, newValue in
             // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
-            // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る
-            if isUnitTest { return }
+            // テスト中に認可ダイアログ・OS アラームの登録が走らないようここで打ち切る。
+            // 多言語スクリーンショット撮影中も、撮影画面の上に認可ダイアログが被らないよう打ち切る
+            if isUnitTest || isSnapshotUITest { return }
             switch newValue {
             case .active:
                 // 連続追撃カウント (スヌーズ消費数) のリセットは reschedule が行う
