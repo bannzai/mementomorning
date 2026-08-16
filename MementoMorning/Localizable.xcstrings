@@ -281,6 +281,16 @@
         }
       }
     },
+    "Fix": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "直す"
+          }
+        }
+      }
+    },
     "I did": {
       "localizations": {
         "ja": {

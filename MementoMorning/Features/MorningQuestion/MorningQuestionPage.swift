@@ -350,13 +350,6 @@ struct MorningQuestionPage: View {
         }
     }
 
-    /// 動画回答の仮の回答本文。文字起こし (issue #25) が動画の音声トラックから置き換えるまでの文言で、
-    /// ホームの「今朝のことば」・ジャーナル・夜リマインドの引用にそのまま表示される
-    private var videoAnswerPlaceholderText: String {
-        // ja: 動画で答えました
-        String(localized: "Answered with a video")
-    }
-
     /// テキスト入力の回答を確定する
     private func save(text: String) {
         guard !isSaving else { return }
@@ -402,6 +395,13 @@ struct MorningQuestionPage: View {
             saveError = error
             isSaving = false
         } else {
+            if let videoAssetIdentifier {
+                // 文字起こしは回答の成立 (アラーム停止) を待たせない。画面が閉じた後も走り続け、完了時に仮テキストを置き換える
+                let modelContext = modelContext
+                Task {
+                    await transcribeAndApplyVideoAnswer(videoAssetIdentifier: videoAssetIdentifier, answeredDate: today, modelContext: modelContext)
+                }
+            }
             dismiss()
         }
     }
