@@ -77,8 +77,8 @@ struct AppStoreScreenshot4Page: View {
         AppStoreScreenshotInkLayout(
             // ja: 答えた朝が、
             //
-            // 墨として残る。
-            title: Text("Answered mornings remain as ink."),
+            // 一粒ずつ残る。
+            title: Text("One dot for each answered morning."),
             // ja: 1行が一週間。空白は、空白のまま。
             subtitle: "Each row is a week. Blank stays blank."
         ) {

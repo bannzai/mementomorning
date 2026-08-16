@@ -24,8 +24,8 @@ struct MockLifeCalendarScreen: View {
             .padding(.top, 70)
             .padding(.bottom, 14)
 
-            // ja: 1行が一週間。答えた朝が、墨として残る。
-            Text("Each row is a week. Answered mornings remain as ink.")
+            // ja: 1行が一週間。答えた朝が、一粒ずつ残る。
+            Text("Each row is a week. One dot for each answered morning.")
                 .font(.system(size: 11))
                 .tracking(0.66)
                 .foregroundStyle(Color.warmWhite.opacity(0.4))
