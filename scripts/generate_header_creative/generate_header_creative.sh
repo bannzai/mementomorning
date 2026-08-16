@@ -18,8 +18,16 @@ swiftc -O -parse-as-library \
   "$script_dir/HeaderCreativeGenerator.swift" \
   -o "$build_dir/generate_header_creative"
 
-if [[ "${1:-}" == "--safe-area-guide" ]]; then
-  "$build_dir/generate_header_creative" "$repo_root/tmp/creative_assets_guide" --safe-area-guide
-else
-  "$build_dir/generate_header_creative" "$repo_root/fastlane/creative_assets"
-fi
+# 引数のタイポで成果物 (fastlane/creative_assets) を意図せず上書きしないよう、未知の引数は拒否する
+case "${1:-}" in
+  --safe-area-guide)
+    "$build_dir/generate_header_creative" "$repo_root/tmp/creative_assets_guide" --safe-area-guide
+    ;;
+  "")
+    "$build_dir/generate_header_creative" "$repo_root/fastlane/creative_assets"
+    ;;
+  *)
+    echo "usage: bash scripts/generate_header_creative/generate_header_creative.sh [--safe-area-guide]" >&2
+    exit 2
+    ;;
+esac

@@ -180,7 +180,8 @@ struct HeaderCreativeGenerator {
     @MainActor
     static func main() {
         let arguments = CommandLine.arguments
-        guard arguments.count >= 2 else {
+        // フラグ形の値 (--safe-area-guide 等) を出力ディレクトリとして誤解釈しないよう拒否する
+        guard arguments.count >= 2, !arguments[1].hasPrefix("--") else {
             FileHandle.standardError.write(Data("usage: \(arguments[0]) <出力ディレクトリ> [--safe-area-guide]\n".utf8))
             exit(2)
         }
