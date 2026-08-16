@@ -14,6 +14,18 @@ struct AppStoreScreenshotsRootPage: View {
                     SnapshotUITest<AppStoreScreenshot4Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot5Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot6Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot7Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot8Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot9Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot10Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot11Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot12Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot13Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot14Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot15Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot16Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot17Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot18Page_Previews>()
                 }
             }
         }

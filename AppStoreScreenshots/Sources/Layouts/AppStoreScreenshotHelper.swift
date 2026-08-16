@@ -123,9 +123,13 @@ struct ScreenshotContentImage<Content: View>: View {
 
 /// デバイスフレームのベゼル表現。影・画像アセットは使わず、ヘアラインのストロークだけで表現する
 struct IPhoneFrameOverlay: View {
+    /// ストロークの色。既定値は暗背景バリアント (ink / dawn) 用のヘアライン。
+    /// 明背景バリアント (washi) は墨のヘアラインを渡して背景とのコントラストを保つ
+    var strokeColor = Color.warmWhite.opacity(0.18)
+
     var body: some View {
         RoundedRectangle(cornerRadius: 36)
-            .stroke(Color.warmWhite.opacity(0.18), lineWidth: 3)
+            .stroke(strokeColor, lineWidth: 3)
     }
 }
 
