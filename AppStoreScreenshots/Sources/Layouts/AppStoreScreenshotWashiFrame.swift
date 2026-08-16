@@ -134,10 +134,10 @@ struct AppStoreScreenshot10Page: View {
         AppStoreScreenshotWashiLayout(
             // ja: 答えた朝が、
             //
-            // 墨として残る。
-            title: Text("Answered mornings remain as ink."),
-            // ja: 1行が一週間。空白は、空白のまま。
-            subtitle: "Each row is a week. Blank stays blank."
+            // 点として残る。
+            title: Text("Answered mornings remain as dots."),
+            // ja: 1行が一週間。点は、いつかつながる。
+            subtitle: "Each row is a week. The dots will connect."
         ) {
             MockLifeCalendarScreen()
         }

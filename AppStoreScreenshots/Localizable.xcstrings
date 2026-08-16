@@ -61,22 +61,22 @@
         }
       }
     },
-    "Answered mornings remain as ink.": {
+    "Answered mornings remain as dots.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "答えた朝が、\n墨として残る。"
+            "value": "答えた朝が、\n点として残る。"
           }
         }
       }
     },
-    "Each row is a week. Blank stays blank.": {
+    "Each row is a week. The dots will connect.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。空白は、空白のまま。"
+            "value": "1行が一週間。点は、いつかつながる。"
           }
         }
       }
@@ -281,22 +281,22 @@
         }
       }
     },
-    "Each row is a week. Answered mornings remain as ink.": {
+    "Each row is a week. Answered mornings remain as dots.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。答えた朝が、墨として残る。"
+            "value": "1行が一週間。答えた朝が、点として残る。"
           }
         }
       }
     },
-    "Blank stays blank.": {
+    "The dots will connect.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "空白は、空白のまま。"
+            "value": "点は、いつかつながる。"
           }
         }
       }
@@ -317,16 +317,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "やれていない"
-          }
-        }
-      }
-    },
-    "Blank days remain blank.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "空白は空白のまま残ります"
           }
         }
       }

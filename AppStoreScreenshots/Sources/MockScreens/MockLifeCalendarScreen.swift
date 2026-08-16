@@ -24,8 +24,8 @@ struct MockLifeCalendarScreen: View {
             .padding(.top, 70)
             .padding(.bottom, 14)
 
-            // ja: 1行が一週間。答えた朝が、墨として残る。
-            Text("Each row is a week. Answered mornings remain as ink.")
+            // ja: 1行が一週間。答えた朝が、点として残る。
+            Text("Each row is a week. Answered mornings remain as dots.")
                 .font(.system(size: 11))
                 .tracking(0.66)
                 .foregroundStyle(Color.warmWhite.opacity(0.4))
@@ -62,8 +62,8 @@ struct MockLifeCalendarScreen: View {
                     .font(.system(size: 12))
                     .tracking(1.2)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
-                // ja: 空白は、空白のまま。
-                Text("Blank stays blank.")
+                // ja: 点は、いつかつながる。
+                Text("The dots will connect.")
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))

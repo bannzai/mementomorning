@@ -16,7 +16,7 @@ private var lifeCalendarAnswersDescriptor: FetchDescriptor<MorningAnswer> {
 
 /// 答えた朝が一粒ずつ墨のように埋まっていく人生カレンダー (週単位グリッド)。1 行が 1 週間、1 マスが 1 日。
 /// デザイン handoff 1g / プロトタイプ calendar 準拠。
-/// 空白の日は空白のまま残す (streak 修復は作らない。documents/PROJECT.md の課金設計参照)
+/// streak 修復は作らない (documents/PROJECT.md の課金設計参照)
 struct LifeCalendarPage: View {
     @Environment(\.modelContext) private var modelContext
     @Query(lifeCalendarAnswersDescriptor) private var answers: [MorningAnswer]
@@ -29,8 +29,8 @@ struct LifeCalendarPage: View {
         let days = lifeCalendarDays(answeredDates: answers.map(\.answeredDate), today: .now, calendar: calendar)
         let today = calendar.startOfDay(for: .now)
         VStack(spacing: 0) {
-            // ja: 1行が一週間。答えた朝が、墨として残る。
-            Text("Each row is a week. Answered mornings remain as ink.")
+            // ja: 1行が一週間。答えた朝が、点として残る。
+            Text("Each row is a week. Answered mornings remain as dots.")
                 .font(.system(size: 11))
                 .tracking(0.66)
                 .foregroundStyle(Color.warmWhite.opacity(0.4))
@@ -81,8 +81,8 @@ struct LifeCalendarPage: View {
                     .font(.system(size: 12))
                     .tracking(1.2)
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
-                // ja: 空白は、空白のまま。
-                Text("Blank stays blank.")
+                // ja: 点は、いつかつながる。
+                Text("The dots will connect.")
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))
