@@ -83,12 +83,6 @@ struct NightReflectionPage: View {
                             .accessibilityIdentifier("night_reflection_save_error")
                     }
 
-                    // ja: 空白は空白のまま残ります
-                    Text("Blank days remain blank.")
-                        .font(.system(size: 10))
-                        .tracking(0.6)
-                        .foregroundStyle(Color.warmWhite.opacity(0.3))
-                        .padding(.top, 4)
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 32)

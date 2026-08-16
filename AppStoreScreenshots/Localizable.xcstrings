@@ -321,16 +321,6 @@
         }
       }
     },
-    "Blank days remain blank.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "空白は空白のまま残ります"
-          }
-        }
-      }
-    },
     "On the seventh morning": {
       "localizations": {
         "ja": {

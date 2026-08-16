@@ -86,7 +86,7 @@
 ### 7. 夜の振り返り(`1j` / night)
 - 21:30 の通知(本文に今朝の回答を引用)から開く
 - 「守れてますか? / ARE YOU KEEPING IT?」→ 今朝の回答 25pt/300 → 「今朝 5:50 のあなた · 動画を見返す」(動画再生導線)
-- ボタン: primary「やれた」/ secondary「やれていない」+ 注釈「空白は空白のまま残ります」
+- ボタン: primary「やれた」/ secondary「やれていない」
 
 ### 8. 共有カード(`1k` / share)— 実装済み `AnswerShareCardView.swift` 準拠
 - 360×360pt(ImageRenderer scale 3 → 1080px)。黒地・白文字・**セリフ体**

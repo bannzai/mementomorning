@@ -171,16 +171,6 @@
         }
       }
     },
-    "Blank days remain blank.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "空白は空白のまま残ります"
-          }
-        }
-      }
-    },
     "The dots will connect.": {
       "localizations": {
         "ja": {
