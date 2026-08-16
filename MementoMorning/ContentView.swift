@@ -66,6 +66,8 @@ private struct HomeContent: View {
     @Query private var stripAnswers: [MorningAnswer]
     /// 全期間の回答数 (答えた朝 N)。件数だけ必要なため fetchCount で取得して保持する
     @State private var answeredCount = 0
+    /// 編集画面 (AnswerEditPage) を開く対象の回答
+    @State private var editTargetAnswer: MorningAnswer?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
     /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
@@ -112,6 +114,9 @@ private struct HomeContent: View {
                 .accessibilityIdentifier("debug_menu_link")
             }
             #endif
+        }
+        .sheet(item: $editTargetAnswer) { answer in
+            AnswerEditPage(answer: answer)
         }
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
@@ -219,7 +224,8 @@ private struct HomeContent: View {
         .accessibilityIdentifier("home_alarm_toggle")
     }
 
-    /// 今朝のことば (回答済みの日のみ)。「直す」導線は編集画面 (#25 文字起こし確認の再利用) の実装時に追加する
+    /// 今朝のことば (回答済みの日のみ)。
+    /// 動画回答の文字起こしの誤認識を直せるよう、本文の下に編集画面 (AnswerEditPage) への「直す」導線を置く
     @ViewBuilder
     private var todayAnswerSection: some View {
         if let todayAnswer = todayAnswers.first {
@@ -237,6 +243,17 @@ private struct HomeContent: View {
                         todayAnswerText(todayAnswer: todayAnswer)
                     }
                 }
+                Button {
+                    editTargetAnswer = todayAnswer
+                } label: {
+                    // ja: 直す
+                    Text("Fix")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color.warmWhite.opacity(0.55))
+                        .underline()
+                }
+                .padding(.top, 5)
+                .accessibilityIdentifier("home_today_answer_edit_link")
             }
             .padding(.top, 56)
             .accessibilityIdentifier("home_today_answer")

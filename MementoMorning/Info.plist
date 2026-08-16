@@ -11,6 +11,8 @@
 	<string>Used to record the audio of your video answer.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to save your recorded video answers to the 'Memento Morning' album in Photos.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Used to transcribe the audio of your video answer into text on this device.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>RevenueCatAPIKey</key>

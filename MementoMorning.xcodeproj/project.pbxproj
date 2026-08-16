@@ -47,6 +47,7 @@
 		46FBC9833205655F28AE4FCB /* MementoMorning.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */; };
 		47298F0ED7429FCF9CB1C4E3 /* MorningQuestionPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC155036E7C6A9F203C5E1 /* MorningQuestionPageSnapshotUITest.swift */; };
 		4A32A22DDE1C69871CE53650 /* PaywallPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE03BA5E48D851DD27B5A884 /* PaywallPage.swift */; };
+		4F14C3CF603F9331A306120C /* VideoAnswerTranscriberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7358BFCB9AE6B557207D3523 /* VideoAnswerTranscriberTests.swift */; };
 		5057BDFC3BC96E468D89F110 /* NightReflectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A66F484F795E19FB4ADA23 /* NightReflectionPage.swift */; };
 		531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF5EE7BC099E438DC69AE6 /* OnboardingPermissionTests.swift */; };
 		53D975F01E22A25F72452BBD /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 61AF4AEDE590737CEF6A406E /* RevenueCat */; };
@@ -65,6 +66,7 @@
 		7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784F14F17E87134C2E8E59A /* Rescheduler.swift */; };
 		819210AB97388C092A1650B7 /* LifeCalendarPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418C3D5ECE4F458975D2C92 /* LifeCalendarPageSnapshotUITest.swift */; };
 		83FEBC1ACE55DF32E2C9CA68 /* PaywallPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AC242E0454C8B64B929716 /* PaywallPageSnapshotUITest.swift */; };
+		856A557689C927EE5A06886B /* AnswerEditPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E0660628EB4AC3D90E2DE /* AnswerEditPage.swift */; };
 		86DAF26A21A1620580E7E9D8 /* MockSevenMorningsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F7F249342F2DE41528F483 /* MockSevenMorningsScreen.swift */; };
 		87E3F55F9195365C0A5ACFCB /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D21ECA983735868168CDBBD /* DesignSystem.swift */; };
 		8AA325D7614FC522380C61C6 /* SnapshotUITestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862E586E3F24AE03E11A7DC3 /* SnapshotUITestPage.swift */; };
@@ -86,6 +88,7 @@
 		AB50FBE9397095C64DE873C5 /* QuestionPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C322778C1BA97DA75148B887 /* QuestionPageSnapshotUITest.swift */; };
 		AD519268D36689E64D7456B8 /* AppStoreScreenshot10PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB719041CF2B837D8CC2A16 /* AppStoreScreenshot10PageSnapshotUITest.swift */; };
 		B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */; };
+		B35F977FB07F68FD87D0FD4A /* VideoAnswerTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */; };
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
 		B87A2AA4C1CBCFB612222763 /* VideoAnswerGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */; };
 		BD573C9988FFD160D9F402F7 /* ContentViewSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */; };
@@ -181,6 +184,7 @@
 		6EB94C934831139721BDE0F8 /* SampleAnswerSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAnswerSeeder.swift; sourceTree = "<group>"; };
 		6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDates.swift; sourceTree = "<group>"; };
 		715457F9DCAEABC482EBEB8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7358BFCB9AE6B557207D3523 /* VideoAnswerTranscriberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerTranscriberTests.swift; sourceTree = "<group>"; };
 		73D325B90BFCC5302543DF5E /* AnswerLogVisibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLogVisibilityTests.swift; sourceTree = "<group>"; };
 		74D62A1161E864CA8A81EAAA /* AnswerShareCardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerShareCardPage.swift; sourceTree = "<group>"; };
 		783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestoneTests.swift; sourceTree = "<group>"; };
@@ -206,7 +210,7 @@
 		999DC90CFBABE7969E4C78E5 /* AppStoreScreenshotInkFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotInkFrame.swift; sourceTree = "<group>"; };
 		9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D21ECA983735868168CDBBD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
-		A0E8A120E01DAB656205932C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		A46E0660628EB4AC3D90E2DE /* AnswerEditPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerEditPage.swift; sourceTree = "<group>"; };
 		A7CC155036E7C6A9F203C5E1 /* MorningQuestionPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKitTest.framework; path = System/Library/Frameworks/StoreKitTest.framework; sourceTree = SDKROOT; };
 		ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSetting.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
 		C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGateTests.swift; sourceTree = "<group>"; };
 		CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot2PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPage.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
 		D16E3D36B5A1DDC475AA0933 /* AppStoreScreenshot8PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot8PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -239,6 +244,7 @@
 		D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningAlarmMetadata.swift; sourceTree = "<group>"; };
 		D69B1B73C832A569BF7DBDA9 /* MockHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeScreen.swift; sourceTree = "<group>"; };
 		D784F14F17E87134C2E8E59A /* Rescheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rescheduler.swift; sourceTree = "<group>"; };
+		DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerTranscriber.swift; sourceTree = "<group>"; };
 		DE2027A220F6AB5E5E9EC6A9 /* AppStoreScreenshot11PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot11PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		DEB719041CF2B837D8CC2A16 /* AppStoreScreenshot10PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot10PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		E17E85BA3B68068B127904EF /* MockJournalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJournalScreen.swift; sourceTree = "<group>"; };
@@ -277,15 +283,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		020899E91D2EFAA5159C7DCA /* issue-13 */ = {
-			isa = PBXGroup;
-			children = (
-				A0E8A120E01DAB656205932C /* Config.xcconfig */,
-			);
-			name = "issue-13";
-			path = .;
-			sourceTree = "<group>";
-		};
 		112B58E4F9934A156679AE30 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +316,15 @@
 				C322778C1BA97DA75148B887 /* QuestionPageSnapshotUITest.swift */,
 			);
 			path = Question;
+			sourceTree = "<group>";
+		};
+		1F872996596D695A2B756CDF /* issue-25 */ = {
+			isa = PBXGroup;
+			children = (
+				CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */,
+			);
+			name = "issue-25";
+			path = .;
 			sourceTree = "<group>";
 		};
 		230FCEEEF98E50E9707380B4 /* Entity */ = {
@@ -404,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				55B3D0486D3AB4787BCD5F25 /* AlarmSetting */,
+				9C7F59E8F0869B782C563668 /* AnswerEdit */,
 				BF34306F551BB88A384C4CDF /* AnswerLog */,
 				6E885FD3AF6855E33EBCF9A0 /* DebugMenu */,
 				7D562EF7D3FEFFF2D7675537 /* LifeCalendar */,
@@ -517,7 +524,7 @@
 				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
 				23EA8FBE6EDC40B9BFA1966B /* AppStoreScreenshots */,
 				675DA7F11AEB50A25114095A /* AppStoreScreenshotsUITests */,
-				020899E91D2EFAA5159C7DCA /* issue-13 */,
+				1F872996596D695A2B756CDF /* issue-25 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				6884511A1BA3EF7D4D816DFE /* MementoMorningSnapshotUITests */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
@@ -581,6 +588,14 @@
 			path = Entitlement;
 			sourceTree = "<group>";
 		};
+		9C7F59E8F0869B782C563668 /* AnswerEdit */ = {
+			isa = PBXGroup;
+			children = (
+				A46E0660628EB4AC3D90E2DE /* AnswerEditPage.swift */,
+			);
+			path = AnswerEdit;
+			sourceTree = "<group>";
+		};
 		9FC18C321010A448E4106E9C /* NightReflection */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +644,7 @@
 				2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */,
 				62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */,
 				1D2DCAE518E4646F494381B0 /* VideoAnswerPhotoLibrary.swift */,
+				DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */,
 			);
 			path = MorningQuestion;
 			sourceTree = "<group>";
@@ -722,6 +738,7 @@
 				C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */,
 				97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */,
 				C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */,
+				7358BFCB9AE6B557207D3523 /* VideoAnswerTranscriberTests.swift */,
 			);
 			path = MementoMorningTests;
 			sourceTree = "<group>";
@@ -987,6 +1004,7 @@
 				2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */,
 				E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */,
 				090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */,
+				856A557689C927EE5A06886B /* AnswerEditPage.swift in Sources */,
 				F06E2954C1D617DC81DCCB0B /* AnswerLogPage.swift in Sources */,
 				6A7B3C433CC99BF73EF3F096 /* AnswerLogVisibility.swift in Sources */,
 				7D513E0EFC28AB38EF46B78B /* AnswerShareCardPage.swift in Sources */,
@@ -1023,6 +1041,7 @@
 				939A8E8262D62CD1915EFADF /* VideoAnswerCamera.swift in Sources */,
 				72AD46DE1066E5C75D102504 /* VideoAnswerGate.swift in Sources */,
 				22C52EF86ADC9C19455FCCA8 /* VideoAnswerPhotoLibrary.swift in Sources */,
+				B35F977FB07F68FD87D0FD4A /* VideoAnswerTranscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1045,6 +1064,7 @@
 				D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */,
 				14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */,
 				B87A2AA4C1CBCFB612222763 /* VideoAnswerGateTests.swift in Sources */,
+				4F14C3CF603F9331A306120C /* VideoAnswerTranscriberTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,7 +1268,7 @@
 		};
 		6D8148AD7C6C10CE6404F6C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0E8A120E01DAB656205932C /* Config.xcconfig */;
+			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -1370,7 +1390,7 @@
 		};
 		94B07253134F816E7ED5852F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0E8A120E01DAB656205932C /* Config.xcconfig */;
+			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;

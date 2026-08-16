@@ -44,6 +44,17 @@
           }
         }
       }
+    },
+    "NSSpeechRecognitionUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画回答の音声を端末上でテキストに変換するために使用します"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
