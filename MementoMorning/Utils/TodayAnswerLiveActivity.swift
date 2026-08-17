@@ -1,14 +1,24 @@
 import ActivityKit
 import Foundation
 
-/// Live Activity の ContentState に格納する本文の最大文字数。
+/// Live Activity の ContentState に格納する本文の UTF-8 バイト数の上限。
 /// ActivityKit には属性 + ContentState の合計 4KB のサイズ上限があり、超えると開始 (request)・更新が失敗する。
-/// ロック画面の表示は最大 3 行のため 300 文字で表示に足り、UTF-8 で最大 4 バイト/文字でも約 1.2KB に収まり上限に達しない
-let todayAnswerActivityTextLimit = 300
+/// JSON エンコードのキー等のオーバーヘッドを差し引いても 4KB に収まるよう本文は 2KB までとする (表示は最大 3 行のため表示にも足りる)
+let todayAnswerActivityTextByteLimit = 2048
 
-/// Live Activity に表示する本文を返す純粋関数。長さ無制限の回答本文をサイズ上限内に切り詰める (表示専用。永続化される回答本文は変えない)
+/// Live Activity に表示する本文を返す純粋関数。長さ無制限の回答本文をサイズ上限内に切り詰める (表示専用。永続化される回答本文は変えない)。
+/// Character 数ではなく UTF-8 バイト数で制限する (複数 Unicode scalar の絵文字等では文字数がエンコード後サイズを保証しないため)。
+/// 書記素クラスタ (Character) の境界で切ることで、絵文字や結合文字が途中で壊れないようにする
 func todayAnswerActivityDisplayText(text: String) -> String {
-    String(text.prefix(todayAnswerActivityTextLimit))
+    var displayText = ""
+    var byteCount = 0
+    for character in text {
+        let characterByteCount = String(character).utf8.count
+        if byteCount + characterByteCount > todayAnswerActivityTextByteLimit { break }
+        displayText.append(character)
+        byteCount += characterByteCount
+    }
+    return displayText
 }
 
 /// 「今日の目標」Live Activity の staleDate (翌日 0 時) を返す純粋関数。

@@ -40,9 +40,21 @@ final class TodayAnswerLiveActivityTests: XCTestCase {
         XCTAssertEqual(todayAnswerActivityDisplayText(text: "家族と海を見に行く"), "家族と海を見に行く")
     }
 
-    func testDisplayTextTruncatesLongAnswer() {
-        let displayText = todayAnswerActivityDisplayText(text: String(repeating: "あ", count: todayAnswerActivityTextLimit + 1))
+    func testDisplayTextTruncatesLongAnswerWithinByteLimit() {
+        // 「あ」は UTF-8 で 3 バイト。上限を超える入力が上限以下のバイト数へ切り詰められ、3 バイト境界 (682 文字 = 2046 バイト) で止まる
+        let displayText = todayAnswerActivityDisplayText(text: String(repeating: "あ", count: 1000))
 
-        XCTAssertEqual(displayText, String(repeating: "あ", count: todayAnswerActivityTextLimit))
+        XCTAssertEqual(displayText, String(repeating: "あ", count: 682))
+        XCTAssertLessThanOrEqual(displayText.utf8.count, todayAnswerActivityTextByteLimit)
+    }
+
+    func testDisplayTextDoesNotSplitMultiScalarEmoji() {
+        // 家族絵文字は 1 Character が複数 Unicode scalar (25 バイト)。文字数ではなくバイト数で制限され、絵文字の途中で壊れない
+        let familyEmoji = "👨‍👩‍👧‍👦"
+        let displayText = todayAnswerActivityDisplayText(text: String(repeating: familyEmoji, count: 300))
+
+        XCTAssertLessThanOrEqual(displayText.utf8.count, todayAnswerActivityTextByteLimit)
+        XCTAssertTrue(displayText.allSatisfy { String($0) == familyEmoji })
+        XCTAssertEqual(displayText.count, todayAnswerActivityTextByteLimit / familyEmoji.utf8.count)
     }
 }
