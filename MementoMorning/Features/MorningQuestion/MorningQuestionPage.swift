@@ -127,8 +127,10 @@ struct MorningQuestionPage: View {
                         .disabled(isSaving)
                         .padding(.horizontal, 32)
                         .accessibilityIdentifier("morning_question_retry_save_button")
-                    } else {
+                    } else if camera.isSessionRunning {
                         recordButton
+                    } else {
+                        preparingRecordingIndicator
                     }
                     Button {
                         // 録画中に切り替えた場合、放置された録画が完了して回答を確定しないよう明示的に止める
@@ -155,6 +157,23 @@ struct MorningQuestionPage: View {
         .onDisappear {
             camera.stop()
         }
+    }
+
+    /// セッションが起動するまでの代替表示。権限リクエスト中・カメラ起動中であることを示す。
+    /// 押しても何も起きない録画ボタンを出すと、拒否されたのか準備中なのか分からない画面になるため置いている (issue #50)。
+    /// 権限拒否・カメラ非搭載が確定した時は isVideoAnswerUnavailable が立ち、テキスト入力へ切り替わるためこの表示には留まらない
+    private var preparingRecordingIndicator: some View {
+        VStack(spacing: 10) {
+            ProgressView()
+                .tint(Color.warmWhite)
+            // ja: カメラを準備しています
+            Text(String(localized: "Preparing the camera"))
+                .font(.system(size: 12))
+                .foregroundStyle(Color.warmWhite.opacity(0.55))
+        }
+        // 起動後に録画ボタン (72pt) へ置き換わっても下の導線が動かないよう高さを合わせる
+        .frame(height: 72)
+        .accessibilityIdentifier("morning_question_camera_preparing")
     }
 
     /// 録画の開始/停止ボタン。録画中は停止 (= 回答確定) の印として夜明け色の角丸を表示する

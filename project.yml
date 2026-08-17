@@ -24,7 +24,11 @@ targets:
     type: application
     platform: iOS
     sources:
-      - MementoMorning
+      # feature ごとの QA.md (setup-qa) はソースツリーに同居する運用ドキュメントで、
+      # 含めるとアプリバンドルのリソースとして配布物に入ってしまうため除外する
+      - path: MementoMorning
+        excludes:
+          - "**/QA.md"
     dependencies:
       - package: RevenueCat
     # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
