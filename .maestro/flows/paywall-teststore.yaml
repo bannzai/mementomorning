@@ -1,0 +1,70 @@
+# Test Store 経由の課金フロー検証 (issue #51)。
+# simctl 起動と同じ経路 (Xcode 非経由) で、価格表示 → 購入 → プレミアム解放 → 復元を確認する。
+# 前提: Debug ビルド (Test Store キーが既定。Config.xcconfig) をインストール済みで、
+# 未購入状態 (購入済みならアプリを uninstall してから) かつオンボーディング完了済みにしておく:
+#   xcrun simctl spawn <UDID> defaults write com.bannzai.MementoMorning hasCompletedOnboarding -bool true
+# 実行例: maestro --device <UDID> test .maestro/flows/paywall-teststore.yaml
+appId: com.bannzai.MementoMorning
+---
+- launchApp
+# 初回起動の通知許可ダイアログを閉じる (出ない場合はスキップ)
+- tapOn:
+    text: "許可"
+    optional: true
+- tapOn:
+    id: "debug_menu_link"
+# isPremium 行は画面下部のためスクロールして表示する
+- scrollUntilVisible:
+    element:
+      id: "debug_premium_state"
+    direction: DOWN
+- assertVisible:
+    text: "isPremium: false"
+- takeScreenshot: tmp/maestro-shots/01-debug-menu-before
+- tapOn:
+    id: "debug_open_paywall"
+# offering の取得 (Test Store) を待つ。取得できるとストア価格のボタンが出る
+- extendedWaitUntil:
+    visible:
+      id: "paywall_yearly_button"
+    timeout: 20000
+- takeScreenshot: tmp/maestro-shots/02-paywall-prices
+# 年額プランを購入 → Test Store のモーダルで成功をシミュレート
+- tapOn:
+    id: "paywall_yearly_button"
+- extendedWaitUntil:
+    visible: "Test Store Purchase"
+    timeout: 20000
+- takeScreenshot: tmp/maestro-shots/03-test-store-modal
+- tapOn: "Test valid purchase"
+# 購入成功で entitlement premium が有効になり、paywall が dismiss されて開発者メニューへ戻る
+- extendedWaitUntil:
+    visible:
+      id: "debug_open_paywall"
+    timeout: 20000
+# 購入前の描画が残らないよう再起動してから entitlement キャッシュを確認する
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- scrollUntilVisible:
+    element:
+      id: "debug_premium_state"
+    direction: DOWN
+- assertVisible:
+    text: "isPremium: true"
+- takeScreenshot: tmp/maestro-shots/04-premium-unlocked
+# 復元: ペイウォールを開き直して「購入を復元」→ 有効な entitlement が返り dismiss される
+- tapOn:
+    id: "debug_open_paywall"
+- extendedWaitUntil:
+    visible:
+      id: "paywall_restore"
+    timeout: 20000
+- tapOn:
+    id: "paywall_restore"
+- extendedWaitUntil:
+    visible:
+      id: "debug_open_paywall"
+    timeout: 20000
+- takeScreenshot: tmp/maestro-shots/05-after-restore
