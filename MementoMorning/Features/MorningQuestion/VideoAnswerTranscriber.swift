@@ -131,8 +131,9 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
 }
 
 /// 音声認識の権限をリクエストし、確定した権限状態を返す (完了ハンドラの async ラッパー)。
-/// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)
-private func requestSpeechRecognitionAuthorization() async -> SFSpeechRecognizerAuthorizationStatus {
+/// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)。
+/// オンボーディングの練習ステップ (OnboardingPage) からも呼び、起き抜けの朝に不意のダイアログを出さないよう事前に確定させる
+func requestSpeechRecognitionAuthorization() async -> SFSpeechRecognizerAuthorizationStatus {
     await withCheckedContinuation { continuation in
         SFSpeechRecognizer.requestAuthorization { authorizationStatus in
             continuation.resume(returning: authorizationStatus)

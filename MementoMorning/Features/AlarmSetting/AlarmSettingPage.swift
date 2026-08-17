@@ -70,6 +70,16 @@ struct AlarmSettingPage: View {
                 }
                 .accessibilityIdentifier("alarm_setting_endless_alarm_row")
             }
+            // 夜リマインドがいつ届くかを可視化する (issue #44)。時刻の SSOT は NightReminder の固定値 (カスタマイズはプレミアム機能で未実装)
+            LabeledContent {
+                Text(nightReminderTime, format: .dateTime.hour().minute())
+            } label: {
+                // ja: 夜のリマインド
+                Text("Night reminder")
+                // ja: 今朝の回答と答え合わせしましょう
+                Text("Check tonight against this morning's answer.")
+            }
+            .accessibilityIdentifier("alarm_setting_night_reminder_row")
             if let lastRescheduleError, !lastRescheduleError.isEmpty {
                 // エラーメッセージはそのまま表示する (加工しない)
                 Text(lastRescheduleError)
@@ -127,6 +137,16 @@ struct AlarmSettingPage: View {
             }
             isEnabled = alarmSetting.isEnabled
         }
+    }
+
+    /// 夜リマインドの通知時刻の表示用 Date (端末のロケールで時刻表記するために Date へ変換する)
+    private var nightReminderTime: Date {
+        Calendar.autoupdatingCurrent.date(
+            bySettingHour: NightReminder.hour,
+            minute: NightReminder.minute,
+            second: 0,
+            of: .now
+        ) ?? .now
     }
 
     /// 入力内容を保存して再スケジュールする

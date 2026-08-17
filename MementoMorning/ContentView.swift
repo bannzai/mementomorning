@@ -106,7 +106,7 @@ private struct HomeContent: View {
                     DebugMenuPage()
                 } label: {
                     Label {
-                        Text(verbatim: "Developer Menu")
+                        Text(verbatim: "開発者メニュー")
                     } icon: {
                         Image(systemName: "hammer")
                     }
@@ -126,7 +126,7 @@ private struct HomeContent: View {
     /// 次の朝のアラーム時刻 (大時刻・残り時間・トグル)
     private var nextMorningSection: some View {
         VStack(spacing: 8) {
-            // ja: 次の朝 · NEXT MORNING
+            // ja: アラーム
             Text("NEXT MORNING")
                 .font(.system(size: 10))
                 .tracking(2.6)
