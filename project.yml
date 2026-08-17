@@ -63,6 +63,11 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
+      configs:
+        Release:
+          # 疑似録画モード (issue #52) のフィクスチャ動画は DEBUG 限定の検証用リソースのため、
+          # リリースビルドの成果物に含めない (コード側は #if DEBUG で除外している)
+          EXCLUDED_SOURCE_FILE_NAMES: DebugVideoAnswerFixture_*.mov
   # ロック画面に「今日の目標」(今日の回答) を Live Activity として表示し (issue #45)、
   # ホーム画面ウィジェットに今日の回答を常駐表示する (issue #46) Widget Extension。
   # ホーム画面ウィジェットは SwiftData を App Groups 共有コンテナ経由で読むため、
