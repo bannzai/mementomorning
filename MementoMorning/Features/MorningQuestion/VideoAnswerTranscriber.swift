@@ -126,6 +126,8 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     // 当日分の通知が仮テキストを引用したまま残る。認識結果の保存に成功したら当日分を登録し直す
     // (通知本文が「今日の回答」の引用である当日の適用時に限る)
     if Calendar.current.isDateInToday(answeredDate) {
+        // ロック画面の「今日の目標」(Live Activity) も仮テキスト「動画で答えました」のままのため、認識結果へ置き換える
+        await refreshTodayAnswerLiveActivity(todayAnswerText: text)
         await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: text)
     }
 }

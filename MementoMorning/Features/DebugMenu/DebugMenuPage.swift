@@ -183,18 +183,21 @@ struct DebugMenuPage: View {
         } catch {
             assertionFailure(error.localizedDescription)
         }
+        // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
     }
 
-    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
+    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない。
+    /// バックグラウンド遷移なしでロック画面の表示を確認できるよう、Live Activity の開始もその場で行う
     private func seedTodayAnswer() {
         guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
-        modelContext.insert(
-            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
-        )
+        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+        modelContext.insert(answer)
         try? modelContext.save()
         refreshAnswerStates()
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: answer.text) }
     }
 
     /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
