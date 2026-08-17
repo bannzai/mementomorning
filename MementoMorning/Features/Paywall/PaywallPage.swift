@@ -19,6 +19,8 @@ struct PaywallPage: View {
     @State private var offeringLoadFailed = false
     /// 購入・復元の失敗をユーザーへ伝えるメッセージ。nil 以外でアラート表示する
     @State private var purchaseError: String?
+    /// 年額プランの導入オファー (無料トライアル) をこのユーザーが使えるか。問い合わせ前・判定不能は unknown
+    @State private var annualIntroEligibility: IntroEligibilityStatus = .unknown
 
     @Environment(\.dismiss) private var dismiss
 
@@ -130,6 +132,13 @@ struct PaywallPage: View {
                         Task { await purchase(package: offering?.annual) }
                     } label: {
                         VStack(spacing: 2) {
+                            if let annualFreeTrialPeriodText {
+                                // ja: %@無料
+                                Text("\(annualFreeTrialPeriodText) free")
+                                    .font(.system(size: 11))
+                                    .tracking(0.5)
+                                    .accessibilityIdentifier("paywall_yearly_free_trial")
+                            }
                             // ja: 年 %@
                             Text("\(annualPriceText) / year")
                                 .font(.system(size: 15))
@@ -239,6 +248,24 @@ struct PaywallPage: View {
             ?? storeProduct.localizedPriceString
     }
 
+    /// 年額プランの無料トライアル期間の表示文字列 (例: 1 week)。
+    /// 商品に無料トライアルの introductory offer があり、かつこのユーザーがそれを使える (eligible) 時だけ返す。
+    /// それ以外 (offer 無し・有料の導入価格・offering 未取得・利用済みで ineligible・判定不能) は nil。
+    /// PROJECT.md の課金設計では「年額のみ 7 日間無料トライアル」だが、固定文言で書くとストア側の設定と
+    /// 食い違った時に実際と異なる無料期間を見せてしまうため、必ず取得できた offer の期間から組み立てる
+    /// (見本価格を出さない PR #30 の方針と同じ)。
+    /// introductoryDiscount は商品側の設定でしかなく、同じ購読グループのトライアルを使い切ったユーザーにも
+    /// 存在する。資格を確認せずに出すと、購入で即時課金される人に「無料」と見せてしまう (PR #54 レビュー指摘)
+    private var annualFreeTrialPeriodText: String? {
+        guard annualIntroEligibility == .eligible,
+              let introductoryDiscount = offering?.annual?.storeProduct.introductoryDiscount,
+              introductoryDiscount.paymentMode == .freeTrial else { return nil }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.year, .month, .weekOfMonth, .day]
+        return formatter.string(from: dateComponents(subscriptionPeriod: introductoryDiscount.subscriptionPeriod))
+    }
+
     /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥800/月) を見本表示する
     private var monthlyPriceText: String {
         offering?.monthly?.storeProduct.localizedPriceString ?? "¥800"
@@ -260,13 +287,26 @@ struct PaywallPage: View {
             let resolved = try await Purchases.shared.offerings().offering(identifier: PremiumEntitlement.offeringIdentifier)
             if let resolved, resolved.annual != nil || resolved.monthly != nil || resolved.lifetime != nil {
                 offering = resolved
+                await loadAnnualIntroEligibility(annualProduct: resolved.annual?.storeProduct)
             } else {
                 offering = nil
+                annualIntroEligibility = .unknown
                 offeringLoadFailed = true
             }
         } catch {
+            annualIntroEligibility = .unknown
             offeringLoadFailed = true
         }
+    }
+
+    /// 年額プランの導入オファーをこのユーザーが使えるかを問い合わせる。
+    /// 判定できない (unknown) 場合は無料トライアルの表記を出さない側に倒す (誤って「無料」と見せない)
+    private func loadAnnualIntroEligibility(annualProduct: StoreProduct?) async {
+        guard let annualProduct else {
+            annualIntroEligibility = .unknown
+            return
+        }
+        annualIntroEligibility = await Purchases.shared.checkTrialOrIntroDiscountEligibility(product: annualProduct)
     }
 
     /// package を購入し、entitlement premium が有効になったら閉じる
@@ -327,6 +367,21 @@ struct PaywallPage: View {
             // ja: 購入を復元できませんでした。
             purchaseError = String(localized: "Purchases couldn't be restored.") + "\n\(error.localizedDescription)"
         }
+    }
+}
+
+/// RevenueCat の購読期間を DateComponentsFormatter へ渡せる DateComponents に変換する。
+/// 週は DateComponents に week が無いため weekOfMonth を使う (DateComponentsFormatter の .weekOfMonth に対応する)
+func dateComponents(subscriptionPeriod: SubscriptionPeriod) -> DateComponents {
+    switch subscriptionPeriod.unit {
+    case .day:
+        return DateComponents(day: subscriptionPeriod.value)
+    case .week:
+        return DateComponents(weekOfMonth: subscriptionPeriod.value)
+    case .month:
+        return DateComponents(month: subscriptionPeriod.value)
+    case .year:
+        return DateComponents(year: subscriptionPeriod.value)
     }
 }
 

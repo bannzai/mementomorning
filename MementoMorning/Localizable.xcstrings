@@ -41,8 +41,36 @@
         }
       }
     },
+    "%@ free": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@無料"
+          }
+        }
+      }
+    },
     "%lld mornings answered": {
       "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld morning answered"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld mornings answered"
+                }
+              }
+            }
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -477,6 +505,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "プレミアム"
+          }
+        }
+      }
+    },
+    "Preparing the camera": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラを準備しています"
           }
         }
       }
