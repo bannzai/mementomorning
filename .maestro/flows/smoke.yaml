@@ -1,0 +1,15 @@
+# 起動 smoke: アプリが起動してオンボーディング 1 画面目が出て、次の画面へ進めることを確認する。
+# runner の Simulator は英語ロケールのため、日本語文言に依存する条件タップは書かない。
+# 通知許可ダイアログは launchApp の permissions で出さない (出ると文言分岐で止まる)。
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    clearState: true
+    permissions:
+      notifications: allow
+- assertVisible:
+    id: "onboarding_begin"
+- tapOn:
+    id: "onboarding_begin"
+- assertVisible:
+    id: "onboarding_allow_permissions"

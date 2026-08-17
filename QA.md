@@ -10,7 +10,7 @@ last_verified_at: null
 ## 対象環境
 
 - ローカルの iOS Simulator (iOS 26+)。バックエンドなし・データはローカルの SwiftData のみ (documents/PROJECT.md)
-- 課金は RevenueCat。実課金の確認は Sandbox / StoreKit Configuration で行い、課金状態の作り込みは開発者メニューの「Force premium (override)」を第一候補にする (.claude/rules/debug-menu-for-verification.md)
+- 課金は RevenueCat。Debug ビルドは Test Store キーが既定 (Config.xcconfig) のため、課金フロー (価格表示・購入・復元) は simulator (simtunnel 含む) でそのまま検証できる (AGENTS.md「検証方法」)。実ストア相当 (StoreKit) の確認だけ Sandbox / StoreKit Configuration で行い、課金状態の作り込みは開発者メニューの「プレミアムを強制 (上書き)」を第一候補にする (.claude/rules/debug-menu-for-verification.md)
 
 ## 起動方法
 
@@ -26,7 +26,8 @@ last_verified_at: null
 - `/ios-simulator` (エントリ。simtunnel / ローカルの使い分けは同 skill Phase 1)
 - `/verify-ui-mobile-mcp` (UI のインタラクティブ検証)
 - `/sim-manager` (ローカルシミュレータ管理)
-- `/ios-storekit-testing` (課金の Sandbox / StoreKit Configuration 検証)
+- 課金フローは Debug ビルドの既定 (Test Store キー) でそのまま検証できる。購入は SDK の「Test Store Purchase」モーダルで成功・失敗・キャンセルを選ぶ (検証手順の詳細は AGENTS.md「検証方法」)
+- `/ios-storekit-testing` (実ストア相当の Sandbox / StoreKit Configuration 検証)
 - 到達困難な状態の作り込みは、ホーム左上の開発者メニュー (debug_menu_link → DebugMenuPage、DEBUG ビルド限定) を使う (.claude/rules/debug-menu-for-verification.md)
 
 ### 再現が難しい操作の手順

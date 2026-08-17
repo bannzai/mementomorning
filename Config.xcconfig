@@ -1,21 +1,26 @@
-// ビルド設定の既定値。このファイルは追跡する (キーの実値は書かない)。
+// ビルド設定の既定値。このファイルは追跡する。
 //
-// REVENUECAT_API_KEY は RevenueCat の iOS 用 public API key (appl_ で始まる)。
-// 本リポジトリは public のため実値はコミットせず、gitignore した
-// Config.local.xcconfig に置いて下の #include? で上書きする (issue #15)。
+// REVENUECAT_API_KEY は RevenueCat の SDK 用 public API key。
+// - Debug の既定値は Test Store の API key (test_ で始まる)。実ストア不要で
+//   購入・復元をシミュレートでき、シミュレータ (simtunnel のリモート実行を含む) で
+//   課金フローを検証できる (issue #51)。テスト購入専用のキーで、公開しても
+//   Test Store のテストデータに影響する程度のため、public リポジトリにコミットする
+// - Release の既定値は空。App Store 用の実キー (appl_ で始まる) は実値をコミットせず、
+//   gitignore した Config.local.xcconfig に置いて下の #include? で上書きする (issue #15)。
+//   Release で appl_ 以外のキーは preBuildScript がビルドエラーにする
+//   (Test Store キー入りのバイナリを出荷しないため。MementoMorning ターゲットの Build Phase 参照)
 //
-// 手元でペイウォールの購入導線を動かすには、次の 1 行だけを書いた
+// 手元でペイウォールの実ストア (StoreKit) の購入導線を動かすには、次の 1 行だけを書いた
 // Config.local.xcconfig をこのファイルと同じ階層に作る:
 //
 //   REVENUECAT_API_KEY = appl_xxxxxxxxxxxxxxxxxxxxxxxxxxx
 //
 // キーは RevenueCat Dashboard の Project Settings > API Keys、または API で取得できる:
-//   bash ~/.claude/skills/revenuecat-product-setup/scripts/rc_api.sh \
-//     GET "/projects/<project_id>/apps/<app_id>/public_api_keys"
+//   bash ~/.claude/skills/revenuecat-product-setup/scripts/rc_get_public_api_key.sh
 //
 // Config.local.xcconfig が無くてもビルドは通る (#include? は存在しないファイルを黙って読み飛ばす)。
-// その場合キーは空のままで Purchases.configure() をスキップするため、購入導線は動かず
-// ペイウォールは見本価格の表示になる (PremiumEntitlement.configureIfPossible)。
+// Debug は Test Store で課金フローが動き、Release はキー空のためビルドエラーで気づける。
 REVENUECAT_API_KEY =
+REVENUECAT_API_KEY[config=Debug] = test_mlOloiaFdvQPRJADVsRcjYvjfuw
 
 #include? "Config.local.xcconfig"

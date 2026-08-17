@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: null
-last_verified_at: null
+last_verified_commit: 40337d0
+last_verified_at: 2026-08-17
 ---
 
 # Paywall QA
@@ -11,6 +11,7 @@ last_verified_at: null
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/9 (受け入れ条件)
 - 関連: https://github.com/bannzai/mementomorning/issues/15 (IAP 商品登録) / https://github.com/bannzai/mementomorning/pull/30 (レビュー指摘の反映)
+- 検証手段: 課金フローは Debug ビルドの既定 (RevenueCat Test Store キー) で simulator (simtunnel 含む) のまま検証できる。手順は AGENTS.md「検証方法」、E2E フローは `.maestro/flows/paywall-teststore.yaml`。導入の経緯は https://github.com/bannzai/mementomorning/issues/51 / https://github.com/bannzai/mementomorning/pull/57
 
 ## 仕様チェックリスト
 
@@ -23,11 +24,10 @@ last_verified_at: null
 
 - [x] **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
   - 自動化: manual（sheet 遷移の確認）
-- [ ] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
-  - ⏭️ スキップ: CI ビルドの simulator では RevenueCat が未 configure の可能性が高く、表示された ¥6,000 / ¥800 / ¥9,800 は見本価格と同値のため「offering 取得後のストア価格」であることを画面から判別できない。StoreKit Configuration / Sandbox での課金検証時に確認する
-  - 自動化: manual（画面上の価格表示の目視確認。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
+- [x] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
+  - 自動化: `.maestro/flows/paywall-teststore.yaml`（Test Store のストア価格は USD のため、見本価格 (¥) と画面上で判別できる。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
 - [ ] **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
-  - ⏭️ スキップ: RevenueCat が未 configure のローカルビルドでは offering を取得できず、トライアル表記の分岐に到達しない (見本価格の表示に倒れ、トライアル行は出ない。2026-08-17 に画面で確認)。StoreKit Configuration / Sandbox での課金検証時に確認する
+  - ⏭️ スキップ: Test Store の年額商品には introductory offer を設定していないため、Debug ビルドの既定では「offer なし → 表記なし」側しか確認できない (2026-08-17 の Test Store 検証でも表記なしを確認)。eligible 時に表示される側は StoreKit Configuration (Xcode の Run) / Sandbox での課金検証時に確認する
   - 自動化: manual（画面上の表記の目視確認。期間の変換ロジックは MementoMorningTests/PaywallSubscriptionPeriodTests.swift、.storekit の offer 定義は MementoMorningTests/StoreKitConfigurationTests.swift がカバー済み）
 - [ ] **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
   - 自動化: todo
@@ -56,7 +56,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17 (Test Store。Maestro フロー全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/e2509ff3-f355-4ae1-84d8-f7e9bfdb8fb8.png" width="320" />
+
+(年 $38.00 + ひと月 $3.17 換算・月 $5.00・一生 $61.50。Test Store の USD ストア価格で、見本価格 (¥6,000 / ¥800 / ¥9,800) と異なるため offering 取得後の表示であることを画面から判別できる)
 
 </details>
 
@@ -104,22 +107,24 @@ last_verified_at: null
 
 ## 2. 購入と復元
 
-- [ ] **購入**: Sandbox (または StoreKit Configuration) で購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる
-  - ⏭️ スキップ: リモート simulator (simtunnel) では Sandbox / StoreKit Configuration の課金操作ができない。ローカルで /ios-storekit-testing により確認する
-  - 自動化: manual（Sandbox 課金の操作が必要。/ios-storekit-testing skill を利用できる）
-- [ ] **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
-  - ⏭️ スキップ: 同上 (リモート simulator では Sandbox 課金不可)
-  - 自動化: manual（Sandbox 課金の操作が必要）
+- [x] **購入**: 購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる (Debug ビルドは Test Store、実ストア相当は Sandbox / StoreKit Configuration)
+  - 自動化: `.maestro/flows/paywall-teststore.yaml`（購入 → dismiss → 再起動後も isPremium: true まで検証。解放判定はゲートの判定値 isPremium (開発者メニュー表示) で行い、ジャーナル・スヌーズの画面側は S2 のとおり AlarmSetting / AnswerLog の QA.md が担当）
+- [x] **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
+  - 自動化: `.maestro/flows/paywall-teststore.yaml`（購入済み状態で復元 → entitlement が返り dismiss されるまで検証。別端末・再インストール相殺の復元は Test Store では匿名ユーザーが変わるため対象外で、Sandbox での課金検証時に確認する）
 
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **購入**: Sandbox (または StoreKit Configuration) で購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる
+### **購入**: 購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる (Debug ビルドは Test Store、実ストア相当は Sandbox / StoreKit Configuration)
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17 (Test Store。Maestro フロー全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/43988669-2064-4b4d-af0a-af8f1922f4ce.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/907c6d48-b5e3-4eaa-815c-7413e748bcc5.png" width="320" />
+
+(左: paywall_yearly_button タップで Test Store Purchase モーダルが出て Test valid purchase を選択。右: アプリ再起動後の開発者メニューで isPremium: true。「プレミアムを強制 (上書き)」は OFF なので購入由来の entitlement)
 
 </details>
 
@@ -127,7 +132,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17 (Test Store。Maestro フロー全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/4f8a0388-8df3-4a51-9514-b435edfcd697.png" width="320" />
+
+(paywall_restore タップで有効な entitlement が返り、paywall が dismiss されて開発者メニューへ戻った直後の画面)
 
 </details>
 
