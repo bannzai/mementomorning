@@ -61,11 +61,16 @@ struct MementoMorningApp: App {
                 // (今日の回答が成立している時だけリセットする。回答の保存フローも同じ reschedule を通る)
                 Task {
                     await reschedule(modelContext: PersistenceController.shared.container.mainContext)
-                    // オンボーディング未完了の間は、通知の認可リクエストをオンボーディングの許可ステップに委ねるため夜リマインドを登録しない
-                    // (起動直後にダイアログを出さない。完了直後の登録は RootView 側の task が行う)
-                    guard UserDefaults.standard.bool(forKey: .hasCompletedOnboarding) else { return }
                     do {
-                        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: try todayAnswerText())
+                        let answerText = try todayAnswerText()
+                        // ロック画面の「今日の目標」(Live Activity) を最新化する。
+                        // システムの制約 (約 8 時間) で自動終了した Live Activity の再開もここで行う
+                        // (取得に失敗した時は、表示中の Live Activity を未回答と誤認して終了しないようスキップする)
+                        await refreshTodayAnswerLiveActivity(todayAnswerText: answerText)
+                        // オンボーディング未完了の間は、通知の認可リクエストをオンボーディングの許可ステップに委ねるため夜リマインドを登録しない
+                        // (起動直後にダイアログを出さない。完了直後の登録は RootView 側の task が行う)
+                        guard UserDefaults.standard.bool(forKey: .hasCompletedOnboarding) else { return }
+                        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: answerText)
                     } catch {
                         // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
                         print("[MementoMorningApp] failed to fetch today's answer: \(error)")
@@ -203,7 +208,18 @@ private struct RootView: View {
             updateMorningQuestionPresentation()
             // 前日分の残バックアップ・追撃を掃除して新しい日の計画へ切り替える
             // (問いを閉じた後に前日のバックアップが鳴り続けないようにする)
-            Task { await reschedule(modelContext: PersistenceController.shared.container.mainContext) }
+            Task {
+                await reschedule(modelContext: PersistenceController.shared.container.mainContext)
+                // 前日の「今日の目標」をロック画面に残さない (新しい日の回答があればそれへ切り替える)。
+                // 日付跨ぎでは消える方が正のため、取得の失敗は未回答 (終了) に倒す
+                await refreshTodayAnswerLiveActivity(
+                    todayAnswerText: (try? MorningAnswer.answer(
+                        day: .now,
+                        calendar: .current,
+                        modelContext: PersistenceController.shared.container.mainContext
+                    ))?.text
+                )
+            }
         }
     }
 

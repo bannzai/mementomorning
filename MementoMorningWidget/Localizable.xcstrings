@@ -1,0 +1,26 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "If today were your last day, what would you want to do?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
+    "This morning's words" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のことば"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

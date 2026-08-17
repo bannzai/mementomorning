@@ -28,9 +28,9 @@ struct DebugMenuPage: View {
     var body: some View {
         List {
             Section {
-                Text(verbatim: "MorningAnswer: \(morningAnswerCount)")
+                Text(verbatim: "回答件数 (MorningAnswer): \(morningAnswerCount)")
                     .accessibilityIdentifier("debug_morning_answer_count")
-                Text(verbatim: "Today's answer: \(answerStateText)")
+                Text(verbatim: "今日の回答: \(answerStateText)")
                     .accessibilityIdentifier("debug_today_answer_state")
             }
             Section {
@@ -38,7 +38,7 @@ struct DebugMenuPage: View {
                     seedSampleAnswersIfNeeded(modelContext: modelContext)
                     refreshAnswerStates()
                 } label: {
-                    Text(verbatim: "Seed sample answers (10 days)")
+                    Text(verbatim: "サンプル回答を投入 (10 日分)")
                 }
                 .accessibilityIdentifier("debug_seed_sample_answers")
 
@@ -46,7 +46,7 @@ struct DebugMenuPage: View {
                     deleteAllMorningAnswers()
                     refreshAnswerStates()
                 } label: {
-                    Text(verbatim: "Delete all answers")
+                    Text(verbatim: "全回答を削除")
                 }
                 .accessibilityIdentifier("debug_delete_all_answers")
 
@@ -54,7 +54,7 @@ struct DebugMenuPage: View {
                     // 削除は未設定でも成功する (冪等)。リセットすると回答 7 件以上なら ContentView が節目画面を再表示する
                     UserDefaults.standard.removeObject(forKey: .isSevenMorningsMilestonePresented)
                 } label: {
-                    Text(verbatim: "Reset Seven Mornings milestone")
+                    Text(verbatim: "七つの朝の節目をリセット")
                 }
                 .accessibilityIdentifier("debug_reset_seven_mornings_milestone")
             }
@@ -64,14 +64,14 @@ struct DebugMenuPage: View {
                 NavigationLink {
                     QuestionPage()
                 } label: {
-                    Text(verbatim: "Open QuestionPage (design shell)")
+                    Text(verbatim: "QuestionPage を開く (デザインシェル)")
                 }
                 .accessibilityIdentifier("debug_open_question_page")
 
                 NavigationLink {
                     PaywallPage()
                 } label: {
-                    Text(verbatim: "Open PaywallPage (design shell)")
+                    Text(verbatim: "PaywallPage を開く (デザインシェル)")
                 }
                 .accessibilityIdentifier("debug_open_paywall_page")
             }
@@ -79,14 +79,14 @@ struct DebugMenuPage: View {
                 Button {
                     seedTodayAnswer()
                 } label: {
-                    Text(verbatim: "Seed today's answer")
+                    Text(verbatim: "今日の回答を投入")
                 }
                 .accessibilityIdentifier("debug_seed_today_answer")
 
                 Button {
                     seedYesterdayAnswer()
                 } label: {
-                    Text(verbatim: "Seed yesterday's answer")
+                    Text(verbatim: "昨日の回答を投入")
                 }
                 .accessibilityIdentifier("debug_seed_yesterday_answer")
 
@@ -96,12 +96,12 @@ struct DebugMenuPage: View {
                         refreshAnswerStates()
                     }
                 } label: {
-                    Text(verbatim: "Schedule night reminder in 1 minute")
+                    Text(verbatim: "夜リマインドを 1 分後に登録")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
             }
             Section {
-                Text(verbatim: "Alarm fired: \(alarmFiredStateText)")
+                Text(verbatim: "アラーム発火記録: \(alarmFiredStateText)")
                     .accessibilityIdentifier("debug_alarm_fired_state")
 
                 Button {
@@ -109,7 +109,7 @@ struct DebugMenuPage: View {
                     recordAlarmFired(date: .now)
                     refreshAnswerStates()
                 } label: {
-                    Text(verbatim: "Record alarm fired now")
+                    Text(verbatim: "アラーム発火を今すぐ記録")
                 }
                 .accessibilityIdentifier("debug_record_alarm_fired")
 
@@ -117,57 +117,57 @@ struct DebugMenuPage: View {
                     UserDefaults.standard.removeObject(forKey: .lastAlarmFiredDate)
                     refreshAnswerStates()
                 } label: {
-                    Text(verbatim: "Clear alarm fired record")
+                    Text(verbatim: "アラーム発火記録を削除")
                 }
                 .accessibilityIdentifier("debug_clear_alarm_fired")
             } header: {
-                Text(verbatim: "Morning Question (issue #4)")
+                Text(verbatim: "朝の問い (issue #4)")
             }
             Section {
                 // ON にすると VideoAnswerCamera が AVCapture を使わず、録画停止でフィクスチャ動画を
                 // 「録画結果」として返す。以降 (写真ライブラリ保存・文字起こし・回答成立・アラームキャンセル) は本物のコードを通る
                 Toggle(isOn: $debugSimulateVideoAnswer) {
-                    Text(verbatim: "Simulate video answer")
+                    Text(verbatim: "動画回答を疑似再現")
                 }
                 .accessibilityIdentifier("debug_simulate_video_answer")
 
-                Text(verbatim: "Fixture utterance: \(debugVideoAnswerFixtureUtterance)")
+                Text(verbatim: "フィクスチャの発話: \(debugVideoAnswerFixtureUtterance)")
                     .accessibilityIdentifier("debug_video_answer_fixture_utterance")
 
-                Text(verbatim: "Fixture bundled: \(debugVideoAnswerFixtureURL != nil)")
+                Text(verbatim: "フィクスチャの同梱: \(debugVideoAnswerFixtureURL != nil)")
                     .accessibilityIdentifier("debug_video_answer_fixture_bundled")
             } header: {
-                Text(verbatim: "Video Answer (issue #52)")
+                Text(verbatim: "動画回答 (issue #52)")
             }
             Section {
-                Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
+                Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")
                     .accessibilityIdentifier("debug_onboarding_state")
                 // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
                 Button {
                     hasCompletedOnboarding = false
                 } label: {
-                    Text(verbatim: "Reset onboarding")
+                    Text(verbatim: "オンボーディングをリセット")
                 }
                 .accessibilityIdentifier("debug_reset_onboarding")
             }
             Section {
-                Text(verbatim: "isPremium: \(PremiumEntitlement.isPremium)")
+                Text(verbatim: "プレミアム判定 (isPremium): \(PremiumEntitlement.isPremium)")
                     .accessibilityIdentifier("debug_premium_state")
 
                 Toggle(isOn: $debugPremiumOverride) {
-                    Text(verbatim: "Force premium (override)")
+                    Text(verbatim: "プレミアムを強制 (上書き)")
                 }
                 .accessibilityIdentifier("debug_premium_override_toggle")
 
                 NavigationLink {
                     PaywallPage()
                 } label: {
-                    Text(verbatim: "Open paywall")
+                    Text(verbatim: "ペイウォールを開く")
                 }
                 .accessibilityIdentifier("debug_open_paywall")
             }
         }
-        .navigationTitle(Text(verbatim: "Developer Menu"))
+        .navigationTitle(Text(verbatim: "開発者メニュー"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             refreshAnswerStates()
@@ -177,14 +177,14 @@ struct DebugMenuPage: View {
     /// 今日の回答の有無と夜の振り返りの記録状態を表す表示用の文字列
     private var answerStateText: String {
         guard let answer else {
-            return "none"
+            return "なし"
         }
         return "\(answer.text) (isFulfilled: \(answer.isFulfilled?.description ?? "nil"))"
     }
 
     /// アラーム発火記録の表示用の文字列
     private var alarmFiredStateText: String {
-        lastAlarmFiredDate()?.formatted(.iso8601) ?? "none"
+        lastAlarmFiredDate()?.formatted(.iso8601) ?? "なし"
     }
 
     /// 回答件数と今日の回答の表示を最新化する
@@ -199,20 +199,33 @@ struct DebugMenuPage: View {
             try modelContext.delete(model: MorningAnswer.self)
             try modelContext.save()
         } catch {
+            // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
+            modelContext.rollback()
             assertionFailure(error.localizedDescription)
+            return
         }
+        // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
     }
 
-    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
+    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない。
+    /// バックグラウンド遷移なしでロック画面の表示を確認できるよう、Live Activity の開始もその場で行う
     private func seedTodayAnswer() {
         guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
-        modelContext.insert(
-            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
-        )
-        try? modelContext.save()
+        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+        modelContext.insert(answer)
+        do {
+            try modelContext.save()
+        } catch {
+            // 保存されていない回答で Live Activity を開始しない (表示と実データがずれる)。破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return
+        }
         refreshAnswerStates()
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: answer.text) }
     }
 
     /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
