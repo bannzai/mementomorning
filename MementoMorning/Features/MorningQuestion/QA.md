@@ -1,7 +1,7 @@
 ---
 feature: MorningQuestion
 verification: mobile-mcp
-last_verified_commit: caf7b50
+last_verified_commit: 07cc8bc
 last_verified_at: 2026-08-17
 ---
 
@@ -177,31 +177,31 @@ last_verified_at: 2026-08-17
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17** (iPhone 16 Pro / iOS 26.5 simulator、端末の言語は日本語)
+**確認日: 2026-08-17** (iPhone 16 Pro / iOS 26.5 simulator、端末の言語は日本語。main 取り込み後の commit `07cc8bc` で実施)
 
 1. 開発者メニューの「Video Answer (issue #52)」。「Simulate video answer」が ON で、端末の言語に合う日本語のフィクスチャ (`Fixture utterance: 今日は家族と海を見に行きたい`) が選ばれ、同梱されている (`Fixture bundled: true`)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2eb4bb08-df48-4678-97b8-cfc69555c37e.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/5fd461bd-00d2-4a3b-9539-eb70cd6dbba8.png" width="320" />
 
 2. 「Record alarm fired now」の後に出る権限ダイアログは写真ライブラリのみ (実撮影をしないためカメラ・マイクは要求しない)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/73b32a74-d252-4819-b136-955ff5ef3494.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/7c5bd8ab-0d95-47b7-a6b0-7c158ee62eda.png" width="320" />
 
 3. 朝の問いが全画面で表示され、録画ボタンが押せる (プレビューは黒。疑似録画モードではカメラを構成しないため)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9b805d81-c3fc-465e-9256-5d61235dea28.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/367e6511-08e6-4e98-8409-25d0858fe65c.png" width="320" />
 
 4. 録画中 (停止 = 回答確定を表す夜明け色の角丸)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2286586d-2ea6-47b1-ba12-b3af35c1a285.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/d522f618-aabc-40d9-9e4a-eb8dcc9fe037.png" width="320" />
 
-5. 停止後、写真アプリのアルバム「Memento Morning」に動画が保存されている (3 件は疑似録画を 3 回実行したぶん。フィクスチャが墨色の単色動画のためサムネイルは黒)
+5. 停止後、写真アプリのアルバム「Memento Morning」に動画が保存されている (5 件は疑似録画を 5 回実行したぶん。フィクスチャが墨色の単色動画のためサムネイルは黒)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2d26fd73-8e44-42ac-a10e-67807047f632.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/b32883bf-9091-4da7-9ea7-7628796abbc9.png" width="320" />
 
 6. 全画面が閉じてホームに戻り、「今朝のことば」に回答が反映される (文字起こしが走らないため仮テキスト「動画で答えました」のまま)。「答えた朝 1」に増え、次のアラームは翌朝 7:00 になっている
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/0b217122-9b11-4153-aa6b-967d5b46503f.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/309282e3-9fbd-4981-acd8-9fcbfd4d9f64.png" width="320" />
 
 シナリオ 6 について: 上記スクリーンショットが示すのは「再スケジュールの計画から当日が外れ、次の発火が翌朝になった」ことまで。AlarmKit に登録済みの当日の UUID が実際にキャンセルされ「鳴らない」ことの確認は「3. アラーム連携」の項目が担当する (実機)。
 
