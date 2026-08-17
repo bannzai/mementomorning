@@ -40,12 +40,17 @@ final class TodayAnswerLiveActivityTests: XCTestCase {
         XCTAssertEqual(todayAnswerActivityDisplayText(text: "家族と海を見に行く"), "家族と海を見に行く")
     }
 
-    func testDisplayTextTruncatesLongAnswerWithinByteLimit() {
-        // 「あ」は UTF-8 で 3 バイト。上限を超える入力が上限以下のバイト数へ切り詰められ、3 バイト境界 (682 文字 = 2046 バイト) で止まる
+    /// text を格納した ContentState の JSON エンコード後のバイト数 (検証対象と同じ判定基準)
+    private func encodedByteCount(text: String) -> Int {
+        try! JSONEncoder().encode(TodayAnswerActivityAttributes.ContentState(text: text)).count
+    }
+
+    func testDisplayTextTruncatesLongAnswerWithinEncodedLimit() {
         let displayText = todayAnswerActivityDisplayText(text: String(repeating: "あ", count: 1000))
 
-        XCTAssertEqual(displayText, String(repeating: "あ", count: 682))
-        XCTAssertLessThanOrEqual(displayText.utf8.count, todayAnswerActivityTextByteLimit)
+        XCTAssertFalse(displayText.isEmpty)
+        XCTAssertTrue(displayText.allSatisfy { $0 == "あ" })
+        XCTAssertLessThanOrEqual(encodedByteCount(text: displayText), todayAnswerActivityContentStateByteLimit)
     }
 
     func testDisplayTextDoesNotSplitMultiScalarEmoji() {
@@ -53,8 +58,16 @@ final class TodayAnswerLiveActivityTests: XCTestCase {
         let familyEmoji = "👨‍👩‍👧‍👦"
         let displayText = todayAnswerActivityDisplayText(text: String(repeating: familyEmoji, count: 300))
 
-        XCTAssertLessThanOrEqual(displayText.utf8.count, todayAnswerActivityTextByteLimit)
+        XCTAssertFalse(displayText.isEmpty)
         XCTAssertTrue(displayText.allSatisfy { String($0) == familyEmoji })
-        XCTAssertEqual(displayText.count, todayAnswerActivityTextByteLimit / familyEmoji.utf8.count)
+        XCTAssertLessThanOrEqual(encodedByteCount(text: displayText), todayAnswerActivityContentStateByteLimit)
+    }
+
+    func testDisplayTextTruncatesEscapedCharactersWithinEncodedLimit() {
+        // 引用符は JSON エスケープで 2 バイトになる。生の UTF-8 バイト数ではなくエンコード後サイズで上限内に収まる
+        let displayText = todayAnswerActivityDisplayText(text: String(repeating: "\"", count: 2048))
+
+        XCTAssertFalse(displayText.isEmpty)
+        XCTAssertLessThanOrEqual(encodedByteCount(text: displayText), todayAnswerActivityContentStateByteLimit)
     }
 }

@@ -1,22 +1,32 @@
 import ActivityKit
 import Foundation
 
-/// Live Activity の ContentState に格納する本文の UTF-8 バイト数の上限。
+/// Live Activity の ContentState 全体 (JSON エンコード後) のバイト数の上限。
 /// ActivityKit には属性 + ContentState の合計 4KB のサイズ上限があり、超えると開始 (request)・更新が失敗する。
-/// JSON エンコードのキー等のオーバーヘッドを差し引いても 4KB に収まるよう本文は 2KB までとする (表示は最大 3 行のため表示にも足りる)
-let todayAnswerActivityTextByteLimit = 2048
+/// 属性 (TodayAnswerActivityAttributes はプロパティなし) の取り分を差し引いても 4KB に収まるよう 2KB とする (表示は最大 3 行のため表示にも足りる)
+let todayAnswerActivityContentStateByteLimit = 2048
+
+/// text を格納した ContentState の JSON エンコード後のバイト数。エンコードに失敗した場合は上限超過として扱う (fail-closed)
+private func todayAnswerActivityEncodedByteCount(text: String) -> Int {
+    (try? JSONEncoder().encode(TodayAnswerActivityAttributes.ContentState(text: text)).count) ?? .max
+}
 
 /// Live Activity に表示する本文を返す純粋関数。長さ無制限の回答本文をサイズ上限内に切り詰める (表示専用。永続化される回答本文は変えない)。
-/// Character 数ではなく UTF-8 バイト数で制限する (複数 Unicode scalar の絵文字等では文字数がエンコード後サイズを保証しないため)。
-/// 書記素クラスタ (Character) の境界で切ることで、絵文字や結合文字が途中で壊れないようにする
+/// 文字数や生の UTF-8 バイト数ではなく、実際にエンコードされる ContentState のバイト数で判定する
+/// (複数 scalar の絵文字は文字数を、引用符・改行等の JSON エスケープは生バイト数を、それぞれエンコード後サイズより小さく見せるため)。
+/// 切り詰めは書記素クラスタ (Character) の境界で行い、絵文字や結合文字が途中で壊れないようにする
 func todayAnswerActivityDisplayText(text: String) -> String {
+    // JSON エスケープでバイト数が減ることはないため、まず生の UTF-8 バイト数で上限まで切り詰めて、エンコード判定の回数を抑える
     var displayText = ""
     var byteCount = 0
     for character in text {
         let characterByteCount = String(character).utf8.count
-        if byteCount + characterByteCount > todayAnswerActivityTextByteLimit { break }
+        if byteCount + characterByteCount > todayAnswerActivityContentStateByteLimit { break }
         displayText.append(character)
         byteCount += characterByteCount
+    }
+    while !displayText.isEmpty, todayAnswerActivityEncodedByteCount(text: displayText) > todayAnswerActivityContentStateByteLimit {
+        displayText.removeLast()
     }
     return displayText
 }
