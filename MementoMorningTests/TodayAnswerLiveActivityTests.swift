@@ -35,4 +35,14 @@ final class TodayAnswerLiveActivityTests: XCTestCase {
             dateTime(year: 2026, month: 9, day: 1, hour: 0, minute: 0)
         )
     }
+
+    func testDisplayTextKeepsShortAnswer() {
+        XCTAssertEqual(todayAnswerActivityDisplayText(text: "家族と海を見に行く"), "家族と海を見に行く")
+    }
+
+    func testDisplayTextTruncatesLongAnswer() {
+        let displayText = todayAnswerActivityDisplayText(text: String(repeating: "あ", count: todayAnswerActivityTextLimit + 1))
+
+        XCTAssertEqual(displayText, String(repeating: "あ", count: todayAnswerActivityTextLimit))
+    }
 }

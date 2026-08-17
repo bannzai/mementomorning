@@ -1,6 +1,16 @@
 import ActivityKit
 import Foundation
 
+/// Live Activity の ContentState に格納する本文の最大文字数。
+/// ActivityKit には属性 + ContentState の合計 4KB のサイズ上限があり、超えると開始 (request)・更新が失敗する。
+/// ロック画面の表示は最大 3 行のため 300 文字で表示に足り、UTF-8 で最大 4 バイト/文字でも約 1.2KB に収まり上限に達しない
+let todayAnswerActivityTextLimit = 300
+
+/// Live Activity に表示する本文を返す純粋関数。長さ無制限の回答本文をサイズ上限内に切り詰める (表示専用。永続化される回答本文は変えない)
+func todayAnswerActivityDisplayText(text: String) -> String {
+    String(text.prefix(todayAnswerActivityTextLimit))
+}
+
 /// 「今日の目標」Live Activity の staleDate (翌日 0 時) を返す純粋関数。
 /// 今日の回答は日付が変わると意味を失うため、翌日 0 時を過ぎた表示はシステムに stale (更新待ち) として扱わせる。
 /// 翌日 0 時の計算に失敗するカレンダーでは staleDate なし (nil) で表示を続ける
@@ -31,7 +41,7 @@ func refreshTodayAnswerLiveActivity(todayAnswerText: String?, now: Date = .now) 
         return
     }
     let content = ActivityContent(
-        state: TodayAnswerActivityAttributes.ContentState(text: todayAnswerText),
+        state: TodayAnswerActivityAttributes.ContentState(text: todayAnswerActivityDisplayText(text: todayAnswerText)),
         staleDate: todayAnswerActivityStaleDate(now: now)
     )
     if let activity = liveActivities.first {

@@ -181,7 +181,10 @@ struct DebugMenuPage: View {
             try modelContext.delete(model: MorningAnswer.self)
             try modelContext.save()
         } catch {
+            // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
+            modelContext.rollback()
             assertionFailure(error.localizedDescription)
+            return
         }
         // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
@@ -195,7 +198,14 @@ struct DebugMenuPage: View {
         }
         let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
         modelContext.insert(answer)
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            // 保存されていない回答で Live Activity を開始しない (表示と実データがずれる)。破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return
+        }
         refreshAnswerStates()
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: answer.text) }
     }

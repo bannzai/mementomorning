@@ -34,12 +34,21 @@ struct AlarmLiveActivityWidget: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.center) {
-                    if let title = context.attributes.metadata?.title {
-                        Text(title)
-                            .font(.system(size: 15, weight: .light))
-                            .foregroundStyle(Color.warmWhite)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
+                    VStack(spacing: 8) {
+                        if let title = context.attributes.metadata?.title {
+                            Text(title)
+                                .font(.system(size: 15, weight: .light))
+                                .foregroundStyle(Color.warmWhite)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                        }
+                        if case .countdown(let countdown) = context.state.mode {
+                            Text(countdown.fireDate, style: .timer)
+                                .font(.system(size: 27, weight: .light))
+                                .monospacedDigit()
+                                .foregroundStyle(Color.warmWhite)
+                                .multilineTextAlignment(.center)
+                        }
                     }
                 }
             } compactLeading: {
