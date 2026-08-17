@@ -26,7 +26,7 @@ last_verified_at: null
 - [ ] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
   - ⏭️ スキップ: CI ビルドの simulator では RevenueCat が未 configure の可能性が高く、表示された ¥6,000 / ¥800 / ¥9,800 は見本価格と同値のため「offering 取得後のストア価格」であることを画面から判別できない。StoreKit Configuration / Sandbox での課金検証時に確認する
   - 自動化: manual（画面上の価格表示の目視確認。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
-- [ ] **年額の無料トライアル表記**: offering の年額に introductory offer (無料トライアル) がある場合、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格の場合は表示しない
+- [ ] **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
   - ⏭️ スキップ: RevenueCat が未 configure のローカルビルドでは offering を取得できず、トライアル表記の分岐に到達しない (見本価格の表示に倒れ、トライアル行は出ない。2026-08-17 に画面で確認)。StoreKit Configuration / Sandbox での課金検証時に確認する
   - 自動化: manual（画面上の表記の目視確認。期間の変換ロジックは MementoMorningTests/PaywallSubscriptionPeriodTests.swift、.storekit の offer 定義は MementoMorningTests/StoreKitConfigurationTests.swift がカバー済み）
 - [ ] **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
@@ -60,7 +60,7 @@ last_verified_at: null
 
 </details>
 
-### **年額の無料トライアル表記**: offering の年額に introductory offer (無料トライアル) がある場合、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格の場合は表示しない
+### **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
 
 <details><summary>動作確認スクショ</summary>
 
