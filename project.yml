@@ -32,15 +32,21 @@ targets:
     configFiles:
       Debug: Config.xcconfig
       Release: Config.xcconfig
-    # Release でキーが空のままだと課金が動かないアーカイブを配布してしまうため、ビルド時に検出して失敗させる。
-    # Debug はキー無しでも動く (configure スキップ + 見本価格) 仕様のため対象外 (PR #30 レビュー指摘)
+    # Release でキーが App Store 用の実キー (appl_) 以外だと課金が動かない・Test Store キー入りの
+    # アーカイブを配布してしまうため、ビルド時に検出して失敗させる (PR #30 レビュー指摘 + issue #51)。
+    # Debug は Test Store キーの既定値で動く (Config.xcconfig 参照) ため対象外
     preBuildScripts:
-      - name: Require REVENUECAT_API_KEY for Release
+      - name: Require App Store REVENUECAT_API_KEY for Release
         basedOnDependencyAnalysis: false
         script: |
-          if [ "${CONFIGURATION}" = "Release" ] && [ -z "${REVENUECAT_API_KEY}" ]; then
-            echo "error: REVENUECAT_API_KEY が空です。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)"
-            exit 1
+          if [ "${CONFIGURATION}" = "Release" ]; then
+            case "${REVENUECAT_API_KEY}" in
+              appl_*) ;;
+              *)
+                echo "error: Release の REVENUECAT_API_KEY が App Store 用の実キー (appl_...) ではありません。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)"
+                exit 1
+                ;;
+            esac
           fi
     settings:
       base:

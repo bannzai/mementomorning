@@ -236,7 +236,6 @@
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
 		C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGateTests.swift; sourceTree = "<group>"; };
 		CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot2PageSnapshotUITest.swift; sourceTree = "<group>"; };
-		CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPage.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
 		D16E3D36B5A1DDC475AA0933 /* AppStoreScreenshot8PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot8PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -244,6 +243,7 @@
 		D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MementoMorningAlarmMetadata.swift; sourceTree = "<group>"; };
 		D69B1B73C832A569BF7DBDA9 /* MockHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeScreen.swift; sourceTree = "<group>"; };
 		D784F14F17E87134C2E8E59A /* Rescheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rescheduler.swift; sourceTree = "<group>"; };
+		D840DDE338A19B1277BDF3E7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerTranscriber.swift; sourceTree = "<group>"; };
 		DE2027A220F6AB5E5E9EC6A9 /* AppStoreScreenshot11PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot11PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		DEB719041CF2B837D8CC2A16 /* AppStoreScreenshot10PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot10PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -318,15 +318,6 @@
 			path = Question;
 			sourceTree = "<group>";
 		};
-		1F872996596D695A2B756CDF /* issue-25 */ = {
-			isa = PBXGroup;
-			children = (
-				CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */,
-			);
-			name = "issue-25";
-			path = .;
-			sourceTree = "<group>";
-		};
 		230FCEEEF98E50E9707380B4 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +327,15 @@
 				FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		2369B11DC9E2117131258496 /* issue-51 */ = {
+			isa = PBXGroup;
+			children = (
+				D840DDE338A19B1277BDF3E7 /* Config.xcconfig */,
+			);
+			name = "issue-51";
+			path = .;
 			sourceTree = "<group>";
 		};
 		23EA8FBE6EDC40B9BFA1966B /* AppStoreScreenshots */ = {
@@ -524,7 +524,7 @@
 				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
 				23EA8FBE6EDC40B9BFA1966B /* AppStoreScreenshots */,
 				675DA7F11AEB50A25114095A /* AppStoreScreenshotsUITests */,
-				1F872996596D695A2B756CDF /* issue-25 */,
+				2369B11DC9E2117131258496 /* issue-51 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				6884511A1BA3EF7D4D816DFE /* MementoMorningSnapshotUITests */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
@@ -840,7 +840,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C94D5706A1151163EBFF173B /* Build configuration list for PBXNativeTarget "MementoMorning" */;
 			buildPhases = (
-				116167399829DBD1856B8A76 /* Require REVENUECAT_API_KEY for Release */,
+				438056613B9279C3BD3FEEC9 /* Require App Store REVENUECAT_API_KEY for Release */,
 				57A0ED272D9BB198CA7A6DF2 /* Sources */,
 				854733A01958AA8759F5EB70 /* Resources */,
 				DC734A178C013E4F8926E61C /* Frameworks */,
@@ -947,7 +947,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		116167399829DBD1856B8A76 /* Require REVENUECAT_API_KEY for Release */ = {
+		438056613B9279C3BD3FEEC9 /* Require App Store REVENUECAT_API_KEY for Release */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -957,14 +957,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Require REVENUECAT_API_KEY for Release";
+			name = "Require App Store REVENUECAT_API_KEY for Release";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ] && [ -z \"${REVENUECAT_API_KEY}\" ]; then\n  echo \"error: REVENUECAT_API_KEY が空です。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)\"\n  exit 1\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n  case \"${REVENUECAT_API_KEY}\" in\n    appl_*) ;;\n    *)\n      echo \"error: Release の REVENUECAT_API_KEY が App Store 用の実キー (appl_...) ではありません。Config.local.xcconfig を用意してください (手順は Config.xcconfig のコメント参照)\"\n      exit 1\n      ;;\n  esac\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1268,7 +1268,7 @@
 		};
 		6D8148AD7C6C10CE6404F6C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
+			baseConfigurationReference = D840DDE338A19B1277BDF3E7 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -1390,7 +1390,7 @@
 		};
 		94B07253134F816E7ED5852F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
+			baseConfigurationReference = D840DDE338A19B1277BDF3E7 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
