@@ -379,6 +379,8 @@ struct MorningQuestionPage: View {
                 modelContext.insert(MorningAnswer(answeredDate: today, text: text, videoAssetIdentifier: videoAssetIdentifier))
             }
             try modelContext.save()
+            // ホーム画面ウィジェットの「今日の答え」を保存の成功直後に反映する (issue #46)
+            reloadHomeWidgetTimelines()
         } catch {
             // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため、
             // 変更を破棄してから中断する

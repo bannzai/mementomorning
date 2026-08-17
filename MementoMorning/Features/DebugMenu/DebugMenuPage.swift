@@ -180,6 +180,8 @@ struct DebugMenuPage: View {
         do {
             try modelContext.delete(model: MorningAnswer.self)
             try modelContext.save()
+            // ホーム画面ウィジェットを未回答表示へ戻す (issue #46)
+            reloadHomeWidgetTimelines()
         } catch {
             assertionFailure(error.localizedDescription)
         }
@@ -194,6 +196,8 @@ struct DebugMenuPage: View {
             MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
         )
         try? modelContext.save()
+        // 投入した今日の回答をホーム画面ウィジェットへ反映する (issue #46)
+        reloadHomeWidgetTimelines()
         refreshAnswerStates()
     }
 
