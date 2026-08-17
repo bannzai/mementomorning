@@ -16,15 +16,16 @@ build:
 device:
 	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -configuration $(CONFIGURATION) -derivedDataPath $(DERIVED_DATA) -destination 'generic/platform=iOS' -allowProvisioningUpdates -allowProvisioningDeviceRegistration build
 
-# 実機ビルドを接続中の実機にインストールする。インストール先は DEVICE 変数 (名前 / UDID) で指定でき、未指定なら devicectl の JSON から接続中デバイスを自動解決する
+# 実機ビルドを実機にインストールする。インストール先の解決順: DEVICE 変数 (名前 / UDID) > 環境変数 IOS_DEVICE_UDID > devicectl の JSON から接続中デバイスを自動解決
 install-device: device
 	@mkdir -p tmp; \
 	device="$(DEVICE)"; \
+	[ -n "$$device" ] || device="$(IOS_DEVICE_UDID)"; \
 	if [ -z "$$device" ]; then \
 		xcrun devicectl list devices --json-output tmp/devices.json > /dev/null; \
 		device=$$(jq -r '[.result.devices[] | select(.connectionProperties.tunnelState == "connected")][0].identifier // empty' tmp/devices.json); \
 	fi; \
-	[ -n "$$device" ] || { echo "Error: 接続中の実機が見つかりません (DEVICE=<名前|UDID> で指定してください)" >&2; exit 1; }; \
+	[ -n "$$device" ] || { echo "Error: 実機が見つかりません (IOS_DEVICE_UDID を export するか DEVICE=<名前|UDID> で指定してください)" >&2; exit 1; }; \
 	xcrun devicectl device install app --device "$$device" "$(IOS_APP)"; \
 	xcrun devicectl device process launch --device "$$device" $(BUNDLE_ID)
 
