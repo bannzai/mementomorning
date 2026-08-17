@@ -33,20 +33,28 @@ last_verified_at: null
 
 - アラーム発火の確認は「1〜2 分後のアラーム」を設定して待つ。発火判定は画面表示で行う (シミュレータは sound .default だと鳴らない。CLAUDE.md「検証方法」)
 - 朝の問いの提示状態は、開発者メニューの「Record alarm fired now」で発火記録を作って再現できる (解除は「Clear alarm fired record」)
-- 回答データの投入は「Seed sample answers (10 days)」「Seed today's answer」「Seed yesterday's answer」、削除は「Delete all answers」
+- 回答データの投入は「Seed sample answers (10 days)」「Seed today's answer」「Seed yesterday's answer」、削除は「Delete all answers」。**Seed sample answers は回答が 1 件でもあると何もしない (SampleAnswerSeeder.swift の冪等仕様) ため、既に回答がある場合は「Delete all answers」→「Seed sample answers」の順で実行する**
 - オンボーディングの再表示は「Reset onboarding」(回答・アラーム設定は消えない)
 
 ## 実行ナレッジ
 
-（まだ知見なし。run-qa が実行中の flaky・落とし穴の知見を蓄積する。運用ルールは ~/.claude/skills/setup-qa/references/qa-md-format.md を参照）
+### SwiftUI の Toggle は WDA の要素 click では切り替わらない
+
+- 発見日: 2026-08-17。開発者メニューの「Force premium (override)」を `tap-id` (要素 click) しても value が 0 のまま変わらなかった
+- 対処: スイッチ部分の座標タップで切り替える (要素の rect 右端付近を狙う)
+
+### リモート simulator (simtunnel) では通知バナーの発火確認ができない
+
+- 発見日: 2026-08-17。夜リマインドの 1 分後発火を待って撮影しても、バナーが出なかったのか消えた後なのかを 1 フレームでは判別できない。WDA のスワイプでは通知センターも開けなかった
+- 対処: 通知タップを伴う項目 (夜リマインド等) はローカル simulator で確認する (通知検証の手順は verify-ui-mobile-mcp skill の「通知タップの検証」参照)
 
 ## 横断確認項目
 
 ## 1. 起動と基本導線
 
-- [ ] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・粒ストリップ・Journal / Life Calendar / Settings リンク) が表示される
+- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・粒ストリップ・Journal / Life Calendar / Settings リンク) が表示される
   - 自動化: manual（起動直後の画面の目視確認）
-- [ ] **開発者メニューへの到達**: DEBUG ビルドでホーム左上のハンマーアイコン (debug_menu_link) から開発者メニューが開く
+- [x] **開発者メニューへの到達**: DEBUG ビルドでホーム左上のハンマーアイコン (debug_menu_link) から開発者メニューが開く
   - 自動化: manual（DEBUG 限定 UI の確認）
 - [ ] **アラームの一連**: アラーム設定 → 1〜2 分後に発火 → 朝の問い → 回答 → 以降鳴らない、のコアループが通る (詳細は AlarmSetting / MorningQuestion の QA.md)
   - 自動化: manual（発火待ちを含む通し確認）
@@ -59,7 +67,8 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/7f66d9aa-375b-456c-b7a2-bdade68758f7.jpg" width="320">
 
 </details>
 
@@ -67,7 +76,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/ad724a07-0133-42fe-9d7b-50cd6b1c5627.jpg" width="320">
+
+(開発者メニューが開き、回答件数・デバッグ操作の各行が表示されている)
 
 </details>
 
