@@ -22,11 +22,11 @@ last_verified_at: null
 
 ## 1. 表示
 
-- [ ] **保存済み設定の反映**: 保存済みのアラーム設定がある状態で画面を開くと、時刻 DatePicker とアラームトグルに保存値が反映されている
+- [x] **保存済み設定の反映**: 保存済みのアラーム設定がある状態で画面を開くと、時刻 DatePicker とアラームトグルに保存値が反映されている
   - 自動化: manual（Form の表示値はシミュレータ操作と目視でしか確認できない）
-- [ ] **無料状態のスヌーズ表示**: 無料状態ではスヌーズ行に「〜回まで (無料)」と表示され、「無限追撃アラーム」行 (accessibilityIdentifier: alarm_setting_endless_alarm_row) が表示される
+- [x] **無料状態のスヌーズ表示**: 無料状態ではスヌーズ行に「〜回まで (無料)」と表示され、「無限追撃アラーム」行 (accessibilityIdentifier: alarm_setting_endless_alarm_row) が表示される
   - 自動化: manual（課金状態の表示分岐は目視確認）
-- [ ] **プレミアム状態のスヌーズ表示**: プレミアム状態 (開発者メニューの「Force premium (override)」ON) ではスヌーズ行が「無制限」になり、「無限追撃アラーム」行が消える
+- [x] **プレミアム状態のスヌーズ表示**: プレミアム状態 (開発者メニューの「Force premium (override)」ON) ではスヌーズ行が「無制限」になり、「無限追撃アラーム」行が消える
   - 自動化: manual（課金状態の表示分岐は目視確認）
 
 #### 動作確認
@@ -37,7 +37,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9d1547c7-b90e-43bc-9880-a60339b23513.jpg" width="320">
+
+(オンボーディングで保存した 7:00 / トグル ON が反映されている)
 
 </details>
 
@@ -45,7 +48,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9d1547c7-b90e-43bc-9880-a60339b23513.jpg" width="320">
+
+(Snooze「Up to 2 times (free)」と「Endless follow-up alarm / Premium」行)
 
 </details>
 
@@ -53,7 +59,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/fc05a8ba-b55d-425b-a828-1a97bc0b0485.jpg" width="320">
+
+(Snooze「Unlimited」になり「Endless follow-up alarm」行が消えている)
 
 </details>
 
@@ -114,7 +123,7 @@ last_verified_at: null
 
 ## 3. ペイウォール導線
 
-- [ ] **無限追撃アラーム行からペイウォール**: 無料状態で「無限追撃アラーム」行をタップすると PaywallPage が sheet で開く
+- [x] **無限追撃アラーム行からペイウォール**: 無料状態で「無限追撃アラーム」行をタップすると PaywallPage が sheet で開く
   - 自動化: manual（sheet 遷移の確認）
 
 #### 動作確認
@@ -125,7 +134,8 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/19481930-0328-43c5-b27a-f0c230ad3735.jpg" width="320">
 
 </details>
 

@@ -25,6 +25,7 @@ last_verified_at: null
 ## 1. 通知
 
 - [ ] **通知からの起動**: 夜リマインド通知 (開発者メニューの「Schedule night reminder in 1 minute」で 1 分後に発火) をタップすると、振り返り画面が sheet で開く
+  - ⏭️ スキップ: リモート simulator (simtunnel) では通知バナーを捕捉できなかった (発火 70 秒後の 1 フレーム撮影ではバナーが消えた後かを判別できず、WDA からは通知センターも開けなかった)。ローカル simulator で確認する
   - 自動化: manual（通知の発火待ちとタップ操作が必要）
 - [ ] **通知のパーソナライズ**: 当日回答がある日は通知本文に回答テキストが含まれ、回答がない日は汎用文言で届く。長文回答でも通知が破綻しない
   - 自動化: manual（通知の実表示の目視確認。本文組み立てのロジックは MementoMorningTests/NightReminderTests.swift がカバー済み）

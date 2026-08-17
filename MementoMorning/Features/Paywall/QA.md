@@ -21,13 +21,14 @@ last_verified_at: null
 
 ## 1. 表示
 
-- [ ] **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
+- [x] **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
   - 自動化: manual（sheet 遷移の確認）
 - [ ] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
+  - ⏭️ スキップ: CI ビルドの simulator では RevenueCat が未 configure の可能性が高く、表示された ¥6,000 / ¥800 / ¥9,800 は見本価格と同値のため「offering 取得後のストア価格」であることを画面から判別できない。StoreKit Configuration / Sandbox での課金検証時に確認する
   - 自動化: manual（画面上の価格表示の目視確認。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
 - [ ] **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
   - 自動化: todo
-- [ ] **閉じる導線**: 「今はしない」(paywall_not_now_button) で sheet が閉じる
+- [x] **閉じる導線**: 「今はしない」(paywall_not_now_button) で sheet が閉じる
   - 自動化: manual（sheet の dismiss 確認）
 - [ ] **法務リンク**: 利用規約・プライバシーポリシーのリンクが開ける
   - 自動化: manual（外部リンクの確認）
@@ -40,7 +41,11 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/19481930-0328-43c5-b27a-f0c230ad3735.jpg" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9a89ccac-2f8f-4bf4-9bb9-a5d33d644043.jpg" width="320">
+
+(左: アラーム設定の「無限追撃アラーム」行から。右: ジャーナルのロック行から。表示内容は同一)
 
 </details>
 
@@ -64,7 +69,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/a91e72fd-c640-46ff-9e9c-7f18f4b0a5f3.jpg" width="320">
+
+(paywall_not_now_button で閉じた後、後続の画面 (人生カレンダー) へ操作を継続できている)
 
 </details>
 
@@ -83,8 +91,10 @@ last_verified_at: null
 ## 2. 購入と復元
 
 - [ ] **購入**: Sandbox (または StoreKit Configuration) で購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる
+  - ⏭️ スキップ: リモート simulator (simtunnel) では Sandbox / StoreKit Configuration の課金操作ができない。ローカルで /ios-storekit-testing により確認する
   - 自動化: manual（Sandbox 課金の操作が必要。/ios-storekit-testing skill を利用できる）
 - [ ] **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
+  - ⏭️ スキップ: 同上 (リモート simulator では Sandbox 課金不可)
   - 自動化: manual（Sandbox 課金の操作が必要）
 
 #### 動作確認

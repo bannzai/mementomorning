@@ -21,7 +21,7 @@ last_verified_at: null
 
 ## 1. カードと共有
 
-- [ ] **カードの表示**: ジャーナルまたは「七つの朝」の回答行をタップすると、日付と回答本文が入ったカードのプレビューが表示される
+- [x] **カードの表示**: ジャーナルまたは「七つの朝」の回答行をタップすると、日付と回答本文が入ったカードのプレビューが表示される
   - 自動化: manual（表示内容の目視確認）
 - [ ] **share sheet での共有**: 「共有」ボタンで share sheet が開き、カードが 1 枚画像として共有できる
   - 自動化: manual（share sheet は OS UI のため目視確認）
@@ -36,7 +36,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/84719a9c-5b33-45ca-8293-32feabd7b903.jpg" width="320">
+
+(問い・回答本文・日付・「Memento Morning」のウォードマークと Share ボタン。share sheet を開くまでは未確認)
 
 </details>
 

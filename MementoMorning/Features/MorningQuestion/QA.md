@@ -27,8 +27,9 @@ last_verified_at: null
 
 ## 1. 提示と解除
 
-- [ ] **アラーム発火後の提示**: アラームが発火した朝 (未回答・アラーム ON) にアプリを前面化すると、朝の問いが全画面 (fullScreenCover) で表示され、スワイプでは閉じられない
+- [x] **アラーム発火後の提示**: アラームが発火した朝 (未回答・アラーム ON) にアプリを前面化すると、朝の問いが全画面 (fullScreenCover) で表示され、スワイプでは閉じられない
   - 自動化: manual（発火状態は開発者メニューの「Record alarm fired now」で再現できる。実発火の確認は 1〜2 分後アラームで行う）
+  - 確認範囲: 提示は「Record alarm fired now」で確認。スワイプで閉じられないことの操作確認と実発火は未実施
 - [ ] **アラーム OFF 中は提示しない**: アラームを OFF にすると、発火記録が残っていても朝の問いが提示されない (提示中でも閉じる)
   - 自動化: manual（画面上の挙動の目視確認。提示判定のロジックは MementoMorningTests/MorningQuestionGateTests.swift がカバー済み）
 
@@ -40,7 +41,10 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9548a201-9da8-4110-b0db-aba1245ca520.jpg" width="320">
+
+(問いの全画面表示と同時にカメラ許可ダイアログ。説明文の位置に NSCameraUsageDescription のキー名が出る別件あり)
 
 </details>
 
@@ -58,11 +62,12 @@ last_verified_at: null
 
 ## 2. テキスト回答
 
-- [ ] **テキスト入力へのフォールバック**: カメラ非搭載のシミュレータ (または権限拒否時) では動画回答が使えず、テキスト入力が表示される
+- [x] **テキスト入力へのフォールバック**: カメラ非搭載のシミュレータ (または権限拒否時) では動画回答が使えず、テキスト入力が表示される
   - 自動化: manual（画面上のフォールバックの目視確認。利用可否判定のロジックは MementoMorningTests/VideoAnswerGateTests.swift がカバー済み）
+  - 気づき: カメラ・マイクの許可を拒否した直後も録画ボタンと「Answer in text」リンクが表示されたまま (権限拒否を知らせる文言なし)。「Answer in text」経由で「The camera isn't available, so answer in text.」に到達する
 - [ ] **昨日の回答の選択式入力**: 昨日の回答がある場合、「昨日の回答を今日やる? YES / NO」の選択式から始まり、断ると自由入力へ切り替わる
   - 自動化: manual（選択式 → 自由入力の切り替え確認）
-- [ ] **回答の保存**: 自由入力で本文を入れて保存すると画面が閉じ、ホームの「今朝のことば」に反映される
+- [x] **回答の保存**: 自由入力で本文を入れて保存すると画面が閉じ、ホームの「今朝のことば」に反映される
   - 自動化: manual（テキスト入力と反映の確認）
 
 #### 動作確認
@@ -73,7 +78,8 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/317e94d4-ecb1-4d82-ba1a-743e3d41ad64.jpg" width="320">
 
 </details>
 
@@ -89,7 +95,11 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-17**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/140155d4-0c60-48be-9aba-ac1c73e4b47b.jpg" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/b18f13e0-b6f3-432f-8036-29e82705eb7d.jpg" width="320">
+
+(「家族と海を見に行く」を入力 → 保存で全画面が閉じ、ホームの「This morning's words」に反映。フッターの件数が「1 mornings answered」になる単数形の別件あり)
 
 </details>
 
