@@ -256,6 +256,10 @@ private struct HomeContent: View {
                 .accessibilityIdentifier("home_today_answer_edit_link")
             }
             .padding(.top, 56)
+            // accessibilityIdentifier を素の VStack に付けると子要素の identifier まで上書きされ、
+            // 「直す」ボタン (home_today_answer_edit_link) を自動操作から引けなくなる。
+            // コンテナ要素として宣言して、自身の identifier と子の identifier を両立させる (issue #50)
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("home_today_answer")
         }
     }
