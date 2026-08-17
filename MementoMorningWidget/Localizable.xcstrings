@@ -1,0 +1,66 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Go see the ocean with my family" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族と海を見に行く"
+          }
+        }
+      }
+    },
+    "If today were your last day, what would you want to do?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
+    "Keep today's answer on your Home Screen." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の答えをホーム画面に置いておく"
+          }
+        }
+      }
+    },
+    "Not answered yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ答えていない"
+          }
+        }
+      }
+    },
+    "This morning's words" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のことば"
+          }
+        }
+      }
+    },
+    "Today's Answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の答え"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

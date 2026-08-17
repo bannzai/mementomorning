@@ -41,8 +41,36 @@
         }
       }
     },
+    "%@ free": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@無料"
+          }
+        }
+      }
+    },
     "%lld mornings answered": {
       "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld morning answered"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld mornings answered"
+                }
+              }
+            }
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -356,7 +384,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "次の朝 · NEXT MORNING"
+            "value": "アラーム"
           }
         }
       }
@@ -477,6 +505,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "プレミアム"
+          }
+        }
+      }
+    },
+    "Preparing the camera": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラを準備しています"
           }
         }
       }
@@ -947,6 +985,146 @@
           "stringUnit": {
             "state": "translated",
             "value": "録画を始める"
+          }
+        }
+      }
+    },
+    "Practice your answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答の練習"
+          }
+        }
+      }
+    },
+    "Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝、インカメラで答えを録画してアラームを止めます。\n最初の朝が来る前に、一度だけ試しておきましょう。"
+          }
+        }
+      }
+    },
+    "Camera & microphone": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラとマイク"
+          }
+        }
+      }
+    },
+    "Records your video answer.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答の動画を録画します"
+          }
+        }
+      }
+    },
+    "Photo library": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "写真ライブラリ"
+          }
+        }
+      }
+    },
+    "Saves your videos to the 'Memento Morning' album in Photos.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画を写真アプリのアルバム「Memento Morning」に保存します"
+          }
+        }
+      }
+    },
+    "Speech recognition": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "音声認識"
+          }
+        }
+      }
+    },
+    "Turns your voice into text, on this device.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画の音声を、端末の中だけで文字にします"
+          }
+        }
+      }
+    },
+    "Try it once": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一度やってみる"
+          }
+        }
+      }
+    },
+    "Later": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あとでやる"
+          }
+        }
+      }
+    },
+    "This is practice. The video won't be saved.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "練習です。動画は保存されません"
+          }
+        }
+      }
+    },
+    "You're ready for the morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これで、朝の準備ができました"
+          }
+        }
+      }
+    },
+    "In the morning, stopping the recording stops the alarm.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "朝は、録画を止めるとアラームが止まります"
+          }
+        }
+      }
+    },
+    "Stop recording": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "録画を止める"
           }
         }
       }

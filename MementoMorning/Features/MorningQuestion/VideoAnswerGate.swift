@@ -18,12 +18,23 @@ func isVideoAnswerPermitted(
 
 /// 動画回答に必要な権限 (カメラ → マイク → 写真ライブラリの順) をリクエストし、すべて使える状態なら true を返す。
 /// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)。
+/// 拒否された時点で後続のリクエストを打ち切る。動画回答はどれか 1 つでも欠けたら成立せず、
+/// 残りのダイアログを待つ間、画面には使えない録画ボタンだけが残るため (issue #50)。
 /// 写真ライブラリはアプリ専用アルバム「Memento Morning」の作成・検索に読み取りが必要なため、
 /// addOnly ではなく readWrite でリクエストする (addOnly ではアルバムの作成・検索ができない。
 /// ref: https://developer.apple.com/forums/thread/661196 )
 func requestVideoAnswerPermissions() async -> Bool {
-    _ = await AVCaptureDevice.requestAccess(for: .video)
-    _ = await AVCaptureDevice.requestAccess(for: .audio)
+    #if DEBUG
+    // 疑似録画モード (issue #52) では実撮影をしないため、カメラ・マイクの権限は要求も判定もしない。
+    // 録画結果の保存先である写真ライブラリだけが必要
+    if isDebugSimulateVideoAnswerEnabled {
+        _ = await PHPhotoLibrary.requestAuthorization(for: .readWrite)
+        let photoLibraryStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        return photoLibraryStatus == .authorized || photoLibraryStatus == .limited
+    }
+    #endif
+    guard await AVCaptureDevice.requestAccess(for: .video) else { return false }
+    guard await AVCaptureDevice.requestAccess(for: .audio) else { return false }
     _ = await PHPhotoLibrary.requestAuthorization(for: .readWrite)
     return isVideoAnswerPermitted(
         cameraStatus: AVCaptureDevice.authorizationStatus(for: .video),

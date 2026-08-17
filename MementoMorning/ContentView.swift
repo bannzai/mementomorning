@@ -106,7 +106,7 @@ private struct HomeContent: View {
                     DebugMenuPage()
                 } label: {
                     Label {
-                        Text(verbatim: "Developer Menu")
+                        Text(verbatim: "開発者メニュー")
                     } icon: {
                         Image(systemName: "hammer")
                     }
@@ -126,7 +126,7 @@ private struct HomeContent: View {
     /// 次の朝のアラーム時刻 (大時刻・残り時間・トグル)
     private var nextMorningSection: some View {
         VStack(spacing: 8) {
-            // ja: 次の朝 · NEXT MORNING
+            // ja: アラーム
             Text("NEXT MORNING")
                 .font(.system(size: 10))
                 .tracking(2.6)
@@ -256,6 +256,10 @@ private struct HomeContent: View {
                 .accessibilityIdentifier("home_today_answer_edit_link")
             }
             .padding(.top, 56)
+            // accessibilityIdentifier を素の VStack に付けると子要素の identifier まで上書きされ、
+            // 「直す」ボタン (home_today_answer_edit_link) を自動操作から引けなくなる。
+            // コンテナ要素として宣言して、自身の identifier と子の identifier を両立させる (issue #50)
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("home_today_answer")
         }
     }
