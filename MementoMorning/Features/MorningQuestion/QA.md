@@ -1,8 +1,8 @@
 ---
 feature: MorningQuestion
 verification: mobile-mcp
-last_verified_commit: null
-last_verified_at: null
+last_verified_commit: caf7b50
+last_verified_at: 2026-08-17
 ---
 
 # MorningQuestion QA
@@ -11,6 +11,7 @@ last_verified_at: null
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/4 (画面骨格・追撃ループ) / https://github.com/bannzai/mementomorning/issues/24 (動画回答) / https://github.com/bannzai/mementomorning/issues/25 (文字起こし)
 - 関連: https://github.com/bannzai/mementomorning/issues/2 (stopIntent 実機検証。シミュレータでは perform() が実行されない既知事象)
+- 関連: https://github.com/bannzai/mementomorning/issues/52 (DEBUG 疑似録画モード。カメラの実撮影だけをフィクスチャ動画に差し替えてシミュレータで動画回答のパイプラインを通す)
 
 ## 仕様チェックリスト
 
@@ -18,12 +19,12 @@ last_verified_at: null
 |----|---------|---------|
 | S1 | アラーム停止 → 質問画面 → 回答 → 以降アラームが鳴らない、の一連が通る | 回答成立で全アラームキャンセル |
 | S2 | 未回答で放置すると追撃アラームが再度鳴る | 追撃アラーム |
-| S3 | 問いオーバーレイ状態でインカメラ録画 → 停止 → 写真アプリに動画が保存される (実機) | 動画回答の録画と保存 |
-| S4 | 録画完了で当日の回答が成立し、追撃アラームが止まる | 動画回答の録画と保存 |
+| S3 | 問いオーバーレイ状態でインカメラ録画 → 停止 → 写真アプリに動画が保存される | 疑似録画での動画回答パイプライン (保存経路) / 実カメラでの録画 (画角・プレビュー) |
+| S4 | 録画完了で当日の回答が成立し、追撃アラームが止まる | 疑似録画での動画回答パイプライン |
 | S5 | カメラ/マイク/写真の権限拒否時にテキスト入力へフォールバックする | テキスト入力へのフォールバック |
-| S6 | 動画回答の完了後、自動で文字起こしが走り MorningAnswer.text に入る (日本語・英語) | 動画回答の録画と保存 |
+| S6 | 動画回答の完了後、自動で文字起こしが走り MorningAnswer.text に入る (日本語・英語) | 文字起こしの適用 (実機のみ) |
 | S7 | 文字起こし結果を編集して保存できる | — (AnswerEdit の QA.md「編集して保存」が担当) |
-| S8 | オンデバイス認識で動作する (ネットワーク遮断状態で確認) | 動画回答の録画と保存 |
+| S8 | オンデバイス認識で動作する (ネットワーク遮断状態で確認) | 文字起こしの適用 (実機のみ) |
 
 ## 1. 提示と解除
 
@@ -138,18 +139,83 @@ last_verified_at: null
 
 ---
 
-## 4. 動画回答 (実機のみ)
 
-- [ ] **動画回答の録画と保存**: 実機で問いがオーバーレイされたインカメラ録画 → 停止すると、写真アプリのアルバムに動画が保存され、文字起こし結果が回答テキストになり (日本語・英語)、追撃アラームが止まる。オンデバイス認識のためネットワーク遮断でも動作する
-  - 自動化: manual（カメラ・写真ライブラリ・Speech はシミュレータで動作しないため実機での確認。文字起こしのロジックは MementoMorningTests/VideoAnswerTranscriberTests.swift がカバー）
+## 4. 動画回答
+
+カメラの実撮影以外のパイプラインは DEBUG 疑似録画モード (issue #52) でシミュレータから検証する。
+開発者メニューの「Simulate video answer」を ON にすると、`VideoAnswerCamera` が AVCapture を使わず、
+録画停止でフィクスチャ動画 (`DebugVideoAnswerFixture_{en,ja}.mov`。既知の発話の音声トラック入り) を
+「録画結果」として返し、以降 (写真ライブラリ保存 → 文字起こし → MorningAnswer 成立 → 当日のアラーム
+キャンセル → 画面が閉じてホームに反映) は本物のコードを通る。
+
+疑似 E2E シナリオ:
+
+1. 開発者メニューで「Simulate video answer」を ON にし、「Record alarm fired now」を押す
+2. 朝の問いが全画面で表示され、録画ボタンが表示される (権限ダイアログは写真ライブラリのみ)
+3. 録画開始 → 停止で回答が確定し、画面が閉じる
+4. 写真アプリのアルバム「Memento Morning」に動画が保存されている
+5. 回答がホームの「今朝のことば」に反映される
+6. 当日の残アラームが計画から外れ、次のアラームが翌朝になる
+
+- [x] **疑似録画での動画回答パイプライン**: 疑似 E2E シナリオ 1〜6 が通る (シミュレータ)
+  - 自動化: manual（開発者メニューのタップ操作。フィクスチャの同梱・音声トラック・一時ファイル複製は MementoMorningTests/DebugVideoAnswerFixtureTests.swift がカバー）
+  - 確認範囲: 録画 → 写真ライブラリ保存 → 回答成立 → ホーム反映 まで確認。文字起こしはシミュレータで動かない (下記「文字起こしの適用 (実機のみ)」)
+- [ ] **文字起こしの適用 (実機のみ)**: 動画回答の完了後にオンデバイス文字起こしが走り、仮テキスト「動画で答えました」が発話内容に置き換わる (日本語・英語)。ネットワーク遮断でも動作する
+  - 自動化: manual（実機のみ。適用可否・上書き判定のロジックは MementoMorningTests/VideoAnswerTranscriberTests.swift がカバー）
+  - **シミュレータでは動作しない (iOS 26.5 simulator で実測)**。`SFSpeechRecognizer.supportsOnDeviceRecognition` は **true を返す**ため `isTranscriptionAvailable` を通過して認識が走るが、実行時に `kLSRErrorDomain 300 "Failed to initialize recognizer"` (MobileAsset の `mini.json` を読めない) で失敗し、仮テキストのまま残る。言語を端末と揃えても再現する (2 回再現)。端末の言語と違う言語で要求した場合は `kLSRErrorDomain 101 "No Assistant asset for language ..."` になる
+  - 実機で確認する時は、フィクスチャの言語が端末の言語と一致している必要がある (シミュレータ・実機ともに端末の言語のオンデバイス認識アセットしか無いため)。`DebugVideoAnswerFixtureLanguage.current` が `Locale.current` の言語で英語版・日本語版を選び、期待値の発話は開発者メニューの「Fixture utterance」に表示される
+- [ ] **実カメラでの録画 (実機のみ)**: インカメラのプレビューに問いがオーバーレイされ、画角・向き (縦) が正しい。実マイクの音声で文字起こしの認識精度が実用に足る
+  - 自動化: manual（シミュレータにカメラが無いため実機のみ。疑似録画モードではプレビューが黒のままになる）
 - [ ] **保存失敗時の再試行**: 動画の保存または回答の確定に失敗した場合、「保存をやり直す」(morning_question_retry_save_button) が表示され、再録画なしで再試行できる
-  - 自動化: todo
+  - 自動化: todo（失敗を注入する手段が無いため未検証。疑似録画モードにも失敗注入は用意していない）
 
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **動画回答の録画と保存**: 実機で問いがオーバーレイされたインカメラ録画 → 停止すると、写真アプリのアルバムに動画が保存され、文字起こし結果が回答テキストになり (日本語・英語)、追撃アラームが止まる。オンデバイス認識のためネットワーク遮断でも動作する
+### **疑似録画での動画回答パイプライン**: 疑似 E2E シナリオ 1〜6 が通る (シミュレータ)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-17** (iPhone 16 Pro / iOS 26.5 simulator、端末の言語は日本語)
+
+1. 開発者メニューの「Video Answer (issue #52)」。「Simulate video answer」が ON で、端末の言語に合う日本語のフィクスチャ (`Fixture utterance: 今日は家族と海を見に行きたい`) が選ばれ、同梱されている (`Fixture bundled: true`)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2eb4bb08-df48-4678-97b8-cfc69555c37e.png" width="320" />
+
+2. 「Record alarm fired now」の後に出る権限ダイアログは写真ライブラリのみ (実撮影をしないためカメラ・マイクは要求しない)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/73b32a74-d252-4819-b136-955ff5ef3494.png" width="320" />
+
+3. 朝の問いが全画面で表示され、録画ボタンが押せる (プレビューは黒。疑似録画モードではカメラを構成しないため)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9b805d81-c3fc-465e-9256-5d61235dea28.png" width="320" />
+
+4. 録画中 (停止 = 回答確定を表す夜明け色の角丸)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2286586d-2ea6-47b1-ba12-b3af35c1a285.png" width="320" />
+
+5. 停止後、写真アプリのアルバム「Memento Morning」に動画が保存されている (3 件は疑似録画を 3 回実行したぶん。フィクスチャが墨色の単色動画のためサムネイルは黒)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/2d26fd73-8e44-42ac-a10e-67807047f632.png" width="320" />
+
+6. 全画面が閉じてホームに戻り、「今朝のことば」に回答が反映される (文字起こしが走らないため仮テキスト「動画で答えました」のまま)。「答えた朝 1」に増え、次のアラームは翌朝 7:00 になっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/0b217122-9b11-4153-aa6b-967d5b46503f.png" width="320" />
+
+シナリオ 6 について: 上記スクリーンショットが示すのは「再スケジュールの計画から当日が外れ、次の発火が翌朝になった」ことまで。AlarmKit に登録済みの当日の UUID が実際にキャンセルされ「鳴らない」ことの確認は「3. アラーム連携」の項目が担当する (実機)。
+
+</details>
+
+### **文字起こしの適用 (実機のみ)**: 動画回答の完了後にオンデバイス文字起こしが走り、仮テキスト「動画で答えました」が発話内容に置き換わる (日本語・英語)。ネットワーク遮断でも動作する
+
+<details><summary>動作確認スクショ</summary>
+
+（実機未実行。シミュレータでは上記のとおり `kLSRErrorDomain 300` で失敗することを確認済みで、仮テキストのまま残る挙動だけが確認できている）
+
+</details>
+
+### **実カメラでの録画 (実機のみ)**: インカメラのプレビューに問いがオーバーレイされ、画角・向き (縦) が正しい。実マイクの音声で文字起こしの認識精度が実用に足る
 
 <details><summary>動作確認スクショ</summary>
 
