@@ -17,8 +17,11 @@ func todayAnswerActivityStaleDate(now: Date, calendar: Calendar = .current) -> D
 /// 表示の失敗は回答フロー (アラーム停止) を妨げないよう throw しない
 @MainActor
 func refreshTodayAnswerLiveActivity(todayAnswerText: String?, now: Date = .now) async {
-    // 終了済み (ended / dismissed) の残骸は更新できないため、生きているものだけを対象にする
-    let activities = Activity<TodayAnswerActivityAttributes>.activities.filter {
+    let activities = Activity<TodayAnswerActivityAttributes>.activities
+    // 終了済み (ended / dismissed) の残骸は更新できないため、更新対象は生きているものに絞る。
+    // 終了系の操作は残骸にも行う (システムの約 8 時間での自動終了後もロック画面に最大 4 時間残り得るため、
+    // 残骸を放置すると再開時に古い表示と並んでしまう。終了済みへの end は無害)
+    let liveActivities = activities.filter {
         $0.activityState == .active || $0.activityState == .stale
     }
     guard let todayAnswerText else {
@@ -31,13 +34,17 @@ func refreshTodayAnswerLiveActivity(todayAnswerText: String?, now: Date = .now) 
         state: TodayAnswerActivityAttributes.ContentState(text: todayAnswerText),
         staleDate: todayAnswerActivityStaleDate(now: now)
     )
-    if let activity = activities.first {
-        // 「今日の目標」は常に 1 本。二重に開始してしまった残りは畳んでから更新する
-        for extraActivity in activities.dropFirst() {
+    if let activity = liveActivities.first {
+        // 「今日の目標」は常に 1 本。二重に開始してしまった残り・終了済みの残骸は畳んでから更新する
+        for extraActivity in activities where extraActivity.id != activity.id {
             await extraActivity.end(nil, dismissalPolicy: .immediate)
         }
         await activity.update(content)
     } else {
+        // 自動終了後の残骸をロック画面から下ろしてから開始し直す
+        for leftoverActivity in activities {
+            await leftoverActivity.end(nil, dismissalPolicy: .immediate)
+        }
         // ユーザーが設定でこのアプリの Live Activity を無効にしている間は開始できない (設定変更後の foreground 復帰で再開される)
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         do {
