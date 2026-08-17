@@ -171,6 +171,36 @@
         }
       }
     },
+    "Go see the ocean with my family": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "家族と海を見に行く"
+          }
+        }
+      }
+    },
+    "Keep today's answer on your Home Screen.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の答えをホーム画面に置いておく"
+          }
+        }
+      }
+    },
+    "Not answered yet": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ答えていない"
+          }
+        }
+      }
+    },
     "The dots will connect.": {
       "localizations": {
         "ja": {
@@ -777,6 +807,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日"
+          }
+        }
+      }
+    },
+    "Today's Answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の答え"
           }
         }
       }
