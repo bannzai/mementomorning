@@ -5,6 +5,7 @@ import WidgetKit
 @main
 struct MementoMorningWidgetBundle: WidgetBundle {
     var body: some Widget {
+        TodayAnswerWidget()
         TodayAnswerLiveActivityWidget()
         AlarmLiveActivityWidget()
     }

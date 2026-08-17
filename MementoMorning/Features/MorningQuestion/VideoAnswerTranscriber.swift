@@ -117,6 +117,8 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     answer.setText(text: text)
     do {
         try modelContext.save()
+        // 仮テキストから認識結果への置き換えをホーム画面ウィジェットへ反映する (issue #46)
+        reloadHomeWidgetTimelines()
     } catch {
         // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため破棄する
         modelContext.rollback()

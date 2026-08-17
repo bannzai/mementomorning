@@ -198,6 +198,8 @@ struct DebugMenuPage: View {
         do {
             try modelContext.delete(model: MorningAnswer.self)
             try modelContext.save()
+            // ホーム画面ウィジェットを未回答表示へ戻す (issue #46)
+            reloadHomeWidgetTimelines()
         } catch {
             // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
             modelContext.rollback()
@@ -224,6 +226,9 @@ struct DebugMenuPage: View {
             assertionFailure(error.localizedDescription)
             return
         }
+        // 投入した今日の回答をホーム画面ウィジェットへ反映する (issue #46)。保存の失敗時にリロードすると
+        // 未保存の状態でウィジェットだけ更新要求が走るため、保存の成功後に限る
+        reloadHomeWidgetTimelines()
         refreshAnswerStates()
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: answer.text) }
     }
