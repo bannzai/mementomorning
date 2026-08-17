@@ -100,6 +100,7 @@
 		C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92895A3751CC78ED59F4CE06 /* MementoMorningApp.swift */; };
 		C5361C2165C329F2B583E2C1 /* ChaseAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */; };
 		CBEDE62BC03301DE44B8ABBC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 301D1F5532F4A8A6AEC68818 /* Localizable.xcstrings */; };
+		CCA26A4ACD80B660A7F8870D /* PaywallSubscriptionPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */; };
 		D2F4226E2CF2FAA6DE557F3E /* XCUIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FA1FA41CA6BF45ADC08D32 /* XCUIApplication+.swift */; };
 		D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */; };
 		D939146DB6D5595A93C7F373 /* AppStoreScreenshot16PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE5243AE47E504C0903E5E8 /* AppStoreScreenshot16PageSnapshotUITest.swift */; };
@@ -194,6 +195,7 @@
 		7DE923F3A1CD1A9A262CA995 /* AppStoreScreenshot12PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot12PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmKitManager.swift; sourceTree = "<group>"; };
 		7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionGate.swift; sourceTree = "<group>"; };
+		800E90840B0C1D8E26B10731 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		81902DA91853DF013ABF9CF8 /* XCUIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+.swift"; sourceTree = "<group>"; };
 		862E586E3F24AE03E11A7DC3 /* SnapshotUITestPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotUITestPage.swift; sourceTree = "<group>"; };
 		8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngineTests.swift; sourceTree = "<group>"; };
@@ -236,7 +238,6 @@
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
 		C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGateTests.swift; sourceTree = "<group>"; };
 		CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot2PageSnapshotUITest.swift; sourceTree = "<group>"; };
-		CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPage.swift; sourceTree = "<group>"; };
 		D0FC7C767D53245642CE24A0 /* MementoMorning.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorning.entitlements; sourceTree = "<group>"; };
 		D16E3D36B5A1DDC475AA0933 /* AppStoreScreenshot8PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot8PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -259,6 +260,7 @@
 		F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		FAE5243AE47E504C0903E5E8 /* AppStoreScreenshot16PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot16PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		FDB2C51D6AFD6256485BAEBF /* AppStoreScreenshot18PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot18PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallSubscriptionPeriodTests.swift; sourceTree = "<group>"; };
 		FF94CCB0BC323D020B94C795 /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languages.swift; sourceTree = "<group>"; };
 		FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledAlarm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -316,15 +318,6 @@
 				C322778C1BA97DA75148B887 /* QuestionPageSnapshotUITest.swift */,
 			);
 			path = Question;
-			sourceTree = "<group>";
-		};
-		1F872996596D695A2B756CDF /* issue-25 */ = {
-			isa = PBXGroup;
-			children = (
-				CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */,
-			);
-			name = "issue-25";
-			path = .;
 			sourceTree = "<group>";
 		};
 		230FCEEEF98E50E9707380B4 /* Entity */ = {
@@ -524,7 +517,7 @@
 				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
 				23EA8FBE6EDC40B9BFA1966B /* AppStoreScreenshots */,
 				675DA7F11AEB50A25114095A /* AppStoreScreenshotsUITests */,
-				1F872996596D695A2B756CDF /* issue-25 */,
+				C89DF31064F3B87390047CCE /* issue-50 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				6884511A1BA3EF7D4D816DFE /* MementoMorningSnapshotUITests */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
@@ -686,6 +679,15 @@
 			path = AnswerLog;
 			sourceTree = "<group>";
 		};
+		C89DF31064F3B87390047CCE /* issue-50 */ = {
+			isa = PBXGroup;
+			children = (
+				800E90840B0C1D8E26B10731 /* Config.xcconfig */,
+			);
+			name = "issue-50";
+			path = .;
+			sourceTree = "<group>";
+		};
 		C9B88CBCEA928A1FC6F3591C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,6 +734,7 @@
 				D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */,
 				16CA221981AFA9477D31763C /* NightReminderTests.swift */,
 				92CF5EE7BC099E438DC69AE6 /* OnboardingPermissionTests.swift */,
+				FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */,
 				8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */,
 				783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */,
 				368460825E5F8390F0948A64 /* SnoozeGateTests.swift */,
@@ -1058,6 +1061,7 @@
 				A66354678A45B89032312EC3 /* MorningQuestionGateTests.swift in Sources */,
 				DB6AC38B5A4436AAE96F5830 /* NightReminderTests.swift in Sources */,
 				531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */,
+				CCA26A4ACD80B660A7F8870D /* PaywallSubscriptionPeriodTests.swift in Sources */,
 				2550886BD9FEB608B9138265 /* PremiumEntitlementTests.swift in Sources */,
 				C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */,
 				7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */,
@@ -1268,7 +1272,7 @@
 		};
 		6D8148AD7C6C10CE6404F6C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
+			baseConfigurationReference = 800E90840B0C1D8E26B10731 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -1390,7 +1394,7 @@
 		};
 		94B07253134F816E7ED5852F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB25F5EA0D59E3E39D5CC57B /* Config.xcconfig */;
+			baseConfigurationReference = 800E90840B0C1D8E26B10731 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
