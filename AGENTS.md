@@ -5,6 +5,12 @@
 ## 概要
 @documents/PROJECT.md
 
+## Xcode プロジェクト構成の変更
+
+- `MementoMorning.xcodeproj` をプロジェクト構成の唯一の正とする。XcodeGen と `project.yml` は使わず、`xcodegen generate` を実行しない（理由: [ADR 0002](documents/adr/0002-manage-xcode-project-directly.md)）
+- ターゲット、ファイル、Build Settings、Build Phases、Scheme、Swift Package の変更は Xcode の GUI で行う。自動化が必要な場合は、プロジェクト構成を `MementoMorning.xcodeproj/project.pbxproj`、Scheme を `MementoMorning.xcodeproj/xcshareddata/xcschemes/*.xcscheme` で直接編集する
+- 変更後は `git diff -- MementoMorning.xcodeproj` で意図した差分だけであることを確認し、下記のビルドとテストを実行する
+
 ## 検証方法
 
 - ユニットテスト・シミュレータビルド: xcodebuild (ログは ./tmp/build.log に保存し、全文を warning / error で検査する)

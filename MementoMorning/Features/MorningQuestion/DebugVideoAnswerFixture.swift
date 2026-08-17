@@ -43,7 +43,7 @@ enum DebugVideoAnswerFixtureLanguage: String {
     }
 
     /// バンドル内のリソース名 (拡張子なし)。
-    /// Release ビルドからは project.yml の EXCLUDED_SOURCE_FILE_NAMES でこの名前のファイルを除外している
+    /// Release ビルドからは MementoMorning ターゲットの EXCLUDED_SOURCE_FILE_NAMES でこの名前のファイルを除外している
     var resourceName: String {
         "DebugVideoAnswerFixture_\(rawValue)"
     }

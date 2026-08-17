@@ -8,7 +8,7 @@
 // - Release の既定値は空。App Store 用の実キー (appl_ で始まる) は実値をコミットせず、
 //   gitignore した Config.local.xcconfig に置いて下の #include? で上書きする (issue #15)。
 //   Release で appl_ 以外のキーは preBuildScript がビルドエラーにする
-//   (Test Store キー入りのバイナリを出荷しないため。project.yml 参照)
+//   (Test Store キー入りのバイナリを出荷しないため。MementoMorning ターゲットの Build Phase 参照)
 //
 // 手元でペイウォールの実ストア (StoreKit) の購入導線を動かすには、次の 1 行だけを書いた
 // Config.local.xcconfig をこのファイルと同じ階層に作る:

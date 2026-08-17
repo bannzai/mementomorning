@@ -123,7 +123,7 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
         sessionQueue.async { [self] in
             guard session.isRunning, !movieOutput.isRecording else { return }
             if let connection = movieOutput.connection(with: .video) {
-                // アプリは縦向き固定 (project.yml の UISupportedInterfaceOrientations) のため、
+                // アプリは縦向き固定 (MementoMorning ターゲットの UISupportedInterfaceOrientations) のため、
                 // 保存される動画も縦向き (90°) に固定する (未指定だと横向きで保存され、写真アプリで横倒しに再生される)
                 if connection.isVideoRotationAngleSupported(90) {
                     connection.videoRotationAngle = 90
@@ -214,7 +214,7 @@ struct CameraPreviewView: UIViewRepresentable {
         let view = CameraPreviewUIView()
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
-        // アプリは縦向き固定 (project.yml の UISupportedInterfaceOrientations) のため、
+        // アプリは縦向き固定 (MementoMorning ターゲットの UISupportedInterfaceOrientations) のため、
         // プレビューも縦向き (90°) に固定する (保存動画の向きと合わせる)
         if let connection = view.previewLayer.connection, connection.isVideoRotationAngleSupported(90) {
             connection.videoRotationAngle = 90
