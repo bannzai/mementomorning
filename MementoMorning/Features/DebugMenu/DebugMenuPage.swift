@@ -17,6 +17,8 @@ struct DebugMenuPage: View {
     @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
     /// 検証用のプレミアム強制フラグ。課金状態のゲート (全履歴・無限追撃) の動作確認に使う (再実行しても壊れない冪等なトグル)
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+    /// 疑似録画モードのフラグ。カメラの無いシミュレータで動画回答のパイプラインを検証するために使う (冪等なトグル)
+    @AppStorage(.debugSimulateVideoAnswer) private var debugSimulateVideoAnswer = false
 
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
@@ -120,6 +122,22 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_clear_alarm_fired")
             } header: {
                 Text(verbatim: "Morning Question (issue #4)")
+            }
+            Section {
+                // ON にすると VideoAnswerCamera が AVCapture を使わず、録画停止でフィクスチャ動画を
+                // 「録画結果」として返す。以降 (写真ライブラリ保存・文字起こし・回答成立・アラームキャンセル) は本物のコードを通る
+                Toggle(isOn: $debugSimulateVideoAnswer) {
+                    Text(verbatim: "Simulate video answer")
+                }
+                .accessibilityIdentifier("debug_simulate_video_answer")
+
+                Text(verbatim: "Fixture utterance: \(debugVideoAnswerFixtureUtterance)")
+                    .accessibilityIdentifier("debug_video_answer_fixture_utterance")
+
+                Text(verbatim: "Fixture bundled: \(debugVideoAnswerFixtureURL != nil)")
+                    .accessibilityIdentifier("debug_video_answer_fixture_bundled")
+            } header: {
+                Text(verbatim: "Video Answer (issue #52)")
             }
             Section {
                 Text(verbatim: "hasCompletedOnboarding: \(hasCompletedOnboarding)")
