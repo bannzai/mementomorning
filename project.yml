@@ -24,7 +24,12 @@ targets:
     type: application
     platform: iOS
     sources:
-      - MementoMorning
+      # feature ごとの QA.md (setup-qa) はドキュメントでありアプリのリソースではない。
+      # 除外しないと全 feature の QA.md が同じ QA.md という名前でバンドル直下へコピーされ、
+      # multiple commands produce でビルドが失敗する
+      - path: MementoMorning
+        excludes:
+          - "**/QA.md"
     dependencies:
       - package: RevenueCat
     # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
@@ -57,6 +62,11 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
+      configs:
+        Release:
+          # 疑似録画モード (issue #52) のフィクスチャ動画は DEBUG 限定の検証用リソースのため、
+          # リリースビルドの成果物に含めない (コード側は #if DEBUG で除外している)
+          EXCLUDED_SOURCE_FILE_NAMES: DebugVideoAnswerFixture_*.mov
   MementoMorningTests:
     type: bundle.unit-test
     platform: iOS
