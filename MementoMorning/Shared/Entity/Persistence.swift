@@ -4,18 +4,19 @@ import SwiftData
 /// 永続化層のシングルトン。App Groups の共有コンテナに保存し、将来の Widget と共有する
 @MainActor
 struct PersistenceController {
-    /// アプリで使用する全ての永続化モデルタイプ。新しいモデルを追加する際はここに追加する
-    static let types: [any PersistentModel.Type] = [
+    /// アプリで使用する全ての永続化モデルタイプ。新しいモデルを追加する際はここに追加する。
+    /// Widget Extension の TimelineProvider (nonisolated) からも参照するため、schema / configuration と共に MainActor 隔離を外す
+    nonisolated static let types: [any PersistentModel.Type] = [
         MorningAnswer.self,
         AlarmSetting.self,
         ScheduledAlarm.self,
     ]
 
     /// 全モデルから構築したスキーマ
-    static let schema = Schema(types)
+    nonisolated static let schema = Schema(types)
 
     /// 本番用の永続化設定。App Groups コンテナに保存する
-    static let configuration = ModelConfiguration(
+    nonisolated static let configuration = ModelConfiguration(
         "MementoMorning",
         schema: schema,
         groupContainer: .identifier("group.com.bannzai.MementoMorning"),

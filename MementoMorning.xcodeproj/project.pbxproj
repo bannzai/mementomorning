@@ -11,10 +11,12 @@
 		0289297ADD51D25498C880F5 /* MockNightReflectionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054CC03E7E81C4216EA5B4D9 /* MockNightReflectionScreen.swift */; };
 		02F294E6F6C210AD1CFC19E0 /* AppStoreScreenshot5PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FD4E3DA4EFBE615E7CC7B /* AppStoreScreenshot5PageSnapshotUITest.swift */; };
 		07108F5661BFA7443756CA95 /* AppStoreScreenshotDawnFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */; };
+		080C509808EF0C4BA09D9C2F /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
 		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
 		0ECC3C0A25AA0B957B3CDF66 /* MorningQuestionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */; };
 		0FC3999F518B1E269B2888B7 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94CCB0BC323D020B94C795 /* Languages.swift */; };
 		119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */; };
+		13C377D591BB01852BA6B11B /* ScheduledAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */; };
 		14A6A6C54431FE5382FA9E50 /* StoreKitConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97711A82E87F2A6A797D4BC3 /* StoreKitConfigurationTests.swift */; };
 		158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */; };
 		15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */; };
@@ -39,6 +41,7 @@
 		334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */; };
 		36AD01AA3B3250F641B30D72 /* StopIntentSpike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1569FF56F53101A3EDBE4 /* StopIntentSpike.swift */; };
 		37F5305F32C4517FD5A654AF /* AppStoreScreenshot2PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */; };
+		38F7CC9BF45470CD0923A6BB /* HomeWidgetTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */; };
 		3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFC6A063A59543493172A5 /* Assets.xcassets */; };
 		3D9EE11995B8B3BAF2AD2304 /* StoreKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */; };
 		3DA562E68DB7BEB42EE2E045 /* MockLifeCalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF7772591D5B5491D85CAAB /* MockLifeCalendarScreen.swift */; };
@@ -71,6 +74,7 @@
 		7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784F14F17E87134C2E8E59A /* Rescheduler.swift */; };
 		7FA67F319DC050731C8ACD5A /* AlarmLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875171AFCB2C608A4938FAEA /* AlarmLiveActivityWidget.swift */; };
 		819210AB97388C092A1650B7 /* LifeCalendarPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418C3D5ECE4F458975D2C92 /* LifeCalendarPageSnapshotUITest.swift */; };
+		83C1A29EDF890B52CD844DD2 /* HomeWidgetTimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34724AB95CFDBAADCB0EEE /* HomeWidgetTimelineTests.swift */; };
 		83FEBC1ACE55DF32E2C9CA68 /* PaywallPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AC242E0454C8B64B929716 /* PaywallPageSnapshotUITest.swift */; };
 		856A557689C927EE5A06886B /* AnswerEditPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A46E0660628EB4AC3D90E2DE /* AnswerEditPage.swift */; };
 		86DAF26A21A1620580E7E9D8 /* MockSevenMorningsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F7F249342F2DE41528F483 /* MockSevenMorningsScreen.swift */; };
@@ -79,10 +83,12 @@
 		8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E88C71CAAE9A7BEF47E27E2 /* AlarmKitManager.swift */; };
 		90AE1F58DFDD1A534F02A974 /* DebugMenuPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65D3164755F057F64140B0 /* DebugMenuPage.swift */; };
 		9220F42AFC4048D4E968A532 /* MementoMorningWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D17B618D757C8939808F5 /* MementoMorningWidgetBundle.swift */; };
+		92E65DCDDB83D00590AA6B54 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
 		939A8E8262D62CD1915EFADF /* VideoAnswerCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */; };
 		94F807CA5C60E3513E8D6F45 /* AppStoreScreenshot4PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667A962B9B52C49CE132D4AC /* AppStoreScreenshot4PageSnapshotUITest.swift */; };
 		96863AB1DF718AA374C01180 /* MockJournalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17E85BA3B68068B127904EF /* MockJournalScreen.swift */; };
 		96CE44828C96A430D173ACFA /* AppStoreScreenshot12PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE923F3A1CD1A9A262CA995 /* AppStoreScreenshot12PageSnapshotUITest.swift */; };
+		994564840A95E41969BB5342 /* TodayAnswerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E7B6CC3DE429CD7922692 /* TodayAnswerWidget.swift */; };
 		A03184E5CAA063BBE0CF849F /* AnswerLogPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3F88DDF209BEB0D0D0A93F /* AnswerLogPageSnapshotUITest.swift */; };
 		A1740F3F9DA1C297DEE3CF33 /* LifeCalendarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF134A23C4F559A06253D340 /* LifeCalendarPage.swift */; };
 		A188159302D9C0F0F197266A /* AppStoreScreenshot11PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2027A220F6AB5E5E9EC6A9 /* AppStoreScreenshot11PageSnapshotUITest.swift */; };
@@ -99,8 +105,10 @@
 		B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */; };
 		B35F977FB07F68FD87D0FD4A /* VideoAnswerTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */; };
 		B40935A41746441DA44580C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */; };
+		B613C22085F4BB8882008A12 /* HomeWidgetTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */; };
 		B87A2AA4C1CBCFB612222763 /* VideoAnswerGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */; };
 		BD573C9988FFD160D9F402F7 /* ContentViewSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */; };
+		C1D0D47578C5998A3050C0CE /* AlarmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */; };
 		C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */; };
 		C38DCA5A434EE0A5B33CB7CB /* SnoozeGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */; };
 		C482BA5AD9BBF0F58F28BDB2 /* AppStoreScreenshot13PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6288E16B769A5A027B4FB8C /* AppStoreScreenshot13PageSnapshotUITest.swift */; };
@@ -127,6 +135,7 @@
 		F06E2954C1D617DC81DCCB0B /* AnswerLogPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F1E8B900459AE8D91FBD56 /* AnswerLogPage.swift */; };
 		F188879D108162E22038E42D /* XCUIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81902DA91853DF013ABF9CF8 /* XCUIApplication+.swift */; };
 		F328E0FA68BE491644057169 /* StopAlarmIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AAFD27A7F0CB620CBDB0A9 /* StopAlarmIntent.swift */; };
+		F7CD76D98B12477BBFEEEEA3 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
 		FB16E0808F35889A98F848AD /* TodayAnswerLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD438F069BAAC3D7E6F5FFD /* TodayAnswerLiveActivityWidget.swift */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +224,7 @@
 		6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotDawnFrame.swift; sourceTree = "<group>"; };
 		62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGate.swift; sourceTree = "<group>"; };
 		667A962B9B52C49CE132D4AC /* AppStoreScreenshot4PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot4PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWidgetTimeline.swift; sourceTree = "<group>"; };
 		6EB94C934831139721BDE0F8 /* SampleAnswerSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAnswerSeeder.swift; sourceTree = "<group>"; };
 		6F4CD6A65CFC00F1CA1486F8 /* LifeCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarDates.swift; sourceTree = "<group>"; };
 		715457F9DCAEABC482EBEB8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -247,6 +257,7 @@
 		999DC90CFBABE7969E4C78E5 /* AppStoreScreenshotInkFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotInkFrame.swift; sourceTree = "<group>"; };
 		9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9D21ECA983735868168CDBBD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		A0FBFC8C732CDD5989ACC742 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		A46E0660628EB4AC3D90E2DE /* AnswerEditPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerEditPage.swift; sourceTree = "<group>"; };
 		A7CC155036E7C6A9F203C5E1 /* MorningQuestionPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningQuestionPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKitTest.framework; path = System/Library/Frameworks/StoreKitTest.framework; sourceTree = SDKROOT; };
@@ -259,8 +270,10 @@
 		B3F1E8B900459AE8D91FBD56 /* AnswerLogPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerLogPage.swift; sourceTree = "<group>"; };
 		B42C042B3EE358D4139B1493 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		B45E91DF187BB4034C3DFBC1 /* MockMorningQuestionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMorningQuestionScreen.swift; sourceTree = "<group>"; };
-		BA2E8D5D2C4E4F547353B8B6 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		BB7FED1E74C838AAE301DD55 /* MementoMorningWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MementoMorningWidget.entitlements; sourceTree = "<group>"; };
 		BD8A21C991EBF5E6F4360D79 /* MementoMorningTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MementoMorningTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE34724AB95CFDBAADCB0EEE /* HomeWidgetTimelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWidgetTimelineTests.swift; sourceTree = "<group>"; };
+		BF5E7B6CC3DE429CD7922692 /* TodayAnswerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayAnswerWidget.swift; sourceTree = "<group>"; };
 		C037DFC7112D63C6A6E17C32 /* NightReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReminder.swift; sourceTree = "<group>"; };
 		C058FBA5F280DF12647938CA /* AppStoreScreenshot14PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot14PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseAlarm.swift; sourceTree = "<group>"; };
@@ -365,8 +378,10 @@
 				875171AFCB2C608A4938FAEA /* AlarmLiveActivityWidget.swift */,
 				2ED92DFDA137BB8AF59D8FFB /* Info.plist */,
 				D4BC2CBA791838AC91A98EA0 /* Localizable.xcstrings */,
+				BB7FED1E74C838AAE301DD55 /* MementoMorningWidget.entitlements */,
 				2E4D17B618D757C8939808F5 /* MementoMorningWidgetBundle.swift */,
 				CBD438F069BAAC3D7E6F5FFD /* TodayAnswerLiveActivityWidget.swift */,
+				BF5E7B6CC3DE429CD7922692 /* TodayAnswerWidget.swift */,
 			);
 			path = MementoMorningWidget;
 			sourceTree = "<group>";
@@ -477,6 +492,7 @@
 			children = (
 				3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */,
 				C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */,
+				697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */,
 				D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */,
 				7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */,
 				AC674EF85921223D5CD0EFC7 /* SnoozeGate.swift */,
@@ -571,7 +587,7 @@
 				5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */,
 				23EA8FBE6EDC40B9BFA1966B /* AppStoreScreenshots */,
 				675DA7F11AEB50A25114095A /* AppStoreScreenshotsUITests */,
-				C44A61B35956C44098AD5CD3 /* issue-45 */,
+				A543291322293B4802EC3282 /* issue-46 */,
 				A98E547D35E68FB918AA435C /* MementoMorning */,
 				6884511A1BA3EF7D4D816DFE /* MementoMorningSnapshotUITests */,
 				D1DD9541328486B2E4FE6ED0 /* MementoMorningTests */,
@@ -650,6 +666,15 @@
 				E4A66F484F795E19FB4ADA23 /* NightReflectionPage.swift */,
 			);
 			path = NightReflection;
+			sourceTree = "<group>";
+		};
+		A543291322293B4802EC3282 /* issue-46 */ = {
+			isa = PBXGroup;
+			children = (
+				A0FBFC8C732CDD5989ACC742 /* Config.xcconfig */,
+			);
+			name = "issue-46";
+			path = .;
 			sourceTree = "<group>";
 		};
 		A63C687F297D468D8EB00705 /* Paywall */ = {
@@ -734,15 +759,6 @@
 			path = AnswerLog;
 			sourceTree = "<group>";
 		};
-		C44A61B35956C44098AD5CD3 /* issue-45 */ = {
-			isa = PBXGroup;
-			children = (
-				BA2E8D5D2C4E4F547353B8B6 /* Config.xcconfig */,
-			);
-			name = "issue-45";
-			path = .;
-			sourceTree = "<group>";
-		};
 		C9B88CBCEA928A1FC6F3591C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -784,6 +800,7 @@
 				73D325B90BFCC5302543DF5E /* AnswerLogVisibilityTests.swift */,
 				C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */,
 				5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */,
+				BE34724AB95CFDBAADCB0EEE /* HomeWidgetTimelineTests.swift */,
 				C1990C15BE0DB2EB8AAF7097 /* LifeCalendarDatesTests.swift */,
 				C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */,
 				D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */,
@@ -1065,11 +1082,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA67F319DC050731C8ACD5A /* AlarmLiveActivityWidget.swift in Sources */,
+				C1D0D47578C5998A3050C0CE /* AlarmSetting.swift in Sources */,
 				A668B97B6D507E7495624D52 /* DesignSystem.swift in Sources */,
+				F7CD76D98B12477BBFEEEEA3 /* Environments.swift in Sources */,
+				B613C22085F4BB8882008A12 /* HomeWidgetTimeline.swift in Sources */,
 				4DA73F9288A660F9BEDDDA38 /* MementoMorningAlarmMetadata.swift in Sources */,
 				9220F42AFC4048D4E968A532 /* MementoMorningWidgetBundle.swift in Sources */,
+				080C509808EF0C4BA09D9C2F /* MorningAnswer.swift in Sources */,
+				92E65DCDDB83D00590AA6B54 /* Persistence.swift in Sources */,
+				13C377D591BB01852BA6B11B /* ScheduledAlarm.swift in Sources */,
 				C66822FC8B22931192CB8B82 /* TodayAnswerActivityAttributes.swift in Sources */,
 				FB16E0808F35889A98F848AD /* TodayAnswerLiveActivityWidget.swift in Sources */,
+				994564840A95E41969BB5342 /* TodayAnswerWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1118,6 +1142,7 @@
 				90AE1F58DFDD1A534F02A974 /* DebugMenuPage.swift in Sources */,
 				87E3F55F9195365C0A5ACFCB /* DesignSystem.swift in Sources */,
 				761AE3021FFE67D48666BC4D /* Environments.swift in Sources */,
+				38F7CC9BF45470CD0923A6BB /* HomeWidgetTimeline.swift in Sources */,
 				1B4349AA97691B2ED56DE13D /* LifeCalendarDates.swift in Sources */,
 				A1740F3F9DA1C297DEE3CF33 /* LifeCalendarPage.swift in Sources */,
 				2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */,
@@ -1159,6 +1184,7 @@
 				E811FB96E3BDAB82CA491D23 /* AnswerLogVisibilityTests.swift in Sources */,
 				334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */,
 				C5361C2165C329F2B583E2C1 /* ChaseAlarmTests.swift in Sources */,
+				83C1A29EDF890B52CD844DD2 /* HomeWidgetTimelineTests.swift in Sources */,
 				119038B1AD3D46665F51A32E /* LifeCalendarDatesTests.swift in Sources */,
 				B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */,
 				A66354678A45B89032312EC3 /* MorningQuestionGateTests.swift in Sources */,
@@ -1380,7 +1406,7 @@
 		};
 		6D8148AD7C6C10CE6404F6C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA2E8D5D2C4E4F547353B8B6 /* Config.xcconfig */;
+			baseConfigurationReference = A0FBFC8C732CDD5989ACC742 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -1502,7 +1528,7 @@
 		};
 		94B07253134F816E7ED5852F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BA2E8D5D2C4E4F547353B8B6 /* Config.xcconfig */;
+			baseConfigurationReference = A0FBFC8C732CDD5989ACC742 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
@@ -1562,6 +1588,7 @@
 		D5594FCAA2D0C874022D5AC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MementoMorningWidget/MementoMorningWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MementoMorningWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Memento Morning";
@@ -1579,6 +1606,7 @@
 		D814F1F1411706D1C2644A3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MementoMorningWidget/MementoMorningWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MementoMorningWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Memento Morning";

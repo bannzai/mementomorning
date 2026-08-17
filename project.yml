@@ -24,7 +24,12 @@ targets:
     type: application
     platform: iOS
     sources:
-      - MementoMorning
+      # feature ごとの QA.md (setup-qa) は開発用ドキュメントで、アプリに同梱しない。
+      # 除外しないと全 feature の QA.md が同じ名前でバンドル直下へコピーされ、
+      # xcodebuild が Multiple commands produce '.../QA.md' で失敗する
+      - path: MementoMorning
+        excludes:
+          - "**/QA.md"
     dependencies:
       - package: RevenueCat
       - target: MementoMorningWidget
@@ -58,7 +63,10 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
-  # ロック画面に「今日の目標」(今日の回答) を Live Activity として表示する Widget Extension (issue #45)
+  # ロック画面に「今日の目標」(今日の回答) を Live Activity として表示し (issue #45)、
+  # ホーム画面ウィジェットに今日の回答を常駐表示する (issue #46) Widget Extension。
+  # ホーム画面ウィジェットは SwiftData を App Groups 共有コンテナ経由で読むため、
+  # 永続化層とエンティティもアプリと共有する (swiftdata-guidelines「App Extension 内での SwiftData」参照)
   MementoMorningWidget:
     type: app-extension
     platform: iOS
@@ -69,12 +77,24 @@ targets:
       - MementoMorning/Shared/TodayAnswerActivityAttributes.swift
       - MementoMorning/Shared/MementoMorningAlarmMetadata.swift
       - MementoMorning/Shared/DesignSystem/DesignSystem.swift
+      # 共有コンテナのスキーマはアプリと完全一致させる必要があるため、
+      # 永続化層と全エンティティをコピーせずアプリのファイルをそのまま両ターゲットに含める
+      - MementoMorning/Shared/Entity/Persistence.swift
+      - MementoMorning/Shared/Entity/MorningAnswer.swift
+      - MementoMorning/Shared/Entity/AlarmSetting.swift
+      - MementoMorning/Shared/Entity/ScheduledAlarm.swift
+      # Persistence が参照する実行環境判定
+      - MementoMorning/Utils/Environments.swift
+      # タイムライン更新日時の計算 (アプリ側のユニットテスト対象)
+      - MementoMorning/Shared/HomeWidgetTimeline.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning.MementoMorningWidget
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_FILE: MementoMorningWidget/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: Memento Morning
+        # ホーム画面ウィジェットが App Groups 共有コンテナの SwiftData を読むため必須 (issue #46)
+        CODE_SIGN_ENTITLEMENTS: MementoMorningWidget/MementoMorningWidget.entitlements
   MementoMorningTests:
     type: bundle.unit-test
     platform: iOS
