@@ -22,7 +22,7 @@ last_verified_at: null
 
 - [x] **ホームからの導線**: 今日の回答がある状態で、ホームの「直す」リンク (home_today_answer_edit_link) をタップすると編集画面が sheet で開く
   - 自動化: manual（sheet 遷移の確認）
-  - 既知の別件: アクセシビリティツリー上ではこの identifier が親 VStack の home_today_answer (ContentView.swift) に上書きされており、ID 指定では要素を引けない。自動操作では座標タップで代替する
+  - 自動操作: home_today_answer_edit_link の ID 指定で引ける (issue #50 で親 VStack の identifier による上書きを解消済み。2026-08-17 に Maestro の assertVisible で確認)
 - [x] **初期値の反映**: 編集画面のテキストフィールド (answer_edit_text_field) に編集対象の回答本文が初期表示される
   - 自動化: manual（表示値の目視確認）
 - [x] **編集して保存**: 本文を書き換えて「保存」(answer_edit_save_button) をタップすると sheet が閉じ、ホームの「今朝のことば」に編集後の本文が反映される
