@@ -9,7 +9,7 @@ Accepted (2026-08-17)
 複数のブランチが同じターゲットを変更すると、生成のたびに `project.pbxproj` が広範囲に書き換わって競合しやすい。また、Xcode の GUI で加えた変更は `project.yml` に反映されず、次の生成で失われる。実際に、ホーム画面ウィジェットと Live Activity の追加を統合した際に `project.pbxproj` が競合し、再生成によって複数の `QA.md` が同じバンドルリソースとして扱われてビルドが失敗した。
 
 ## Decision
-`project.yml` を削除し、`MementoMorning.xcodeproj` をプロジェクト構成の唯一の正として直接管理する。ターゲット、ファイル、ビルド設定、Scheme、Swift Package の変更には Xcode の GUI を使い、自動化が必要な場合は `project.pbxproj` を直接編集する。XcodeGen は使わず、`xcodegen generate` を実行しない。
+`project.yml` を削除し、`MementoMorning.xcodeproj` をプロジェクト構成の唯一の正として直接管理する。ターゲット、ファイル、ビルド設定、Scheme、Swift Package の変更には Xcode の GUI を使う。自動化が必要な場合は、プロジェクト構成を `project.pbxproj`、Scheme を `xcshareddata/xcschemes/*.xcscheme` で直接編集する。XcodeGen は使わず、`xcodegen generate` を実行しない。
 
 ## Consequences
 
