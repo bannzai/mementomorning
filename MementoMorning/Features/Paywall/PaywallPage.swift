@@ -130,6 +130,13 @@ struct PaywallPage: View {
                         Task { await purchase(package: offering?.annual) }
                     } label: {
                         VStack(spacing: 2) {
+                            if let annualFreeTrialPeriodText {
+                                // ja: %@無料
+                                Text("\(annualFreeTrialPeriodText) free")
+                                    .font(.system(size: 11))
+                                    .tracking(0.5)
+                                    .accessibilityIdentifier("paywall_yearly_free_trial")
+                            }
                             // ja: 年 %@
                             Text("\(annualPriceText) / year")
                                 .font(.system(size: 15))
@@ -239,6 +246,20 @@ struct PaywallPage: View {
             ?? storeProduct.localizedPriceString
     }
 
+    /// 年額プランの無料トライアル期間の表示文字列 (例: 1 week)。
+    /// introductory offer が無料トライアルの時だけ返し、それ以外 (offer 無し・有料の導入価格・offering 未取得) は nil。
+    /// PROJECT.md の課金設計では「年額のみ 7 日間無料トライアル」だが、固定文言で書くとストア側の設定と
+    /// 食い違った時に実際と異なる無料期間を見せてしまうため、必ず取得できた offer の期間から組み立てる
+    /// (見本価格を出さない PR #30 の方針と同じ)
+    private var annualFreeTrialPeriodText: String? {
+        guard let introductoryDiscount = offering?.annual?.storeProduct.introductoryDiscount,
+              introductoryDiscount.paymentMode == .freeTrial else { return nil }
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.year, .month, .weekOfMonth, .day]
+        return formatter.string(from: dateComponents(subscriptionPeriod: introductoryDiscount.subscriptionPeriod))
+    }
+
     /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥800/月) を見本表示する
     private var monthlyPriceText: String {
         offering?.monthly?.storeProduct.localizedPriceString ?? "¥800"
@@ -327,6 +348,21 @@ struct PaywallPage: View {
             // ja: 購入を復元できませんでした。
             purchaseError = String(localized: "Purchases couldn't be restored.") + "\n\(error.localizedDescription)"
         }
+    }
+}
+
+/// RevenueCat の購読期間を DateComponentsFormatter へ渡せる DateComponents に変換する。
+/// 週は DateComponents に week が無いため weekOfMonth を使う (DateComponentsFormatter の .weekOfMonth に対応する)
+func dateComponents(subscriptionPeriod: SubscriptionPeriod) -> DateComponents {
+    switch subscriptionPeriod.unit {
+    case .day:
+        return DateComponents(day: subscriptionPeriod.value)
+    case .week:
+        return DateComponents(weekOfMonth: subscriptionPeriod.value)
+    case .month:
+        return DateComponents(month: subscriptionPeriod.value)
+    case .year:
+        return DateComponents(year: subscriptionPeriod.value)
     }
 }
 
