@@ -195,10 +195,17 @@ struct DebugMenuPage: View {
         modelContext.insert(
             MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
         )
-        try? modelContext.save()
-        // 投入した今日の回答をホーム画面ウィジェットへ反映する (issue #46)
-        reloadHomeWidgetTimelines()
-        refreshAnswerStates()
+        do {
+            try modelContext.save()
+            // 投入した今日の回答をホーム画面ウィジェットへ反映する (issue #46)。保存の失敗時にリロードすると
+            // 未保存の状態でウィジェットだけ更新要求が走るため、保存の成功後に限る
+            reloadHomeWidgetTimelines()
+            refreshAnswerStates()
+        } catch {
+            // 保存失敗を握りつぶすと未投入なのに投入済みに見えるため、変更を破棄して開発中に気づけるよう落とす
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+        }
     }
 
     /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
