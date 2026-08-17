@@ -2,7 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- 権限の説明文はアプリの基準言語 (英語) で書き、日本語は InfoPlist.xcstrings で提供する -->
+	<!-- 権限の説明文はアプリの基準言語 (英語) で書き、日本語は InfoPlist.xcstrings で提供する。
+	     InfoPlist.xcstrings に en の値が無いと、生成される en.lproj/InfoPlist.strings がキー名に
+	     フォールバックして OS のダイアログにキー名が表示されるため (issue #50)、
+	     同じ英文を InfoPlist.xcstrings の en にも持たせる。文言を変える時は両方を合わせて更新する -->
 	<key>NSAlarmKitUsageDescription</key>
 	<string>Used to ring the alarm at your set time and stop it by answering today's question.</string>
 	<key>NSCameraUsageDescription</key>

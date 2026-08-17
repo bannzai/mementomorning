@@ -4,6 +4,12 @@
     "NSAlarmKitUsageDescription": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to ring the alarm at your set time and stop it by answering today's question."
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -15,6 +21,12 @@
     "NSCameraUsageDescription": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to record your video answer to the morning question with the front camera."
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -26,6 +38,12 @@
     "NSMicrophoneUsageDescription": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to record the audio of your video answer."
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -37,6 +55,12 @@
     "NSPhotoLibraryUsageDescription": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
@@ -48,6 +72,12 @@
     "NSSpeechRecognitionUsageDescription": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used to transcribe the audio of your video answer into text on this device."
+          }
+        },
         "ja": {
           "stringUnit": {
             "state": "translated",
