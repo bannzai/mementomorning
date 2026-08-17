@@ -11,6 +11,10 @@ APP_NAME="${APP_NAME:-}"
 ARTIFACT_DIR="${ARTIFACT_DIR:-maestro-artifacts}"
 RECORD_VIDEO="${RECORD_VIDEO:-true}"
 SUMMARY="${GITHUB_STEP_SUMMARY:-/dev/null}"
+# maestro を入れる時のバージョンと、そのリリースの maestro.zip の sha256。
+# 更新は https://github.com/mobile-dev-inc/maestro/releases の checksums_sha256.txt から取る。
+MAESTRO_VERSION="${MAESTRO_VERSION:-2.8.0}"
+MAESTRO_SHA256="${MAESTRO_SHA256:-b3e561161904fb391875ca5834d5b22cf0b01c052dd1b408ad83e30d8f8951b3}"
 
 RESOLVE_ONLY=false
 if [ "${1:-}" = "--resolve-only" ]; then
@@ -62,12 +66,6 @@ xcrun simctl install "$UDID" "$APP_PATH"
 
 mkdir -p "$ARTIFACT_DIR"
 
-REC_PID=""
-if [ "$RECORD_VIDEO" = "true" ]; then
-  xcrun simctl io "$UDID" recordVideo --codec=h264 -f "${ARTIFACT_DIR}/session.mp4" &
-  REC_PID=$!
-fi
-
 # maestro は JVM で動く (Java 17+ 必須)。runner の既定 JAVA_HOME が古い場合に備えて新しい方へ向ける
 for v in 21 17; do
   var="JAVA_HOME_${v}_arm64"
@@ -80,12 +78,27 @@ java -version
 
 export MAESTRO_CLI_NO_ANALYTICS=1
 export MAESTRO_DRIVER_STARTUP_TIMEOUT=120000
-# runner には maestro が入っていないためインストールする (ローカル再現時は既存の maestro を使う)
+# runner には maestro が入っていないためインストールする (ローカル再現時は既存の maestro を使う)。
+# get.maestro.mobile.dev のインストーラーは常に最新版を入れるため、リリース成果物を
+# バージョン固定で取得し、sha256 が想定と一致することを確認してから使う。
+# 録画の開始前に済ませる (インストールの失敗で録画プロセスが取り残されないようにする)。
 if ! command -v maestro > /dev/null 2>&1; then
-  curl -fsSL "https://get.maestro.mobile.dev" | bash
-  export PATH="${PATH}:${HOME}/.maestro/bin"
+  WORK="${RUNNER_TEMP:-/tmp}"
+  mkdir -p "$WORK"
+  INSTALL_DIR="${WORK}/maestro-cli"
+  ZIP="${WORK}/maestro.zip"
+  curl -fsSL -o "$ZIP" "https://github.com/mobile-dev-inc/maestro/releases/download/cli-${MAESTRO_VERSION}/maestro.zip"
+  echo "${MAESTRO_SHA256}  ${ZIP}" | shasum -a 256 -c -
+  unzip -q -o "$ZIP" -d "$INSTALL_DIR"
+  export PATH="${PATH}:${INSTALL_DIR}/maestro/bin"
 fi
 maestro --version
+
+REC_PID=""
+if [ "$RECORD_VIDEO" = "true" ]; then
+  xcrun simctl io "$UDID" recordVideo --codec=h264 -f "${ARTIFACT_DIR}/session.mp4" &
+  REC_PID=$!
+fi
 
 STATUS=0
 maestro --udid "$UDID" test \
