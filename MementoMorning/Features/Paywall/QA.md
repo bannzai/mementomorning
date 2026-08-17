@@ -1,0 +1,112 @@
+---
+feature: Paywall
+verification: mobile-mcp
+last_verified_commit: null
+last_verified_at: null
+---
+
+# Paywall QA
+
+## 関連リンク
+
+- 仕様: https://github.com/bannzai/mementomorning/issues/9 (受け入れ条件)
+- 関連: https://github.com/bannzai/mementomorning/issues/15 (IAP 商品登録) / https://github.com/bannzai/mementomorning/pull/30 (レビュー指摘の反映)
+
+## 仕様チェックリスト
+
+| ID | 期待挙動 | 対応項目 |
+|----|---------|---------|
+| S1 | Sandbox で購入 → プレミアム解放 → 復元が確認できる | 購入 / 復元 |
+| S2 | 無料状態で無限追撃・全履歴が制限される | — (AlarmSetting の QA.md「無料状態のスヌーズ表示」・AnswerLog の QA.md「無料枠の非表示とロック行」が担当) |
+
+## 1. 表示
+
+- [ ] **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
+  - 自動化: manual（sheet 遷移の確認）
+- [ ] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
+  - 自動化: manual（画面上の価格表示の目視確認。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
+- [ ] **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
+  - 自動化: todo
+- [ ] **閉じる導線**: 「今はしない」(paywall_not_now_button) で sheet が閉じる
+  - 自動化: manual（sheet の dismiss 確認）
+- [ ] **法務リンク**: 利用規約・プライバシーポリシーのリンクが開ける
+  - 自動化: manual（外部リンクの確認）
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+### **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+### **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+### **閉じる導線**: 「今はしない」(paywall_not_now_button) で sheet が閉じる
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+### **法務リンク**: 利用規約・プライバシーポリシーのリンクが開ける
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+</details>
+
+---
+
+## 2. 購入と復元
+
+- [ ] **購入**: Sandbox (または StoreKit Configuration) で購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる
+  - 自動化: manual（Sandbox 課金の操作が必要。/ios-storekit-testing skill を利用できる）
+- [ ] **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
+  - 自動化: manual（Sandbox 課金の操作が必要）
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **購入**: Sandbox (または StoreKit Configuration) で購入するとプレミアムが解放され、sheet が閉じてジャーナルの全履歴・スヌーズ無制限が有効になる
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+### **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
+
+<details><summary>動作確認スクショ</summary>
+
+（未実行）
+
+</details>
+
+</details>
+
+---
