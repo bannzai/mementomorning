@@ -21,14 +21,29 @@ func needsPermissionSettingsGuidance(
 }
 
 /// 初回起動時のオンボーディング。
-/// コンセプト提示 → アラーム・通知の許可 → 最初のアラーム設定、の 3 ステップを 1 画面内のフェードで進める
-/// (デザイン: design_handoff_memento_morning の 1m「夜明けの一枚目」。画面遷移はフェードのみ)
+/// コンセプト提示 → アラーム・通知の許可 → 回答の練習 → 最初のアラーム設定、の 4 ステップを 1 画面内のフェードで進める
+/// (デザイン: design_handoff_memento_morning の 1m「夜明けの一枚目」。画面遷移はフェードのみ)。
+/// 練習ステップは、朝の初回がぶっつけ本番の録画にならないよう事前に一度録画を試すチュートリアル (issue #44)。
+/// カメラ・マイク・写真ライブラリ・音声認識の権限も、使い道の説明を見せてからここでまとめてリクエストする
 struct OnboardingPage: View {
     /// オンボーディングの進行ステップ
     private enum Step {
         case concept
         case permission
+        case practice
         case alarmSetting
+    }
+
+    /// 練習ステップ内の進行状態
+    private enum PracticePhase {
+        /// 説明と権限の使い道の提示 (権限リクエストは「一度やってみる」のタップまで実行しない)
+        case introduction
+        /// インカメラのプレビューを表示して録画を試している
+        case recording
+        /// 録画を止めて練習を終えた
+        case completed
+        /// 動画回答を使えない (権限拒否・カメラ非搭載環境)。朝はテキスト入力になることを案内する
+        case unavailable
     }
 
     /// モデルコンテキスト
@@ -61,6 +76,12 @@ struct OnboardingPage: View {
     /// 保存処理 (再スケジュール完了待ち) の実行中かどうか。
     /// true の間はボタンを無効化し、連打による複数 Task の並行起動を防ぐ
     @State private var isSaving: Bool = false
+    /// 練習用のインカメラ録画セッション (朝の本番と同じ VideoAnswerCamera を使う)
+    @State private var practiceCamera = VideoAnswerCamera()
+    /// 練習ステップ内の進行状態
+    @State private var practicePhase: PracticePhase = .introduction
+    /// 練習の権限リクエストの実行中かどうか。連打によるダイアログの多重リクエストを防ぐ
+    @State private var isRequestingPracticePermissions = false
 
     var body: some View {
         ZStack {
@@ -71,6 +92,8 @@ struct OnboardingPage: View {
                 conceptStep.transition(.opacity)
             case .permission:
                 permissionStep.transition(.opacity)
+            case .practice:
+                practiceStep.transition(.opacity)
             case .alarmSetting:
                 alarmSettingStep.transition(.opacity)
             }
@@ -212,7 +235,7 @@ struct OnboardingPage: View {
                 .accessibilityIdentifier("onboarding_allow_permissions")
                 if hasRequestedPermissions {
                     Button {
-                        withAnimation(.easeInOut(duration: 0.6)) { step = .alarmSetting }
+                        withAnimation(.easeInOut(duration: 0.6)) { step = .practice }
                     } label: {
                         // ja: つづける
                         Text("Continue")
@@ -234,7 +257,276 @@ struct OnboardingPage: View {
         }
     }
 
-    /// ステップ 3: 最初のアラーム設定
+    /// ステップ 3: 回答の練習 (インカメラ録画のチュートリアル)。
+    /// 権限の使い道を説明してから「一度やってみる」のタップでまとめてリクエストし、揃ったら録画を一度試す。
+    /// 練習の録画は回答ではないため保存しない。権限拒否・カメラ非搭載環境では朝はテキスト入力になることを案内して先へ進める
+    @ViewBuilder
+    private var practiceStep: some View {
+        switch practicePhase {
+        case .introduction:
+            practiceIntroduction
+        case .recording:
+            practiceRecording
+        case .completed:
+            practiceCompleted
+        case .unavailable:
+            practiceUnavailable
+        }
+    }
+
+    /// 練習の説明と権限の使い道の提示。ダイアログは「一度やってみる」のタップまで出さない
+    private var practiceIntroduction: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // ja: 回答の練習
+            Text("Practice your answer")
+                .font(.system(size: 25, weight: .light))
+                .tracking(1.5)
+            // ja: 毎朝、インカメラで答えを録画してアラームを止めます。
+            //
+            // 最初の朝が来る前に、一度だけ試しておきましょう。
+            Text("Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning.")
+                .font(.system(size: 12))
+                .lineSpacing(9)
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
+            VStack(alignment: .leading, spacing: 0) {
+                // リクエスト前の使い道の説明のため、許可済みバッジ (isGranted) は常に出さない
+                // ja: カメラとマイク
+                // ja: 回答の動画を録画します
+                permissionRow(
+                    title: Text("Camera & microphone"),
+                    detail: Text("Records your video answer."),
+                    isGranted: false
+                )
+                HairlineDivider()
+                // ja: 写真ライブラリ
+                // ja: 動画を写真アプリのアルバム「Memento Morning」に保存します
+                permissionRow(
+                    title: Text("Photo library"),
+                    detail: Text("Saves your videos to the 'Memento Morning' album in Photos."),
+                    isGranted: false
+                )
+                HairlineDivider()
+                // ja: 音声認識
+                // ja: 動画の音声を、端末の中だけで文字にします
+                permissionRow(
+                    title: Text("Speech recognition"),
+                    detail: Text("Turns your voice into text, on this device."),
+                    isGranted: false
+                )
+            }
+            .padding(.top, 28)
+            Spacer()
+            VStack(spacing: 14) {
+                Button {
+                    Task { await startPractice() }
+                } label: {
+                    // ja: 一度やってみる
+                    Text("Try it once")
+                }
+                .buttonStyle(PrimaryPillButtonStyle())
+                .disabled(isRequestingPracticePermissions)
+                .accessibilityIdentifier("onboarding_practice_start")
+                Button {
+                    withAnimation(.easeInOut(duration: 0.6)) { step = .alarmSetting }
+                } label: {
+                    // ja: あとでやる
+                    Text("Later")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Color.warmWhite.opacity(0.55))
+                        .underline()
+                }
+                .accessibilityIdentifier("onboarding_practice_skip")
+            }
+        }
+        .foregroundStyle(Color.warmWhite)
+        .padding(.top, 130)
+        .padding(.horizontal, 36)
+        .padding(.bottom, 48)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// 練習の録画。朝の本番 (MorningQuestionPage) と同じく問いをプレビューへオーバーレイし、録画停止で練習を終える
+    private var practiceRecording: some View {
+        ZStack {
+            if practiceCamera.isSessionRunning {
+                CameraPreviewView(session: practiceCamera.session)
+                    .ignoresSafeArea()
+            }
+            // プレビュー (顔) の上でも問いと操作が読めるよう、上下に墨のスクリムを敷く (MorningQuestionPage と同じ演出)
+            VStack(spacing: 0) {
+                LinearGradient(
+                    colors: [Color.ink.opacity(0.75), Color.ink.opacity(0)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 280)
+                Spacer()
+                LinearGradient(
+                    colors: [Color.ink.opacity(0), Color.ink.opacity(0.75)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 260)
+            }
+            .ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                // ja: 今日死ぬとしたら、何をやりたいか
+                Text(String(localized: "If today were your last day, what would you want to do?"))
+                    .font(.system(size: 27, weight: .light))
+                    .lineSpacing(10)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 110)
+                    .padding(.horizontal, 32)
+                // ja: 練習です。動画は保存されません
+                Text("This is practice. The video won't be saved.")
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color.warmWhite.opacity(0.55))
+                    .padding(.top, 14)
+                Spacer()
+                practiceRecordButton
+                    .padding(.bottom, 32)
+            }
+        }
+        .foregroundStyle(Color.warmWhite)
+        .onDisappear {
+            practiceCamera.stop()
+        }
+    }
+
+    /// 練習用の録画の開始/停止ボタン (MorningQuestionPage の recordButton と同じ見た目)
+    private var practiceRecordButton: some View {
+        Button {
+            if practiceCamera.isRecording {
+                practiceCamera.stopRecording()
+            } else {
+                practiceCamera.startRecording()
+            }
+        } label: {
+            ZStack {
+                Circle()
+                    .stroke(Color.warmWhite.opacity(0.8), lineWidth: 3)
+                    .frame(width: 72, height: 72)
+                if practiceCamera.isRecording {
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color.dawn)
+                        .frame(width: 28, height: 28)
+                } else {
+                    Circle()
+                        .fill(Color.warmWhite)
+                        .frame(width: 58, height: 58)
+                }
+            }
+        }
+        .disabled(!practiceCamera.isSessionRunning)
+        .accessibilityLabel(
+            practiceCamera.isRecording
+                // ja: 録画を止める
+                ? Text("Stop recording")
+                // ja: 録画を始める
+                : Text("Start recording")
+        )
+        .accessibilityIdentifier("onboarding_practice_record_button")
+    }
+
+    /// 練習の完了。朝の本番の動きを一言添えて次のステップへ進める
+    private var practiceCompleted: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // ja: これで、朝の準備ができました
+            Text("You're ready for the morning.")
+                .font(.system(size: 25, weight: .light))
+                .tracking(1.5)
+            // ja: 朝は、録画を止めるとアラームが止まります
+            Text("In the morning, stopping the recording stops the alarm.")
+                .font(.system(size: 12))
+                .lineSpacing(9)
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
+            Spacer()
+            Button {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .alarmSetting }
+            } label: {
+                // ja: つづける
+                Text("Continue")
+            }
+            .buttonStyle(PrimaryPillButtonStyle())
+            .accessibilityIdentifier("onboarding_practice_continue")
+        }
+        .foregroundStyle(Color.warmWhite)
+        .padding(.top, 130)
+        .padding(.horizontal, 36)
+        .padding(.bottom, 48)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// 動画回答を使えない場合の案内 (権限拒否・カメラ非搭載環境)。朝はテキスト入力へフォールバックする旨を伝えて先へ進める
+    private var practiceUnavailable: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // ja: 回答の練習
+            Text("Practice your answer")
+                .font(.system(size: 25, weight: .light))
+                .tracking(1.5)
+            // ja: カメラを使えないため、テキストで答えます
+            Text("The camera isn't available, so answer in text.")
+                .font(.system(size: 12))
+                .lineSpacing(9)
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
+            // ja: 許可は設定アプリから変更できます
+            Text("You can change permissions in the Settings app.")
+                .font(.system(size: 12))
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
+            Spacer()
+            Button {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .alarmSetting }
+            } label: {
+                // ja: つづける
+                Text("Continue")
+            }
+            .buttonStyle(PrimaryPillButtonStyle())
+            .accessibilityIdentifier("onboarding_practice_continue")
+        }
+        .foregroundStyle(Color.warmWhite)
+        .padding(.top, 130)
+        .padding(.horizontal, 36)
+        .padding(.bottom, 48)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// 練習の開始: 動画回答の権限 (カメラ → マイク → 写真ライブラリ) と音声認識をまとめてリクエストし、使えるなら録画練習へ進む。
+    /// 音声認識は動画回答の必須権限ではない (拒否しても録画・保存はできる。VideoAnswerTranscriber 参照) ため、
+    /// 判定には使わず、初回の文字起こし時に不意のダイアログが出ないようここで確定だけさせる
+    private func startPractice() async {
+        guard !isRequestingPracticePermissions else { return }
+        isRequestingPracticePermissions = true
+        defer { isRequestingPracticePermissions = false }
+        let isPermitted = await requestVideoAnswerPermissions()
+        _ = await requestSpeechRecognitionAuthorization()
+        guard isPermitted else {
+            withAnimation(.easeInOut(duration: 0.6)) { practicePhase = .unavailable }
+            return
+        }
+        practiceCamera.onFinished = { fileURL in
+            // 練習の録画は回答ではないため、写真ライブラリへ保存せず捨てる
+            try? FileManager.default.removeItem(at: fileURL)
+            practiceCamera.stop()
+            withAnimation(.easeInOut(duration: 0.6)) { practicePhase = .completed }
+        }
+        practiceCamera.onRecordingFailed = { _ in
+            // 練習の目的 (権限の確定と操作の体験) は録画の成否に依らず果たされているため、失敗でも完了へ進める
+            practiceCamera.stop()
+            withAnimation(.easeInOut(duration: 0.6)) { practicePhase = .completed }
+        }
+        practiceCamera.onUnavailable = {
+            withAnimation(.easeInOut(duration: 0.6)) { practicePhase = .unavailable }
+        }
+        withAnimation(.easeInOut(duration: 0.6)) { practicePhase = .recording }
+        practiceCamera.start()
+    }
+
+    /// ステップ 4: 最初のアラーム設定
     private var alarmSettingStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             // ja: 最初のアラーム
@@ -345,7 +637,7 @@ struct OnboardingPage: View {
             alarmAuthorizationState: alarmAuthorizationState,
             notificationAuthorizationStatus: notificationAuthorizationStatus
         ) {
-            withAnimation(.easeInOut(duration: 0.6)) { step = .alarmSetting }
+            withAnimation(.easeInOut(duration: 0.6)) { step = .practice }
         }
     }
 
