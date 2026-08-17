@@ -27,6 +27,7 @@ targets:
       - MementoMorning
     dependencies:
       - package: RevenueCat
+      - target: MementoMorningWidget
     # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
     # Config.xcconfig 経由で渡す (実値は gitignore した Config.local.xcconfig で上書きする。issue #15)
     configFiles:
@@ -57,6 +58,23 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
+  # ロック画面に「今日の目標」(今日の回答) を Live Activity として表示する Widget Extension (issue #45)
+  MementoMorningWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - MementoMorningWidget
+      # ActivityKit / AlarmKit はアプリと拡張で属性・メタデータの型を照合するため、型定義を両ターゲットに所属させる。
+      # デザイントークン (DesignSystem.swift) も共有し、AppStoreScreenshots のような複製を増やさない
+      - MementoMorning/Shared/TodayAnswerActivityAttributes.swift
+      - MementoMorning/Shared/MementoMorningAlarmMetadata.swift
+      - MementoMorning/Shared/DesignSystem/DesignSystem.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning.MementoMorningWidget
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: MementoMorningWidget/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: Memento Morning
   MementoMorningTests:
     type: bundle.unit-test
     platform: iOS

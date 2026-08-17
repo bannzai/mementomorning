@@ -87,6 +87,10 @@ struct AnswerEditPage: View {
             saveError = "\(error)"
             return
         }
+        // 今日の回答を編集した場合は、ロック画面の「今日の目標」(Live Activity) にも編集後の本文を反映する
+        if Calendar.current.isDateInToday(answer.answeredDate) {
+            Task { await refreshTodayAnswerLiveActivity(todayAnswerText: trimmed) }
+        }
         dismiss()
     }
 }

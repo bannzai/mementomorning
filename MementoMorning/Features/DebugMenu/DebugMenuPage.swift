@@ -181,20 +181,33 @@ struct DebugMenuPage: View {
             try modelContext.delete(model: MorningAnswer.self)
             try modelContext.save()
         } catch {
+            // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
+            modelContext.rollback()
             assertionFailure(error.localizedDescription)
+            return
         }
+        // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
     }
 
-    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない
+    /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない。
+    /// バックグラウンド遷移なしでロック画面の表示を確認できるよう、Live Activity の開始もその場で行う
     private func seedTodayAnswer() {
         guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
-        modelContext.insert(
-            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
-        )
-        try? modelContext.save()
+        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+        modelContext.insert(answer)
+        do {
+            try modelContext.save()
+        } catch {
+            // 保存されていない回答で Live Activity を開始しない (表示と実データがずれる)。破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return
+        }
         refreshAnswerStates()
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: answer.text) }
     }
 
     /// 検証用に昨日の回答を作る。既に昨日の回答があれば何もしない (冪等)。今日の回答には触れない。
