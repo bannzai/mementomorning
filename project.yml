@@ -27,6 +27,8 @@ targets:
       - MementoMorning
     dependencies:
       - package: RevenueCat
+      # ホーム画面ウィジェット (issue #46)。アプリへ埋め込んで配布する
+      - target: MementoMorningWidget
     # RevenueCat の API key は public リポジトリにコミットしないため、既定値だけを持つ
     # Config.xcconfig 経由で渡す (実値は gitignore した Config.local.xcconfig で上書きする。issue #15)
     configFiles:
@@ -57,6 +59,36 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_ENTITLEMENTS: MementoMorning/MementoMorning.entitlements
         STRING_CATALOG_GENERATE_SYMBOLS: YES
+  # ホーム画面ウィジェット (issue #46)。今日の回答をホーム画面に常駐表示する。
+  # SwiftData を App Groups 共有コンテナ経由で読むため、永続化層とエンティティを
+  # アプリと共有する (swiftdata-guidelines「App Extension 内での SwiftData」参照)
+  MementoMorningWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - MementoMorningWidget
+      # 共有コンテナのスキーマはアプリと完全一致させる必要があるため、
+      # 永続化層と全エンティティをコピーせずアプリのファイルをそのまま両ターゲットに含める
+      - MementoMorning/Shared/Entity/Persistence.swift
+      - MementoMorning/Shared/Entity/MorningAnswer.swift
+      - MementoMorning/Shared/Entity/AlarmSetting.swift
+      - MementoMorning/Shared/Entity/ScheduledAlarm.swift
+      # Persistence が参照する実行環境判定
+      - MementoMorning/Utils/Environments.swift
+      # ウィジェットの配色をアプリのデザイントークンと同一に保つ
+      - MementoMorning/Shared/DesignSystem/DesignSystem.swift
+      # タイムライン更新日時の計算 (アプリ側のユニットテスト対象)
+      - MementoMorning/Shared/HomeWidgetTimeline.swift
+      # ウィジェット表示文言の翻訳 (Extension は自バンドルのカタログしか読めないため同梱する)
+      - MementoMorning/Localizable.xcstrings
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bannzai.MementoMorning.MementoMorningWidget
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: MementoMorningWidget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MementoMorningWidget/MementoMorningWidget.entitlements
+        # Extension はアプリに埋め込まれて配布されるため、単体ではアーカイブに含めない
+        SKIP_INSTALL: YES
   MementoMorningTests:
     type: bundle.unit-test
     platform: iOS
