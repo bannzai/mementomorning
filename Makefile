@@ -5,12 +5,14 @@ DERIVED_DATA := tmp/DerivedData
 APP := $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)-iphonesimulator/MementoMorning.app
 IOS_APP := $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)-iphoneos/MementoMorning.app
 BUNDLE_ID := com.bannzai.MementoMorning
+SIMULATOR_UDID ?= $(shell sim-boot | sed -n 's/^DEVICE_UDID=//p' | tail -n 1)
+DESTINATION ?= platform=iOS Simulator,id=$(SIMULATOR_UDID)
 
 .PHONY: build device install-device run test clean
 
 # Simulator 向けビルド。generic destination なら simulator の起動なしでビルドできる
 build:
-	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -configuration $(CONFIGURATION) -derivedDataPath $(DERIVED_DATA) -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -configuration $(CONFIGURATION) -derivedDataPath $(DERIVED_DATA) -destination 'generic/platform=iOS Simulator' build
 
 # 実機向けビルド。code signing が必要なため、provisioning profile の自動生成とこの Mac へのデバイス登録を CLI から行えるようにする
 device:
@@ -31,11 +33,13 @@ install-device: device
 
 # Simulator 向けビルドを起動中の simulator にインストールして起動する (simulator は sim-boot で用意する)
 run: build
-	xcrun simctl install booted $(APP)
-	xcrun simctl launch booted $(BUNDLE_ID)
+	@set -e; \
+	simulator_udid="$(SIMULATOR_UDID)"; \
+	xcrun simctl install "$$simulator_udid" $(APP); \
+	xcrun simctl launch "$$simulator_udid" $(BUNDLE_ID)
 
 test:
-	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -destination 'platform=iOS Simulator,name=iPhone 17' CODE_SIGNING_ALLOWED=NO test
+	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -destination '$(DESTINATION)' test
 
 clean:
 	rm -rf $(DERIVED_DATA)
