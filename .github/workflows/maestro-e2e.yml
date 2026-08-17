@@ -45,10 +45,14 @@ jobs:
             CODE_SIGN_IDENTITY=- \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=YES
+      # upload-artifact はファイル権限を保持しない (download 後は全て 0644 になり .app の実行バイナリが壊れる) ため、
+      # tar で権限ごと固めてから artifact にする。e2e 側の maestro-e2e-run.sh が展開する。
+      - name: ビルド成果物を tar でまとめる
+        run: tar -C build/DerivedData/Build/Products/Debug-iphonesimulator -cf simulator-app.tar .
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: simulator-app
-          path: build/DerivedData/Build/Products/Debug-iphonesimulator # .app の親ディレクトリ (.app 直指定は中身が flatten される)
+          path: simulator-app.tar
           retention-days: 1
   e2e:
     needs: build

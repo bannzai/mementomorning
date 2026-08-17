@@ -55,6 +55,13 @@ echo "udid=${UDID}"
 xcrun simctl boot "$UDID" || true
 xcrun simctl bootstatus "$UDID" -b
 
+# build job は upload-artifact の権限欠落 (download 後は全て 0644 になる) を避けるため
+# 成果物を tar で固めている。展開して .app の実行権限を復元する
+for t in "$APP_DIR"/*.tar; do
+  [ -e "$t" ] || continue
+  tar -xf "$t" -C "$APP_DIR"
+done
+
 if [ -n "$APP_NAME" ]; then
   APP_PATH="$(find "$APP_DIR" -maxdepth 3 -name "${APP_NAME}.app" -print -quit)"
 else
