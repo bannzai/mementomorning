@@ -117,6 +117,8 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     answer.setText(text: text)
     do {
         try modelContext.save()
+        // 仮テキストから認識結果への置き換えをホーム画面ウィジェットへ反映する (issue #46)
+        reloadHomeWidgetTimelines()
     } catch {
         // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため破棄する
         modelContext.rollback()
@@ -126,13 +128,16 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     // 当日分の通知が仮テキストを引用したまま残る。認識結果の保存に成功したら当日分を登録し直す
     // (通知本文が「今日の回答」の引用である当日の適用時に限る)
     if Calendar.current.isDateInToday(answeredDate) {
+        // ロック画面の「今日の目標」(Live Activity) も仮テキスト「動画で答えました」のままのため、認識結果へ置き換える
+        await refreshTodayAnswerLiveActivity(todayAnswerText: text)
         await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: text)
     }
 }
 
 /// 音声認識の権限をリクエストし、確定した権限状態を返す (完了ハンドラの async ラッパー)。
-/// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)
-private func requestSpeechRecognitionAuthorization() async -> SFSpeechRecognizerAuthorizationStatus {
+/// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)。
+/// オンボーディングの練習ステップ (OnboardingPage) からも呼び、起き抜けの朝に不意のダイアログを出さないよう事前に確定させる
+func requestSpeechRecognitionAuthorization() async -> SFSpeechRecognizerAuthorizationStatus {
     await withCheckedContinuation { continuation in
         SFSpeechRecognizer.requestAuthorization { authorizationStatus in
             continuation.resume(returning: authorizationStatus)

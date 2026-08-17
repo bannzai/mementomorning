@@ -398,6 +398,8 @@ struct MorningQuestionPage: View {
                 modelContext.insert(MorningAnswer(answeredDate: today, text: text, videoAssetIdentifier: videoAssetIdentifier))
             }
             try modelContext.save()
+            // ホーム画面ウィジェットの「今日の答え」を保存の成功直後に反映する (issue #46)
+            reloadHomeWidgetTimelines()
         } catch {
             // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため、
             // 変更を破棄してから中断する
@@ -406,6 +408,10 @@ struct MorningQuestionPage: View {
             isSaving = false
             return
         }
+
+        // 回答が成立したので、ロック画面に「今日の目標」(Live Activity) を出す (issue #45)。
+        // 後続の reschedule が失敗しても回答自体は成立しているため、reschedule の結果を待たずここで開始する
+        await refreshTodayAnswerLiveActivity(todayAnswerText: text)
 
         // 回答の成立 → 当日の全アラーム (バックアップ・追撃含む) のキャンセル。
         // reschedule は回答済みの日を計画から除くため、全キャンセル → 全再登録で当日分だけが消える

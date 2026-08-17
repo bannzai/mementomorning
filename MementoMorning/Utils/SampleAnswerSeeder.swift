@@ -31,6 +31,8 @@ func seedSampleAnswersIfNeeded(modelContext: ModelContext) {
             modelContext.insert(MorningAnswer(answeredDate: answeredDate, text: text))
         }
         try modelContext.save()
+        // 投入したサンプルの今日の回答をホーム画面ウィジェットへ反映する (issue #46)
+        reloadHomeWidgetTimelines()
     } catch {
         assertionFailure(error.localizedDescription)
     }

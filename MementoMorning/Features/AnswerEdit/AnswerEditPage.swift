@@ -81,11 +81,17 @@ struct AnswerEditPage: View {
         answer.setText(text: trimmed)
         do {
             try modelContext.save()
+            // 今日の回答の編集をホーム画面ウィジェットへ反映する (過去の回答の編集ではリロードしても表示は変わらず無害)
+            reloadHomeWidgetTimelines()
         } catch {
             // 永続化されていない変更を mainContext に残すと、次回の reschedule がその未保存の値を fetch してしまうため破棄する
             modelContext.rollback()
             saveError = "\(error)"
             return
+        }
+        // 今日の回答を編集した場合は、ロック画面の「今日の目標」(Live Activity) にも編集後の本文を反映する
+        if Calendar.current.isDateInToday(answer.answeredDate) {
+            Task { await refreshTodayAnswerLiveActivity(todayAnswerText: trimmed) }
         }
         dismiss()
     }
