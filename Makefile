@@ -5,7 +5,7 @@ DERIVED_DATA := tmp/DerivedData
 APP := $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)-iphonesimulator/MementoMorning.app
 IOS_APP := $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)-iphoneos/MementoMorning.app
 BUNDLE_ID := com.bannzai.MementoMorning
-SIMULATOR_UDID ?= $(shell sim-boot | sed -n 's/^DEVICE_UDID=//p' | tail -n 1)
+SIMULATOR_UDID ?= $(shell SCRIPT_QUIET=1 sim-boot | sed -n 's/^DEVICE_UDID=//p' | tail -n 1)
 DESTINATION ?= platform=iOS Simulator,id=$(SIMULATOR_UDID)
 
 .PHONY: build device install-device run test clean
@@ -35,11 +35,15 @@ install-device: device
 run: build
 	@set -e; \
 	simulator_udid="$(SIMULATOR_UDID)"; \
+	[ -n "$$simulator_udid" ] || { echo "Error: sim-boot でSimulatorを解決できません (sim-bootがPATHにあるか確認するか、SIMULATOR_UDID=<UDID>を指定してください)" >&2; exit 1; }; \
 	xcrun simctl install "$$simulator_udid" $(APP); \
 	xcrun simctl launch "$$simulator_udid" $(BUNDLE_ID)
 
 test:
-	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -destination '$(DESTINATION)' test
+	@set -e; \
+	destination="$(DESTINATION)"; \
+	[ -n "$$destination" ] && [ "$$destination" != "platform=iOS Simulator,id=" ] || { echo "Error: sim-boot でSimulatorを解決できません (sim-bootがPATHにあるか確認するか、DESTINATION='<destination>'またはSIMULATOR_UDID=<UDID>を指定してください)" >&2; exit 1; }; \
+	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -destination "$$destination" test
 
 clean:
 	rm -rf $(DERIVED_DATA)
