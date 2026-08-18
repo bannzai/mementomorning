@@ -102,13 +102,11 @@ App Privacy は公開 App Store Connect API に存在しないため、Web UI �
 skill を使う場合の回答定義 (fastlane/app_privacy_details.json 相当):
 
 ```json
-{
-  "data_usages": [
-    {
-      "category": "PURCHASE_HISTORY",
-      "purposes": ["ANALYTICS", "APP_FUNCTIONALITY"],
-      "data_protections": ["DATA_NOT_LINKED_TO_YOU"]
-    }
-  ]
-}
+[
+  {
+    "category": "PURCHASE_HISTORY",
+    "purposes": ["ANALYTICS", "APP_FUNCTIONALITY"],
+    "data_protections": ["DATA_NOT_LINKED_TO_YOU"]
+  }
+]
 ```
