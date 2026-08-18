@@ -13205,10 +13205,214 @@
     },
     "Seven answers, together on one page for the first time." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سبع إجابات، مجتمعة في صفحة واحدة للمرة الأولى."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set respostes, juntes en una sola pàgina per primera vegada."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedm odpovědí, poprvé pohromadě na jedné stránce."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Syv svar, samlet på én side for første gang."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sieben Antworten, zum ersten Mal gemeinsam auf einer Seite."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επτά απαντήσεις, μαζί σε μία σελίδα για πρώτη φορά."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siete respuestas, juntas en una sola página por primera vez."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siete respuestas, juntas en una sola página por primera vez."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seitsemän vastausta, ensimmäistä kertaa samalla sivulla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sept réponses, réunies sur une seule page pour la première fois."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שבע תשובות, יחד בעמוד אחד בפעם הראשונה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सात उत्तर, पहली बार एक ही पेज पर साथ."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedam odgovora, prvi put zajedno na jednoj stranici."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hét válasz, először egy oldalon együtt."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tujuh jawaban, bersama di satu halaman untuk pertama kalinya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sette risposte, insieme su una sola pagina per la prima volta."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "七日分の答えが、はじめて一枚に並びました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일곱 개의 답이, 처음으로 한 페이지에 함께 모였습니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tujuh jawapan, bersama pada satu halaman buat pertama kalinya."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sju svar, samlet på én side for første gang."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeven antwoorden, voor het eerst samen op één pagina."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siedem odpowiedzi, po raz pierwszy razem na jednej stronie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sete respostas, juntas em uma única página pela primeira vez."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sete respostas, juntas numa só página pela primeira vez."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șapte răspunsuri, împreună pe o singură pagină pentru prima dată."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Семь ответов, впервые вместе на одной странице."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedem odpovedí, po prvý raz spolu na jednej stránke."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sju svar, samlade på en sida för första gången."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำตอบเจ็ดข้อ รวมกันอยู่ในหน้าเดียวเป็นครั้งแรก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yedi cevap, ilk kez tek bir sayfada bir arada."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сім відповідей, уперше разом на одній сторінці."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bảy câu trả lời, cùng trên một trang lần đầu tiên."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七個答案，首次一起出現在同一頁上。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七个答案，首次一起出现在同一页上。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七個答案，首次一起出現在同一頁上。"
           }
         }
       }
