@@ -2609,10 +2609,214 @@
     },
     "Answer one question each morning to stop the alarm.\nYour answers become the journal of your life." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أجب عن سؤال واحد كل صباح لإيقاف المنبّه.\nتُصبح إجاباتك يوميات حياتك."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respon una pregunta cada matí per aturar l'alarma.\nLes teves respostes es converteixen en el diari de la teva vida."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každé ráno odpověz na jednu otázku a zastav budík.\nTvé odpovědi se stanou deníkem tvého života."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svar på ét spørgsmål hver morgen for at stoppe alarmen.\nDine svar bliver til din livsjournal."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beantworte jeden Morgen eine Frage, um den Wecker zu stoppen.\nDeine Antworten werden zum Journal deines Lebens."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απάντησε σε μία ερώτηση κάθε πρωί για να σταματήσεις την ειδοποίηση.\nΟι απαντήσεις σου γίνονται το ημερολόγιο της ζωής σου."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responde una pregunta cada mañana para detener la alarma.\nTus respuestas se convierten en el diario de tu vida."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responde una pregunta cada mañana para detener la alarma.\nTus respuestas se convierten en el diario de tu vida."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastaa yhteen kysymykseen joka aamu, niin hälytys pysähtyy.\nVastauksistasi tulee elämäsi päiväkirja."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Répondez à une question chaque matin pour arrêter l'alarme.\nVos réponses deviennent le journal de votre vie."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ענה על שאלה אחת בכל בוקר כדי לעצור את האזעקה.\nהתשובות שלך הופכות ליומן החיים שלך."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अलार्म बंद करने के लिए हर सुबह एक सवाल का जवाब दें।\nआपके जवाब आपकी ज़िंदगी की डायरी बन जाते हैं।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odgovori na jedno pitanje svako jutro da zaustaviš alarm.\nTvoji odgovori postaju dnevnik tvog života."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Válaszolj egy kérdésre minden reggel, hogy leállítsd az ébresztőt.\nA válaszaidból lesz az életed naplója."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawab satu pertanyaan setiap pagi untuk menghentikan alarm.\nJawabanmu menjadi jurnal hidupmu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rispondi a una domanda ogni mattina per fermare la sveglia.\nLe tue risposte diventano il diario della tua vita."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "毎朝ひとつの問いに答えて、アラームを止める。\n答えは、あなたの人生のジャーナルになる。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알람을 끄려면 매일 아침 한 가지 질문에 답하세요.\n당신의 답변은 삶의 기록이 됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawab satu soalan setiap pagi untuk menghentikan alarm.\nJawapan anda menjadi jurnal hidup anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svar på ett spørsmål hver morgen for å stoppe alarmen.\nSvarene dine blir livets dagbok."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beantwoord elke ochtend één vraag om het alarm te stoppen.\nJe antwoorden worden het dagboek van je leven."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpowiedz na jedno pytanie każdego ranka, aby wyłączyć alarm.\nTwoje odpowiedzi stają się dziennikiem twojego życia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responda a uma pergunta toda manhã para parar o alarme.\nSuas respostas viram o diário da sua vida."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responde a uma pergunta todas as manhãs para parar o alarme.\nAs tuas respostas tornam-se o diário da tua vida."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Răspunde la o întrebare în fiecare dimineață pentru a opri alarma.\nRăspunsurile tale devin jurnalul vieții tale."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждое утро отвечайте на один вопрос, чтобы остановить будильник.\nВаши ответы станут дневником вашей жизни."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každé ráno odpovedz na jednu otázku, aby si zastavil budík.\nTvoje odpovede sa stanú denníkom tvojho života."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svara på en fråga varje morgon för att stoppa alarmet.\nDina svar blir din livsdagbok."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอบคำถามหนึ่งข้อทุกเช้าเพื่อหยุดเสียงปลุก\nคำตอบของคุณจะกลายเป็นบันทึกชีวิตของคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmı durdurmak için her sabah bir soruyu yanıtla.\nCevapların, hayatının günlüğü olur."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відповідайте на одне запитання щоранку, щоб зупинити будильник.\nВаші відповіді стануть щоденником вашого життя."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trả lời một câu hỏi mỗi sáng để tắt báo thức.\nCâu trả lời của bạn sẽ trở thành cuốn nhật ký cuộc đời bạn."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每朝回答一條問題，即可停止鬧鐘。\n你的答案會成為你人生的日記。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天早晨回答一个问题来关闭闹钟。\n你的回答会成为你人生的日记。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天早晨回答一個問題來關閉鬧鐘。\n你的回答會成為你人生的日記。"
           }
         }
       }
