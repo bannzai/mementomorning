@@ -19482,7 +19482,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点滴终将相连。"
+            "value" : "点，终将相连。"
           }
         },
         "zh-Hant" : {
@@ -22596,7 +22596,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "어제의 답을 오늘 실행할까요?"
+            "value" : "어제의 답을 오늘 해볼까요?"
           }
         },
         "ms" : {
@@ -22686,19 +22686,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你會今天做昨天的答案嗎？"
+            "value" : "昨天的回答，今天做嗎？"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你会今天做昨天的答案吗？"
+            "value" : "昨天的回答，今天做吗？"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你會今天做昨天的答案嗎？"
+            "value" : "昨天的回答，今天做嗎？"
           }
         }
       }
