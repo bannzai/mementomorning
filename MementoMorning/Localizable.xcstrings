@@ -1743,10 +1743,214 @@
     },
     "Alarm is off · Tap the time to change" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنبه متوقف · اضغط على الوقت للتغيير"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'alarma està desactivada · Toca l'hora per canviar-la"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Budík je vypnutý · Klepněte na čas a změňte ho"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmen er slået fra · Tryk på tiden for at ændre den"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wecker ist aus · Tippe auf die Uhrzeit, um sie zu ändern"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το ξυπνητήρι είναι απενεργοποιημένο · Πατήστε την ώρα για να την αλλάξετε"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La alarma está desactivada · Toca la hora para cambiarla"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La alarma está apagada · Toca la hora para cambiarla"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hälytys on pois päältä · Vaihda aikaa napauttamalla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le réveil est désactivé · Touchez l’heure pour la modifier"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "השעון המעורר כבוי · הקש על השעה כדי לשנות"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अलार्म बंद है · बदलने के लिए समय पर टैप करें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm je isključen · Dodirnite vrijeme za promjenu"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az ébresztő ki van kapcsolva · Koppints az időre a módosításhoz"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm mati · Ketuk waktu untuk mengubahnya"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sveglia è disattivata · Tocca l’ora per cambiarla"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "アラームはオフ · 時刻をタップして変更"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알람이 꺼져 있습니다 · 시간을 탭하여 변경"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggera dimatikan · Ketik masa untuk menukar"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmen er av · Trykk på tiden for å endre den"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het alarm staat uit · Tik op de tijd om te wijzigen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm jest wyłączony · Stuknij godzinę, aby zmienić"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O alarme está desativado · Toque no horário para alterar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O alarme está desativado · Toque na hora para alterar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarma este dezactivată · Atingeți ora pentru a o schimba"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будильник выключен · Нажмите на время, чтобы изменить"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Budík je vypnutý · Ťuknite na čas a zmeňte ho"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmen är avstängd · Tryck på tiden för att ändra den"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิดนาฬิกาปลุกแล้ว · แตะเวลาที่ต้องการเปลี่ยน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarm kapalı · Değiştirmek için saate dokun"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будильник вимкнено · Торкніться часу, щоб змінити його"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Báo thức đang tắt · Chạm vào giờ để thay đổi"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鬧鐘已關閉 · 輕點時間以更改"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "闹钟已关闭 · 轻点时间以更改"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鬧鐘已關閉 · 點一下時間以更改"
           }
         }
       }
