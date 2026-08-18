@@ -3930,7 +3930,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tu t’y tiens ?"
+            "value" : "Vous y tenez-vous ?"
           }
         },
         "he" : {
@@ -7514,7 +7514,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إذا كان اليوم هو آخر يوم لك، فماذا كنت ستفعل؟"
+            "value" : "إذا كان اليوم هو آخر يوم لك، فماذا تريد أن تفعل؟"
           }
         },
         "ca" : {
@@ -7712,7 +7712,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果今天是你最后一天，你想做什么？"
+            "value" : "如果今天是你生命的最后一天，你想做什么？"
           }
         },
         "zh-Hant" : {
@@ -8210,7 +8210,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il continue de sonner jusqu’à ce que tu répondes."
+            "value" : "Il continue de sonner jusqu’à ce que vous répondiez."
           }
         },
         "he" : {
@@ -10612,7 +10612,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "아직"
+            "value" : "아직요"
           }
         },
         "ms" : {
@@ -11188,7 +11188,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los mañanas anteriores se desbloquean con Premium."
+            "value" : "Las mañanas anteriores se desbloquean con Premium."
           }
         },
         "es-419" : {
@@ -12062,7 +12062,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entraîne-toi à répondre"
+            "value" : "Entraînez-vous à répondre"
           }
         },
         "he" : {
@@ -13988,7 +13988,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Souviens-toi de la mort.\nPuis commence ta matinée."
+            "value" : "Souvenez-vous de la mort.\nPuis commencez votre matinée."
           }
         },
         "he" : {
@@ -16058,7 +16058,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "七个答案，首次一起出现在同一页上。"
+            "value" : "七天的回答，第一次汇聚在同一页。"
           }
         },
         "zh-Hant" : {
@@ -16556,7 +16556,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Parlez de votre réponse"
+            "value" : "Dites votre réponse"
           }
         },
         "he" : {
@@ -22548,7 +22548,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Feras-tu aujourd’hui la réponse d’hier ?"
+            "value" : "Ferez-vous aujourd’hui ce que vous avez répondu hier ?"
           }
         },
         "he" : {
