@@ -16037,10 +16037,214 @@
     },
     "The purchase finished, but Premium couldn't be confirmed. Please try restoring purchases later." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتمل الشراء، لكن تعذّر تأكيد Premium. يُرجى محاولة استعادة المشتريات لاحقًا."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La compra s'ha completat, però no s'ha pogut confirmar Premium. Prova de restaurar les compres més tard."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nákup byl dokončen, ale Premium se nepodařilo ověřit. Zkuste nákupy obnovit později."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Købet blev gennemført, men Premium kunne ikke bekræftes. Prøv at gendanne køb senere."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Kauf wurde abgeschlossen, aber Premium konnte nicht bestätigt werden. Bitte versuchen Sie später, Käufe wiederherzustellen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η αγορά ολοκληρώθηκε, αλλά δεν ήταν δυνατό να επιβεβαιωθεί το Premium. Δοκιμάστε να επαναφέρετε τις αγορές αργότερα."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La compra se completó, pero no se pudo confirmar Premium. Intenta restaurar las compras más tarde."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La compra se completó, pero no se pudo confirmar Premium. Intenta restaurar las compras más tarde."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osto valmistui, mutta Premiumia ei voitu vahvistaa. Yritä palauttaa ostot myöhemmin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’achat est terminé, mais Premium n’a pas pu être confirmé. Veuillez essayer de restaurer vos achats plus tard."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הרכישה הושלמה, אך לא ניתן היה לאשר את Premium. נא לנסות לשחזר רכישות מאוחר יותר."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खरीद पूरी हो गई, लेकिन Premium की पुष्टि नहीं हो सकी। कृपया बाद में खरीदारी पुनर्स्थापित करने की कोशिश करें।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kupnja je dovršena, ali Premium se nije mogao potvrditi. Pokušajte kasnije vratiti kupnje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A vásárlás befejeződött, de a Premiumot nem lehetett megerősíteni. Próbálja meg később visszaállítani a vásárlásokat."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pembelian selesai, tetapi Premium tidak dapat dikonfirmasi. Coba pulihkan pembelian lagi nanti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’acquisto è stato completato, ma non è stato possibile confermare Premium. Prova a ripristinare gli acquisti più tardi."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "購入は完了しましたが、プレミアムの反映を確認できませんでした。時間をおいて購入の復元をお試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "구매는 완료되었지만 Premium을 확인할 수 없습니다. 나중에 구매 복원을 시도해 주세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pembelian telah selesai, tetapi Premium tidak dapat disahkan. Sila cuba pulihkan pembelian nanti."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kjøpet er fullført, men Premium kunne ikke bekreftes. Prøv å gjenopprette kjøp senere."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De aankoop is voltooid, maar Premium kon niet worden bevestigd. Probeer aankopen later opnieuw te herstellen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zakup został zakończony, ale nie udało się potwierdzić Premium. Spróbuj później przywrócić zakupy."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A compra foi concluída, mas não foi possível confirmar o Premium. Tente restaurar as compras mais tarde."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A compra foi concluída, mas não foi possível confirmar o Premium. Tente restaurar as compras mais tarde."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achiziția a fost finalizată, dar Premium nu a putut fi confirmat. Încercați să restaurați achizițiile mai târziu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупка завершена, но не удалось подтвердить Premium. Попробуйте восстановить покупки позже."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nákup sa dokončil, ale Premium sa nepodarilo potvrdiť. Skúste nákupy obnoviť neskôr."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köpet slutfördes, men Premium kunde inte bekräftas. Försök att återställa köp senare."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การซื้อเสร็จสมบูรณ์แล้ว แต่ไม่สามารถยืนยัน Premium ได้ โปรดลองกู้คืนการซื้อในภายหลัง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satın alma tamamlandı, ancak Premium doğrulanamadı. Lütfen daha sonra satın alımları geri yüklemeyi deneyin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупку завершено, але не вдалося підтвердити Premium. Спробуйте відновити покупки пізніше."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giao dịch mua đã hoàn tất, nhưng không thể xác nhận Premium. Vui lòng thử khôi phục các giao dịch mua sau."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購買已完成，但無法確認 Premium。請稍後嘗試還原購買項目。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "购买已完成，但无法确认 Premium。请稍后尝试恢复购买。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購買已完成，但無法確認 Premium。請稍後嘗試還原購買。"
           }
         }
       }
