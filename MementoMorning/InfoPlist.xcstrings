@@ -225,16 +225,220 @@
     "NSCameraUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لتسجيل إجابة الفيديو على سؤال الصباح باستخدام الكاميرا الأمامية."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per enregistrar la teva resposta en vídeo a la pregunta del matí amb la càmera frontal."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používá se k nahrání vaší videoodpovědi na ranní otázku pomocí přední kamery."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at optage dit videoответ til morgenens spørgsmål med frontkameraet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um Ihre Videoantwort auf die morgendliche Frage mit der Frontkamera aufzuzeichnen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για την καταγραφή της βιντεοαπάντησής σας στην πρωινή ερώτηση με την μπροστινή κάμερα."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Used to record your video answer to the morning question with the front camera."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar tu respuesta en video a la pregunta de la mañana con la cámara frontal."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar tu respuesta en video a la pregunta de la mañana con la cámara frontal."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään video­vastauksesi tallentamiseen aamun kysymykseen etukameralla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour enregistrer votre réponse vidéo à la question du matin avec la caméra frontale."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש להקלטת תשובת הווידאו שלך לשאלת הבוקר באמצעות המצלמה הקדמית."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुबह के प्रश्न का आपका वीडियो उत्तर सामने वाले कैमरे से रिकॉर्ड करने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za snimanje vašeg video odgovora na jutarnje pitanje prednjom kamerom."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az első kamerával rögzíti a reggeli kérdésre adott videóválaszát."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merekam jawaban video Anda untuk pertanyaan pagi dengan kamera depan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usato per registrare la tua risposta video alla domanda del mattino con la fotocamera anteriore."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "朝の問いに答える動画をインカメラで録画するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전면 카메라로 아침 질문에 대한 동영상 답변을 녹화하는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merakam jawapan video anda kepada soalan pagi menggunakan kamera hadapan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ta opp videoответen din på morgenens spørsmål med frontkameraet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om je videoantwoord op de ochtendvraag op te nemen met de camera aan de voorkant."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do nagrywania odpowiedzi wideo na poranne pytanie za pomocą przedniej kamery."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para gravar sua resposta em vídeo para a pergunta da manhã com a câmera frontal."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para gravar a sua resposta em vídeo à pergunta da manhã com a câmara frontal."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosit pentru a înregistra răspunsul video la întrebarea de dimineață cu camera frontală."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для записи вашего видеоответа на утренний вопрос с помощью фронтальной камеры."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa sa na nahratie vašej videoodpovede na rannú otázku pomocou prednej kamery."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att spela in ditt videосvar på morgonens fråga med frontkameran."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อบันทึกคำตอบวิดีโอของคุณสำหรับคำถามตอนเช้าด้วยกล้องหน้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön kamera ile sabah sorusuna verdiğiniz video yanıtı kaydetmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для запису вашої відеовідповіді на ранкове запитання за допомогою фронтальної камери."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được dùng để ghi lại câu trả lời video của bạn cho câu hỏi buổi sáng bằng camera trước."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於使用前置鏡頭錄製你對早晨問題的影片回答。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于使用前置摄像头录制你对早晨问题的自拍视频回答。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於使用前置相機錄製你對早晨問題的影片回答。"
           }
         }
       }
