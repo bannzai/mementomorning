@@ -2,11 +2,17 @@ import Foundation
 
 /// スクリーンショットを生成する言語の一覧。
 /// (言語コード, リージョン付き言語タグ) の組で、リージョン付きタグはロケール依存表示 (日付等) の再現に使う。
-/// 本プロジェクトのローカライズ対象 (en 基準 + ja。.claude/rules/localization-guidelines.md) に合わせて 2 言語とし、
-/// 対応言語を増やす時はここに追加する (取り込み元: bannzai/Focus の同名ファイル)
+/// ローカライズ対象は 35 言語 (translate-app.config.json) だが、全言語の撮影は実行時間が長すぎるため、
+/// ja / en + 文字体系・字幅・RTL の代表 6 言語に絞る。対応言語を増やす時はここに追加する (取り込み元: bannzai/Focus の同名ファイル)
 let languageCodeAndLanguageWithRegion = [
     ("ja", "ja-JP"),
     ("en", "en-US"),
+    ("de", "de-DE"),
+    ("fr", "fr-FR"),
+    ("es", "es-ES"),
+    ("ko", "ko-KR"),
+    ("zh-Hans", "zh-Hans-CN"),
+    ("ar", "ar-SA"),
 ]
 
 /// 環境変数 SNAPSHOT_LANGUAGES で言語をフィルタリングする。

@@ -12674,7 +12674,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Datenschutzerklärung"
+            "value" : "Datenschutz"
           }
         },
         "el" : {
@@ -18666,7 +18666,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutzungsbedingungen"
+            "value" : "AGB"
           }
         },
         "el" : {
