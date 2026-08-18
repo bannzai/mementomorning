@@ -590,7 +590,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ / mes."
+            "value" : "%@ mesačne"
           }
         },
         "sv" : {
@@ -660,7 +660,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ navždy (jednorázově)"
+            "value" : "Navždy za %@ (jednorázově)"
           }
         },
         "da" : {
@@ -708,7 +708,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ לכל החיים (תשלום חד-פעמי)"
+            "value" : "לכל החיים ב-%@ (תשלום חד-פעמי)"
           }
         },
         "hi" : {
@@ -720,7 +720,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ zauvijek (jednokratno)"
+            "value" : "Zauvijek za %@ (jednokratno)"
           }
         },
         "hu" : {
@@ -732,7 +732,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ seumur hidup (sekali bayar)"
+            "value" : "Selamanya seharga %@ (sekali bayar)"
           }
         },
         "it" : {
@@ -798,13 +798,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ навсегда (разовая оплата)"
+            "value" : "Навсегда за %@ (разовый платёж)"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ navždy (jednorazovo)"
+            "value" : "Navždy za %@ (jednorazovo)"
           }
         },
         "sv" : {
@@ -828,7 +828,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ назавжди (разовий платіж)"
+            "value" : "Назавжди за %@ (разова покупка)"
           }
         },
         "vi" : {
@@ -1018,7 +1018,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ zdarma"
+            "value" : "%@ zadarmo"
           }
         },
         "sv" : {
@@ -1073,30 +1073,6 @@
     },
     "%lld mornings answered" : {
       "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld morning answered"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld mornings answered"
-                }
-              }
-            }
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "答えた朝 %lld"
-          }
-        },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1131,6 +1107,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Πρωινά με απάντηση: %lld"
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld morning answered"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld mornings answered"
+                }
+              }
+            }
           }
         },
         "es" : {
@@ -1191,6 +1185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mattine con risposta: %lld"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えた朝 %lld"
           }
         },
         "ko" : {
@@ -1606,7 +1606,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm dan notifikasi"
+            "value" : "Alarm & Notifikasi"
           }
         },
         "it" : {
@@ -1748,7 +1748,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Následuje žádost o oprávnění pro budík a oznámení"
+            "value" : "Na další obrazovce budou vyžádána oprávnění pro budík a oznámení"
           }
         },
         "da" : {
@@ -1796,7 +1796,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בהמשך תתבקש הרשאה להתראות ולתזכורות"
+            "value" : "בשלב הבא תתבקש להעניק הרשאות לשעון המעורר ולהתראות"
           }
         },
         "hi" : {
@@ -1808,7 +1808,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zatim će se zatražiti dopuštenja za alarm i obavijesti"
+            "value" : "Na sljedećem zaslonu zatražit će se dopuštenja za alarm i obavijesti"
           }
         },
         "hu" : {
@@ -1820,7 +1820,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selanjutnya akan diminta izin alarm dan notifikasi"
+            "value" : "Berikutnya, izin alarm dan notifikasi akan diminta"
           }
         },
         "it" : {
@@ -1886,13 +1886,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Затем будут запрошены разрешения на будильник и уведомления"
+            "value" : "Далее будут запрошены разрешения на будильник и уведомления"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Potom sa vyžiadajú povolenia pre budík a oznámenia"
+            "value" : "Na ďalšej obrazovke budú vyžiadané oprávnenia pre budík a upozornenia"
           }
         },
         "sv" : {
@@ -1962,7 +1962,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Budík je vypnutý · Klepněte na čas a změňte ho"
+            "value" : "Budík je vypnutý · Klepni na čas a změň ho"
           }
         },
         "da" : {
@@ -2022,7 +2022,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm je isključen · Dodirnite vrijeme za promjenu"
+            "value" : "Alarm je isključen · Dodirni vrijeme za promjenu"
           }
         },
         "hu" : {
@@ -2034,7 +2034,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm mati · Ketuk waktu untuk mengubahnya"
+            "value" : "Alarm mati · Ketuk waktu untuk mengubah"
           }
         },
         "it" : {
@@ -2106,7 +2106,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Budík je vypnutý · Ťuknite na čas a zmeňte ho"
+            "value" : "Budík je vypnutý · Ťukni na čas a zmeň ho"
           }
         },
         "sv" : {
@@ -2130,7 +2130,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Будильник вимкнено · Торкніться часу, щоб змінити його"
+            "value" : "Будильник вимкнено · Торкніться часу, щоб змінити"
           }
         },
         "vi" : {
@@ -2176,7 +2176,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Všechna tvoje rána"
+            "value" : "Všechna tvá rána"
           }
         },
         "da" : {
@@ -2248,7 +2248,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Semua pagi Anda"
+            "value" : "Semua pagi kamu"
           }
         },
         "it" : {
@@ -2664,7 +2664,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dozvoljeno"
+            "value" : "Dopušteno"
           }
         },
         "hu" : {
@@ -2866,7 +2866,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "להשיב בטקסט"
+            "value" : "ענה בטקסט"
           }
         },
         "hi" : {
@@ -3032,7 +3032,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno odpověz na jednu otázku a zastav budík.\nTvé odpovědi se stanou deníkem tvého života."
+            "value" : "Každé ráno odpověz na jednu otázku a vypni budík.\nTvé odpovědi se stanou deníkem tvého života."
           }
         },
         "da" : {
@@ -3080,7 +3080,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ענה על שאלה אחת בכל בוקר כדי לעצור את האזעקה.\nהתשובות שלך הופכות ליומן החיים שלך."
+            "value" : "ענה על שאלה אחת בכל בוקר כדי לכבות את השעון המעורר.\nהתשובות שלך הופכות ליומן חייך."
           }
         },
         "hi" : {
@@ -3092,7 +3092,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odgovori na jedno pitanje svako jutro da zaustaviš alarm.\nTvoji odgovori postaju dnevnik tvog života."
+            "value" : "Svako jutro odgovori na jedno pitanje kako bi zaustavio alarm.\nTvoji odgovori postaju dnevnik tvog života."
           }
         },
         "hu" : {
@@ -3104,7 +3104,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jawab satu pertanyaan setiap pagi untuk menghentikan alarm.\nJawabanmu menjadi jurnal hidupmu."
+            "value" : "Setiap pagi, jawab satu pertanyaan untuk mematikan alarm.\nJawabanmu menjadi jurnal hidupmu."
           }
         },
         "it" : {
@@ -3170,13 +3170,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каждое утро отвечайте на один вопрос, чтобы остановить будильник.\nВаши ответы станут дневником вашей жизни."
+            "value" : "Каждое утро ответьте на один вопрос, чтобы выключить будильник.\nВаши ответы становятся дневником вашей жизни."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno odpovedz na jednu otázku, aby si zastavil budík.\nTvoje odpovede sa stanú denníkom tvojho života."
+            "value" : "Každé ráno odpovedz na jednu otázku a vypni budík.\nTvoje odpovede sa stanú denníkom tvojho života."
           }
         },
         "sv" : {
@@ -3200,7 +3200,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відповідайте на одне запитання щоранку, щоб зупинити будильник.\nВаші відповіді стануть щоденником вашого життя."
+            "value" : "Щоранку дайте відповідь на одне запитання, щоб вимкнути будильник.\nВаші відповіді стають щоденником вашого життя."
           }
         },
         "vi" : {
@@ -3246,7 +3246,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odpovězte pomocí klávesnice"
+            "value" : "Odpověz pomocí klávesnice"
           }
         },
         "da" : {
@@ -3294,7 +3294,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "השב באמצעות המקלדת"
+            "value" : "ענה בעזרת המקלדת"
           }
         },
         "hi" : {
@@ -3306,7 +3306,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odgovorite tipkovnicom"
+            "value" : "Odgovori tipkovnicom"
           }
         },
         "hu" : {
@@ -3384,13 +3384,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ответить с клавиатуры"
+            "value" : "Ответьте с помощью клавиатуры"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odpovedať pomocou klávesnice"
+            "value" : "Odpovedz pomocou klávesnice"
           }
         },
         "sv" : {
@@ -3414,7 +3414,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відповісти за допомогою клавіатури"
+            "value" : "Дайте відповідь за допомогою клавіатури"
           }
         },
         "vi" : {
@@ -3508,7 +3508,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "נענה"
+            "value" : "ענית"
           }
         },
         "hi" : {
@@ -3532,7 +3532,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dijawab"
+            "value" : "Terjawab"
           }
         },
         "it" : {
@@ -3628,7 +3628,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відповідь надано"
+            "value" : "Відповіли"
           }
         },
         "vi" : {
@@ -3674,7 +3674,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odpovězeno videem"
+            "value" : "Odpověděl jsi videem"
           }
         },
         "da" : {
@@ -3722,7 +3722,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "נענה בסרטון"
+            "value" : "ענית בסרטון"
           }
         },
         "hi" : {
@@ -3734,7 +3734,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odgovoreno videozapisom"
+            "value" : "Odgovorio si videom"
           }
         },
         "hu" : {
@@ -3746,7 +3746,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dijawab dengan video"
+            "value" : "Menjawab dengan video"
           }
         },
         "it" : {
@@ -3812,13 +3812,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отвечено видео"
+            "value" : "Ответили видео"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zodpovedané videom"
+            "value" : "Odpovedal si videom"
           }
         },
         "sv" : {
@@ -3842,7 +3842,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відповідь у відео"
+            "value" : "Відповіли відео"
           }
         },
         "vi" : {
@@ -3888,7 +3888,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Držíš se toho?"
+            "value" : "Daří se ti to držet?"
           }
         },
         "da" : {
@@ -3936,7 +3936,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אתה עומד בזה?"
+            "value" : "האם אתה עומד בזה?"
           }
         },
         "hi" : {
@@ -3960,7 +3960,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apakah kamu menjalaninya?"
+            "value" : "Masih menjalaninya?"
           }
         },
         "it" : {
@@ -4026,13 +4026,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ты придерживаешься этого?"
+            "value" : "Вы этого придерживаетесь?"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Držíš sa toho?"
+            "value" : "Darí sa ti to dodržať?"
           }
         },
         "sv" : {
@@ -4056,7 +4056,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ти дотримуєшся цього?"
+            "value" : "Ви цього дотримуєтеся?"
           }
         },
         "vi" : {
@@ -4162,7 +4162,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Započni"
+            "value" : "Počni"
           }
         },
         "hu" : {
@@ -4484,7 +4484,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Камера і мікрофон"
+            "value" : "Камера й мікрофон"
           }
         },
         "vi" : {
@@ -4530,7 +4530,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kdykoli můžete zrušit. Vaše odpovědi zůstanou v tomto zařízení."
+            "value" : "Kdykoli můžeš zrušit. Tvé odpovědi zůstanou v tomto zařízení."
           }
         },
         "da" : {
@@ -4578,7 +4578,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ניתן לבטל בכל עת. התשובות שלך יישארו במכשיר הזה."
+            "value" : "אפשר לבטל בכל עת. התשובות שלך יישארו במכשיר הזה."
           }
         },
         "hi" : {
@@ -4590,7 +4590,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Možete otkazati bilo kada. Vaši odgovori ostat će na ovom uređaju."
+            "value" : "Možeš otkazati bilo kada. Tvoji odgovori ostaju na ovom uređaju."
           }
         },
         "hu" : {
@@ -4602,7 +4602,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bisa dibatalkan kapan saja. Jawaban Anda tetap di perangkat ini."
+            "value" : "Batalkan kapan saja. Jawabanmu tetap tersimpan di perangkat ini."
           }
         },
         "it" : {
@@ -4668,13 +4668,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вы можете отменить в любой момент. Ваши ответы останутся на этом устройстве."
+            "value" : "Отменить можно в любой момент. Ваши ответы останутся на этом устройстве."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Môžete zrušiť kedykoľvek. Vaše odpovede zostanú v tomto zariadení."
+            "value" : "Kedykoľvek môžeš zrušiť. Tvoje odpovede zostanú v tomto zariadení."
           }
         },
         "sv" : {
@@ -4698,7 +4698,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ви можете скасувати будь-коли. Ваші відповіді залишаться на цьому пристрої."
+            "value" : "Скасувати можна будь-коли. Ваші відповіді залишаться на цьому пристрої."
           }
         },
         "vi" : {
@@ -4744,7 +4744,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Porovnejte se dnes večer s odpovědí z rána."
+            "value" : "Večer si porovnej dnešek s ranní odpovědí."
           }
         },
         "da" : {
@@ -4792,7 +4792,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "השוו הערב את התשובה של הבוקר."
+            "value" : "בדוק הערב מול התשובה של הבוקר."
           }
         },
         "hi" : {
@@ -4804,7 +4804,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usporedi večeras s odgovorom od jutros."
+            "value" : "Večeras provjeri kako stojiš u odnosu na jutrošnji odgovor."
           }
         },
         "hu" : {
@@ -4816,7 +4816,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cek malam ini dengan jawaban pagi ini."
+            "value" : "Bandingkan malam ini dengan jawaban pagi ini."
           }
         },
         "it" : {
@@ -4882,13 +4882,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сравните сегодня вечером с ответом этим утром."
+            "value" : "Сверьтесь вечером с сегодняшним утренним ответом."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Porovnajte si dnes večer odpoveď z rána."
+            "value" : "Večer si porovnaj dnešok s rannou odpoveďou."
           }
         },
         "sv" : {
@@ -4912,7 +4912,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Порівняйте сьогодні ввечері з відповіддю зранку."
+            "value" : "Звірте вечір із сьогоднішньою ранковою відповіддю."
           }
         },
         "vi" : {
@@ -5006,7 +5006,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "סגירה"
+            "value" : "סגור"
           }
         },
         "hi" : {
@@ -5386,7 +5386,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno nahrajte svou odpověď přední kamerou, abyste zastavili budík.\nVyzkoušejte to jednou, ještě před svým prvním ránem."
+            "value" : "Každé ráno nahraješ svou odpověď přední kamerou, aby ses vypnul budík.\nZkus to jednou před svým prvním ránem."
           }
         },
         "da" : {
@@ -5434,7 +5434,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בכל בוקר, מקליטים את התשובה שלך במצלמה הקדמית כדי לעצור את השעון המעורר.\nנסו זאת פעם אחת, לפני הבוקר הראשון שלכם."
+            "value" : "בכל בוקר אתה מקליט את התשובה שלך במצלמה הקדמית כדי לעצור את השעון המעורר.\nנסה פעם אחת לפני הבוקר הראשון שלך."
           }
         },
         "hi" : {
@@ -5446,7 +5446,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Svako jutro snimate svoj odgovor prednjom kamerom kako biste zaustavili alarm.\nIsprobajte jednom, prije svog prvog jutra."
+            "value" : "Svakog jutra snimiš svoj odgovor prednjom kamerom kako bi ugasio alarm.\nIsprobaj jednom prije svog prvog jutra."
           }
         },
         "hu" : {
@@ -5458,7 +5458,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setiap pagi, rekam jawaban Anda dengan kamera depan untuk menghentikan alarm.\nCobalah sekali, sebelum pagi pertamamu."
+            "value" : "Setiap pagi, kamu merekam jawabanmu dengan kamera depan untuk mematikan alarm.\nCoba sekali sebelum pagi pertamamu."
           }
         },
         "it" : {
@@ -5524,13 +5524,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каждое утро вы записываете свой ответ на фронтальную камеру, чтобы выключить будильник.\nПопробуйте один раз, до вашего первого утра."
+            "value" : "Каждое утро вы записываете свой ответ на фронтальную камеру, чтобы выключить будильник.\nПопробуйте один раз до первого утра."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno nahráte svoju odpoveď prednou kamerou, aby ste zastavili budík.\nVyskúšajte to raz, pred svojím prvým ránom."
+            "value" : "Každé ráno nahráš svoju odpoveď prednou kamerou, aby si vypol budík.\nSkús to raz pred svojím prvým ránom."
           }
         },
         "sv" : {
@@ -5554,7 +5554,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Щоранку ви записуєте свою відповідь на фронтальну камеру, щоб зупинити будильник.\nСпробуйте один раз, ще до вашого першого ранку."
+            "value" : "Щоранку ви записуєте свою відповідь на фронтальну камеру, щоб вимкнути будильник.\nСпробуйте один раз до першого ранку."
           }
         },
         "vi" : {
@@ -5600,7 +5600,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každý řádek je týden. Zodpovězená rána zůstávají jako tečky."
+            "value" : "Každý řádek je týden. Rána, kdy jsi odpověděl, zůstávají jako tečky."
           }
         },
         "da" : {
@@ -5648,7 +5648,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כל שורה היא שבוע. הבקרים שנענו נשארים כנקודות."
+            "value" : "כל שורה היא שבוע. הבקרים שבהם ענית נשארים כנקודות."
           }
         },
         "hi" : {
@@ -5660,7 +5660,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Svaki redak je tjedan. Odgovorena jutra ostaju kao točkice."
+            "value" : "Svaki redak je tjedan. Jutra na koja si odgovorio ostaju kao točkice."
           }
         },
         "hu" : {
@@ -5672,7 +5672,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setiap baris adalah satu minggu. Pagi yang sudah dijawab tetap sebagai titik."
+            "value" : "Setiap baris adalah satu minggu. Pagi yang kamu jawab akan tetap sebagai titik."
           }
         },
         "it" : {
@@ -5738,13 +5738,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каждая строка — это неделя. Отвеченные утра остаются точками."
+            "value" : "Каждая строка — неделя. Утра, когда вы ответили, остаются точками."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každý riadok je týždeň. Zodpovedané rána zostávajú ako bodky."
+            "value" : "Každý riadok je týždeň. Rána, keď si odpovedal, zostávajú ako bodky."
           }
         },
         "sv" : {
@@ -5768,7 +5768,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Кожен рядок — це тиждень. Відповіді на ранкові запитання лишаються крапками."
+            "value" : "Кожен рядок — це тиждень. Ранки, коли ви відповіли, залишаються крапками."
           }
         },
         "vi" : {
@@ -5800,22 +5800,28 @@
     "Endless follow-up alarm" : {
       "comment" : "プレミアム機能名。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと (follow-up = 追いかけて再び鳴る)。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منبّه متابعة بلا نهاية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarma de seguiment infinita"
+            "value" : "Alarma de repetició infinita"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nekonečný následný budík"
+            "value" : "Nekonečný opakovaný budík"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Endeløs opfølgningsalarm"
+            "value" : "Uendelig opfølgende alarm"
           }
         },
         "de" : {
@@ -5827,13 +5833,25 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ατελείωτο ξυπνητήρι συνέχειας"
+            "value" : "Ατελείωτο επαναλαμβανόμενο ξυπνητήρι"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarma de repetición infinita"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarma con repetición infinita"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loputon seurantahälytys"
+            "value" : "Loputon toistuva herätys"
           }
         },
         "fr" : {
@@ -5845,31 +5863,37 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "התראת המשך אינסופית"
+            "value" : "התראה חוזרת בלי סוף"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अनंत फ़ॉलो-अप अलार्म"
+            "value" : "अंतहीन दोहराने वाला अलार्म"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beskonačna naknadna alarma"
+            "value" : "Beskonačni ponovni alarm"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Végtelen utólagos ébresztő"
+            "value" : "Végtelen újraébresztő"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm lanjutan tanpa akhir"
+            "value" : "Alarm susulan tanpa batas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sveglia con ripetizione infinita"
           }
         },
         "ja" : {
@@ -5887,31 +5911,43 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penggera susulan tanpa henti"
+            "value" : "Penggera susulan tanpa had"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Endeløs oppfølgingsalarm"
+            "value" : "Uendelig oppfølgingsalarm"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eindeloos vervolg-alarm"
+            "value" : "Eindeloze herhaalwekker"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nieskończony alarm przypominający"
+            "value" : "Alarm z nieograniczonym ponawianiem"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarme com repetição ilimitada"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarme com repetição ilimitada"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarmă de urmărire fără sfârșit"
+            "value" : "Alarmă cu repetare nelimitată"
           }
         },
         "ru" : {
@@ -5923,25 +5959,25 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nekonečný následný budík"
+            "value" : "Nekonečný opakovaný budík"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oändligt uppföljningslarm"
+            "value" : "Oändligt återkommande alarm"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "การปลุกติดตามผลไม่สิ้นสุด"
+            "value" : "นาฬิกาปลุกติดตามแบบไม่สิ้นสุด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sonsuz takip alarmı"
+            "value" : "Sonsuz tekrar çalan alarm"
           }
         },
         "uk" : {
@@ -5953,7 +5989,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Báo thức theo dõi vô tận"
+            "value" : "Báo thức nhắc lại không giới hạn"
           }
         },
         "zh-HK" : {
@@ -5979,6 +6015,12 @@
     "Endless follow-up alarms" : {
       "comment" : "プレミアム機能名 (ペイウォールの見出し)。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منبّهات متكررة بلا نهاية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5988,13 +6030,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nekonečné následné budíky"
+            "value" : "Neomezené opakované budíky"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uendelige opfølgningsalarmer"
+            "value" : "Uendelige opfølgende alarmer"
           }
         },
         "de" : {
@@ -6006,13 +6048,25 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ατελείωτες επαναλαμβανόμενες ειδοποιήσεις"
+            "value" : "Ατελείωτα επαναλαμβανόμενα ξυπνητήρια"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmas insistentes ilimitadas"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmas insistentes ilimitadas"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loputtomat jatkohälytykset"
+            "value" : "Rajattomat toistuvat hälytykset"
           }
         },
         "fr" : {
@@ -6024,31 +6078,37 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "התראות המשך בלי סוף"
+            "value" : "התראות חוזרות ללא הגבלה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अनंत फ़ॉलो-अप अलार्म"
+            "value" : "असीमित दोहराए जाने वाले अलार्म"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bezbrojni naknadni alarmi"
+            "value" : "Beskonačni ponovljeni alarmi"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Végtelen utólagos ébresztések"
+            "value" : "Végtelenül ismétlődő ébresztések"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm tindak lanjut tanpa henti"
+            "value" : "Alarm susulan tanpa batas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sveglie insistenti illimitate"
           }
         },
         "ja" : {
@@ -6066,7 +6126,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penggera susulan tanpa henti"
+            "value" : "Penggera susulan tanpa had"
           }
         },
         "nb" : {
@@ -6078,19 +6138,31 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oneindige vervolgwekkers"
+            "value" : "Eindeloze opvolgalarmen"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nieskończone alarmy przypominające"
+            "value" : "Niekończące się ponawiane alarmy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmes recorrentes ilimitados"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmes insistentes ilimitados"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarme de urmărire fără sfârșit"
+            "value" : "Alarme repetate fără limită"
           }
         },
         "ru" : {
@@ -6102,7 +6174,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nekonečné následné budíky"
+            "value" : "Neobmedzené opakované budíky"
           }
         },
         "sv" : {
@@ -6114,13 +6186,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "การปลุกติดตามผลไม่รู้จบ"
+            "value" : "นาฬิกาปลุกติดตามแบบไม่สิ้นสุด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sonsuz takip alarmları"
+            "value" : "Sınırsız tekrar eden alarmlar"
           }
         },
         "uk" : {
@@ -6132,7 +6204,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Báo thức nhắc lại không ngừng"
+            "value" : "Báo thức nhắc lại không giới hạn"
           }
         },
         "zh-HK" : {
@@ -6172,7 +6244,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno, nad rámec posledních 7 dnů."
+            "value" : "Každé ráno, i za posledních 7 dní."
           }
         },
         "da" : {
@@ -6220,7 +6292,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כל בוקר, מעבר ל־7 הימים האחרונים."
+            "value" : "כל בוקר, גם מעבר ל־7 הימים האחרונים."
           }
         },
         "hi" : {
@@ -6232,7 +6304,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Svako jutro, izvan posljednjih 7 dana."
+            "value" : "Svako jutro, i nakon zadnjih 7 dana."
           }
         },
         "hu" : {
@@ -6310,13 +6382,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каждое утро, за пределами последних 7 дней."
+            "value" : "Каждое утро — без ограничения 7 днями."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno, nad rámec posledných 7 dní."
+            "value" : "Každé ráno, aj po posledných 7 dňoch."
           }
         },
         "sv" : {
@@ -6340,7 +6412,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Щоранку, за межами останніх 7 днів."
+            "value" : "Щоранку — без обмеження 7 днями."
           }
         },
         "vi" : {
@@ -6386,7 +6458,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uložení se nezdařilo"
+            "value" : "Nepodařilo se uložit"
           }
         },
         "da" : {
@@ -6434,7 +6506,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שמירת השינויים נכשלה"
+            "value" : "השמירה נכשלה"
           }
         },
         "hi" : {
@@ -6530,7 +6602,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uloženie zlyhalo"
+            "value" : "Nepodarilo sa uložiť"
           }
         },
         "sv" : {
@@ -6600,7 +6672,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uložení se nezdařilo. Zkuste to znovu."
+            "value" : "Uložení se nezdařilo. Zkus to prosím znovu."
           }
         },
         "da" : {
@@ -6648,7 +6720,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "השמירה נכשלה. נסו שוב."
+            "value" : "השמירה נכשלה. נסה שוב."
           }
         },
         "hi" : {
@@ -6660,7 +6732,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spremanje nije uspjelo. Pokušajte ponovno."
+            "value" : "Spremanje nije uspjelo. Pokušaj ponovno."
           }
         },
         "hu" : {
@@ -6738,13 +6810,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не удалось сохранить. Попробуйте еще раз."
+            "value" : "Не удалось сохранить. Попробуйте ещё раз."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uloženie zlyhalo. Skúste to znova."
+            "value" : "Uloženie sa nepodarilo. Skús to prosím znova."
           }
         },
         "sv" : {
@@ -6862,7 +6934,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לתקן"
+            "value" : "תקן"
           }
         },
         "hi" : {
@@ -7028,7 +7100,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hotovo"
+            "value" : "Splnil jsem to"
           }
         },
         "da" : {
@@ -7076,7 +7148,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עשיתי"
+            "value" : "עשיתי את זה"
           }
         },
         "hi" : {
@@ -7088,7 +7160,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uspio sam"
+            "value" : "Učinio sam to"
           }
         },
         "hu" : {
@@ -7100,7 +7172,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sudah kulakukan"
+            "value" : "Aku melakukannya"
           }
         },
         "it" : {
@@ -7166,13 +7238,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сделано"
+            "value" : "Я сделал"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Urobil som to"
+            "value" : "Splnil som to"
           }
         },
         "sv" : {
@@ -7196,7 +7268,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зробив"
+            "value" : "Я зробив"
           }
         },
         "vi" : {
@@ -7290,7 +7362,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אעשה זאת"
+            "value" : "אני אעשה"
           }
         },
         "hi" : {
@@ -7302,7 +7374,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Učinit ću"
+            "value" : "Učinit ću to"
           }
         },
         "hu" : {
@@ -7314,7 +7386,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saya akan"
+            "value" : "Aku akan melakukannya"
           }
         },
         "it" : {
@@ -7380,7 +7452,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сделаю"
+            "value" : "Я сделаю"
           }
         },
         "sk" : {
@@ -7456,7 +7528,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kdyby byl dnešek tvůj poslední den, co bys chtěl(a) dělat?"
+            "value" : "Kdyby dnešek byl tvůj poslední den, co bys chtěl dělat?"
           }
         },
         "da" : {
@@ -7516,7 +7588,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kad bi danas bio tvoj posljednji dan, što bi želio/željela raditi?"
+            "value" : "Kad bi danas bio tvoj posljednji dan, što bi htio učiniti?"
           }
         },
         "hu" : {
@@ -7528,7 +7600,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jika hari ini hari terakhirmu, apa yang ingin kamu lakukan?"
+            "value" : "Jika hari ini adalah hari terakhirmu, apa yang ingin kamu lakukan?"
           }
         },
         "it" : {
@@ -7600,7 +7672,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keby bol dnešok tvoj posledný deň, čo by si chcel(a) robiť?"
+            "value" : "Keby dnešok bol tvoj posledný deň, čo by si chcel robiť?"
           }
         },
         "sv" : {
@@ -7624,7 +7696,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Якби сьогодні був твій останній день, що б ти хотів(ла) зробити?"
+            "value" : "Якби сьогодні був ваш останній день, що б ви хотіли зробити?"
           }
         },
         "vi" : {
@@ -7670,7 +7742,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za %lld h %lld min · Klepnutím na čas jej změníte"
+            "value" : "Za %lld h %lld min · Klepnutím na čas změníš"
           }
         },
         "da" : {
@@ -7718,7 +7790,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בעוד %lld שעות %lld דקות · הקישו על השעה כדי לשנות אותה"
+            "value" : "בעוד %lld ש׳ %lld דק׳ · הקש על השעה כדי לשנות"
           }
         },
         "hi" : {
@@ -7730,7 +7802,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za %lld h %lld min · Dodirnite vrijeme za promjenu"
+            "value" : "Za %lld h %lld min · Dodirni vrijeme za promjenu"
           }
         },
         "hu" : {
@@ -7742,7 +7814,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dalam %lld jam %lld menit · Ketuk waktu untuk mengubahnya"
+            "value" : "Dalam %lld jam %lld mnt · Ketuk waktu untuk mengubah"
           }
         },
         "it" : {
@@ -7808,13 +7880,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Через %lld ч %lld мин · Коснитесь времени, чтобы изменить его"
+            "value" : "Через %lld ч %lld мин · Нажмите на время, чтобы изменить"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O %lld h %lld min · Ťuknite na čas a zmeňte ho"
+            "value" : "O %lld h %lld min · Ťuknutím na čas zmeníš"
           }
         },
         "sv" : {
@@ -7838,7 +7910,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Через %lld год %lld хв · Торкніться часу, щоб змінити його"
+            "value" : "Через %lld год %lld хв · Торкніться часу, щоб змінити"
           }
         },
         "vi" : {
@@ -7884,7 +7956,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ráno zastavením nahrávání zastavíte budík."
+            "value" : "Ráno, když zastavíš nahrávání, vypne se budík."
           }
         },
         "da" : {
@@ -7932,7 +8004,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בבוקר, עצירת ההקלטה עוצרת את השעון המעורר."
+            "value" : "בבוקר, כשאתה עוצר את ההקלטה, השעון המעורר נפסק."
           }
         },
         "hi" : {
@@ -7944,7 +8016,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ujutro, zaustavljanje snimanja zaustavlja i alarm."
+            "value" : "Ujutro, kad zaustaviš snimanje, alarm se zaustavlja."
           }
         },
         "hu" : {
@@ -7956,7 +8028,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Di pagi hari, menghentikan rekaman akan menghentikan alarm."
+            "value" : "Di pagi hari, saat kamu menghentikan rekaman, alarm akan berhenti."
           }
         },
         "it" : {
@@ -8022,13 +8094,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Утром остановите запись — и будильник остановится."
+            "value" : "Утром, когда вы останавливаете запись, будильник выключается."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ráno zastavením nahrávania zastavíte budík."
+            "value" : "Ráno, keď zastavíš nahrávanie, budík sa vypne."
           }
         },
         "sv" : {
@@ -8052,7 +8124,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вранці зупинка запису зупиняє будильник."
+            "value" : "Вранці, коли ви зупиняєте запис, будильник вимикається."
           }
         },
         "vi" : {
@@ -8098,7 +8170,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zvoní, dokud neodpovíte."
+            "value" : "Bude zvonit, dokud neodpovíš."
           }
         },
         "da" : {
@@ -8146,7 +8218,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הוא ממשיך לצלצל עד שתענה."
+            "value" : "הוא ימשיך לצלצל עד שתענה."
           }
         },
         "hi" : {
@@ -8158,7 +8230,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zvoni dok ne odgovoriš."
+            "value" : "Nastavlja zvoniti dok ne odgovoriš."
           }
         },
         "hu" : {
@@ -8170,7 +8242,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terus berbunyi sampai kamu menjawab."
+            "value" : "Alarm akan terus berbunyi sampai kamu menjawab."
           }
         },
         "it" : {
@@ -8236,13 +8308,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Он продолжает звонить, пока вы не ответите."
+            "value" : "Он будет звонить, пока вы не ответите."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zvoní, kým neodpovieš."
+            "value" : "Bude zvoniť, kým neodpovieš."
           }
         },
         "sv" : {
@@ -8266,7 +8338,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Воно дзвонить, доки ви не відповісте."
+            "value" : "Він дзвонитиме, доки ви не відповісте."
           }
         },
         "vi" : {
@@ -8480,7 +8552,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Щоденник"
+            "value" : "Журнал"
           }
         },
         "vi" : {
@@ -8788,7 +8860,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לוח השנה של החיים"
+            "value" : "לוח החיים"
           }
         },
         "hi" : {
@@ -9002,7 +9074,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "להפוך זאת לתשובה של היום"
+            "value" : "קבע את זה כתשובה של היום"
           }
         },
         "hi" : {
@@ -9026,7 +9098,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jadikan jawaban hari ini"
+            "value" : "Jadikan ini jawaban hari ini"
           }
         },
         "it" : {
@@ -9092,7 +9164,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сделать это ответом на сегодня"
+            "value" : "Сделать это сегодняшним ответом"
           }
         },
         "sk" : {
@@ -9122,7 +9194,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зробити відповіддю на сьогодні"
+            "value" : "Зробити це сьогоднішньою відповіддю"
           }
         },
         "vi" : {
@@ -9216,7 +9288,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הבוקר הבא"
+            "value" : "מחר בבוקר"
           }
         },
         "hi" : {
@@ -9240,7 +9312,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PAGI BERIKUTNYA"
+            "value" : "BESOK PAGI"
           }
         },
         "it" : {
@@ -9312,7 +9384,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NASLEDUJÚCE RÁNO"
+            "value" : "ĎALŠIE RÁNO"
           }
         },
         "sv" : {
@@ -9382,7 +9454,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noční připomínka"
+            "value" : "Večerní připomenutí"
           }
         },
         "da" : {
@@ -9430,7 +9502,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "תזכורת לילה"
+            "value" : "תזכורת לערב"
           }
         },
         "hi" : {
@@ -9442,7 +9514,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noćna podsjetnica"
+            "value" : "Večernji podsjetnik"
           }
         },
         "hu" : {
@@ -9526,7 +9598,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nočná pripomienka"
+            "value" : "Večerná pripomienka"
           }
         },
         "sv" : {
@@ -9550,7 +9622,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нічне нагадування"
+            "value" : "Вечірнє нагадування"
           }
         },
         "vi" : {
@@ -9596,7 +9668,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnes ráno ještě žádná odpověď."
+            "value" : "Dnešní ranní odpověď tu ještě není."
           }
         },
         "da" : {
@@ -9644,7 +9716,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עדיין אין תשובה הבוקר."
+            "value" : "עדיין אין תשובה מהבוקר."
           }
         },
         "hi" : {
@@ -9734,13 +9806,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сегодня утром ещё нет ответа."
+            "value" : "Сегодня утром ответа еще нет."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnes ráno ešte nie je žiadna odpoveď."
+            "value" : "Dnešná ranná odpoveď tu ešte nie je."
           }
         },
         "sv" : {
@@ -9764,7 +9836,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цього ранку ще немає відповіді."
+            "value" : "Сьогодні вранці відповіді ще немає."
           }
         },
         "vi" : {
@@ -9870,7 +9942,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nisu pronađene kupnje za vraćanje."
+            "value" : "Nisu pronađene kupnje za obnovu."
           }
         },
         "hu" : {
@@ -9882,7 +9954,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak ditemukan pembelian untuk dipulihkan."
+            "value" : "Tidak ada pembelian yang dapat dipulihkan."
           }
         },
         "it" : {
@@ -9948,7 +10020,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не найдено покупок для восстановления."
+            "value" : "Покупки для восстановления не найдены."
           }
         },
         "sk" : {
@@ -9978,7 +10050,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не знайдено покупок для відновлення."
+            "value" : "Покупок для відновлення не знайдено."
           }
         },
         "vi" : {
@@ -10024,7 +10096,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez odpovědi"
+            "value" : "Nezodpovězeno"
           }
         },
         "da" : {
@@ -10072,7 +10144,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ללא תשובה"
+            "value" : "לא ענית"
           }
         },
         "hi" : {
@@ -10084,7 +10156,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez odgovora"
+            "value" : "Nije odgovoreno"
           }
         },
         "hu" : {
@@ -10162,13 +10234,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нет ответа"
+            "value" : "Не отвечено"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez odpovede"
+            "value" : "Nezodpovedané"
           }
         },
         "sv" : {
@@ -10192,7 +10264,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Без відповіді"
+            "value" : "Не відповіли"
           }
         },
         "vi" : {
@@ -10310,7 +10382,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak sekarang"
+            "value" : "Nanti saja"
           }
         },
         "it" : {
@@ -10452,7 +10524,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zatím ne"
+            "value" : "Ještě ne"
           }
         },
         "da" : {
@@ -10596,7 +10668,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zatiaľ nie"
+            "value" : "Ešte nie"
           }
         },
         "sv" : {
@@ -10804,7 +10876,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OK"
+            "value" : "ОК"
           }
         },
         "sk" : {
@@ -10834,7 +10906,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OK"
+            "value" : "ОК"
           }
         },
         "vi" : {
@@ -10952,7 +11024,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mati"
+            "value" : "Nonaktif"
           }
         },
         "it" : {
@@ -11142,7 +11214,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בקרים ישנים יותר נפתחים עם Premium."
+            "value" : "בקרים מוקדמים יותר נפתחים עם Premium."
           }
         },
         "hi" : {
@@ -11154,7 +11226,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Starija jutra otključavaju se uz Premium."
+            "value" : "Ranija jutra otključavaju se uz Premium."
           }
         },
         "hu" : {
@@ -11232,7 +11304,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Старые утра доступны с Premium."
+            "value" : "Более ранние утра открываются с Премиум."
           }
         },
         "sk" : {
@@ -11262,7 +11334,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Старіші ранки відкриваються з Premium."
+            "value" : "Раніші ранки відкриваються з Premium."
           }
         },
         "vi" : {
@@ -11308,7 +11380,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapnuto"
+            "value" : "Zap."
           }
         },
         "da" : {
@@ -11356,7 +11428,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מופעל"
+            "value" : "פועל"
           }
         },
         "hi" : {
@@ -11452,7 +11524,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zapnuté"
+            "value" : "Zap."
           }
         },
         "sv" : {
@@ -11476,7 +11548,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Увімкнено"
+            "value" : "Увімк."
           }
         },
         "vi" : {
@@ -11522,7 +11594,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otevřít Nastavení"
+            "value" : "Otevřít nastavení"
           }
         },
         "da" : {
@@ -11570,7 +11642,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "פתיחת ההגדרות"
+            "value" : "פתח הגדרות"
           }
         },
         "hi" : {
@@ -11666,7 +11738,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otvoriť Nastavenia"
+            "value" : "Otvoriť nastavenia"
           }
         },
         "sv" : {
@@ -11736,7 +11808,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Knihovna fotek"
+            "value" : "Fotogalerie"
           }
         },
         "da" : {
@@ -11784,7 +11856,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ספריית תמונות"
+            "value" : "ספריית התמונות"
           }
         },
         "hi" : {
@@ -11808,7 +11880,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pustaka foto"
+            "value" : "Perpustakaan foto"
           }
         },
         "it" : {
@@ -11874,13 +11946,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Медиатека фото"
+            "value" : "Медиатека"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Knižnica fotiek"
+            "value" : "Fotoknižnica"
           }
         },
         "sv" : {
@@ -11950,7 +12022,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Procvičte si odpověď"
+            "value" : "Procvič si svou odpověď"
           }
         },
         "da" : {
@@ -12088,13 +12160,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Потренируйтесь отвечать"
+            "value" : "Попрактикуйте свой ответ"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Precvičte si odpoveď"
+            "value" : "Precvič si svoju odpoveď"
           }
         },
         "sv" : {
@@ -12118,7 +12190,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Потренуйте свою відповідь"
+            "value" : "Попрактикуйте свою відповідь"
           }
         },
         "vi" : {
@@ -12212,7 +12284,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Premium"
+            "value" : "פרימיום"
           }
         },
         "hi" : {
@@ -12302,7 +12374,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Premium"
+            "value" : "Премиум"
           }
         },
         "sk" : {
@@ -12332,7 +12404,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Premium"
+            "value" : "Преміум"
           }
         },
         "vi" : {
@@ -12378,7 +12450,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Připravuje se kamera"
+            "value" : "Připravuji kameru"
           }
         },
         "da" : {
@@ -12438,7 +12510,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Priprema kamere"
+            "value" : "Pripremam kameru"
           }
         },
         "hu" : {
@@ -12522,7 +12594,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pripravuje sa kamera"
+            "value" : "Pripravujem kameru"
           }
         },
         "sv" : {
@@ -12854,7 +12926,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הרכישות עדיין לא מוכנות. נסו שוב מאוחר יותר."
+            "value" : "הרכישות עדיין לא מוכנות. נסה שוב מאוחר יותר."
           }
         },
         "hi" : {
@@ -12866,7 +12938,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kupnje još nisu spremne. Pokušajte ponovno kasnije."
+            "value" : "Kupnje još nisu spremne. Pokušaj ponovno kasnije."
           }
         },
         "hu" : {
@@ -12878,7 +12950,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pembelian belum siap. Silakan coba lagi nanti."
+            "value" : "Pembelian belum siap. Coba lagi nanti."
           }
         },
         "it" : {
@@ -12944,13 +13016,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покупки пока не готовы. Попробуйте позже."
+            "value" : "Покупки пока недоступны. Повторите попытку позже."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nákupy ešte nie sú pripravené. Skúste to znova neskôr."
+            "value" : "Nákupy zatiaľ nie sú pripravené. Skúste to prosím neskôr."
           }
         },
         "sv" : {
@@ -12974,7 +13046,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покупки ще не готові. Спробуйте пізніше."
+            "value" : "Покупки поки недоступні. Спробуйте ще раз пізніше."
           }
         },
         "vi" : {
@@ -13068,7 +13140,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לא ניתן לשחזר את הרכישות."
+            "value" : "לא ניתן היה לשחזר את הרכישות."
           }
         },
         "hi" : {
@@ -13080,7 +13152,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kupnje se nisu mogle vratiti."
+            "value" : "Kupnje nije bilo moguće obnoviti."
           }
         },
         "hu" : {
@@ -13282,7 +13354,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "נרשם: %@"
+            "value" : "תועד: %@"
           }
         },
         "hi" : {
@@ -13306,7 +13378,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terekam: %@"
+            "value" : "Tercatat: %@"
           }
         },
         "it" : {
@@ -13448,7 +13520,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nahraje vaši video odpověď."
+            "value" : "Nahraje tvou videoodpověď."
           }
         },
         "da" : {
@@ -13508,7 +13580,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Snimava vaš video odgovor."
+            "value" : "Snima tvoj videoodgovor."
           }
         },
         "hu" : {
@@ -13520,7 +13592,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Merekam jawaban video Anda."
+            "value" : "Merekam jawaban videomu."
           }
         },
         "it" : {
@@ -13592,7 +13664,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nahráva vašu video odpoveď."
+            "value" : "Nahrá vašu videoodpoveď."
           }
         },
         "sv" : {
@@ -13662,7 +13734,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Znovu načíst ceny"
+            "value" : "Načíst ceny znovu"
           }
         },
         "da" : {
@@ -13710,7 +13782,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "טען מחירים מחדש"
+            "value" : "טען מחדש את המחירים"
           }
         },
         "hi" : {
@@ -13800,13 +13872,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перезагрузить цены"
+            "value" : "Обновить цены"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Znova načítať ceny"
+            "value" : "Načítať ceny znova"
           }
         },
         "sv" : {
@@ -13830,7 +13902,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перезавантажити ціни"
+            "value" : "Оновити ціни"
           }
         },
         "vi" : {
@@ -13948,7 +14020,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingatlah kematian.\nLalu mulailah pagimu."
+            "value" : "Ingat kematian.\nLalu mulailah pagimu."
           }
         },
         "it" : {
@@ -14014,7 +14086,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помни о смерти.\nЗатем начни своё утро."
+            "value" : "Помните о смерти.\nА затем начните своё утро."
           }
         },
         "sk" : {
@@ -14044,7 +14116,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Пам’ятай про смерть.\nПотім почни свій ранок."
+            "value" : "Пам’ятайте про смерть.\nА тоді почніть свій ранок."
           }
         },
         "vi" : {
@@ -14150,7 +14222,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vrati kupnje"
+            "value" : "Obnovi kupnje"
           }
         },
         "hu" : {
@@ -14162,7 +14234,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pulihkan pembelian"
+            "value" : "Pulihkan Pembelian"
           }
         },
         "it" : {
@@ -14352,7 +14424,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מצלצל בשעה שלך, גם במצב שקט."
+            "value" : "מצלצל בזמן שקבעת, גם במצב שקט."
           }
         },
         "hi" : {
@@ -14364,7 +14436,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zvoni u tvoje vrijeme, čak i u tihom načinu."
+            "value" : "Zazvoni u tvoje vrijeme, čak i u tihom načinu rada."
           }
         },
         "hu" : {
@@ -14376,7 +14448,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berbunyi pada waktumu, bahkan dalam mode senyap."
+            "value" : "Berbunyi pada waktu yang kamu atur, bahkan dalam mode senyap."
           }
         },
         "it" : {
@@ -14442,13 +14514,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Звонит в назначенное время, даже в беззвучном режиме."
+            "value" : "Срабатывает в заданное вами время, даже в беззвучном режиме."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zazvoní v nastavený čas, aj v tichom režime."
+            "value" : "Zazvoní v nastavenom čase, aj v tichom režime."
           }
         },
         "sv" : {
@@ -14472,7 +14544,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Дзвонить у ваш час, навіть у беззвучному режимі."
+            "value" : "Спрацьовує у вказаний вами час, навіть у беззвучному режимі."
           }
         },
         "vi" : {
@@ -14566,7 +14638,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שמירה"
+            "value" : "שמור"
           }
         },
         "hi" : {
@@ -14732,7 +14804,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ukládá vaše videa do alba 'Memento Morning' v aplikaci Fotky."
+            "value" : "Uloží tvá videa do alba 'Memento Morning' ve Fotkách."
           }
         },
         "da" : {
@@ -14780,7 +14852,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שומר את הסרטונים שלך באלבום 'Memento Morning' ב׳תמונות׳."
+            "value" : "שומר את הסרטונים שלך באלבום 'Memento Morning' ב״תמונות״."
           }
         },
         "hi" : {
@@ -14792,7 +14864,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spremi vaše videozapise u album 'Memento Morning' u Fotografijama."
+            "value" : "Sprema tvoje videozapise u album 'Memento Morning' u aplikaciji Foto."
           }
         },
         "hu" : {
@@ -14804,7 +14876,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menyimpan video Anda ke album 'Memento Morning' di Foto."
+            "value" : "Menyimpan videomu ke album 'Memento Morning' di Foto."
           }
         },
         "it" : {
@@ -14870,13 +14942,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сохраняет ваши видео в альбоме 'Memento Morning' в Фото."
+            "value" : "Сохраняет ваши видео в альбом 'Memento Morning' в Фото."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ukladá vaše videá do albumu 'Memento Morning' v aplikácii Fotky."
+            "value" : "Uloží tvoje videá do albumu 'Memento Morning' vo Fotkách."
           }
         },
         "sv" : {
@@ -14900,7 +14972,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зберігає ваші відео в альбомі 'Memento Morning' у Фото."
+            "value" : "Зберігає ваші відео в альбом 'Memento Morning' у Фото."
           }
         },
         "vi" : {
@@ -14946,7 +15018,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zobrazit každé ráno"
+            "value" : "Zobrazit všechna rána"
           }
         },
         "da" : {
@@ -14994,7 +15066,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "צפייה בכל בוקר"
+            "value" : "ראה את כל הבקרים"
           }
         },
         "hi" : {
@@ -15006,7 +15078,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vidi svako jutro"
+            "value" : "Pogledaj sva jutra"
           }
         },
         "hu" : {
@@ -15018,7 +15090,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lihat setiap pagi"
+            "value" : "Lihat semua pagi"
           }
         },
         "it" : {
@@ -15084,13 +15156,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Смотреть каждое утро"
+            "value" : "Смотреть все утра"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zobraziť každé ráno"
+            "value" : "Zobraziť všetky rána"
           }
         },
         "sv" : {
@@ -15114,7 +15186,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переглянути кожен ранок"
+            "value" : "Переглянути всі ранки"
           }
         },
         "vi" : {
@@ -15208,7 +15280,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הגדרת שעון מעורר"
+            "value" : "הגדר שעון מעורר"
           }
         },
         "hi" : {
@@ -15328,7 +15400,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити будильник"
+            "value" : "Установити будильник"
           }
         },
         "vi" : {
@@ -15802,7 +15874,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sedm odpovědí, poprvé pohromadě na jedné stránce."
+            "value" : "Sedm odpovědí poprvé spolu na jedné stránce."
           }
         },
         "da" : {
@@ -15850,7 +15922,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שבע תשובות, יחד בעמוד אחד בפעם הראשונה."
+            "value" : "שבע תשובות, יחד על עמוד אחד בפעם הראשונה."
           }
         },
         "hi" : {
@@ -15862,7 +15934,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sedam odgovora, prvi put zajedno na jednoj stranici."
+            "value" : "Sedam odgovora prvi put zajedno na jednoj stranici."
           }
         },
         "hu" : {
@@ -15940,13 +16012,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Семь ответов, впервые вместе на одной странице."
+            "value" : "Семь ответов впервые собраны на одной странице."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sedem odpovedí, po prvý raz spolu na jednej stránke."
+            "value" : "Sedem odpovedí po prvý raz spolu na jednej stránke."
           }
         },
         "sv" : {
@@ -15970,7 +16042,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сім відповідей, уперше разом на одній сторінці."
+            "value" : "Сім відповідей уперше зібрані на одній сторінці."
           }
         },
         "vi" : {
@@ -16064,7 +16136,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שיתוף"
+            "value" : "שתף"
           }
         },
         "hi" : {
@@ -16290,7 +16362,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odgoda"
+            "value" : "Odgodi"
           }
         },
         "hu" : {
@@ -16368,7 +16440,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Дремать"
+            "value" : "Отложить"
           }
         },
         "sk" : {
@@ -16398,7 +16470,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Дрімати"
+            "value" : "Відкласти"
           }
         },
         "vi" : {
@@ -16444,7 +16516,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Řekněte svou odpověď"
+            "value" : "Odpověz nahlas"
           }
         },
         "da" : {
@@ -16492,7 +16564,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אמור את תשובתך"
+            "value" : "ענה בקול"
           }
         },
         "hi" : {
@@ -16504,7 +16576,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Izgovori svoj odgovor"
+            "value" : "Odgovori naglas"
           }
         },
         "hu" : {
@@ -16516,7 +16588,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ucapkan jawabanmu"
+            "value" : "Jawab dengan suara"
           }
         },
         "it" : {
@@ -16582,13 +16654,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скажите свой ответ"
+            "value" : "Ответьте вслух"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povedzte svoju odpoveď"
+            "value" : "Odpovedz nahlas"
           }
         },
         "sv" : {
@@ -16612,7 +16684,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скажіть свою відповідь"
+            "value" : "Дайте відповідь уголос"
           }
         },
         "vi" : {
@@ -16730,7 +16802,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengenalan suara"
+            "value" : "Pengenalan ucapan"
           }
         },
         "it" : {
@@ -16872,7 +16944,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spustit nahrávání"
+            "value" : "Začít nahrávat"
           }
         },
         "da" : {
@@ -16920,7 +16992,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "התחל הקלטה"
+            "value" : "התחל להקליט"
           }
         },
         "hi" : {
@@ -16932,7 +17004,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Započni snimanje"
+            "value" : "Počni snimati"
           }
         },
         "hu" : {
@@ -17016,7 +17088,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spustiť nahrávanie"
+            "value" : "Začať nahrávať"
           }
         },
         "sv" : {
@@ -17158,7 +17230,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berhenti"
+            "value" : "Hentikan"
           }
         },
         "it" : {
@@ -17348,7 +17420,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עצירת השעון המעורר"
+            "value" : "עצור את השעון המעורר"
           }
         },
         "hi" : {
@@ -17562,7 +17634,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הפסקת ההקלטה"
+            "value" : "עצור הקלטה"
           }
         },
         "hi" : {
@@ -17586,7 +17658,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hentikan perekaman"
+            "value" : "Hentikan rekaman"
           }
         },
         "it" : {
@@ -17728,7 +17800,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavit nahrávání a dokončit odpověď"
+            "value" : "Zastav nahrávání a dokonči svou odpověď"
           }
         },
         "da" : {
@@ -17788,7 +17860,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaustavi snimanje i dovrši odgovor"
+            "value" : "Zaustavi snimanje i dovrši svoj odgovor"
           }
         },
         "hu" : {
@@ -17800,7 +17872,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hentikan perekaman dan akhiri jawaban Anda"
+            "value" : "Hentikan rekaman dan selesaikan jawabanmu"
           }
         },
         "it" : {
@@ -17872,7 +17944,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte nahrávanie a dokončite svoju odpoveď"
+            "value" : "Zastav nahrávanie a dokonči svoju odpoveď"
           }
         },
         "sv" : {
@@ -17896,7 +17968,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупиніть запис і завершіть свою відповідь"
+            "value" : "Зупиніть запис і завершіть відповідь"
           }
         },
         "vi" : {
@@ -17942,7 +18014,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte budík a otevřete Memento Morning"
+            "value" : "Zastavit budík a otevřít Memento Morning"
           }
         },
         "da" : {
@@ -17990,7 +18062,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עצור את השעון ופתח את Memento Morning"
+            "value" : "עצור את השעון המעורר ופתח את Memento Morning"
           }
         },
         "hi" : {
@@ -18080,13 +18152,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Остановите будильник и откройте Memento Morning"
+            "value" : "Остановить будильник и открыть Memento Morning"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte budík a otvorte Memento Morning"
+            "value" : "Zastaviť budík a otvoriť Memento Morning"
           }
         },
         "sv" : {
@@ -18110,7 +18182,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупиніть будильник і відкрийте Memento Morning"
+            "value" : "Зупинити будильник і відкрити Memento Morning"
           }
         },
         "vi" : {
@@ -18142,22 +18214,28 @@
     "Stop, and the alarm stops too." : {
       "comment" : "朝の回答画面で録画停止ボタンの下に出る説明。「録画を止めると、アラームも止まる」の意味。ユーザー自身が立ち止まる意味ではない",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توقّف، وسيتوقّف المنبّه أيضًا."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atura-ho, i l'alarma també s'aturarà."
+            "value" : "Atura-ho, i l’alarma també s’aturarà."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte to a vypne se i budík."
+            "value" : "Zastav to a zastaví se i budík."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop, og vækkeuret stopper også."
+            "value" : "Stop, så stopper alarmen også."
           }
         },
         "de" : {
@@ -18169,13 +18247,25 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Σταμάτα, και το ξυπνητήρι θα σταματήσει επίσης."
+            "value" : "Σταμάτα, και το ξυπνητήρι σταματά κι αυτό."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detén la grabación, y la alarma también se detendrá."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detén la grabación, y la alarma también se detendrá."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pysäytä, niin myös hälytys loppuu."
+            "value" : "Pysäytä, niin hälytyskin pysähtyy."
           }
         },
         "fr" : {
@@ -18187,19 +18277,37 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עצרו, וגם השעון המעורר ייפסק."
+            "value" : "עצור, וגם ההתראה תיעצר."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "रोकें, और अलार्म भी बंद हो जाएगा।"
+            "value" : "रोकें, और अलार्म भी रुक जाएगा।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi i alarm će se zaustaviti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Állítsd le, és a riasztás is leáll."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berhenti, dan alarm juga akan berhenti."
+            "value" : "Hentikan, dan alarm juga berhenti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferma, e anche la sveglia si fermerà."
           }
         },
         "ja" : {
@@ -18217,55 +18325,103 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berhenti, dan penggera juga akan berhenti."
+            "value" : "Hentikan, dan penggera juga akan berhenti."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stopp, og vekkerklokken stopper også."
+            "value" : "Stopp, så stopper alarmen også."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop, en het alarm stopt ook."
+            "value" : "Stop, dan stopt het alarm ook."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj, a alarm też się zatrzyma."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pare, e o alarme também para."
+            "value" : "Pare, e o alarme também vai parar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para, e o alarme também para."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprește, și alarma se oprește și ea."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановите запись — остановится и будильник."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte sa a budík sa tiež zastaví."
+            "value" : "Zastav to a zastaví sa aj budík."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stoppa, så stannar alarmen också."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หยุด แล้วนาฬิกาปลุกก็จะหยุดด้วย"
+            "value" : "หยุด แล้วนาฬิกาปลุกจะหยุดด้วย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dur, alarm da durur."
+            "value" : "Durdur, alarm da dursun."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупиніться, і будильник також зупиниться."
+            "value" : "Зупиніть запис — зупиниться й будильник."
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dừng lại, và báo thức cũng sẽ dừng."
+            "value" : "Dừng lại, báo thức cũng sẽ dừng."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止後，鬧鐘也會停止。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止后，闹钟也会停止。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止後，鬧鐘也會停止。"
           }
         }
       }
@@ -18287,7 +18443,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klepnutím na čas nastavte budík"
+            "value" : "Klepni na čas a nastav si budík"
           }
         },
         "da" : {
@@ -18335,7 +18491,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הקישו על השעה כדי להגדיר את השעון המעורר"
+            "value" : "הקש על השעה כדי להגדיר את השעון המעורר"
           }
         },
         "hi" : {
@@ -18347,7 +18503,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dodirnite vrijeme za postavljanje alarma"
+            "value" : "Dodirni vrijeme za postavljanje alarma"
           }
         },
         "hu" : {
@@ -18359,7 +18515,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ketuk waktu untuk mengatur alarm Anda"
+            "value" : "Ketuk waktunya untuk mengatur alarm"
           }
         },
         "it" : {
@@ -18425,13 +18581,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нажмите на время, чтобы настроить будильник"
+            "value" : "Нажмите на время, чтобы установить будильник"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ťuknite na čas a nastavte budík"
+            "value" : "Ťukni na čas a nastav si budík"
           }
         },
         "sv" : {
@@ -18455,7 +18611,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Торкніться часу, щоб налаштувати будильник"
+            "value" : "Торкніться часу, щоб встановити будильник"
           }
         },
         "vi" : {
@@ -18573,7 +18729,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ketentuan Penggunaan"
+            "value" : "Syarat Penggunaan"
           }
         },
         "it" : {
@@ -18715,7 +18871,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Budík se bude ozývat, dokud neodpovíš."
+            "value" : "Budík se bude vracet, dokud neodpovíš."
           }
         },
         "da" : {
@@ -18763,7 +18919,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "האזעקה ממשיכה לחזור עד שתענה."
+            "value" : "השעון המעורר יחזור שוב ושוב עד שתענה."
           }
         },
         "hi" : {
@@ -18775,7 +18931,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm će se vraćati dok ne odgovoriš."
+            "value" : "Alarm će se stalno vraćati dok ne odgovoriš."
           }
         },
         "hu" : {
@@ -18787,7 +18943,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm akan terus berbunyi sampai Anda menjawab."
+            "value" : "Alarm akan terus kembali sampai kamu menjawab."
           }
         },
         "it" : {
@@ -18853,7 +19009,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Будильник будет возвращаться, пока вы не ответите."
+            "value" : "Будильник будет снова срабатывать, пока вы не ответите."
           }
         },
         "sk" : {
@@ -18883,7 +19039,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Будильник повертатиметься, доки ви не відповісте."
+            "value" : "Будильник знову спрацьовуватиме, доки ви не відповісте."
           }
         },
         "vi" : {
@@ -18929,7 +19085,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fotoaparát není k dispozici, odpovězte tedy textem."
+            "value" : "Kamera není dostupná, odpověz tedy textem."
           }
         },
         "da" : {
@@ -18977,7 +19133,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "המצלמה לא זמינה, אז ענו בטקסט."
+            "value" : "המצלמה לא זמינה, אז ענה בטקסט."
           }
         },
         "hi" : {
@@ -18989,7 +19145,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamera nije dostupna, pa odgovorite tekstom."
+            "value" : "Kamera nije dostupna, pa odgovori tekstom."
           }
         },
         "hu" : {
@@ -19001,7 +19157,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamera tidak tersedia, jadi jawab dalam teks."
+            "value" : "Kamera tidak tersedia, jadi jawab dengan teks."
           }
         },
         "it" : {
@@ -19073,7 +19229,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kamera nie je k dispozícii, preto odpovedzte textom."
+            "value" : "Kamera nie je dostupná, tak odpovedz textom."
           }
         },
         "sv" : {
@@ -19097,7 +19253,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Камера недоступна, тож відповідайте текстом."
+            "value" : "Камера недоступна, тож дайте відповідь текстом."
           }
         },
         "vi" : {
@@ -19143,7 +19299,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tečky se propojí."
+            "value" : "Body se jednou propojí."
           }
         },
         "da" : {
@@ -19191,7 +19347,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הנקודות יתחברו."
+            "value" : "הנקודות עוד יתחברו."
           }
         },
         "hi" : {
@@ -19203,7 +19359,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Točkice će se povezati."
+            "value" : "Točke će se jednom povezati."
           }
         },
         "hu" : {
@@ -19281,13 +19437,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Точки соединятся."
+            "value" : "Точки однажды соединятся."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bodky sa spoja."
+            "value" : "Body sa raz spoja."
           }
         },
         "sv" : {
@@ -19311,7 +19467,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Крапки з’єднаються."
+            "value" : "Точки колись з'єднаються."
           }
         },
         "vi" : {
@@ -19571,7 +19727,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nákup byl dokončen, ale Premium se nepodařilo ověřit. Zkuste nákupy obnovit později."
+            "value" : "Nákup byl dokončen, ale nepodařilo se potvrdit Premium. Zkus prosím později obnovit nákupy."
           }
         },
         "da" : {
@@ -19619,7 +19775,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הרכישה הושלמה, אך לא ניתן היה לאשר את Premium. נא לנסות לשחזר רכישות מאוחר יותר."
+            "value" : "הרכישה הושלמה, אבל לא היה אפשר לאשר את Premium. נסה לשחזר רכישות מאוחר יותר."
           }
         },
         "hi" : {
@@ -19631,7 +19787,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kupnja je dovršena, ali Premium se nije mogao potvrditi. Pokušajte kasnije vratiti kupnje."
+            "value" : "Kupnja je dovršena, ali nije bilo moguće potvrditi Premium. Pokušaj kasnije obnoviti kupnje."
           }
         },
         "hu" : {
@@ -19643,7 +19799,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pembelian selesai, tetapi Premium tidak dapat dikonfirmasi. Coba pulihkan pembelian lagi nanti."
+            "value" : "Pembelian selesai, tetapi Premium tidak dapat dikonfirmasi. Coba pulihkan pembelian nanti."
           }
         },
         "it" : {
@@ -19709,13 +19865,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покупка завершена, но не удалось подтвердить Premium. Попробуйте восстановить покупки позже."
+            "value" : "Покупка завершена, но не удалось подтвердить Premium. Пожалуйста, попробуйте восстановить покупки позже."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nákup sa dokončil, ale Premium sa nepodarilo potvrdiť. Skúste nákupy obnoviť neskôr."
+            "value" : "Nákup bol dokončený, ale Premium sa nepodarilo potvrdiť. Skús si, prosím, neskôr obnoviť nákupy."
           }
         },
         "sv" : {
@@ -19739,7 +19895,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покупку завершено, але не вдалося підтвердити Premium. Спробуйте відновити покупки пізніше."
+            "value" : "Покупку завершено, але не вдалося підтвердити Premium. Будь ласка, спробуйте відновити покупки пізніше."
           }
         },
         "vi" : {
@@ -19785,7 +19941,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toto je nácvik. Video se neuloží."
+            "value" : "Toto je zkouška. Video se neuloží."
           }
         },
         "da" : {
@@ -19929,7 +20085,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toto je nácvik. Video sa neuloží."
+            "value" : "Toto je skúška. Video sa neuloží."
           }
         },
         "sv" : {
@@ -19953,7 +20109,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Це тренування. Відео не буде збережено."
+            "value" : "Це практика. Відео не буде збережено."
           }
         },
         "vi" : {
@@ -19999,7 +20155,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnes ráno jsi řekl(a) \"%@\""
+            "value" : "Dnes ráno jsi řekl: „%@“"
           }
         },
         "da" : {
@@ -20047,7 +20203,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "הבוקר אמרת \"%@\""
+            "value" : "הבוקר אמרת '%@'"
           }
         },
         "hi" : {
@@ -20059,7 +20215,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jutros si rekao/la \"%@\""
+            "value" : "Jutros si rekao: „%@”"
           }
         },
         "hu" : {
@@ -20071,7 +20227,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pagi ini kamu berkata \"%@\""
+            "value" : "Pagi ini kamu berkata '%@'"
           }
         },
         "it" : {
@@ -20137,13 +20293,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сегодня утром вы сказали: \"%@\""
+            "value" : "Сегодня утром вы сказали: «%@»"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnes ráno si povedal(a) \"%@\""
+            "value" : "Dnes ráno si povedal: „%@“"
           }
         },
         "sv" : {
@@ -20167,7 +20323,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цього ранку ви сказали \"%@\""
+            "value" : "Сьогодні вранці ви сказали: «%@»"
           }
         },
         "vi" : {
@@ -20213,7 +20369,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slova pro toto ráno"
+            "value" : "Dnešní ranní slova"
           }
         },
         "da" : {
@@ -20261,7 +20417,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מילות הבוקר הזה"
+            "value" : "המילים של הבוקר הזה"
           }
         },
         "hi" : {
@@ -20273,7 +20429,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Riječi ovog jutra"
+            "value" : "Jutrošnje riječi"
           }
         },
         "hu" : {
@@ -20641,7 +20797,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aby si každý ranní okamžik zůstal."
+            "value" : "Aby zůstalo každé ráno."
           }
         },
         "da" : {
@@ -20689,7 +20845,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כדי לשמור על כל בוקר."
+            "value" : "כדי לשמור כל בוקר."
           }
         },
         "hi" : {
@@ -20701,7 +20857,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Da sačuvamo svako jutro."
+            "value" : "Da sačuvaš svako jutro."
           }
         },
         "hu" : {
@@ -20713,7 +20869,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Untuk menjaga setiap pagi."
+            "value" : "Untuk menyimpan setiap pagi."
           }
         },
         "it" : {
@@ -20785,7 +20941,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aby sme si zachovali každé ráno."
+            "value" : "Aby ostalo každé ráno."
           }
         },
         "sv" : {
@@ -20809,7 +20965,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Щоб зберегти щоранку."
+            "value" : "Щоб зберегти кожен ранок."
           }
         },
         "vi" : {
@@ -21069,7 +21225,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyzkoušet jednou"
+            "value" : "Zkus to jednou"
           }
         },
         "da" : {
@@ -21117,7 +21273,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "נסה זאת פעם אחת"
+            "value" : "נסה פעם אחת"
           }
         },
         "hi" : {
@@ -21207,13 +21363,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Попробовать один раз"
+            "value" : "Попробуйте один раз"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vyskúšať raz"
+            "value" : "Skús to raz"
           }
         },
         "sv" : {
@@ -21237,7 +21393,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Спробувати один раз"
+            "value" : "Спробуйте один раз"
           }
         },
         "vi" : {
@@ -21283,7 +21439,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zkuste uložit znovu"
+            "value" : "Zkus to uložit znovu"
           }
         },
         "da" : {
@@ -21421,13 +21577,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Попробуйте сохранить еще раз"
+            "value" : "Попробуйте сохранить снова"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skúste uložiť znova"
+            "value" : "Skús to uložiť znova"
           }
         },
         "sv" : {
@@ -21497,7 +21653,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Převádí váš hlas na text přímo v tomto zařízení."
+            "value" : "Převádí tvůj hlas na text v tomto zařízení."
           }
         },
         "da" : {
@@ -21557,7 +21713,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pretvara vaš glas u tekst na ovom uređaju."
+            "value" : "Pretvara tvoj glas u tekst na ovom uređaju."
           }
         },
         "hu" : {
@@ -21569,7 +21725,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mengubah suara Anda menjadi teks, di perangkat ini."
+            "value" : "Mengubah suaramu menjadi teks di perangkat ini."
           }
         },
         "it" : {
@@ -21641,7 +21797,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prevodí váš hlas na text priamo v tomto zariadení."
+            "value" : "Premení tvoj hlas na text v tomto zariadení."
           }
         },
         "sv" : {
@@ -21711,7 +21867,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sem napiš"
+            "value" : "Piš sem"
           }
         },
         "da" : {
@@ -21759,7 +21915,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "כתבו כאן"
+            "value" : "כתוב כאן"
           }
         },
         "hi" : {
@@ -21771,7 +21927,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upišite ovdje"
+            "value" : "Piši ovdje"
           }
         },
         "hu" : {
@@ -21849,13 +22005,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Введите здесь"
+            "value" : "Напишите здесь"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napíšte sem"
+            "value" : "Píš sem"
           }
         },
         "sv" : {
@@ -21879,7 +22035,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Введіть тут"
+            "value" : "Напишіть тут"
           }
         },
         "vi" : {
@@ -21997,7 +22153,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tak terbatas"
+            "value" : "Tanpa batas"
           }
         },
         "it" : {
@@ -22069,7 +22225,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neobmedzené"
+            "value" : "Neobmedzene"
           }
         },
         "sv" : {
@@ -22093,7 +22249,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Безлімітно"
+            "value" : "Без обмежень"
           }
         },
         "vi" : {
@@ -22187,7 +22343,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עד %lld פעמים (חינם)"
+            "value" : "עד %lld פעמים (בחינם)"
           }
         },
         "hi" : {
@@ -22339,10 +22495,28 @@
     "Will you do yesterday's answer today?" : {
       "comment" : "昨日答えた内容 (やりたいこと) を今日実行するか、を問う選択肢の見出し。「回答という行為をする」ではなく「昨日答えたことを今日やる」の意味",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل ستفعل ما أجبْتَ به أمس اليوم؟"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faràs avui allò que vas respondre ahir?"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uděláš dnes včerejší odpověď?"
+            "value" : "Uděláš dnes to, co jsi včera odpověděl?"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vil du gøre det, du svarede i går, i dag?"
           }
         },
         "de" : {
@@ -22351,10 +22525,28 @@
             "value" : "Wirst du die Antwort von gestern heute umsetzen?"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θα κάνεις σήμερα αυτό που απάντησες χθες;"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Harás hoy lo que respondiste ayer?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Harás hoy lo que respondiste ayer?"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toteutatko eilisen vastauksen tänään?"
+            "value" : "Teetkö tänään sen, mitä vastasit eilen?"
           }
         },
         "fr" : {
@@ -22366,7 +22558,37 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "האם תבצעו היום את התשובה מאתמול?"
+            "value" : "האם תעשה היום את מה שענית אתמול?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्या आप आज वह करेंगे जो आपने कल जवाब दिया था?"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoćeš li danas učiniti ono što si jučer odgovorio?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megteszed ma azt, amit tegnap válaszoltál?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akankah kamu melakukan hari ini apa yang kamu jawab kemarin?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farai oggi ciò che hai risposto ieri?"
           }
         },
         "ja" : {
@@ -22381,16 +22603,88 @@
             "value" : "어제의 답을 오늘 해볼까요?"
           }
         },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah anda akan melakukan apa yang anda jawab semalam hari ini?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vil du gjøre det du svarte i går, i dag?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doe je vandaag wat je gisteren hebt geantwoord?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrobisz dziś to, co wczoraj odpowiedziałeś?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você vai fazer hoje o que respondeu ontem?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vais fazer hoje o que respondeste ontem?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vei face azi ceea ce ai răspuns ieri?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделаете то, что ответили вчера, сегодня?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urobíš dnes to, čo si včera odpovedal?"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gör du idag det du svarade igår?"
+          }
+        },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คุณจะทำตามคำตอบของเมื่อวานวันนี้ไหม?"
+            "value" : "วันนี้คุณจะทำสิ่งที่ตอบไว้เมื่อวานไหม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dün verdiğin cevabı bugün yapacak mısın?"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Чи зробиш сьогодні вчорашню відповідь?"
+            "value" : "Зробите сьогодні те, що відповіли вчора?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hôm nay bạn sẽ làm điều bạn đã trả lời hôm qua chứ?"
           }
         },
         "zh-HK" : {
@@ -22430,7 +22724,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napište jinou odpověď"
+            "value" : "Napiš jinou odpověď"
           }
         },
         "da" : {
@@ -22490,7 +22784,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napiši drugi odgovor"
+            "value" : "Napiši drugačiji odgovor"
           }
         },
         "hu" : {
@@ -22574,7 +22868,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Napíšte inú odpoveď"
+            "value" : "Napíš inú odpoveď"
           }
         },
         "sv" : {
@@ -22644,7 +22938,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oprávnění můžete změnit v aplikaci Nastavení."
+            "value" : "Oprávnění můžeš změnit v aplikaci Nastavení."
           }
         },
         "da" : {
@@ -22692,7 +22986,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אפשר לשנות הרשאות באפליקציית ההגדרות."
+            "value" : "אפשר לשנות את ההרשאות באפליקציית ״הגדרות״."
           }
         },
         "hi" : {
@@ -22704,7 +22998,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dozvole možete promijeniti u aplikaciji Postavke."
+            "value" : "Dopuštenja možeš promijeniti u aplikaciji Postavke."
           }
         },
         "hu" : {
@@ -22716,7 +23010,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anda dapat mengubah izin di app Pengaturan."
+            "value" : "Kamu dapat mengubah izin di app Pengaturan."
           }
         },
         "it" : {
@@ -22788,7 +23082,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povolenia môžete zmeniť v apke Nastavenia."
+            "value" : "Povolenia môžeš zmeniť v aplikácii Nastavenia."
           }
         },
         "sv" : {
@@ -22812,7 +23106,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ви можете змінити дозволи в програмі «Налаштування»."
+            "value" : "Ви можете змінити дозволи в програмі «Параметри»."
           }
         },
         "vi" : {
@@ -22858,7 +23152,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Na ráno jste připraveni."
+            "value" : "Jsi připravený na ráno."
           }
         },
         "da" : {
@@ -22906,7 +23200,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אתם מוכנים לבוקר."
+            "value" : "אתה מוכן לבוקר."
           }
         },
         "hi" : {
@@ -22918,7 +23212,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spremni ste za jutro."
+            "value" : "Spreman si za jutro."
           }
         },
         "hu" : {
@@ -22930,7 +23224,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anda siap untuk pagi hari."
+            "value" : "Kamu siap menyambut pagi."
           }
         },
         "it" : {
@@ -23002,7 +23296,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ste pripravení na ráno."
+            "value" : "Si pripravený na ráno."
           }
         },
         "sv" : {
@@ -23072,7 +23366,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaše odpovědi se tu budou shromažďovat, jedno ráno za druhým."
+            "value" : "Tvoje odpovědi se tu budou shromažďovat, ráno po ránu."
           }
         },
         "da" : {
@@ -23120,7 +23414,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "התשובות שלך יתאספו כאן, בוקר אחר בוקר."
+            "value" : "התשובות שלך ייאספו כאן, בוקר אחר בוקר."
           }
         },
         "hi" : {
@@ -23132,7 +23426,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaši će se odgovori ovdje skupljati, jedno po jedno jutro."
+            "value" : "Tvoji će se odgovori ovdje skupljati, jutro po jutro."
           }
         },
         "hu" : {
@@ -23216,7 +23510,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaše odpovede sa tu budú zhromažďovať, ráno za ráno."
+            "value" : "Tvoje odpovede sa tu budú zhromažďovať, ráno za ránom."
           }
         },
         "sv" : {
@@ -23240,7 +23534,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ваші відповіді збираються тут, ранок за ранком."
+            "value" : "Ваші відповіді збиратимуться тут, ранок за ранком."
           }
         },
         "vi" : {
@@ -23286,7 +23580,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Váš první budík"
+            "value" : "Tvůj první budík"
           }
         },
         "da" : {
@@ -23346,7 +23640,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaš prvi alarm"
+            "value" : "Tvoj prvi alarm"
           }
         },
         "hu" : {
@@ -23358,7 +23652,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alarm pertama Anda"
+            "value" : "Alarm pertamamu"
           }
         },
         "it" : {
@@ -23430,7 +23724,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Váš prvý budík"
+            "value" : "Tvoj prvý budík"
           }
         },
         "sv" : {

@@ -19,7 +19,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slouží k zazvonění budíku v nastavený čas a k jeho zastavení odpovědí na dnešní otázku."
+            "value" : "Používá se k zazvonění budíku ve vámi nastavený čas a k jeho vypnutí odpovědí na dnešní otázku."
           }
         },
         "da" : {
@@ -73,7 +73,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "משמש להשמעת האזעקה בשעה שהגדרת ולעצירתה באמצעות מענה על שאלת היום."
+            "value" : "משמש להפעלת השעון המעורר בזמן שהגדרת ולעצירתו על ידי מענה על השאלה של היום."
           }
         },
         "hi" : {
@@ -85,7 +85,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Koristi se za uključivanje alarma u vrijeme koje ste postavili i njegovo zaustavljanje odgovorom na današnje pitanje."
+            "value" : "Koristi se za uključivanje alarma u vrijeme koje postaviš i za njegovo zaustavljanje odgovaranjem na današnje pitanje."
           }
         },
         "hu" : {
@@ -97,7 +97,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digunakan untuk membunyikan alarm pada waktu yang Anda atur dan menghentikannya dengan menjawab pertanyaan hari ini."
+            "value" : "Digunakan untuk membunyikan alarm pada waktu yang kamu atur dan mematikannya dengan menjawab pertanyaan hari ini."
           }
         },
         "it" : {
@@ -163,13 +163,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используется, чтобы включать будильник в установленное время и останавливать его, ответив на вопрос дня."
+            "value" : "Используется, чтобы подавать сигнал будильника в назначенное вами время и выключать его, отвечая на сегодняшний вопрос."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používa sa na spustenie budíka v nastavený čas a jeho zastavenie odpoveďou na dnešnú otázku."
+            "value" : "Používa sa na spustenie budíka v čase, ktorý si nastavíš, a na jeho vypnutie odpoveďou na dnešnú otázku."
           }
         },
         "sv" : {
@@ -193,7 +193,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Використовується, щоб увімкнути будильник у встановлений час і зупинити його, відповівши на сьогоднішнє запитання."
+            "value" : "Використовується, щоб будити у встановлений вами час і вимикати будильник, відповідаючи на сьогоднішнє запитання."
           }
         },
         "vi" : {
@@ -240,7 +240,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používá se k nahrání vaší videoodpovědi na ranní otázku pomocí přední kamery."
+            "value" : "Slouží k nahrání tvé videoodpovědi na ranní otázku pomocí přední kamery."
           }
         },
         "da" : {
@@ -306,7 +306,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upotrebljava se za snimanje vašeg video odgovora na jutarnje pitanje prednjom kamerom."
+            "value" : "Koristi se za snimanje tvog video odgovora na jutarnje pitanje prednjom kamerom."
           }
         },
         "hu" : {
@@ -318,7 +318,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digunakan untuk merekam jawaban video Anda untuk pertanyaan pagi dengan kamera depan."
+            "value" : "Digunakan untuk merekam jawaban video kamu atas pertanyaan pagi dengan kamera depan."
           }
         },
         "it" : {
@@ -384,13 +384,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используется для записи вашего видеоответа на утренний вопрос с помощью фронтальной камеры."
+            "value" : "Используется, чтобы записывать ваш видеоответ на утренний вопрос с помощью фронтальной камеры."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používa sa na nahratie vašej videoodpovede na rannú otázku pomocou prednej kamery."
+            "value" : "Slúži na nahratie tvojej videoodpovede na rannú otázku pomocou prednej kamery."
           }
         },
         "sv" : {
@@ -414,7 +414,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Використовується для запису вашої відеовідповіді на ранкове запитання за допомогою фронтальної камери."
+            "value" : "Використовується, щоб записувати вашу відеовідповідь на ранкове запитання за допомогою фронтальної камери."
           }
         },
         "vi" : {
@@ -461,7 +461,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slouží k nahrávání zvuku vaší video odpovědi."
+            "value" : "Používá se k nahrávání zvuku vaší videoodpovědi."
           }
         },
         "da" : {
@@ -527,7 +527,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upotrebljava se za snimanje zvuka vašeg video odgovora."
+            "value" : "Koristi se za snimanje zvuka u tvojem video odgovoru."
           }
         },
         "hu" : {
@@ -539,7 +539,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digunakan untuk merekam audio dari jawaban video Anda."
+            "value" : "Digunakan untuk merekam audio dari jawaban videomu."
           }
         },
         "it" : {
@@ -605,13 +605,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используется для записи звука вашего видеоответа."
+            "value" : "Используется для записи звука в вашем видеоответе."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používa sa na nahrávanie zvuku vašej video odpovede."
+            "value" : "Používa sa na nahrávanie zvuku vašej videoodpovede."
           }
         },
         "sv" : {
@@ -635,7 +635,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Використовується для запису звуку вашої відеовідповіді."
+            "value" : "Використовується для запису звуку у вашій відеовідповіді."
           }
         },
         "vi" : {
@@ -682,7 +682,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používá se k uložení nahraných videoodpovědí do alba 'Memento Morning' v aplikaci Fotky."
+            "value" : "Používá se k ukládání tvých nahraných videoodpovědí do alba „Memento Morning“ ve Fotkách."
           }
         },
         "da" : {
@@ -748,7 +748,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upotrebljava se za spremanje tvojih snimljenih video odgovora u album 'Memento Morning' u Fotografijama."
+            "value" : "Koristi se za spremanje tvojih snimljenih video odgovora u album 'Memento Morning' u aplikaciji Foto."
           }
         },
         "hu" : {
@@ -760,7 +760,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digunakan untuk menyimpan jawaban video yang Anda rekam ke album 'Memento Morning' di Foto."
+            "value" : "Digunakan untuk menyimpan jawaban video yang direkam ke album 'Memento Morning' di Foto."
           }
         },
         "it" : {
@@ -826,13 +826,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используется для сохранения записанных видеответов в альбом 'Memento Morning' в Фото."
+            "value" : "Используется, чтобы сохранять записанные вами видеоответы в альбом «Memento Morning» в приложении «Фото»."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používa sa na uloženie vašich nahratých video odpovedí do albumu 'Memento Morning' vo Fotkách."
+            "value" : "Používa sa na ukladanie tvojich nahraných videoodpovedí do albumu „Memento Morning“ vo Fotkách."
           }
         },
         "sv" : {
@@ -856,7 +856,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Використовується для збереження записаних відеовідповідей в альбом 'Memento Morning' у Фото."
+            "value" : "Використовується, щоб зберігати записані вами відеовідповіді до альбому «Memento Morning» у програмі «Фото»."
           }
         },
         "vi" : {
@@ -903,7 +903,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slouží k přepisu zvuku vaší video odpovědi do textu v tomto zařízení."
+            "value" : "Slouží k přepisu zvuku tvé videoodpovědi do textu v tomto zařízení."
           }
         },
         "da" : {
@@ -957,7 +957,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "משמש לתמלול האודיו של תשובת הווידאו שלך לטקסט במכשיר זה."
+            "value" : "משמש לתמלול השמע של תשובת הווידאו שלך לטקסט במכשיר זה."
           }
         },
         "hi" : {
@@ -969,7 +969,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Koristi se za pretvaranje zvuka vašeg video odgovora u tekst na ovom uređaju."
+            "value" : "Koristi se za pretvaranje zvuka tvog video odgovora u tekst na ovom uređaju."
           }
         },
         "hu" : {
@@ -981,7 +981,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digunakan untuk mentranskripsikan audio jawaban video Anda menjadi teks di perangkat ini."
+            "value" : "Digunakan untuk mentranskripsikan audio dari jawaban video kamu menjadi teks di perangkat ini."
           }
         },
         "it" : {
@@ -1047,13 +1047,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используется для преобразования звука вашего видеответа в текст на этом устройстве."
+            "value" : "Используется, чтобы преобразовать аудио вашего видеоответа в текст на этом устройстве."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Používa sa na prepis zvuku vašej videoodpovede do textu na tomto zariadení."
+            "value" : "Používa sa na prepísanie zvuku tvojej videoodpovede do textu v tomto zariadení."
           }
         },
         "sv" : {
@@ -1077,7 +1077,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Використовується для перетворення звуку вашої відеовідповіді на текст на цьому пристрої."
+            "value" : "Використовується, щоб перетворити аудіо вашої відеовідповіді на текст на цьому пристрої."
           }
         },
         "vi" : {

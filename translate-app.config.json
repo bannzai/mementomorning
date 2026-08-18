@@ -40,6 +40,7 @@
     "zh-Hant"
   ],
   "engine": "openai",
+  "model": "gpt-5.4",
   "context": "毎朝「今日死ぬとしたら、何をやりたいか」というひとつの問いに答えてアラームを止める iOS 目覚ましアプリ「Memento Morning」(メメント・モリ × Morning)。回答はインカメラの録画かテキストで行い、毎朝の答えが人生ジャーナルとして蓄積される。派手な演出やゲーミフィケーションを排した、静かで内省的な世界観。UI 文言は簡潔で落ち着いた文体に訳し、詩的な原文 (Remember death. など) はトーンを保って訳す。アプリ名 Memento Morning と写真アプリのアルバム名 'Memento Morning' は訳さない。Premium は課金プラン名として各言語の App Store で一般的な表記にする。 二人称・敬称の文体は言語ごとに次で統一し、同じ言語内で混在させない: de は du、fr は vous、es/es-419 は tú、it は tu、pt-BR は você、pt-PT は tu、ca は tu、nl は je、da/nb/sv は du、fi は sinä、ru は вы、uk は ви、pl は ty、cs/sk は ty、hr は ti、hu は te、ro は tu、el は εσύ、he は男性単数 (אתה)、ar は أنت (男性単数)、hi は आप と 〜ें の敬体、id は kamu、ms は anda、tr は sen、vi は bạn、th は คุณ、ko は 해요体で「당신」を使わず主語を省略、zh-Hans/zh-Hant/zh-HK は 你 (您 を使わない)、ja は です・ます調で「あなた」を多用しない。",
   "source_dirs": [
     "MementoMorning"

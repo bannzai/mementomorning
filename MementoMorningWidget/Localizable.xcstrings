@@ -18,7 +18,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jít se podívat na oceán s rodinou"
+            "value" : "Jet s rodinou k oceánu"
           }
         },
         "da" : {
@@ -78,7 +78,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ići vidjeti ocean s obitelji"
+            "value" : "Otići s obitelji do mora"
           }
         },
         "hu" : {
@@ -156,13 +156,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Пойти посмотреть на океан с семьёй"
+            "value" : "Поехать к океану с семьёй"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ísť sa pozrieť na oceán s rodinou"
+            "value" : "Ísť s rodinou k oceánu"
           }
         },
         "sv" : {
@@ -186,7 +186,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Піти подивитися на океан із сім’єю"
+            "value" : "Поїхати до океану з родиною"
           }
         },
         "vi" : {
@@ -232,7 +232,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kdyby byl dnešek tvůj poslední den, co bys chtěl(a) dělat?"
+            "value" : "Kdyby byl dnešek tvůj poslední den, co bys chtěl dělat?"
           }
         },
         "da" : {
@@ -292,7 +292,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kad bi danas bio tvoj posljednji dan, što bi želio/željela raditi?"
+            "value" : "Kad bi ti danas bio posljednji dan, što bi htio učiniti?"
           }
         },
         "hu" : {
@@ -304,7 +304,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jika hari ini hari terakhirmu, apa yang ingin kamu lakukan?"
+            "value" : "Jika hari ini adalah hari terakhirmu, apa yang ingin kamu lakukan?"
           }
         },
         "it" : {
@@ -376,7 +376,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keby bol dnešok tvoj posledný deň, čo by si chcel(a) robiť?"
+            "value" : "Keby bol dnešok tvoj posledný deň, čo by si chcel robiť?"
           }
         },
         "sv" : {
@@ -400,7 +400,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Якби сьогодні був твій останній день, що б ти хотів(ла) зробити?"
+            "value" : "Якби сьогодні був ваш останній день, що б ви хотіли зробити?"
           }
         },
         "vi" : {
@@ -446,7 +446,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mějte dnešní odpověď na ploše."
+            "value" : "Měj dnešní odpověď na ploše."
           }
         },
         "da" : {
@@ -494,7 +494,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שמרו את התשובה של היום במסך הבית."
+            "value" : "השאר את התשובה של היום במסך הבית."
           }
         },
         "hi" : {
@@ -506,7 +506,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zadržite današnji odgovor na početnom zaslonu."
+            "value" : "Drži današnji odgovor na početnom zaslonu."
           }
         },
         "hu" : {
@@ -584,13 +584,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Оставляйте сегодняшний ответ на экране «Домой»."
+            "value" : "Сохраните сегодняшний ответ на главном экране."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Majte dnešnú odpoveď na ploche."
+            "value" : "Maj dnešnú odpoveď na ploche."
           }
         },
         "sv" : {
@@ -614,7 +614,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тримайте сьогоднішню відповідь на екрані «Додому»."
+            "value" : "Тримайте сьогоднішню відповідь на початковому екрані."
           }
         },
         "vi" : {
@@ -660,7 +660,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ještě nezodpovězeno"
+            "value" : "Ještě jsi neodpověděl"
           }
         },
         "da" : {
@@ -708,7 +708,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "עדיין לא נענה"
+            "value" : "עדיין לא ענית"
           }
         },
         "hi" : {
@@ -720,7 +720,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Još nije odgovoreno"
+            "value" : "Još nisi odgovorio"
           }
         },
         "hu" : {
@@ -798,13 +798,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Пока нет ответа"
+            "value" : "Вы ещё не ответили"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zatiaľ neodpovedané"
+            "value" : "Ešte si neodpovedal"
           }
         },
         "sv" : {
@@ -828,7 +828,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ще не відповіли"
+            "value" : "Ви ще не відповіли"
           }
         },
         "vi" : {
@@ -874,7 +874,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slova pro toto ráno"
+            "value" : "Dnešní ranní slova"
           }
         },
         "da" : {
@@ -922,7 +922,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "מילות הבוקר הזה"
+            "value" : "המילים של הבוקר"
           }
         },
         "hi" : {
@@ -934,7 +934,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Riječi ovog jutra"
+            "value" : "Jutrošnje riječi"
           }
         },
         "hu" : {
@@ -1018,7 +1018,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slová tohto rána"
+            "value" : "Dnešné ranné slová"
           }
         },
         "sv" : {
@@ -1160,7 +1160,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jawaban hari ini"
+            "value" : "Jawaban Hari Ini"
           }
         },
         "it" : {
@@ -1226,7 +1226,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ответ на сегодня"
+            "value" : "Сегодняшний ответ"
           }
         },
         "sk" : {
@@ -1256,7 +1256,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відповідь на сьогодні"
+            "value" : "Сьогоднішня відповідь"
           }
         },
         "vi" : {
