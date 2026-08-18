@@ -217,10 +217,214 @@
     },
     "If today were your last day, what would you want to do?" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إذا كان اليوم هو يومك الأخير، فماذا كنت ستفعل؟"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si avui fos el teu últim dia, què voldries fer?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kdyby byl dnešek tvůj poslední den, co bys chtěl(a) dělat?"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis i dag var din sidste dag, hvad ville du så gerne gøre?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn heute dein letzter Tag wäre, was würdest du tun wollen?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αν η σημερινή μέρα ήταν η τελευταία σου, τι θα ήθελες να κάνεις;"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si hoy fuera tu último día, ¿qué te gustaría hacer?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si hoy fuera tu último día, ¿qué te gustaría hacer?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jos tämä olisi viimeinen päiväsi, mitä haluaisit tehdä?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si aujourd’hui était ton dernier jour, que voudrais-tu faire ?"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אם היום היה היום האחרון שלך, מה היית רוצה לעשות?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अगर आज आपका आखिरी दिन होता, तो आप क्या करना चाहते?"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kad bi danas bio tvoj posljednji dan, što bi htio/htjela raditi?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha a mai nap lenne az utolsó napod, mit szeretnél csinálni?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jika hari ini adalah hari terakhirmu, apa yang ingin kamu lakukan?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se oggi fosse il tuo ultimo giorno, cosa vorresti fare?"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日死ぬとしたら、何をやりたいか"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘이 당신의 마지막 날이라면, 무엇을 하고 싶으신가요?"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jika hari ini hari terakhir anda, apa yang anda mahu lakukan?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis i dag var din siste dag, hva ville du gjort?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als vandaag je laatste dag was, wat zou je dan willen doen?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gdyby dzisiaj był twój ostatni dzień, co chciał(a)byś zrobić?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se hoje fosse seu último dia, o que você gostaria de fazer?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se hoje fosse o teu último dia, o que gostarias de fazer?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dacă azi ar fi ultima ta zi, ce ai vrea să faci?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если бы сегодня был ваш последний день, что бы вы хотели сделать?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keby bol dnešok tvoj posledný deň, čo by si chcel(a) robiť?"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om idag var din sista dag, vad skulle du vilja göra?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถ้าวันนี้เป็นวันสุดท้ายของคุณ คุณอยากทำอะไร?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bugün son günün olsaydı, ne yapmak isterdin?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Якби сьогодні був твій останній день, що б ти хотів(ла) зробити?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nếu hôm nay là ngày cuối cùng của bạn, bạn muốn làm gì?"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果今天是你的最後一天，你想做什麼？"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果今天是你的最后一天，你想做什么？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果今天是你的最後一天，你想做什麼？"
           }
         }
       }
