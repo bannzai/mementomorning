@@ -1,91 +1,295 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "NSAlarmKitUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to ring the alarm at your set time and stop it by answering today's question."
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAlarmKitUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لإطلاق المنبّه في الوقت الذي تحدّده وإيقافه بالإجابة عن سؤال اليوم."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per fer sonar l'alarma a l'hora que has configurat i aturar-la responent la pregunta d'avui."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží k zazvonění budíku v nastavený čas a k jeho zastavení odpovědí na dnešní otázku."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at ringe alarmen på det tidspunkt, du har indstillet, og stoppe den ved at besvare dagens spørgsmål."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um den Alarm zur festgelegten Zeit auszulösen und ihn durch Beantworten der heutigen Frage zu stoppen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για να ενεργοποιεί την αφύπνιση την ώρα που ορίσατε και να τη σταματά με την απάντηση στη σημερινή ερώτηση."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to ring the alarm at your set time and stop it by answering today's question."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora programada y detenerla respondiendo la pregunta de hoy."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora programada y detenerla respondiendo la pregunta de hoy."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään hälytyksen soittamiseen asettamanasi aikana ja sen pysäyttämiseen vastaamalla päivän kysymykseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour faire sonner l’alarme à l’heure définie et l’arrêter en répondant à la question du jour."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש להשמעת האזעקה בשעה שהגדרת ולעצירתה באמצעות מענה על שאלת היום."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह आपके निर्धारित समय पर अलार्म बजाने और आज के प्रश्न का उत्तर देकर उसे रोकने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koristi se za uključivanje alarma u vrijeme koje ste postavili i njegovo zaustavljanje odgovorom na današnje pitanje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A megadott időben megszólaltatja az ébresztést, és a mai kérdés megválaszolásával állítja le."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan alarm pada waktu yang Anda atur dan menghentikannya dengan menjawab pertanyaan hari ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usato per far suonare la sveglia all’ora impostata e interromperla rispondendo alla domanda di oggi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정한 시간에 알람을 울리고 오늘의 질문에 답해 알람을 멈추는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan penggera pada waktu yang anda tetapkan dan menghentikannya dengan menjawab soalan hari ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ringe alarmen på tidspunktet du har angitt, og stoppe den ved å svare på dagens spørsmål."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om het alarm op het ingestelde tijdstip te laten afgaan en te stoppen door de vraag van vandaag te beantwoorden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do uruchamiania alarmu o ustawionej godzinie i zatrzymywania go przez odpowiedź na dzisiejsze pytanie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para tocar o alarme no horário definido e interrompê-lo ao responder à pergunta de hoje."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para fazer tocar o alarme à hora definida e pará-lo ao responder à pergunta de hoje."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosit pentru a suna alarma la ora setată și pentru a o opri răspunzând la întrebarea de azi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется, чтобы включать будильник в установленное время и останавливать его, ответив на вопрос дня."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa sa na spustenie budíka v nastavený čas a jeho zastavenie odpoveďou na dnešnú otázku."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att låta alarmet ringa vid den tid du har ställt in och stoppa det genom att svara på dagens fråga."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อให้เสียงปลุกดังขึ้นตามเวลาที่คุณตั้งไว้ และหยุดได้ด้วยการตอบคำถามประจำวัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmı ayarladığınız saatte çalmak ve bugünün sorusunu yanıtlayarak durdurmak için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується, щоб увімкнути будильник у встановлений час і зупинити його, відповівши на сьогоднішнє запитання."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng để báo thức vào thời gian bạn đã đặt và tắt báo thức bằng cách trả lời câu hỏi hôm nay."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在您設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于在您设置的时间响起闹钟，并通过回答今天的问题来停止闹钟。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在您設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
           }
         }
       }
     },
-    "NSCameraUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to record your video answer to the morning question with the front camera."
+    "NSCameraUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to record your video answer to the morning question with the front camera."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝の問いに答える動画をインカメラで録画するために使用します"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝の問いに答える動画をインカメラで録画するために使用します"
           }
         }
       }
     },
-    "NSMicrophoneUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to record the audio of your video answer."
+    "NSMicrophoneUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to record the audio of your video answer."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画回答の音声を録音するために使用します"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画回答の音声を録音するために使用します"
           }
         }
       }
     },
-    "NSPhotoLibraryUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
+    "NSPhotoLibraryUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "録画した動画回答を写真アプリのアルバム「Memento Morning」に保存するために使用します"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画した動画回答を写真アプリのアルバム「Memento Morning」に保存するために使用します"
           }
         }
       }
     },
-    "NSSpeechRecognitionUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to transcribe the audio of your video answer into text on this device."
+    "NSSpeechRecognitionUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to transcribe the audio of your video answer into text on this device."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画回答の音声を端末上でテキストに変換するために使用します"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画回答の音声を端末上でテキストに変換するために使用します"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
