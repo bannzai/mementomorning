@@ -5798,13 +5798,8 @@
       }
     },
     "Endless follow-up alarm" : {
+      "comment" : "プレミアム機能名。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと (follow-up = 追いかけて再び鳴る)。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "منبّه متابع بلا نهاية"
-          }
-        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5833,18 +5828,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ατελείωτο ξυπνητήρι συνέχειας"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarma de seguimiento sin fin"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarma de seguimiento sin fin"
           }
         },
         "fi" : {
@@ -5889,12 +5872,6 @@
             "value" : "Alarm lanjutan tanpa akhir"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sveglia di follow-up infinita"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5929,18 +5906,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nieskończony alarm przypominający"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarme de acompanhamento infinito"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarme de seguimento sem fim"
           }
         },
         "ro" : {
@@ -6012,13 +5977,8 @@
       }
     },
     "Endless follow-up alarms" : {
+      "comment" : "プレミアム機能名 (ペイウォールの見出し)。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "منبهات متابعة لا تنتهي"
-          }
-        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6047,18 +6007,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ατελείωτες επαναλαμβανόμενες ειδοποιήσεις"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarmas de seguimiento sin fin"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarmas de seguimiento sin fin"
           }
         },
         "fi" : {
@@ -6103,12 +6051,6 @@
             "value" : "Alarm tindak lanjut tanpa henti"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sveglie di follow-up illimitate"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6143,18 +6085,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nieskończone alarmy przypominające"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarmes de acompanhamento infinitos"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alarmes de seguimento sem fim"
           }
         },
         "ro" : {
@@ -18210,13 +18140,8 @@
       }
     },
     "Stop, and the alarm stops too." : {
+      "comment" : "朝の回答画面で録画停止ボタンの下に出る説明。「録画を止めると、アラームも止まる」の意味。ユーザー自身が立ち止まる意味ではない",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "توقف، وسيتوقف المنبه أيضًا."
-          }
-        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18247,18 +18172,6 @@
             "value" : "Σταμάτα, και το ξυπνητήρι θα σταματήσει επίσης."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detente, y la alarma también se detendrá."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deténte, y la alarma también se detendrá."
-          }
-        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18283,28 +18196,10 @@
             "value" : "रोकें, और अलार्म भी बंद हो जाएगा।"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zaustavi se, i alarm će se također zaustaviti."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Állj meg, és az ébresztő is leáll."
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berhenti, dan alarm juga akan berhenti."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fermati, e anche la sveglia si fermerà."
           }
         },
         "ja" : {
@@ -18337,46 +18232,16 @@
             "value" : "Stop, en het alarm stopt ook."
           }
         },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zatrzymaj się, a alarm też się wyłączy."
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pare, e o alarme também para."
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pára, e o alarme também pára."
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oprește-te, iar alarma se oprește și ea."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Остановись, и будильник тоже остановится."
-          }
-        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zastavte sa a budík sa tiež zastaví."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stanna, så stannar också larmet."
           }
         },
         "th" : {
@@ -18401,24 +18266,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dừng lại, và báo thức cũng sẽ dừng."
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "停下來，鬧鐘也會停止。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "停下来，闹钟也会停止。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "停下來，鬧鐘也會停止。"
           }
         }
       }
@@ -22490,53 +22337,18 @@
       }
     },
     "Will you do yesterday's answer today?" : {
+      "comment" : "昨日答えた内容 (やりたいこと) を今日実行するか、を問う選択肢の見出し。「回答という行為をする」ではなく「昨日答えたことを今日やる」の意味",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "هل ستنفّذ إجابة الأمس اليوم؟"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Faràs avui la resposta d'ahir?"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uděláš dnes včerejší odpověď?"
           }
         },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vil du gøre gårsdagens svar i dag?"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wirst du die Antwort von gestern heute umsetzen?"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Θα κάνεις σήμερα την απάντηση της χθεσινής ημέρας;"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Harás hoy la respuesta de ayer?"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Harás hoy la respuesta de ayer?"
           }
         },
         "fi" : {
@@ -22557,36 +22369,6 @@
             "value" : "האם תבצעו היום את התשובה מאתמול?"
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "क्या आप कल के उत्तर को आज करेंगे?"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hoćeš li danas učiniti jučerašnji odgovor?"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Megcsinálod ma a tegnapi válaszodat?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apakah kamu akan melakukan jawaban kemarin hari ini?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Farai oggi la risposta di ieri?"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22599,88 +22381,16 @@
             "value" : "어제의 답을 오늘 해볼까요?"
           }
         },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adakah anda akan melakukan jawapan semalam hari ini?"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vil du gjøre gårsdagens svar i dag?"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ga je het antwoord van gisteren vandaag doen?"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Czy zrobisz dziś odpowiedź z wczoraj?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Você vai fazer hoje a resposta de ontem?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vais fazer hoje a resposta de ontem?"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vei face astăzi răspunsul de ieri?"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Сделаете ли вы сегодня ответ со вчерашнего дня?"
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Urobíš dnes včerajšiu odpoveď?"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ska du göra gårdagens svar idag?"
-          }
-        },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "คุณจะทำตามคำตอบของเมื่อวานวันนี้ไหม?"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dünkü yanıtı bugün yapacak mısın?"
-          }
-        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Чи зробиш сьогодні вчорашню відповідь?"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bạn sẽ làm câu trả lời hôm qua hôm nay chứ?"
           }
         },
         "zh-HK" : {
