@@ -1,0 +1,24 @@
+Memento Morning es un despertador que se detiene respondiendo una pregunta cada mañana.
+
+Solo hay una pregunta.
+«Si hoy fuera tu último día, ¿qué querrías hacer?»
+
+■ Un ritual matutino
+- La alarma suena a la hora que elijas
+- Responde la pregunta de hoy y tu mañana comienza
+- Hasta que respondas, la alarma volverá a llamarte suavemente
+
+■ Un diario de tu vida
+- Una respuesta al día, acumulándose en silencio
+- Tu calendario de vida se va llenando, una mañana a la vez
+- En los días 7, 30, 90, 180 y 365 te reencuentras con tu yo del pasado
+
+■ Un repaso nocturno
+- Por la noche solo preguntamos una cosa: «¿Cumpliste tu respuesta de hoy?»
+- Los días que sí y los días que no permanecen tal como fueron
+
+■ Privacidad
+- Tus respuestas se guardan solo en tu dispositivo. No se envía nada a ningún servidor
+
+Sin confeti, sin insignias, sin rachas en llamas.
+Solo una pregunta silenciosa y tus respuestas.
