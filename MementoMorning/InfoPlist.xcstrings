@@ -246,7 +246,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bruges til at optage dit videoответ til morgenens spørgsmål med frontkameraet."
+            "value" : "Bruges til at optage dit videosvar til morgenens spørgsmål med frontkameraet."
           }
         },
         "de" : {
@@ -348,7 +348,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brukes til å ta opp videoответen din på morgenens spørsmål med frontkameraet."
+            "value" : "Brukes til å ta opp videosvaret ditt på morgenens spørsmål med frontkameraet."
           }
         },
         "nl" : {
@@ -396,7 +396,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Används för att spela in ditt videосvar på morgonens fråga med frontkameran."
+            "value" : "Används för att spela in ditt videosvar på morgonens fråga med frontkameran."
           }
         },
         "th" : {
@@ -569,7 +569,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brukes til å ta opp lyden i videoответet ditt."
+            "value" : "Brukes til å ta opp lyden i videosvaret ditt."
           }
         },
         "nl" : {
@@ -975,7 +975,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arra szolgál, hogy az видеóválaszod hangját szöveggé írja át ezen az eszközön."
+            "value" : "Arra szolgál, hogy a videóválaszod hangját szöveggé írja át ezen az eszközön."
           }
         },
         "id" : {

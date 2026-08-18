@@ -5494,7 +5494,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elke ochtend neem je je antwoord op met de camera aan de voorzijde om het alarm te stoppen.\nProbeer het ერთხელ, vóór je eerste ochtend."
+            "value" : "Elke ochtend neem je je antwoord op met de camera aan de voorzijde om het alarm te stoppen.\nProbeer het één keer, vóór je eerste ochtend."
           }
         },
         "pl" : {
@@ -10344,7 +10344,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ei հիմա"
+            "value" : "Ei nyt"
           }
         },
         "fr" : {
@@ -19546,7 +19546,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ostoa ei voitu დასრულaa."
+            "value" : "Ostoa ei voitu suorittaa loppuun."
           }
         },
         "fr" : {
@@ -20914,13 +20914,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para preservar каждое manhã."
+            "value" : "Para guardar cada manhã."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para preservar каждое manhã."
+            "value" : "Para guardar cada manhã."
           }
         },
         "ro" : {
