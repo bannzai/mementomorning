@@ -2200,7 +2200,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todos tus mañanas"
+            "value" : "Todas tus mañanas"
           }
         },
         "es-419" : {
@@ -2266,7 +2266,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "당신의 모든 아침"
+            "value" : "모든 아침"
           }
         },
         "ms" : {
@@ -3122,7 +3122,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "알람을 끄려면 매일 아침 한 가지 질문에 답하세요.\n당신의 답변은 삶의 기록이 됩니다."
+            "value" : "알람을 끄려면 매일 아침 한 가지 질문에 답하세요.\n답변은 삶의 기록이 됩니다."
           }
         },
         "ms" : {
@@ -3930,7 +3930,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vous y tenez-vous ?"
+            "value" : "Vous vous y tenez ?"
           }
         },
         "he" : {
@@ -5994,19 +5994,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無盡跟進鬧鐘"
+            "value" : "無限次重複響鈴"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无尽跟进闹钟"
+            "value" : "无限次重复响铃"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無盡跟進鬧鐘"
+            "value" : "無限次重複響鈴"
           }
         }
       }
@@ -6208,19 +6208,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無限後續鬧鐘"
+            "value" : "無限次重複響鈴"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无限追问闹钟"
+            "value" : "无限次重复响铃"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無限追問鬧鐘"
+            "value" : "無限次重複響鈴"
           }
         }
       }
@@ -7616,7 +7616,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "오늘이 당신의 마지막 날이라면, 무엇을 하고 싶으신가요?"
+            "value" : "오늘이 마지막 날이라면, 무엇을 하고 싶나요?"
           }
         },
         "ms" : {
@@ -13656,7 +13656,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Записывает ваш видеoответ."
+            "value" : "Записывает ваш видеоответ."
           }
         },
         "sk" : {
@@ -14000,7 +14000,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "मृत्यु को याद रखो।\nफिर अपनी सुबह शुरू करो।"
+            "value" : "मृत्यु को याद रखें।\nफिर अपनी सुबह शुरू करें।"
           }
         },
         "hr" : {
@@ -14994,7 +14994,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將您的影片儲存到「照片」中的 'Memento Morning' 相簿。"
+            "value" : "將你的影片儲存到「照片」中的 'Memento Morning' 相簿。"
           }
         }
       }
@@ -19736,7 +19736,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Kauf wurde abgeschlossen, aber Premium konnte nicht bestätigt werden. Bitte versuchen Sie später, Käufe wiederherzustellen."
+            "value" : "Der Kauf wurde abgeschlossen, aber Premium konnte nicht bestätigt werden. Bitte versuche später, die Käufe wiederherzustellen."
           }
         },
         "el" : {
@@ -20242,7 +20242,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "오늘 아침에 당신은 \"%@\"라고 했어요"
+            "value" : "오늘 아침에 \"%@\"라고 했어요"
           }
         },
         "ms" : {
@@ -23452,7 +23452,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "당신의 답변은 여기, 매일 아침 하나씩 쌓여갑니다."
+            "value" : "답변은 여기에 매일 아침 하나씩 쌓여갑니다."
           }
         },
         "ms" : {

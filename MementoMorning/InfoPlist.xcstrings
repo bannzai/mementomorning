@@ -205,19 +205,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用於在您設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用于在您设置的时间响起闹钟，并通过回答今天的问题来停止闹钟。"
+            "value" : "用于在你设置的时间响起闹钟，并通过回答今天的问题来停止闹钟。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用於在您設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今天的問題來停止鬧鐘。"
           }
         }
       }
@@ -252,7 +252,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wird verwendet, um Ihre Videoantwort auf die morgendliche Frage mit der Frontkamera aufzuzeichnen."
+            "value" : "Wird verwendet, um deine Videoantwort auf die morgendliche Frage mit der Frontkamera aufzuzeichnen."
           }
         },
         "el" : {
@@ -282,7 +282,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Käytetään video­vastauksesi tallentamiseen aamun kysymykseen etukameralla."
+            "value" : "Käytetään videovastauksesi tallentamiseen aamun kysymykseen etukameralla."
           }
         },
         "fr" : {
@@ -312,7 +312,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Az első kamerával rögzíti a reggeli kérdésre adott videóválaszát."
+            "value" : "Az elülső kamerával rögzíti a reggeli kérdésre adott videóválaszodat."
           }
         },
         "id" : {
@@ -372,7 +372,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usado para gravar a sua resposta em vídeo à pergunta da manhã com a câmara frontal."
+            "value" : "Usado para gravar a tua resposta em vídeo à pergunta da manhã com a câmara frontal."
           }
         },
         "ro" : {
@@ -467,13 +467,13 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bruges til at optage lyden i dit video­svar."
+            "value" : "Bruges til at optage lyden i dit videosvar."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wird verwendet, um den Ton Ihrer Videoantwort aufzunehmen."
+            "value" : "Wird verwendet, um den Ton deiner Videoantwort aufzunehmen."
           }
         },
         "el" : {
@@ -617,7 +617,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Används för att spela in ljudet i ditt video­svar."
+            "value" : "Används för att spela in ljudet i ditt videosvar."
           }
         },
         "th" : {
@@ -724,7 +724,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Käytetään tallentamaan nauhoitetut video­vastauksesi Kuvat-sovelluksen 'Memento Morning' -albumiin."
+            "value" : "Käytetään tallentamaan nauhoitetut videovastauksesi Kuvat-sovelluksen 'Memento Morning' -albumiin."
           }
         },
         "fr" : {
@@ -754,7 +754,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A rögzített videóválaszok Mentéséhez használjuk a Fotók 'Memento Morning' albumába."
+            "value" : "A rögzített videóválaszaid mentéséhez használjuk a Fotók 'Memento Morning' albumába."
           }
         },
         "id" : {
@@ -790,7 +790,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brukes til å lagre de innspilte video­svarene dine i albumet 'Memento Morning' i Bilder."
+            "value" : "Brukes til å lagre de innspilte videosvarene dine i albumet 'Memento Morning' i Bilder."
           }
         },
         "nl" : {
@@ -814,7 +814,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usado para guardar as suas respostas em vídeo gravadas no álbum 'Memento Morning' nas Fotos."
+            "value" : "Usado para guardar as tuas respostas em vídeo gravadas no álbum 'Memento Morning' nas Fotos."
           }
         },
         "ro" : {
@@ -868,7 +868,7 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "用於將你錄製的影片回答儲存到「Memento Morning」相簿中的「照片」app。"
+            "value" : "用於將你錄製的影片回答儲存到「照片」app 中的「Memento Morning」相簿。"
           }
         },
         "zh-Hans" : {
@@ -909,13 +909,13 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bruges til at transskribere lyden fra dit video­svar til tekst på denne enhed."
+            "value" : "Bruges til at transskribere lyden fra dit videosvar til tekst på denne enhed."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wird verwendet, um den Ton Ihrer Videoantwort auf diesem Gerät in Text zu transkribieren."
+            "value" : "Wird verwendet, um den Ton deiner Videoantwort auf diesem Gerät in Text zu transkribieren."
           }
         },
         "el" : {
@@ -1011,7 +1011,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brukes til å transkribere lyden i videovaret ditt til tekst på denne enheten."
+            "value" : "Brukes til å transkribere lyden i videosvaret ditt til tekst på denne enheten."
           }
         },
         "nl" : {
@@ -1035,13 +1035,13 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usado para transcrever o áudio da sua resposta em vídeo para texto neste dispositivo."
+            "value" : "Usado para transcrever o áudio da tua resposta em vídeo para texto neste dispositivo."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este folosit pentru a transcrie sunetul răspunsului dvs. video în text pe acest dispozitiv."
+            "value" : "Este folosit pentru a transcrie sunetul răspunsului tău video în text pe acest dispozitiv."
           }
         },
         "ru" : {
