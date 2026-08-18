@@ -30,7 +30,8 @@ RevenueCat SDK (課金) だけである。
   `MementoMorning/Shared/Entitlement/PremiumEntitlement.swift` の `Purchases.configure(withAPIKey:)` のみで、
   `Purchases.logIn` によるユーザー ID 連携は行っていない (匿名 App User ID のみ) ため「ユーザーに紐付けない」
 - 用途に APP_FUNCTIONALITY と ANALYTICS の両方を含めるのは、RevenueCat 公式が最低要件とする回答に合わせたもの
-  (出典: RevenueCat「Apple App Privacy」ドキュメント。`~/.claude/skills/appstore-app-privacy/references/sdk_privacy_answers.md` に整理済み)
+  (出典: https://www.revenuecat.com/docs/platform-resources/apple-platform-resources/apple-app-privacy 。
+  Analytics は RevenueCat ダッシュボード機能のため、App Functionality はレシート検証と entitlement 付与のために必要とされる)
 - 補足: SDK 同梱の Privacy Manifest (後述) は purposes を App Functionality のみで宣言しているが、
   ASC の回答と Privacy Manifest は別の成果物であり、ASC 側は RevenueCat の ASC 回答ガイド (より広い方) に従う
 
@@ -44,7 +45,7 @@ Apple の「収集」の定義は「端末外へ送信し、開発者や第三�
 | 毎朝の回答テキスト | SwiftData でローカル保存。Widget へは App Groups 共有ストア経由 (端末内) | `MementoMorning/Shared/` の SwiftData モデル、[ADR 0001](adr/0001-local-only-swiftdata-revenuecat-infra.md) |
 | 回答動画 (カメラ・マイク) | インカメラで録画し、一時ディレクトリ経由で写真アプリのアルバム「Memento Morning」へ保存 (端末内のみ) | `MementoMorning/Features/MorningQuestion/VideoAnswerCamera.swift`、`VideoAnswerPhotoLibrary.swift` |
 | 音声の文字起こし | `SFSpeechRecognizer` に `requiresOnDeviceRecognition = true` を指定し、端末内でのみ認識 | `MementoMorning/Features/MorningQuestion/VideoAnswerTranscriber.swift:74` |
-| 写真ライブラリ | 保存 (書き込み) のみで読み取りなし | `MementoMorning/Features/MorningQuestion/VideoAnswerPhotoLibrary.swift`、`MementoMorning/Info.plist` の `NSPhotoLibraryUsageDescription` |
+| 写真ライブラリ | 保存に加えて、アプリが作成したアルバム「Memento Morning」の検索 (`PHAssetCollection.fetchAssetCollections`) と、文字起こしのための保存済み動画の読み出し (`PHAsset.fetchAssets` / `requestAVAsset`) を行う。いずれも端末内で完結し、端末外へ送信しない | `MementoMorning/Features/MorningQuestion/VideoAnswerPhotoLibrary.swift:52`、`VideoAnswerTranscriber.swift:55`、`MementoMorning/Info.plist` の `NSPhotoLibraryUsageDescription` |
 | アラーム設定・オンボーディング状態等 | UserDefaults / SwiftData でローカル保存 | `MementoMorning/MementoMorningApp.swift` ほか |
 
 分析 SDK (Firebase 等)・広告 SDK・IDFA は使用していない (依存は RevenueCat のみ。
