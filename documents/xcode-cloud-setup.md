@@ -19,9 +19,10 @@ main へ push → Xcode Cloud が検知 → ci_post_clone.sh で Config.local.xc
 
 | 項目 | 状態 |
 |---|---|
-| `ci_scripts/ci_post_clone.sh` | 環境変数 `REVENUECAT_API_KEY` から `Config.local.xcconfig` を生成する。未設定なら生成せず正常終了し、Release の欠落は下記 preBuild 検査が検出する |
+| `ci_scripts/ci_post_clone.sh` | 環境変数 `REVENUECAT_API_KEY` から `Config.local.xcconfig` を生成する (実キーの適用は `[config=Release]` で Release 構成に限定し、Debug のテストは Test Store キーのまま動く)。未設定なら生成せず正常終了し、Release の欠落は下記 preBuild 検査が検出する |
 | scheme の共有 | `MementoMorning` scheme は `MementoMorning.xcodeproj/xcshareddata/xcschemes/` に共有済み (Xcode Cloud は共有 scheme しか扱えない) |
 | Release キーの検査 | MementoMorning ターゲットの Build Phase「Require App Store REVENUECAT_API_KEY for Release」が、Release 構成で `appl_` 以外のキーをビルドエラーにする。Secret の設定漏れはアーカイブ失敗で気づける |
+| 輸出コンプライアンスの事前回答 | `MementoMorning/Info.plist` に `ITSAppUsesNonExemptEncryption = false` を設定済み (通信は RevenueCat SDK の HTTPS のみ)。App Store Connect での毎ビルドの回答は不要で、TestFlight の Missing Compliance で自動配布が止まらない |
 
 補足: `ci_scripts/` は Xcode プロジェクト直下 (`.xcodeproj` と同じ階層) に置くだけでよく、Xcode プロジェクトへのファイル追加は不要。Xcode Cloud が clone 直後に `ci_post_clone.sh` を自動実行する。
 参考: https://developer.apple.com/documentation/xcode/writing-custom-build-scripts
@@ -48,11 +49,12 @@ main へ push → Xcode Cloud が検知 → ci_post_clone.sh で Config.local.xc
 | Start Conditions | Branch Changes: `main` (タグ運用にしたい場合は Tag Changes に変更) |
 | Environment | 最新の macOS / Xcode。**Clean を有効**にする (アーカイブの再現性のため) |
 | Environment Variables | 下記「3. Secret の登録」 |
-| Actions | Archive — Platform: iOS, Scheme: `MementoMorning`, Deployment Preparation: **TestFlight (Internal Testing Only)** (App Store 提出まで見据える場合は TestFlight and App Store) |
+| Actions | Archive — Platform: iOS, Scheme: `MementoMorning`, Deployment Preparation: **TestFlight and App Store** (この binary をそのまま App Store 提出に使うため。内部テスト専用にしたい場合のみ TestFlight (Internal Testing Only)) |
 | Post-Actions | TestFlight Internal Testing — 配布先の内部テスターグループを選択 (グループは App Store Connect の TestFlight で事前に作成する) |
 
 - Archive アクションは Release 構成でビルドされるため、`Config.local.xcconfig` の appl_ キーが必須になる (preBuild 検査)
-- テストをワークフローに含めたい場合は Test アクション (Scheme: `MementoMorning`) を追加する。テストは Debug 構成で走るため Secret なしでも動く (Test Store キー)
+- テストをワークフローに含めたい場合は Test アクション (Scheme: `MementoMorning`) を追加する。テストは Debug 構成で走るため Secret なしでも Test Store キーで動く (`ci_post_clone.sh` の生成する実キーは `[config=Release]` で Release 限定のため、Secret を登録していても Debug は Test Store のまま)
+  - Test アクションの destination (simulator) は **iOS 26.2 以下**の runtime を選ぶこと。iOS 26.5 の simulator は StoreKit Testing が機能せず、`StoreKitConfigurationTests` が全テストを skip するため、商品価格・無料トライアル・entitlement 付与の検査が実質実行されない (AGENTS.md「検証方法」参照)。26.2 以下を選べない Xcode バージョンでは StoreKit の検査は担保されない前提で扱う
 
 ### 3. Secret の登録
 
@@ -88,8 +90,8 @@ Xcode Cloud は既定で cloud signing (マネージド署名) を使う。初�
 ```sh
 # Config.local.xcconfig が生成されること (実キー運用中の場合は事前に退避する)
 REVENUECAT_API_KEY=dummy bash ci_scripts/ci_post_clone.sh
-cat Config.local.xcconfig   # → REVENUECAT_API_KEY = dummy
-rm Config.local.xcconfig    # 後片付け (dummy キーを残すと Debug ビルドの課金検証が壊れる)
+cat Config.local.xcconfig   # → REVENUECAT_API_KEY[config=Release] = dummy
+rm Config.local.xcconfig    # 後片付け (CI 用の生成物をローカルに残さない)
 
 # 未設定なら生成されないこと
 bash ci_scripts/ci_post_clone.sh
