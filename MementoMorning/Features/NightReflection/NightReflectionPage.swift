@@ -15,6 +15,8 @@ struct NightReflectionPage: View {
     @State private var isSaveFailed = false
     /// やれた/やれていないの記録操作へハプティクスを添えるためのトリガー。記録のたびに増える
     @State private var recordHapticTrigger = 0
+    /// 動画の再生画面 (AnswerVideoPlayerPage) を開く対象の動画 (issue #80)
+    @State private var replayTargetVideo: VideoAnswerReplayTarget?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -41,6 +43,22 @@ struct NightReflectionPage: View {
                             .foregroundStyle(Color.warmWhite)
                             .multilineTextAlignment(.center)
                             .accessibilityIdentifier("night_reflection_answer_text")
+
+                        // 動画で答えた朝は、今朝の自分の動画を見返す導線を添える (handoff 1j「今朝 5:52 のあなた · 動画を見返す」)
+                        if let videoAssetIdentifier = answer.videoAssetIdentifier {
+                            Button {
+                                replayTargetVideo = VideoAnswerReplayTarget(videoAssetIdentifier: videoAssetIdentifier)
+                            } label: {
+                                // ja: 今朝 %@ のあなた · 動画を見返す
+                                Text("You at \(answer.createdDateTime, format: .dateTime.hour().minute()) this morning · Watch the video")
+                                    .font(.system(size: 11))
+                                    .tracking(1.1)
+                                    .foregroundStyle(Color.warmWhite.opacity(0.4))
+                                    .underline()
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("night_reflection_video_replay_link")
+                        }
 
                         if let isFulfilled = answer.isFulfilled {
                             // ja: 記録済み: %@
@@ -114,6 +132,9 @@ struct NightReflectionPage: View {
         .background(Color.ink.ignoresSafeArea())
         // 記録の操作に軽いハプティクスを添える (handoff の Interactions & Behavior)
         .sensoryFeedback(.impact(flexibility: .rigid), trigger: recordHapticTrigger)
+        .sheet(item: $replayTargetVideo) { target in
+            AnswerVideoPlayerPage(videoAssetIdentifier: target.videoAssetIdentifier)
+        }
         .onAppear {
             answer = fetchMorningAnswer(answeredDate: notificationDate, modelContext: modelContext)
         }

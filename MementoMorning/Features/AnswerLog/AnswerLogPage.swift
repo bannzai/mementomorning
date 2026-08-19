@@ -8,6 +8,8 @@ struct AnswerLogPage: View {
 
     /// 共有カードを表示する対象の回答
     @State private var shareTargetAnswer: MorningAnswer?
+    /// 動画の再生画面 (AnswerVideoPlayerPage) を開く対象の動画 (issue #80)
+    @State private var replayTargetVideo: VideoAnswerReplayTarget?
     /// ペイウォールの表示状態。無料枠のロック行から開く
     @State private var isPaywallPresented = false
 
@@ -75,13 +77,43 @@ struct AnswerLogPage: View {
         .sheet(item: $shareTargetAnswer) { answer in
             AnswerShareCardPage(answer: answer)
         }
+        .sheet(item: $replayTargetVideo) { target in
+            AnswerVideoPlayerPage(videoAssetIdentifier: target.videoAssetIdentifier)
+        }
         .sheet(isPresented: $isPaywallPresented) {
             PaywallPage()
         }
     }
 
-    /// 回答 1 行 (日付 + 夜の結果 + 回答本文、ヘアライン区切り)。タップで共有カードを開く
+    /// 回答 1 行 (日付 + 夜の結果 + 回答本文、ヘアライン区切り)。タップで共有カードを開く。
+    /// 動画で答えた行は本文の下に「動画を見返す」導線を添え、再生画面を開く (issue #80)
     private func answerRow(answer: MorningAnswer) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            shareCardButton(answer: answer)
+            if let videoAssetIdentifier = answer.videoAssetIdentifier {
+                Button {
+                    replayTargetVideo = VideoAnswerReplayTarget(videoAssetIdentifier: videoAssetIdentifier)
+                } label: {
+                    // ja: 動画を見返す
+                    Text("Watch the video")
+                        .font(.system(size: 11))
+                        .tracking(1.1)
+                        .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        .underline()
+                        .padding(.bottom, 19)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("journal_video_replay_link")
+            }
+        }
+        .overlay(alignment: .bottom) {
+            HairlineDivider()
+        }
+    }
+
+    /// 回答本文の部分 (日付 + 夜の結果 + 回答本文)。タップで共有カードを開く
+    private func shareCardButton(answer: MorningAnswer) -> some View {
         let isToday = Calendar.current.isDateInToday(answer.answeredDate)
         return Button {
             shareTargetAnswer = answer
@@ -124,15 +156,14 @@ struct AnswerLogPage: View {
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.vertical, 19)
+            .padding(.top, 19)
+            // 動画の行は「動画を見返す」導線が下の余白を受け持つため、本文側の下余白を詰める
+            .padding(.bottom, answer.videoAssetIdentifier == nil ? 19 : 10)
             // plain スタイルの Button はラベルの描画領域しかタップに反応しないため、
             // 行全体に広げた透明領域もヒット対象にして行のどこを押しても共有カードを開けるようにする
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .overlay(alignment: .bottom) {
-            HairlineDivider()
-        }
     }
 
     /// 無料枠のロック行。タップでペイウォールを開く
@@ -175,12 +206,12 @@ struct AnswerLogPage_Previews: PreviewProvider {
     static var previews: some View {
         let container = PersistenceController.shared.container
         let modelContext = ModelContext(container)
-        // 直近 7 日以内の回答 2 件 + 8 日以上前の回答 1 件 (無料状態では見えない) のサンプル
+        // 直近 7 日以内の回答 2 件 (うち 1 件は動画回答) + 8 日以上前の回答 1 件 (無料状態では見えない) のサンプル
         let _ = {
             // Preview の body は複数回評価されるため、共有 in-memory コンテナへの重複挿入を防いで冪等にする
             guard (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) == 0 else { return }
             modelContext.insert(MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く"))
-            modelContext.insert(MorningAnswer(answeredDate: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, text: "友人に手紙を書く"))
+            modelContext.insert(MorningAnswer(answeredDate: Calendar.current.date(byAdding: .day, value: -3, to: .now)!, text: "友人に手紙を書く", videoAssetIdentifier: "preview-video"))
             modelContext.insert(MorningAnswer(answeredDate: Calendar.current.date(byAdding: .day, value: -10, to: .now)!, text: "山に登る"))
             try! modelContext.save()
         }()
