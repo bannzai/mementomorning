@@ -26,9 +26,8 @@ final class AnswerVideoPlayerTests: XCTestCase {
         XCTAssertFalse(isPhotoLibraryReadableForVideoAnswer(photoLibraryStatus: .notDetermined))
     }
 
-    func testMissingAssetReturnsNilPlayerItem() async {
-        // 写真アプリで削除された動画 (存在しない localIdentifier) は再生できず nil になる
-        let playerItem = await loadVideoAnswerPlayerItem(videoAssetIdentifier: "missing-video-asset")
-        XCTAssertNil(playerItem)
+    func testMissingAssetReturnsNil() {
+        // 写真アプリで削除された動画 (存在しない localIdentifier) は見つからず nil になる (再生画面では「写真アプリにありません」の表示)
+        XCTAssertNil(fetchVideoAnswerAsset(videoAssetIdentifier: "missing-video-asset"))
     }
 }

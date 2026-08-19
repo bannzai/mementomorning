@@ -28,18 +28,28 @@ struct AnswerVideoPlayerPage: View {
             case .notFound:
                 // ja: この動画は写真アプリにありません
                 unavailableText("This video is no longer in Photos.")
+            case .loadFailed:
+                VStack(spacing: 20) {
+                    // ja: 動画を読み込めませんでした。通信状態を確認してもう一度お試しください
+                    unavailableText("Couldn't load the video. Check your connection and try again.")
+                    Button {
+                        state = .loading
+                        Task { await load() }
+                    } label: {
+                        // ja: もう一度試す
+                        Text("Try again")
+                            .font(.system(size: 13))
+                            .foregroundStyle(Color.warmWhite.opacity(0.55))
+                            .underline()
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("answer_video_retry_button")
+                }
             }
         }
         .presentationDragIndicator(.visible)
         .task {
-            state = await loadVideoAnswerReplayState(videoAssetIdentifier: videoAssetIdentifier)
-            if case .playable(let player) = state {
-                // 既定の ambient カテゴリではサイレントスイッチ ON の端末で音声が出ず、朝の自分の声を聞き返せないため、
-                // 写真アプリの動画再生と同じく playback カテゴリで再生する。失敗しても映像の再生は妨げない
-                try? AVAudioSession.sharedInstance().setCategory(.playback)
-                try? AVAudioSession.sharedInstance().setActive(true)
-                player.play()
-            }
+            await load()
         }
         .onDisappear {
             // シートを閉じた後も音声だけ鳴り続けないよう止め、他アプリの音声再開を通知してセッションを返す
@@ -50,7 +60,24 @@ struct AnswerVideoPlayerPage: View {
         }
     }
 
-    /// 再生できない理由の表示 (削除済み・権限なし)
+    /// 動画を読み出し、再生できれば再生を始める。初回表示と「もう一度試す」から呼ぶ
+    private func load() async {
+        let loadedState = await loadVideoAnswerReplayState(videoAssetIdentifier: videoAssetIdentifier)
+        // iCloud からのダウンロード中にシートを閉じると .task はキャンセルされるが、Photos への要求は
+        // キャンセルを監視せず完了まで進む。閉じた後に再生を始めると onDisappear で止められず音声だけが流れるため、
+        // 読み込み後・再生前にキャンセルを確認して打ち切る
+        guard !Task.isCancelled else { return }
+        state = loadedState
+        if case .playable(let player) = loadedState {
+            // 既定の ambient カテゴリではサイレントスイッチ ON の端末で音声が出ず、朝の自分の声を聞き返せないため、
+            // 写真アプリの動画再生と同じく playback カテゴリで再生する。失敗しても映像の再生は妨げない
+            try? AVAudioSession.sharedInstance().setCategory(.playback)
+            try? AVAudioSession.sharedInstance().setActive(true)
+            player.play()
+        }
+    }
+
+    /// 再生できない理由の表示 (削除済み・権限なし・読み込み失敗)
     private func unavailableText(_ key: LocalizedStringKey) -> some View {
         Text(key)
             .font(.system(size: 14, weight: .light))
@@ -79,6 +106,8 @@ enum VideoAnswerReplayState {
     case photoLibraryDenied
     /// 権限はあるが動画が見つからない (写真アプリでユーザーが削除した等)
     case notFound
+    /// 動画は存在するが読み込めなかった (iCloud 写真で端末から退避された動画のオフライン時や一時的なエラー)。再試行できる
+    case loadFailed
 }
 
 /// 写真ライブラリの権限状態で、保存済みの回答動画を読み出せるかを判定する純粋関数。
@@ -94,18 +123,24 @@ func loadVideoAnswerReplayState(videoAssetIdentifier: String) async -> VideoAnsw
     guard isPhotoLibraryReadableForVideoAnswer(photoLibraryStatus: PHPhotoLibrary.authorizationStatus(for: .readWrite)) else {
         return .photoLibraryDenied
     }
-    guard let playerItem = await loadVideoAnswerPlayerItem(videoAssetIdentifier: videoAssetIdentifier) else {
+    // 「動画が無い (削除済み)」と「動画はあるが読み込めない (一時的な失敗)」を分け、後者だけ再試行に誘導する
+    guard let asset = fetchVideoAnswerAsset(videoAssetIdentifier: videoAssetIdentifier) else {
         return .notFound
+    }
+    guard let playerItem = await requestVideoAnswerPlayerItem(asset: asset) else {
+        return .loadFailed
     }
     return .playable(AVPlayer(playerItem: playerItem))
 }
 
-/// 写真ライブラリから回答動画の AVPlayerItem を取得する。動画が見つからない・取得に失敗した時は nil を返す。
+/// 写真ライブラリから回答動画の PHAsset を引く。写真アプリで削除済みなど、見つからない時は nil を返す
+func fetchVideoAnswerAsset(videoAssetIdentifier: String) -> PHAsset? {
+    PHAsset.fetchAssets(withLocalIdentifiers: [videoAssetIdentifier], options: nil).firstObject
+}
+
+/// 回答動画の AVPlayerItem を取得する。取得に失敗した時は nil を返す。
 /// 文字起こし (VideoAnswerTranscriber) と違い、iCloud 写真で端末から退避された動画も見返せるようダウンロードを許可する
-func loadVideoAnswerPlayerItem(videoAssetIdentifier: String) async -> AVPlayerItem? {
-    guard let asset = PHAsset.fetchAssets(withLocalIdentifiers: [videoAssetIdentifier], options: nil).firstObject else {
-        return nil
-    }
+func requestVideoAnswerPlayerItem(asset: PHAsset) async -> AVPlayerItem? {
     let options = PHVideoRequestOptions()
     options.isNetworkAccessAllowed = true
     let canResume = makeResumeOnceGate()

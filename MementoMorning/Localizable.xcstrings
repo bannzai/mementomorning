@@ -1168,6 +1168,26 @@
           }
         }
       }
+    },
+    "Couldn't load the video. Check your connection and try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画を読み込めませんでした。通信状態を確認してもう一度お試しください"
+          }
+        }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度試す"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
