@@ -25,14 +25,17 @@ func recordSharePromptPresented(date: Date) {
 
 /// 共有を促すダイアログを表示すべきかを判定する純粋関数。
 /// 今日の回答がある朝に限り、一度も出していなければ出す (初回)。以降は前回の表示から
-/// sharePromptIntervalDays (14 日) 以上経った朝に出す (日数は暦日で数え、時刻の差では数えない)
+/// sharePromptIntervalDays (14 日) 以上経った朝に出す (日数は暦日で数え、時刻の差では数えない)。
+/// 動画回答の文字起こしが終わる前 (本文が仮テキスト placeholderText のまま) は、仮テキストのカードを共有させないため出さない。
+/// 文字起こしの完了や「直す」で本文が変わった時に判定し直す
 func shouldPresentSharePrompt(
-    hasTodayAnswer: Bool,
+    todayAnswerText: String?,
+    placeholderText: String,
     lastPromptedDate: Date?,
     today: Date,
     calendar: Calendar = .current
 ) -> Bool {
-    guard hasTodayAnswer else { return false }
+    guard let todayAnswerText, todayAnswerText != placeholderText else { return false }
     guard let lastPromptedDate else { return true }
     let elapsedDays = calendar.dateComponents(
         [.day],

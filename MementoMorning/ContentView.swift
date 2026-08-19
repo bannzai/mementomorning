@@ -83,6 +83,8 @@ private struct HomeContent: View {
     /// 共有を促すダイアログを直近に表示した日時 (epoch 秒。0 = 未記録)。
     /// Date は @AppStorage で扱えないため Double で監視し、読み取りは lastSharePromptDate() を使う
     @AppStorage(.lastSharePromptDate) private var lastSharePromptDate: Double = 0
+    /// 7 日の節目を表示済みかどうか。節目の提示が確定する前に共有を促すダイアログを出さないための判定に使う
+    @AppStorage(.isSevenMorningsMilestonePresented) private var isSevenMorningsMilestonePresented = false
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
     /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
@@ -160,8 +162,9 @@ private struct HomeContent: View {
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
-        // 回答が成立してホームへ戻った時 (今日の回答が現れた時) と、起動時点で今日の回答がある時に判定する
-        .onChange(of: todayAnswers.count, initial: true) { _, _ in
+        // 回答が成立してホームへ戻った時 (今日の回答が現れた時)・起動時点で今日の回答がある時に加え、
+        // 動画回答の文字起こしの完了や「直す」で本文が仮テキストから変わった時にも判定する
+        .onChange(of: todayAnswers.first?.text, initial: true) { _, _ in
             presentSharePromptIfNeeded()
         }
         // 朝の問い・7 日の節目などが閉じてホームが前面に戻った時に判定し直す
@@ -181,8 +184,16 @@ private struct HomeContent: View {
         // 多言語スクリーンショット・Preview は今日の回答を持つサンプルを表示するため、撮影・描画確認をダイアログで覆わない
         if isUnitTest || isSnapshotUITest || isPreview { return }
         if isCoveredByOtherScreen || isSharePromptPresented { return }
+        // 7 件目の回答が成立した更新では、親 (ContentView) が節目シートを提示する変更がまだ isCoveredByOtherScreen に
+        // 伝わっていないことがある。節目が提示されるべき状態 (件数が 7 件以上で未表示) なら節目を優先して待ち、
+        // シートが閉じて isCoveredByOtherScreen が変わった時に判定し直す (節目シートの上に出したり、競合で出ないまま記録したりしない)
+        if shouldPresentSevenMorningsMilestone(
+            answerCount: (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0,
+            isPresented: isSevenMorningsMilestonePresented
+        ) { return }
         guard shouldPresentSharePrompt(
-            hasTodayAnswer: !todayAnswers.isEmpty,
+            todayAnswerText: todayAnswers.first?.text,
+            placeholderText: videoAnswerPlaceholderText,
             lastPromptedDate: MementoMorning.lastSharePromptDate(),
             today: today
         ) else { return }
@@ -319,15 +330,18 @@ private struct HomeContent: View {
                             .underline()
                     }
                     .accessibilityIdentifier("home_today_answer_edit_link")
-                    // 撮影後にジャーナルへ回らなくても、今朝のことばをその場から共有カードにできる導線 (issue #74)
-                    Button {
-                        shareTargetAnswer = todayAnswer
-                    } label: {
-                        // ja: 共有
-                        Text("Share")
-                            .underline()
+                    // 撮影後にジャーナルへ回らなくても、今朝のことばをその場から共有カードにできる導線 (issue #74)。
+                    // 動画回答の文字起こしが終わる前 (本文が仮テキストのまま) は、仮テキストのカードを共有させないため出さない
+                    if todayAnswer.text != videoAnswerPlaceholderText {
+                        Button {
+                            shareTargetAnswer = todayAnswer
+                        } label: {
+                            // ja: 共有
+                            Text("Share")
+                                .underline()
+                        }
+                        .accessibilityIdentifier("home_today_answer_share_link")
                     }
-                    .accessibilityIdentifier("home_today_answer_share_link")
                 }
                 .font(.system(size: 13))
                 .foregroundStyle(Color.warmWhite.opacity(0.55))
