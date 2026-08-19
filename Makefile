@@ -52,7 +52,7 @@ test:
 beta:
 	bundle exec fastlane ios beta $(FASTLANE_ARGS)
 
-# Release アーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)
+# build number +1 → Release アーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)
 release:
 	bundle exec fastlane ios release $(FASTLANE_ARGS)
 

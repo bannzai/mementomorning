@@ -29,7 +29,7 @@ build number を +1 → Release でアーカイブ → TestFlight へアップ�
 [bundle exec] fastlane ios release
 ```
 
-Release でアーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)。skip_upload:true でアップロード直前に止める
+build number を +1 → Release でアーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)。skip_upload:true でアップロード直前に止める
 
 ### ios metadata_upload
 

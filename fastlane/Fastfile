@@ -18,7 +18,7 @@ BUILD_OUTPUT_DIRECTORY = File.expand_path("../tmp/fastlane", __dir__).freeze
 #
 # 実行コマンド (Makefile 経由):
 #   make beta                              # build number +1 → Release アーカイブ → TestFlight へアップロード
-#   make release                           # Release アーカイブ → App Store Connect へアップロード (metadata は上げない)
+#   make release                           # build number +1 → Release アーカイブ → App Store Connect へアップロード (metadata は上げない)
 #   make beta FASTLANE_ARGS=skip_upload:true   # アップロード直前で止める (アーカイブ経路の確認用)
 #
 # 必要なもの:
@@ -40,7 +40,9 @@ BUILD_OUTPUT_DIRECTORY = File.expand_path("../tmp/fastlane", __dir__).freeze
 #   - App Store Connect API key を発行して上記 3 変数を .envrc に書き、`direnv allow` する
 #
 # 注意:
-#   - beta は increment_build_number で project.pbxproj の CURRENT_PROJECT_VERSION を +1 する。
+#   - beta / release はどちらも increment_build_number で project.pbxproj の CURRENT_PROJECT_VERSION を +1 してから
+#     アーカイブする (App Store Connect はアップロード済みと同じ build number のバイナリを拒否するため、
+#     beta の後に release を実行しても重複しないように release 側でも採番する)。
 #     アップロード成功後にその差分をコミットする (次回の build number 重複を防ぐ)
 #   - release は binary だけを上げる (skip_metadata / skip_screenshots)。metadata と screenshots は
 #     metadata_upload lane に任せる。審査提出 (submit_for_review) は行わず、App Store Connect で手動提出する
@@ -62,10 +64,11 @@ platform :ios do
     )
   end
 
-  desc "Release でアーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)。skip_upload:true でアップロード直前に止める"
+  desc "build number を +1 → Release でアーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)。skip_upload:true でアップロード直前に止める"
   lane :release do |options|
     ensure_release_config
     api_key = asc_api_key
+    increment_build_number(xcodeproj: XCODEPROJ)
     archive_release
     next if skip_upload?(options)
 
@@ -113,8 +116,8 @@ platform :ios do
 
         echo 'REVENUECAT_API_KEY = appl_xxxxxxxxxxxxxxxxxxxxxxxxxxx' > #{CONFIG_LOCAL_XCCONFIG}
 
-      キーは RevenueCat Dashboard の Project Settings > API Keys、または次で取得できます (詳細は Config.xcconfig のコメント参照):
-        bash ~/.claude/skills/revenuecat-product-setup/scripts/rc_get_public_api_key.sh <APP_ID>
+      キーは RevenueCat Dashboard の Project Settings > API Keys、または次で取得できます (詳細は Config.xcconfig のコメント参照。APP_ID は RevenueCat の App ID で、bash rc_list.sh apps の APP 行で確認できます):
+        bash ~/.claude/skills/revenuecat-product-setup/scripts/rc_get_public_api_key.sh "$APP_ID"
     MESSAGE
   end
 
