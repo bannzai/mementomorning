@@ -1,1222 +1,1225 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "%@ / month": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "月 %@"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ / month" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "月 %@"
           }
         }
       }
     },
-    "%@ / year": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "年 %@"
+    "%@ / year" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "年 %@"
           }
         }
       }
     },
-    "%@ a month": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ひと月 %@"
+    "%@ a month" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ひと月 %@"
           }
         }
       }
     },
-    "%@ for life (one-time)": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一生 %@ (一度だけ)"
+    "%@ for life (one-time)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一生 %@ (一度だけ)"
           }
         }
       }
     },
-    "%@ free": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@無料"
+    "%@ free" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@無料"
           }
         }
       }
     },
-    "%lld mornings answered": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld morning answered"
+    "%lld mornings answered" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld morning answered"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld mornings answered"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld mornings answered"
                 }
               }
             }
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えた日数 %lld日"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えた日数 %lld日"
           }
         }
       }
     },
-    "%lld times": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld time"
+    "%lld times" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld time"
                 }
               },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld times"
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld times"
                 }
               }
             }
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld 回"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 回"
           }
         }
       }
     },
-    "Alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラーム"
+    "Alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム"
           }
         }
       }
     },
-    "Alarm & Notifications": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームと通知の許可"
+    "Alarm & Notifications" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームと通知の許可"
           }
         }
       }
     },
-    "Alarm & notification permissions are requested next": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "次の画面でアラームと通知の許可をお願いします"
+    "Alarm & notification permissions are requested next" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の画面でアラームと通知の許可をお願いします"
           }
         }
       }
     },
-    "Alarm is off · Tap the time to change": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームはオフ · 時刻をタップして変更"
+    "Alarm is off · Tap the time to change" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームはオフ · 時刻をタップして変更"
           }
         }
       }
     },
-    "All your mornings": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "すべての履歴"
+    "All your mornings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべての履歴"
           }
         }
       }
     },
-    "Allow": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "許可する"
+    "Allow" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可する"
           }
         }
       }
     },
-    "Allowed": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "許可済み"
+    "Allow access to Photos in Settings to watch the video." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画を見返すには、設定で写真へのアクセスを許可してください"
           }
         }
       }
     },
-    "Answer one question each morning to stop the alarm.\nYour answers become the journal of your life.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "毎朝ひとつの問いに答えて、アラームを止める。\n答えは、あなたの人生のジャーナルになる。"
+    "Allowed" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可済み"
           }
         }
       }
     },
-    "Answer with the keyboard": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "キーボードで答える"
+    "Answer in text" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストで答える"
           }
         }
       }
     },
-    "Answered": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答済み"
+    "Answer one question each morning to stop the alarm.\nYour answers become the journal of your life." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "毎朝ひとつの問いに答えて、アラームを止める。\n答えは、あなたの人生のジャーナルになる。"
           }
         }
       }
     },
-    "Are you keeping it?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "守れてますか?"
+    "Answer with the keyboard" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードで答える"
           }
         }
       }
     },
-    "Begin": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "はじめる"
+    "Answered" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答済み"
           }
         }
       }
     },
-    "The dots will connect.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点はいつかつながる"
+    "Answered with a video" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画で答えました"
           }
         }
       }
     },
-    "Cancel anytime. Your answers stay on this device.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "いつでも解約できます。回答はこの端末に残ります。"
+    "Are you keeping it?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "守れてますか?"
           }
         }
       }
     },
-    "Check tonight against this morning's answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答と答え合わせしましょう"
+    "Begin" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はじめる"
           }
         }
       }
     },
-    "Close": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "閉じる"
+    "Camera & microphone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラとマイク"
           }
         }
       }
     },
-    "Continue": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "つづける"
+    "Cancel anytime. Your answers stay on this device." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いつでも解約できます。回答はこの端末に残ります。"
           }
         }
       }
     },
-    "Each row is a week. Answered mornings remain as dots.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1行が1週間。答えた日が点として残る"
+    "Check tonight against this morning's answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝の回答と答え合わせしましょう"
           }
         }
       }
     },
-    "Endless follow-up alarms": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無限追撃アラーム"
+    "Close" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
           }
         }
       }
     },
-    "Every morning, beyond the last 7 days.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7日を越えて、すべての朝を"
+    "Continue" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "つづける"
           }
         }
       }
     },
-    "Failed to save": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存に失敗しました"
+    "Couldn't load the video. Check your connection and try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画を読み込めませんでした。通信状態を確認してもう一度お試しください"
           }
         }
       }
     },
-    "Failed to save. Please try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存に失敗しました。もう一度お試しください"
+    "Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "毎朝、インカメラで答えを録画してアラームを止めます。\n最初の朝が来る前に、一度だけ試しておきましょう。"
           }
         }
       }
     },
-    "Fix": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "直す"
+    "Each row is a week. Answered mornings remain as dots." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1行が1週間。答えた日が点として残る"
           }
         }
       }
     },
-    "I did": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれた"
+    "Endless follow-up alarms" : {
+      "comment" : "プレミアム機能名 (ペイウォールの見出し)。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと。「追跡」「フォローアップ」「追加の質問」ではない",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無限追撃アラーム"
           }
         }
       }
     },
-    "If today were your last day, what would you want to do?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日死ぬとしたら、何をやりたいか"
+    "Every morning, beyond the last 7 days." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7日を越えて、すべての朝を"
           }
         }
       }
     },
-    "In %lld hr %lld min · Tap the time to change": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "あと %lld 時間 %lld 分 · 時刻をタップして変更"
+    "Failed to save" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存に失敗しました"
           }
         }
       }
     },
-    "It keeps ringing until you answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えるまで、鳴りやまない"
+    "Failed to save. Please try again." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存に失敗しました。もう一度お試しください"
           }
         }
       }
     },
-    "Journal": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ジャーナル"
+    "Fix" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直す"
           }
         }
       }
     },
-    "Life Calendar": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "人生カレンダー"
+    "I did" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やれた"
           }
         }
       }
     },
-    "NEXT MORNING": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラーム"
+    "I will" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やる"
           }
         }
       }
     },
-    "Night reminder": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "夜のリマインド"
+    "If today were your last day, what would you want to do?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日死ぬとしたら、何をやりたいか"
           }
         }
       }
     },
-    "No answer this morning yet.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝の回答はまだありません"
+    "In %lld hr %lld min · Tap the time to change" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あと %lld 時間 %lld 分 · 時刻をタップして変更"
           }
         }
       }
     },
-    "No purchases to restore were found.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "復元できる購入が見つかりませんでした。"
+    "In the morning, stopping the recording stops the alarm." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝は、録画を止めるとアラームが止まります"
           }
         }
       }
     },
-    "Not answered": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "未回答"
+    "It keeps ringing until you answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えるまで、鳴りやまない"
           }
         }
       }
     },
-    "Not now": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今はしない"
+    "Journal" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ジャーナル"
           }
         }
       }
     },
-    "Not yet": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やれていない"
+    "Later" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あとでやる"
           }
         }
       }
     },
-    "OK": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
+    "Life Calendar" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人生カレンダー"
           }
         }
       }
     },
-    "Off": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "オフ"
+    "Make it today's answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これで確定する"
           }
         }
       }
     },
-    "Older mornings unlock with Premium.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7日より前の朝は、プレミアムで。"
+    "NEXT MORNING" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラーム"
           }
         }
       }
     },
-    "On": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "オン"
+    "Night reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夜のリマインド"
           }
         }
       }
     },
-    "Open Settings": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定を開く"
+    "No answer this morning yet." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝の回答はまだありません"
           }
         }
       }
     },
-    "Premium": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プレミアム"
+    "No purchases to restore were found." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復元できる購入が見つかりませんでした。"
           }
         }
       }
     },
-    "Preparing the camera": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "カメラを準備しています"
+    "Not answered" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未回答"
           }
         }
       }
     },
-    "Privacy Policy": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "プライバシーポリシー"
+    "Not now" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今はしない"
           }
         }
       }
     },
-    "Purchases aren't ready yet. Please try again later.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "購入はまだ準備できていません。しばらくしてからお試しください。"
+    "Not yet" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やれていない"
           }
         }
       }
     },
-    "Purchases couldn't be restored.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "購入を復元できませんでした。"
+    "OK" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
     },
-    "Recorded: %@": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "記録済み: %@"
+    "Off" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
           }
         }
       }
     },
-    "Reload prices": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "料金を再読み込み"
+    "Older mornings unlock with Premium." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7日より前の朝は、プレミアムで。"
           }
         }
       }
     },
-    "Remember death.\nThen begin your morning.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "死を想ってから、\n朝を始める。"
+    "On" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オン"
           }
         }
       }
     },
-    "Restore Purchases": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "購入を復元"
+    "Open Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を開く"
           }
         }
       }
     },
-    "Rings at your time, even in silent mode.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定した時刻に、サイレントモードでも鳴ります"
+    "Photo library" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写真ライブラリ"
           }
         }
       }
     },
-    "Save": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存"
+    "Practice your answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答の練習"
           }
         }
       }
     },
-    "See every morning": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "すべての朝を見る"
+    "Premium" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアム"
           }
         }
       }
     },
-    "Set alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームをセットする"
+    "Preparing the camera" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラを準備しています"
           }
         }
       }
     },
-    "Settings": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定"
+    "Privacy Policy" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
           }
         }
       }
     },
-    "Seven Mornings": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "七つの朝"
+    "Purchases aren't ready yet. Please try again later." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入はまだ準備できていません。しばらくしてからお試しください。"
           }
         }
       }
     },
-    "Seven answers, together on one page for the first time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "七日分の答えが、はじめて一枚に並びました"
+    "Purchases couldn't be restored." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を復元できませんでした。"
           }
         }
       }
     },
-    "Share": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "共有"
+    "Recorded: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記録済み: %@"
           }
         }
       }
     },
-    "Snooze": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "スヌーズ"
+    "Records your video answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答の動画を録画します"
           }
         }
       }
     },
-    "Speak your answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "話して、答える"
+    "Reload prices" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "料金を再読み込み"
           }
         }
       }
     },
-    "Stop": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "止める"
+    "Remember death.\nThen begin your morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "死を想ってから、\n朝を始める。"
           }
         }
       }
     },
-    "Stop Alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームを止める"
+    "Restore Purchases" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を復元"
           }
         }
       }
     },
-    "Stop the alarm and open Memento Morning": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "アラームを停止して Memento Morning を開きます"
+    "Rings at your time, even in silent mode." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定した時刻に、サイレントモードでも鳴ります"
           }
         }
       }
     },
-    "Stop, and the alarm stops too.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "止めると、アラームも止まります"
+    "Save" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
           }
         }
       }
     },
-    "Tap the time to set your alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "時刻をタップして設定"
+    "Saves your videos to the 'Memento Morning' album in Photos." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画を写真アプリのアルバム「Memento Morning」に保存します"
           }
         }
       }
     },
-    "Terms of Use": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "利用規約"
+    "See every morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべての朝を見る"
           }
         }
       }
     },
-    "The alarm keeps returning until you answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えるまで、アラームは鳴り続けます"
+    "Set alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームをセットする"
           }
         }
       }
     },
-    "The purchase couldn't be completed.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "購入を完了できませんでした。"
+    "Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
           }
         }
       }
     },
-    "The purchase finished, but Premium couldn't be confirmed. Please try restoring purchases later.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "購入は完了しましたが、プレミアムの反映を確認できませんでした。時間をおいて購入の復元をお試しください。"
+    "Seven Mornings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七つの朝"
           }
         }
       }
     },
-    "This morning's words": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝のことば"
+    "Seven answers, together on one page for the first time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七日分の答えが、はじめて一枚に並びました"
           }
         }
       }
     },
-    "Time": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "時刻"
+    "Share" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共有"
           }
         }
       }
     },
-    "To keep every morning.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "すべての朝を、残すために。"
+    "Share this morning's words?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のことばを、共有しませんか"
           }
         }
       }
     },
-    "Today": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今日"
+    "Snooze" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズ"
           }
         }
       }
     },
-    "Unlimited": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無制限"
+    "Speak your answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "話して、答える"
           }
         }
       }
     },
-    "You can change permissions in the Settings app.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "許可は設定アプリから変更できます"
+    "Speech recognition" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音声認識"
           }
         }
       }
     },
-    "Your answers will gather here, one morning at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答は、ひと朝ずつここに集まっていきます"
+    "Start recording" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画を始める"
           }
         }
       }
     },
-    "Your first alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "最初のアラーム"
+    "Stop" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "止める"
           }
         }
       }
     },
-    "This morning you said '%@'": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝のあなた『%@』"
+    "Stop Alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームを止める"
           }
         }
       }
     },
-    "Will you do yesterday's answer today?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "昨日の回答を、今日やる?"
+    "Stop recording" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画を止める"
           }
         }
       }
     },
-    "I will": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "やる"
+    "Stop recording and finish your answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画を止めて回答を確定する"
           }
         }
       }
     },
-    "Write a different answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "別の答えを書く"
+    "Stop the alarm and open Memento Morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アラームを停止して Memento Morning を開きます"
           }
         }
       }
     },
-    "Type here": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ここに書く"
+    "Stop, and the alarm stops too." : {
+      "comment" : "朝の回答画面で録画停止ボタンの下に出る説明。「録画を止めると、アラームも止まる」の意味。ユーザー自身が立ち止まる意味ではない",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "止めると、アラームも止まります"
           }
         }
       }
     },
-    "Make it today's answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "これで確定する"
+    "Tap the time to set your alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時刻をタップして設定"
           }
         }
       }
     },
-    "Answered with a video": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画で答えました"
+    "Terms of Use" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約"
           }
         }
       }
     },
-    "Try saving again": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "保存をやり直す"
+    "The alarm keeps returning until you answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えるまで、アラームは鳴り続けます"
           }
         }
       }
     },
-    "Answer in text": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "テキストで答える"
+    "The camera isn't available, so answer in text." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラを使えないため、テキストで答えます"
           }
         }
       }
     },
-    "The camera isn't available, so answer in text.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "カメラを使えないため、テキストで答えます"
+    "The dots will connect." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点はいつかつながる"
           }
         }
       }
     },
-    "Stop recording and finish your answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "録画を止めて回答を確定する"
+    "The purchase couldn't be completed." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入を完了できませんでした。"
           }
         }
       }
     },
-    "Start recording": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "録画を始める"
+    "The purchase finished, but Premium couldn't be confirmed. Please try restoring purchases later." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入は完了しましたが、プレミアムの反映を確認できませんでした。時間をおいて購入の復元をお試しください。"
           }
         }
       }
     },
-    "Practice your answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答の練習"
+    "This is practice. The video won't be saved." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "練習です。動画は保存されません"
           }
         }
       }
     },
-    "Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "毎朝、インカメラで答えを録画してアラームを止めます。\n最初の朝が来る前に、一度だけ試しておきましょう。"
+    "This morning you said '%@'" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のあなた『%@』"
           }
         }
       }
     },
-    "Camera & microphone": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "カメラとマイク"
+    "This morning's words" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のことば"
           }
         }
       }
     },
-    "Records your video answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答の動画を録画します"
+    "This video is no longer in Photos." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この動画は写真アプリにありません"
           }
         }
       }
     },
-    "Photo library": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "写真ライブラリ"
+    "Time" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時刻"
           }
         }
       }
     },
-    "Saves your videos to the 'Memento Morning' album in Photos.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画を写真アプリのアルバム「Memento Morning」に保存します"
+    "To keep every morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべての朝を、残すために。"
           }
         }
       }
     },
-    "Speech recognition": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "音声認識"
+    "Today" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
           }
         }
       }
     },
-    "Turns your voice into text, on this device.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画の音声を、端末の中だけで文字にします"
+    "Try again" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もう一度試す"
           }
         }
       }
     },
-    "Try it once": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "一度やってみる"
+    "Try it once" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一度やってみる"
           }
         }
       }
     },
-    "Later": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "あとでやる"
+    "Try saving again" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存をやり直す"
           }
         }
       }
     },
-    "This is practice. The video won't be saved.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "練習です。動画は保存されません"
+    "Turns your voice into text, on this device." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画の音声を、端末の中だけで文字にします"
           }
         }
       }
     },
-    "You're ready for the morning.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "これで、朝の準備ができました"
+    "Type here" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ここに書く"
           }
         }
       }
     },
-    "In the morning, stopping the recording stops the alarm.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝は、録画を止めるとアラームが止まります"
+    "Unlimited" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無制限"
           }
         }
       }
     },
-    "Stop recording": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "録画を止める"
+    "Watch the video" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画を見返す"
           }
         }
       }
     },
-    "Watch the video": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画を見返す"
+    "Will you do yesterday's answer today?" : {
+      "comment" : "昨日答えた内容 (やりたいこと) を今日実行するか、を問う選択肢の見出し。「回答という行為をする」ではなく「昨日答えたことを今日やる」の意味",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昨日の回答を、今日やる?"
           }
         }
       }
     },
-    "You at %@ this morning · Watch the video": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝 %@ のあなた · 動画を見返す"
+    "Write a different answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別の答えを書く"
           }
         }
       }
     },
-    "Allow access to Photos in Settings to watch the video.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画を見返すには、設定で写真へのアクセスを許可してください"
+    "You at %@ this morning · Watch the video" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝 %@ のあなた · 動画を見返す"
           }
         }
       }
     },
-    "This video is no longer in Photos.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "この動画は写真アプリにありません"
+    "You can change permissions in the Settings app." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "許可は設定アプリから変更できます"
           }
         }
       }
     },
-    "Couldn't load the video. Check your connection and try again.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画を読み込めませんでした。通信状態を確認してもう一度お試しください"
+    "You're ready for the morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これで、朝の準備ができました"
           }
         }
       }
     },
-    "Try again": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "もう一度試す"
+    "Your answer becomes a quiet card you can pass along." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝のことばが、静かな一枚のカードになります"
           }
         }
       }
     },
-    "Share this morning's words?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝のことばを、共有しませんか"
+    "Your answers will gather here, one morning at a time." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答は、ひと朝ずつここに集まっていきます"
           }
         }
       }
     },
-    "Your answer becomes a quiet card you can pass along.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝のことばが、静かな一枚のカードになります"
+    "Your first alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最初のアラーム"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
