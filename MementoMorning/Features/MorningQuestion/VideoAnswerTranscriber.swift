@@ -147,8 +147,9 @@ func requestSpeechRecognitionAuthorization() async -> SFSpeechRecognizerAuthoriz
 
 /// continuation を 1 回だけ resume するためのゲートを作る。true を返した呼び出しだけが resume してよい。
 /// 音声認識の resultHandler は結果の後にエラーが届くなど複数回呼ばれることがあり、
-/// 2 回目の resume はクラッシュする。ハンドラは任意のスレッドから呼ばれるため、ロックで直列化して判定する
-private func makeResumeOnceGate() -> @Sendable () -> Bool {
+/// 2 回目の resume はクラッシュする。ハンドラは任意のスレッドから呼ばれるため、ロックで直列化して判定する。
+/// 動画回答の再生 (AnswerVideoPlayerPage) の PHImageManager 呼び出しからも使う
+func makeResumeOnceGate() -> @Sendable () -> Bool {
     let isResumed = OSAllocatedUnfairLock(initialState: false)
     return {
         isResumed.withLock { isResumed in

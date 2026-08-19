@@ -1128,6 +1128,46 @@
           }
         }
       }
+    },
+    "Watch the video": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画を見返す"
+          }
+        }
+      }
+    },
+    "You at %@ this morning · Watch the video": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝 %@ のあなた · 動画を見返す"
+          }
+        }
+      }
+    },
+    "Allow access to Photos in Settings to watch the video.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "動画を見返すには、設定で写真へのアクセスを許可してください"
+          }
+        }
+      }
+    },
+    "This video is no longer in Photos.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この動画は写真アプリにありません"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
