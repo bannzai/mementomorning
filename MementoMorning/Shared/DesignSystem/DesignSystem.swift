@@ -12,6 +12,8 @@ extension Color {
     static let dawn = Color(red: 0xC2 / 255, green: 0xA1 / 255, blue: 0x83 / 255)
     /// ヘアライン (区切り線)。rgba(233,231,226,0.08)
     static let hairline = Color.warmWhite.opacity(0.08)
+    /// アラーム ON/OFF トグルの ON 背景 (夜明け 45%)。ホームの pill トグルと設定画面の Toggle で同じ色を使う (issue #73)
+    static let alarmToggleOn = Color.dawn.opacity(0.45)
 }
 
 /// ヘアラインの区切り線 1 本。List を使わないレイアウトでの行区切りに使う

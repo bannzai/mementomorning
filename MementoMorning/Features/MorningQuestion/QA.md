@@ -1,8 +1,8 @@
 ---
 feature: MorningQuestion
 verification: mobile-mcp
-last_verified_commit: 07cc8bc
-last_verified_at: 2026-08-17
+last_verified_commit: 56abe79
+last_verified_at: 2026-08-19
 ---
 
 # MorningQuestion QA
@@ -25,6 +25,7 @@ last_verified_at: 2026-08-17
 | S6 | 動画回答の完了後、自動で文字起こしが走り MorningAnswer.text に入る (日本語・英語) | 文字起こしの適用 (実機のみ) |
 | S7 | 文字起こし結果を編集して保存できる | — (AnswerEdit の QA.md「編集して保存」が担当) |
 | S8 | オンデバイス認識で動作する (ネットワーク遮断状態で確認) | 文字起こしの適用 (実機のみ) |
+| S9 | 録画は 10 秒で自動停止して回答が確定し、録画中は上限までの進み具合が見える (issue #71) | 録画の上限とインジケーター |
 
 ## 1. 提示と解除
 
@@ -180,6 +181,9 @@ last_verified_at: 2026-08-17
   - 自動化: manual（シミュレータにカメラが無いため実機のみ。疑似録画モードではプレビューが黒のままになる）
 - [ ] **保存失敗時の再試行**: 動画の保存または回答の確定に失敗した場合、「保存をやり直す」(morning_question_retry_save_button) が表示され、再録画なしで再試行できる
   - 自動化: todo（失敗を注入する手段が無いため未検証。疑似録画モードにも失敗注入は用意していない）
+- [x] **録画の上限とインジケーター**: 録画中は録画ボタンの上に夜明け色の点と mono タイマー「0:03 / 0:10」(morning_question_recording_timer) が出て、録画ボタンの外リングが進捗ぶん夜明け色で埋まる。10 秒で自動停止して回答が確定し、手動停止も従来どおり動く
+  - 自動化: manual（開発者メニューの疑似録画モードで simulator から確認。上限値・進捗・タイマー文字列の算出は MementoMorningTests/VideoAnswerRecordingLimitTests.swift がカバー。実カメラの maxRecordedDuration での停止は実機のみ）
+  - 確認範囲: 疑似録画モード (simtunnel のリモート simulator、英語ロケール) で確認。実カメラでの上限到達 (AVFoundation の maxRecordedDuration による停止) は実機未確認
 
 #### 動作確認
 <details>
@@ -211,7 +215,7 @@ last_verified_at: 2026-08-17
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/b32883bf-9091-4da7-9ea7-7628796abbc9.png" width="320" />
 
-6. 全画面が閉じてホームに戻り、「今朝のことば」に回答が反映される (文字起こしが走らないため仮テキスト「動画で答えました」のまま)。「答えた朝 1」に増え、次のアラームは翌朝 7:00 になっている
+6. 全画面が閉じてホームに戻り、「今朝のことば」に回答が反映される (文字起こしが走らないため仮テキスト「動画で答えました」のまま)。「答えた日数 1日」に増え、次のアラームは翌朝 7:00 になっている
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/309282e3-9fbd-4981-acd8-9fcbfd4d9f64.png" width="320" />
 
@@ -240,6 +244,38 @@ last_verified_at: 2026-08-17
 <details><summary>動作確認スクショ</summary>
 
 （未実行）
+
+</details>
+
+### **録画の上限とインジケーター**: 録画中は録画ボタンの上に夜明け色の点と mono タイマー「0:03 / 0:10」(morning_question_recording_timer) が出て、録画ボタンの外リングが進捗ぶん夜明け色で埋まる。10 秒で自動停止して回答が確定し、手動停止も従来どおり動く
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-19** (iPhone 17 / iOS 26.5、simtunnel セッション `mementomorning-issue-71`、`--ref issue-71`、英語ロケール。commit `56abe79`)
+
+1. 録画前: タイマー・点は出ず、録画ボタンは白丸 + 白のリングのみ
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/7111030c-2042-48b2-9020-410971712813.jpg" width="320" />
+
+2. 録画開始から約 1.5 秒: 「0:01 / 0:10」と点が出て、外リングの上部が夜明け色になっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/4b52b915-5ed1-48e4-835b-6d9491e2b0c6.jpg" width="320" />
+
+3. 約 6 秒: 「0:05 / 0:10」、外リングの約半分が夜明け色。点は 2. より薄く (明滅)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/23d62858-6c9d-4851-b3a9-e44f2f8a0e7b.jpg" width="320" />
+
+4. 約 16 秒: 朝の問いの全画面はボタン操作なしで閉じ (10 秒で自動停止 → 疑似録画の結果を保存 → 回答成立)、呼び出し元の開発者メニューに戻って音声認識の許可ダイアログ (文字起こしの開始) が出ている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/3c538cf1-bccf-41fe-93d8-86b899a65c5a.jpg" width="320" />
+
+5. ホームに戻ると「This morning's words: Answered with a video」「1 morning answered」(自動停止で回答が成立している。文字起こしは simulator で動かないため仮テキストのまま)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/f0ca7e37-b3e0-4cc5-bd21-47865ae92631.jpg" width="320" />
+
+6. 手動停止: 「全回答を削除」→「アラーム発火を今すぐ記録」→ 録画開始 → 約 1.7 秒後に録画ボタンをタップ → 全画面が閉じて開発者メニューに戻る (手動停止も従来どおり)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/12f654fe-15a7-4340-861a-ba94f981a3e4.jpg" width="320" />
 
 </details>
 

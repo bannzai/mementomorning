@@ -5,17 +5,41 @@ import SwiftData
 /// 根拠: documents/PROJECT.md の課金設計「無料: スヌーズ 2 回まで / プレミアム: 無限追撃アラーム」
 let freeTierSnoozeLimit = 2
 
-/// アラーム停止時に追撃アラームを再登録すべきか。
-/// プレミアムは常に追撃する (無限追撃)。無料は連続追撃回数が freeTierSnoozeLimit に達したら打ち切る。
+/// スヌーズ回数として選べる有限の回数 (issue #73)。この範囲に加えて「無制限」(nil) を選べる。
+/// 無料は freeTierSnoozeLimit までしか選べず、それ以上と無制限はプレミアム
+let snoozeLimitChoices = 1...10
+
+/// 設定値 (AlarmSetting.snoozeLimit) が現在の課金状態で選択可能か。
+/// 無料は freeTierSnoozeLimit 以下の回数だけ選べ、それを超える回数と無制限 (nil) はプレミアムでのみ選べる。
 /// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
-func shouldChase(chaseCount: Int, isPremium: Bool) -> Bool {
-    isPremium || chaseCount < freeTierSnoozeLimit
+func isSnoozeLimitSelectable(snoozeLimit: Int?, isPremium: Bool) -> Bool {
+    if isPremium { return true }
+    guard let snoozeLimit else { return false }
+    return snoozeLimit <= freeTierSnoozeLimit
+}
+
+/// 設定値と課金状態から、実際に追撃を打ち切る回数を返す (nil = 無制限)。
+/// 選択不能な設定値 (未設定の nil や、プレミアム失効後に残った回数) は無料枠 freeTierSnoozeLimit に丸める。
+/// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
+func effectiveSnoozeLimit(snoozeLimit: Int?, isPremium: Bool) -> Int? {
+    if isSnoozeLimitSelectable(snoozeLimit: snoozeLimit, isPremium: isPremium) {
+        return snoozeLimit
+    }
+    return freeTierSnoozeLimit
+}
+
+/// アラーム停止時に追撃アラームを再登録すべきか。
+/// 連続追撃回数が effectiveSnoozeLimit に達したら打ち切り、無制限なら常に追撃する。
+/// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
+func shouldChase(chaseCount: Int, snoozeLimit: Int?, isPremium: Bool) -> Bool {
+    guard let limit = effectiveSnoozeLimit(snoozeLimit: snoozeLimit, isPremium: isPremium) else { return true }
+    return chaseCount < limit
 }
 
 /// 今日 (0 時基準) の回答が既に記録されているか。
 /// 追撃カウント (stopIntentChaseCount) のリセット条件に使う: openAppWhenRun による foreground 復帰でも
 /// scenePhase の .active ハンドラは走るため、無条件にリセットすると未回答のまま停止を繰り返すたびに
-/// カウントが 0 に戻り、無料枠のスヌーズ上限 (freeTierSnoozeLimit) に到達しない
+/// カウントが 0 に戻り、スヌーズ上限 (effectiveSnoozeLimit) に到達しない
 @MainActor
 func hasTodayAnswer(modelContext: ModelContext, calendar: Calendar = .current, now: Date = .now) -> Bool {
     fetchMorningAnswer(answeredDate: now, modelContext: modelContext, calendar: calendar) != nil
