@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: 40337d0
-last_verified_at: 2026-08-17
+last_verified_commit: 67e24f4
+last_verified_at: 2026-08-19
 ---
 
 # Paywall QA
@@ -33,7 +33,7 @@ last_verified_at: 2026-08-17
   - 自動化: todo
 - [x] **閉じる導線**: 「今はしない」(paywall_not_now_button) で sheet が閉じる
   - 自動化: manual（sheet の dismiss 確認）
-- [ ] **法務リンク**: 利用規約・プライバシーポリシーのリンクが開ける
+- [x] **法務リンク**: 利用規約・プライバシーポリシー・特定商取引法に基づく表記 (paywall_specified_commercial_transaction_act_link) のリンクが開ける
   - 自動化: manual（外部リンクの確認）
 
 #### 動作確認
@@ -93,11 +93,19 @@ last_verified_at: 2026-08-17
 
 </details>
 
-### **法務リンク**: 利用規約・プライバシーポリシーのリンクが開ける
+### **法務リンク**: 利用規約・プライバシーポリシー・特定商取引法に基づく表記 (paywall_specified_commercial_transaction_act_link) のリンクが開ける
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-19 (Maestro でタップ、スクショは xcrun simctl)**
+
+Paywall 下部のリンク行 (購入を復元・利用規約・プライバシーポリシー・特定商取引法に基づく表記):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/bf2cea1a-c111-4755-8dcf-5793fc3edad1.png" width="320" />
+
+特定商取引法に基づく表記リンク → Safari (bannzai.github.io の該当ページ):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/ed9c6a80-b2b0-4a7f-88f3-a7d327fa8ac2.png" width="320" />
+
+(利用規約・プライバシーポリシーのリンク先の URL は LegalLinks へ集約され、設定画面側の 2026-08-19 の確認 (AlarmSetting の QA.md「情報セクション」) と同一 URL のため個別再タップは省略)
 
 </details>
 

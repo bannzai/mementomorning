@@ -1,11 +1,6 @@
 import SwiftUI
 import RevenueCat
 
-/// 利用規約ページの URL (docs/ を GitHub Pages で配信している)
-private let termsURL = URL(string: "https://bannzai.github.io/mementomorning/Terms-ja")!
-/// プライバシーポリシーページの URL (docs/ を GitHub Pages で配信している)
-private let privacyPolicyURL = URL(string: "https://bannzai.github.io/mementomorning/PrivacyPolicy-ja")!
-
 /// ペイウォール画面 (デザイン handoff 1l / プロトタイプ paywall)。静かな課金訴求。
 /// バッジ・カウントダウン等の圧は一切使わない。
 /// 料金は RevenueCat の offering (lookup_key: PremiumEntitlement.offeringIdentifier) の packages から表示し、
@@ -202,7 +197,7 @@ struct PaywallPage: View {
                 .foregroundStyle(Color.warmWhite.opacity(0.3))
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 Button {
                     Task { await restore() }
                 } label: {
@@ -212,9 +207,12 @@ struct PaywallPage: View {
                 .disabled(isPurchasing)
                 .accessibilityIdentifier("paywall_restore")
                 // ja: 利用規約
-                Link(destination: termsURL) { Text("Terms of Use") }
+                Link(destination: LegalLinks.terms) { Text("Terms of Use") }
                 // ja: プライバシーポリシー
-                Link(destination: privacyPolicyURL) { Text("Privacy Policy") }
+                Link(destination: LegalLinks.privacyPolicy) { Text("Privacy Policy") }
+                // ja: 特定商取引法に基づく表記
+                Link(destination: LegalLinks.specifiedCommercialTransactionAct) { Text("Legal Notice") }
+                    .accessibilityIdentifier("paywall_specified_commercial_transaction_act_link")
             }
             .font(.system(size: 10))
             .tracking(0.5)
