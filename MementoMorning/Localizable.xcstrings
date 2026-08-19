@@ -14826,10 +14826,214 @@
     },
     "Saves your videos to the 'Memento Morning' album in Photos." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يحفظ مقاطع الفيديو في ألبوم 'Memento Morning' في Photos."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desa els teus vídeos a l’àlbum «Memento Morning» de Photos."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukládá videa do alba „Memento Morning“ ve Fotkách."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gemmer dine videoer i albummet 'Memento Morning' i Fotos."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speichert deine Videos im Album „Memento Morning“ in Fotos."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποθηκεύει τα βίντεό σου στο άλμπουμ «Memento Morning» στις Φωτογραφίες."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda tus vídeos en el álbum «Memento Morning» de Fotos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda tus videos en el álbum «Memento Morning» de Fotos."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tallentaa videosi Kuvat-apin Memento Morning -albumiin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistre vos vidéos dans l’album « Memento Morning » de Photos."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שומר את הסרטונים שלך באלבום 'Memento Morning' ב‑Photos."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके वीडियो Photos में मौजूद 'Memento Morning' एल्बम में सेव करता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprema tvoje videozapise u album „Memento Morning“ u aplikaciji Foto."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A videóidat a Fotók „Memento Morning” albumába menti."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyimpan video kamu ke album 'Memento Morning' di Foto."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva i tuoi video nell’album “Memento Morning” di Foto."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "動画を写真アプリのアルバム「Memento Morning」に保存します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동영상을 사진 앱의 ‘Memento Morning’ 앨범에 저장해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyimpan video anda ke album 'Memento Morning' dalam Photos."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagrer videoene dine i albumet «Memento Morning» i Bilder."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slaat je video’s op in het album ‘Memento Morning’ in Foto’s."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisuje Twoje filmy w albumie „Memento Morning” w aplikacji Zdjęcia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva seus vídeos no álbum “Memento Morning” do Fotos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda os teus vídeos no álbum “Memento Morning” das Fotografias."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvează videoclipurile tale în albumul „Memento Morning” din Poze."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохраняет ваши видео в альбом «Memento Morning» в приложении «Фото»."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukladá tvoje videá do albumu „Memento Morning“ vo Fotkách."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sparar dina videor i albumet ”Memento Morning” i Bilder."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บันทึกวิดีโอของคุณลงในอัลบั้ม 'Memento Morning' ใน Photos"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Videolarını Photos'taki 'Memento Morning' albümüne kaydeder."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зберігає ваші відео в альбомі «Memento Morning» у програмі «Фото»."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lưu video của bạn vào album 'Memento Morning' trong Ảnh."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將你嘅影片儲存到 Photos 入面嘅「Memento Morning」相簿。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将你的视频保存到 Photos 中的“Memento Morning”相簿。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將你的影片儲存至 Photos 中的「Memento Morning」相簿。"
           }
         }
       }
