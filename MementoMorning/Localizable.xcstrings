@@ -19,6 +19,12 @@
     },
     "%@ / year" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / Jahr"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
