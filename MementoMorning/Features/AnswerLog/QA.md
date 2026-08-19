@@ -1,8 +1,8 @@
 ---
 feature: AnswerLog
 verification: mobile-mcp
-last_verified_commit: null
-last_verified_at: null
+last_verified_commit: f07f0fd
+last_verified_at: 2026-08-19
 ---
 
 # AnswerLog QA
@@ -10,7 +10,7 @@ last_verified_at: null
 ## 関連リンク
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/5 (受け入れ条件)
-- 関連: https://github.com/bannzai/mementomorning/issues/9 (全履歴の課金線) / https://github.com/bannzai/mementomorning/issues/7 (共有カード導線)
+- 関連: https://github.com/bannzai/mementomorning/issues/9 (全履歴の課金線) / https://github.com/bannzai/mementomorning/issues/7 (共有カード導線) / https://github.com/bannzai/mementomorning/issues/80 (動画の見返し)
 
 ## 仕様チェックリスト
 
@@ -18,6 +18,7 @@ last_verified_at: null
 |----|---------|---------|
 | S1 | 蓄積した回答が日付順に表示される | 回答一覧の表示 |
 | S2 | 8 日以上前の回答が無料状態では見えない | 無料枠の非表示とロック行 |
+| S3 | 動画で答えた朝の動画を見返せる (issue #80) | 動画の見返し |
 
 ## 1. 一覧表示
 
@@ -125,6 +126,32 @@ last_verified_at: null
 <details><summary>動作確認スクショ</summary>
 
 （未実行）
+
+</details>
+
+</details>
+
+---
+
+## 4. 動画の見返し
+
+- [x] **動画の見返し**: 動画で答えた回答の行に「動画を見返す」リンク (journal_video_replay_link) が表示され、タップすると再生画面 (answer_video_player) が sheet で開いて保存済みの動画が再生される。テキスト回答の行にはリンクが出ない
+  - 自動化: maestro（開発者メニューの「動画回答を疑似再現」ON →「アラーム発火を今すぐ記録」→ 朝の問いで録画開始・停止 → ジャーナル → リンクをタップ、の flow で再現できる）
+  - 確認範囲: ローカル simulator (日本語ロケール) で、疑似録画のフィクスチャ動画 (2.6 秒・0x111111 の単色フレーム + 発話音声) を写真ライブラリへ保存した回答行にリンクが出て、タップで再生画面が開き、シークバーが末尾 (0:03 / -0:00) まで進むことを確認した。フィクスチャ動画は単色フレームのため映像の内容自体は目視できない。音声の再生 (playback カテゴリでサイレントスイッチ ON でも鳴ること) は simulator では未検証。写真の権限取り消し時・動画削除時のメッセージ表示は未検証 (判定は MementoMorningTests/AnswerVideoPlayerTests.swift がカバー)
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **動画の見返し**: 動画で答えた回答の行に「動画を見返す」リンク (journal_video_replay_link) が表示され、タップすると再生画面 (answer_video_player) が sheet で開いて保存済みの動画が再生される。テキスト回答の行にはリンクが出ない
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-19**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/546c0d48-3312-4ab0-a316-dff29bcecc93.png" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/a180cbe5-accc-4be5-9a44-74696edd94b7.png" width="320" />
+
+(疑似録画で答えた「今日」の行の本文の下に「動画を見返す」。タップで再生画面が開き、フィクスチャ動画 (単色フレーム) が末尾まで再生された状態。中央タップで標準の再生コントロールが出る)
 
 </details>
 
