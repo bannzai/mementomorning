@@ -13,6 +13,8 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
     private(set) var isSessionRunning = false
     /// 録画中かどうか (録画開始のデリゲート通知で true になる)
     private(set) var isRecording = false
+    /// 現在の録画の開始時刻。録画中インジケーター (経過時間・上限までの進み具合。issue #71) の基準で、録画が終わると nil に戻る
+    private(set) var recordingStartedAt: Date?
     /// 録画が正常に停止して出力ファイルが確定した時に呼ばれる
     var onFinished: ((URL) -> Void)?
     /// 録画がエラーで失敗した時に呼ばれる (エラーメッセージは加工せずそのまま渡す)
@@ -67,10 +69,10 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
                 session.addInput(cameraInput)
                 session.addInput(microphoneInput)
                 session.addOutput(movieOutput)
-                // 寝落ち等で録画が止まらないまま端末の空き容量を使い切らないよう上限を設ける。
-                // 3 分は朝のひと言の回答には十分な長さで、上限到達時は AVFoundation が録画を停止して
-                // 通常の完了デリゲート (成功扱い) を呼ぶため、そのまま回答として保存される
-                movieOutput.maxRecordedDuration = CMTime(seconds: 180, preferredTimescale: 600)
+                // 録画の長さに上限 (10 秒。issue #71) を設ける。上限到達時は AVFoundation が録画を停止して
+                // 通常の完了デリゲート (AVErrorMaximumDurationReached だが成功扱い) を呼ぶため、そのまま回答として保存される。
+                // 画面のインジケーターと同じ値 (videoAnswerMaxRecordingDuration) を使い、表示と実際の停止をずらさない
+                movieOutput.maxRecordedDuration = CMTime(seconds: videoAnswerMaxRecordingDuration, preferredTimescale: 600)
                 session.commitConfiguration()
                 // 実行中のセッションが復旧不能なエラーで止まった場合もテキスト入力へフォールバックさせる
                 NotificationCenter.default.addObserver(
@@ -116,7 +118,18 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
     func startRecording() {
         #if DEBUG
         if isSimulating {
+            guard !isRecording else { return }
+            let startedAt = Date()
             isRecording = true
+            recordingStartedAt = startedAt
+            // 実録画は AVFoundation が maxRecordedDuration で止めるが、疑似録画には止める主体が無いため
+            // 同じ上限で自動停止する (上限到達 → 完了 → 回答保存、の経路をシミュレータでも同じ手順で通す)。
+            // 手動で止めて再開された録画を誤って止めないよう、開始時刻が一致する時だけ止める
+            Task {
+                try? await Task.sleep(for: .seconds(videoAnswerMaxRecordingDuration))
+                guard isRecording, recordingStartedAt == startedAt else { return }
+                stopRecording()
+            }
             return
         }
         #endif
@@ -146,6 +159,7 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
             // 実録画側が movieOutput.isRecording で弾くのと同じく何もしない
             guard isRecording else { return }
             isRecording = false
+            recordingStartedAt = nil
             do {
                 onFinished?(try copyDebugVideoAnswerFixtureToTemporaryDirectory())
             } catch {
@@ -164,8 +178,10 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
         didStartRecordingTo fileURL: URL,
         from connections: [AVCaptureConnection]
     ) {
+        let startedAt = Date()
         Task { @MainActor in
             isRecording = true
+            recordingStartedAt = startedAt
         }
     }
 
@@ -185,6 +201,7 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
         }
         Task { @MainActor in
             isRecording = false
+            recordingStartedAt = nil
             if isSuccessfullyFinished {
                 onFinished?(outputFileURL)
             } else if let error {
