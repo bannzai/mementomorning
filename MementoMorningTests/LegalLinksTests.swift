@@ -23,7 +23,7 @@ final class LegalLinksTests: XCTestCase {
     }
 
     func testContactURLIsMailto() {
-        XCTAssertEqual(LegalLinks.contact.scheme, "mailto")
+        XCTAssertEqual(LegalLinks.contact.absoluteString, "mailto:bannzai.app@gmail.com")
     }
 
     func testAppVersionTextCombinesVersionAndBuild() {
