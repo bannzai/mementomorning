@@ -7764,10 +7764,214 @@
     },
     "In %lld hr %lld min · Tap the time to change" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خلال %lld ساعة و%lld دقيقة · اضغط على الوقت لتغييره"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En %lld h %lld min · Toca l’hora per canviar-la"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za %lld h %lld min · Klepnutím na čas ho změníte"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om %lld t %lld min · Tryk på tiden for at ændre den"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In %lld Std. %lld Min. · Tippe auf die Zeit, um sie zu ändern"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε %lld ώρες %lld λεπτά · Πατήστε την ώρα για αλλαγή"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En %lld h %lld min · Toca la hora para cambiarla"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En %lld h %lld min · Toca la hora para cambiarla"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h %lld min kuluttua · Napauta aikaa muuttaaksesi sitä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans %lld h %lld min · Touchez l’heure pour la modifier"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בעוד %lld שעות ו-%lld דקות · הקש על השעה כדי לשנות אותה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld घंटे %lld मिनट में · बदलने के लिए समय पर टैप करें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za %lld h %lld min · Dodirnite vrijeme da biste ga promijenili"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld óra %lld perc múlva · Koppints az időpontra a módosításhoz"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dalam %lld jam %lld menit · Ketuk waktu untuk mengubahnya"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tra %lld h %lld min · Tocca l’ora per modificarla"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "あと %lld 時間 %lld 分 · 時刻をタップして変更"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld시간 %lld분 후 · 변경하려면 시간을 탭하세요"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dalam %lld jam %lld min · Ketik masa untuk mengubahnya"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om %lld t %lld min · Trykk på tiden for å endre den"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over %lld uur en %lld min · Tik op de tijd om deze te wijzigen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Za %lld godz. %lld min · Stuknij godzinę, aby ją zmienić"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em %lld h %lld min · Toque no horário para alterá-lo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daqui a %lld h %lld min · Toque na hora para a alterar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peste %lld ore și %lld min · Atinge ora pentru a o schimba"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Через %lld ч %lld мин · Нажмите на время, чтобы изменить его"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O %lld h %lld min · Klepnutím na čas ho zmeníte"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om %lld tim %lld min · Tryck på tiden för att ändra den"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อีก %lld ชม. %lld นาที · แตะเวลานี้เพื่อเปลี่ยน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sa %lld dk içinde · Değiştirmek için saate dokunun"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Через %lld год %lld хв · Натисніть на час, щоб змінити його"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sau %lld giờ %lld phút · Chạm vào thời gian để thay đổi"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 小時 %lld 分鐘後 · 點按時間以更改"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 小时 %lld 分钟后 · 轻点时间以更改"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 小時 %lld 分鐘後 · 點按時間以更改"
           }
         }
       }
