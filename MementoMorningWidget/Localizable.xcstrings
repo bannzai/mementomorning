@@ -220,7 +220,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لو كان اليوم آخر يوم لك، ماذا كنت تريد أن تفعل؟"
+            "value" : "لو كان اليوم آخر يوم لك، فماذا تريد أن تفعل؟"
           }
         },
         "ca" : {
@@ -232,19 +232,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kdyby byl dnešek tvým posledním dnem, co bys chtěl dělat?"
+            "value" : "Kdyby byl dnešek tvým posledním dnem, co bys chtěl udělat?"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hvis i dag var din sidste dag, hvad ville du så gerne gøre?"
+            "value" : "Hvis i dag var din sidste dag, hvad ville du så gerne lave?"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn heute dein letzter Tag wäre, was würdest du tun wollen?"
+            "value" : "Wenn heute dein letzter Tag wäre, was würdest du tun?"
           }
         },
         "el" : {
@@ -256,49 +256,49 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si hoy fuera tu último día, ¿qué querrías hacer?"
+            "value" : "Si hoy fuera tu último día, ¿qué te gustaría hacer?"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si hoy fuera tu último día, ¿qué querrías hacer?"
+            "value" : "Si hoy fuera tu último día, ¿qué te gustaría hacer?"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jos tämä olisi viimeinen päiväsi, mitä haluaisit tehdä?"
+            "value" : "Jos tämä päivä olisi viimeisesi, mitä haluaisit tehdä?"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si aujourd’hui était votre dernier jour, que voudriez-vous faire ?"
+            "value" : "Si aujourd’hui était votre dernier jour, que voudriez-vous faire ?"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "אם היום היה יומך האחרון, מה היית רוצה לעשות?"
+            "value" : "אילו היום היה יומך האחרון, מה היית רוצה לעשות?"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अगर आज आपका आख़िरी दिन होता, तो आप क्या करना चाहते?"
+            "value" : "अगर आज आपका आखिरी दिन हो, तो आप क्या करना चाहेंगे?"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kad bi danas bio tvoj posljednji dan, što bi želio učiniti?"
+            "value" : "Da je danas tvoj posljednji dan, što bi želio učiniti?"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ha ma lenne az utolsó napod, mit szeretnél tenni?"
+            "value" : "Ha ma lenne az utolsó napod, mit szeretnél csinálni?"
           }
         },
         "id" : {
@@ -322,7 +322,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "오늘이 마지막 날이라면 무엇을 하고 싶으세요?"
+            "value" : "오늘이 마지막 날이라면, 무엇을 하고 싶나요?"
           }
         },
         "ms" : {
@@ -334,13 +334,13 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hvis i dag var din siste dag, hva ville du ha lyst til å gjøre?"
+            "value" : "Hvis i dag var din siste dag, hva ville du gjort?"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Als vandaag je laatste dag was, wat zou je dan willen doen?"
+            "value" : "Als vandaag je laatste dag was, wat zou je willen doen?"
           }
         },
         "pl" : {
@@ -412,19 +412,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果今天是你最後一天，你想做什麼？"
+            "value" : "如果今天是你生命中的最後一天，你想做什麼？"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果今天是你生命的最后一天，你想做什么？"
+            "value" : "如果今天是你生命中的最后一天，你想做什么？"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果今天是你生命的最後一天，你想做什麼？"
+            "value" : "如果今天是你生命中的最後一天，你想做什麼？"
           }
         }
       }
@@ -868,19 +868,19 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paraules d'aquest matí"
+            "value" : "Les paraules d’aquest matí"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnešní ranní slova"
+            "value" : "Slova dnešního rána"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Morgenens ord"
+            "value" : "Denne morgens ord"
           }
         },
         "de" : {
@@ -892,7 +892,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τα σημερινά πρωινά λόγια"
+            "value" : "Τα λόγια αυτού του πρωινού"
           }
         },
         "es" : {
@@ -934,13 +934,13 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jutrošnje riječi"
+            "value" : "Jutarnje riječi"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A mai reggel szavai"
+            "value" : "A ma reggeli szavak"
           }
         },
         "id" : {
@@ -976,31 +976,31 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Morgenens ord"
+            "value" : "Denne morgenens ord"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Woorden van vanochtend"
+            "value" : "De woorden van vanochtend"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dzisiejsze poranne słowa"
+            "value" : "Słowa dzisiejszego poranka"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Palavras desta manhã"
+            "value" : "As palavras desta manhã"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Palavras desta manhã"
+            "value" : "As palavras desta manhã"
           }
         },
         "ro" : {
@@ -1018,19 +1018,19 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dnešné ranné slová"
+            "value" : "Slová dnešného rána"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Morgonens ord"
+            "value" : "Den här morgonens ord"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ถ้อยคำของเช้านี้"
+            "value" : "ถ้อยคำของเช้าวันนี้"
           }
         },
         "tr" : {
@@ -1054,7 +1054,7 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今早的話"
+            "value" : "今朝的話"
           }
         },
         "zh-Hans" : {

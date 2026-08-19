@@ -4106,13 +4106,13 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你有冇做到？"
+            "value" : "你有做到嗎？"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你做到吗？"
+            "value" : "你做到了吗？"
           }
         },
         "zh-Hant" : {
@@ -5550,7 +5550,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não foi possível carregar o vídeo. Verifique a sua ligação e tente novamente."
+            "value" : "Não foi possível carregar o vídeo. Verifica a tua ligação e tenta novamente."
           }
         },
         "ro" : {
@@ -7779,7 +7779,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za %lld h %lld min · Klepnutím na čas ho změníte"
+            "value" : "Za %lld h %lld min · Klepnutím na čas ho změníš"
           }
         },
         "da" : {
@@ -7839,7 +7839,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za %lld h %lld min · Dodirnite vrijeme da biste ga promijenili"
+            "value" : "Za %lld h %lld min · Dodirni vrijeme da ga promijeniš"
           }
         },
         "hu" : {
@@ -7923,7 +7923,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O %lld h %lld min · Klepnutím na čas ho zmeníte"
+            "value" : "O %lld h %lld min · Klepnutím na čas ho zmeníš"
           }
         },
         "sv" : {
@@ -7993,7 +7993,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ráno zastavením nahrávání vypnete budík."
+            "value" : "Ráno zastavením nahrávání vypneš budík."
           }
         },
         "da" : {
@@ -12713,7 +12713,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Datenschutzerklärung"
+            "value" : "Datenschutz"
           }
         },
         "el" : {
@@ -14829,13 +14829,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يحفظ مقاطع الفيديو في ألبوم 'Memento Morning' في Photos."
+            "value" : "يحفظ مقاطع الفيديو في ألبوم 'Memento Morning' في تطبيق الصور."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desa els teus vídeos a l’àlbum «Memento Morning» de Photos."
+            "value" : "Desa els teus vídeos a l’àlbum «Memento Morning» de Fotos."
           }
         },
         "cs" : {
@@ -14889,13 +14889,13 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "שומר את הסרטונים שלך באלבום 'Memento Morning' ב‑Photos."
+            "value" : "שומר את הסרטונים שלך באלבום 'Memento Morning' ב״תמונות״."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "आपके वीडियो Photos में मौजूद 'Memento Morning' एल्बम में सेव करता है।"
+            "value" : "आपके वीडियो फ़ोटो में मौजूद 'Memento Morning' एल्बम में सेव करता है।"
           }
         },
         "hr" : {
@@ -14937,7 +14937,7 @@
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menyimpan video anda ke album 'Memento Morning' dalam Photos."
+            "value" : "Menyimpan video anda ke album 'Memento Morning' dalam Foto."
           }
         },
         "nb" : {
@@ -14997,13 +14997,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บันทึกวิดีโอของคุณลงในอัลบั้ม 'Memento Morning' ใน Photos"
+            "value" : "บันทึกวิดีโอของคุณลงในอัลบั้ม 'Memento Morning' ในแอปรูปภาพ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Videolarını Photos'taki 'Memento Morning' albümüne kaydeder."
+            "value" : "Videolarını Fotoğraflar’daki 'Memento Morning' albümüne kaydeder."
           }
         },
         "uk" : {
@@ -15021,19 +15021,19 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將你嘅影片儲存到 Photos 入面嘅「Memento Morning」相簿。"
+            "value" : "將你的影片儲存至「相片」中的「Memento Morning」相簿。"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将你的视频保存到 Photos 中的“Memento Morning”相簿。"
+            "value" : "将你的视频保存到“照片”中的“Memento Morning”相簿。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將你的影片儲存至 Photos 中的「Memento Morning」相簿。"
+            "value" : "將你的影片儲存至「照片」中的「Memento Morning」相簿。"
           }
         }
       }
@@ -18265,7 +18265,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zastavte budík a otevřete Memento Morning"
+            "value" : "Zastav budík a otevři Memento Morning"
           }
         },
         "da" : {
@@ -18920,7 +18920,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nutzungsbedingungen"
+            "value" : "AGB"
           }
         },
         "el" : {
@@ -20888,7 +20888,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "यह वीडियो अब Photos में नहीं है।"
+            "value" : "यह वीडियो अब फ़ोटो में नहीं है।"
           }
         },
         "hr" : {
@@ -23797,7 +23797,7 @@
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今朝 %@ 嘅你 · 觀看影片"
+            "value" : "今早 %@ 的你 · 觀看影片"
           }
         },
         "zh-Hans" : {
