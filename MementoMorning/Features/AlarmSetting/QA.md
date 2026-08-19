@@ -1,7 +1,7 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 2cff9ff
+last_verified_commit: e1c36da
 last_verified_at: 2026-08-19
 ---
 
@@ -119,6 +119,8 @@ OFF:
 **確認日: 2026-08-19**
 
 プレミアム状態で「4 回」を選んで保存 → ホームへ戻る → 設定を開き直すと、Picker の表示が「4 回」(mobile-mcp のアクセシビリティツリーで `alarm_setting_snooze_picker` の label が「スヌーズ、4 回」) のまま保持されていることを確認した (スクショなし。要素ツリーで確認)
+
+続けて、開発者メニューで「プレミアムを強制 (上書き)」を OFF にして設定を開くと表示は「2 回」(無料枠の実効値) になり、そのまま保存 → プレミアムを ON に戻して開き直すと「4 回」に戻る (Picker を変更していない保存では保存済みの希望値を上書きしない。PR #78 レビュー対応) ことを確認した
 
 </details>
 
