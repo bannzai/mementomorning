@@ -7978,10 +7978,214 @@
     },
     "In the morning, stopping the recording stops the alarm." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في الصباح، يؤدي إيقاف التسجيل إلى إيقاف المنبّه."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al matí, en aturar la gravació, s’atura l’alarma."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ráno zastavením nahrávání vypnete budík."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om morgenen stopper alarmen, når du stopper optagelsen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgens wird der Wecker ausgeschaltet, sobald du die Aufnahme stoppst."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το πρωί, όταν σταματάς την εγγραφή, σταματά και το ξυπνητήρι."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por la mañana, al detener la grabación, se detiene la alarma."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por la mañana, al detener la grabación, se detiene la alarma."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aamulla herätys sammuu, kun lopetat tallennuksen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le matin, l’alarme s’arrête lorsque vous arrêtez l’enregistrement."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בבוקר, כשאתה מפסיק את ההקלטה, השעון המעורר נעצר."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुबह रिकॉर्डिंग रोकने पर अलार्म बंद हो जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ujutro se alarm zaustavlja kada zaustaviš snimanje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reggel a felvétel leállításával leáll az ébresztő."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Di pagi hari, alarm berhenti saat kamu menghentikan rekaman."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al mattino, quando interrompi la registrazione, si ferma anche la sveglia."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "朝は、録画を止めるとアラームが止まります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아침에는 녹화를 중지하면 알람이 꺼져요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pada waktu pagi, apabila anda menghentikan rakaman, penggera turut berhenti."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om morgenen stopper alarmen når du stopper opptaket."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "’s Ochtends stopt het alarm wanneer je de opname stopt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rano zatrzymanie nagrania wyłącza alarm."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De manhã, ao interromper a gravação, o alarme é desligado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De manhã, ao parares a gravação, o alarme para."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimineața, când oprești înregistrarea, se oprește și alarma."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Утром, когда вы останавливаете запись, будильник отключается."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ráno sa budík vypne, keď zastavíš nahrávanie."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På morgonen stängs alarmet av när du stoppar inspelningen."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนเช้า เมื่อคุณหยุดบันทึก เสียงปลุกจะหยุดลง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah, kaydı durdurduğunda alarm da durur."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вранці, коли ви зупиняєте запис, будильник вимикається."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vào buổi sáng, khi bạn dừng quay, báo thức sẽ tắt."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "早上，停止錄影就會關閉鬧鐘。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "早上，停止录制即可关闭闹钟。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "早上，停止錄製即可關閉鬧鐘。"
           }
         }
       }
