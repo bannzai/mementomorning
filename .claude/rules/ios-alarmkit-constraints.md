@@ -17,8 +17,7 @@ paths:
 6. **バックグラウンド wake しない**
 7. **サイレントモード・集中モードを突破して鳴る**
 8. **スワイプ消去は検知不可。** stopIntent も通らない
-9. **シミュレータでは sound `.default` だと鳴らない癖がある。** 発火確認は画面表示で判定する
-10. **システムのアラーム UI の停止ボタンは消せない・差し替えられない。** iOS 26.1 で `AlarmPresentation.Alert` の `stopButton` は deprecated になり、停止 UI はシステム標準描画
+9. **システムのアラーム UI の停止ボタンは消せない・差し替えられない。** iOS 26.1 で `AlarmPresentation.Alert` の `stopButton` は deprecated になり、停止 UI はシステム標準描画
 
 ## Memento Morning での運用ルール（方針）
 

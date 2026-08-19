@@ -10,38 +10,22 @@ DB はローカルの SwiftData のみ（サーバー DB なし。documents/adr/
 
 ## 1. PersistenceController パターン
 
-永続化層は `@MainActor struct PersistenceController` のシングルトンで管理する。
+永続化層は `@MainActor struct PersistenceController` のシングルトンで管理する（実体: `MementoMorning/Shared/Entity/Persistence.swift`）。
 
-- `static let types: [any PersistentModel.Type]` に全モデルを列挙する。新しいモデルを追加したらここにも追加する
-- `Schema(types)` でスキーマを構築する
-- テスト / Preview 環境では `isStoredInMemoryOnly: true` でメモリ内 DB を使用する
+- 新しいモデルを追加したら `static let types: [any PersistentModel.Type]` にも追加する（Schema はここから構築される）
+- テスト / Preview 環境では `isStoredInMemoryOnly: true` でメモリ内 DB を使う
 - Widget 等の Extension とデータを共有する場合は `groupContainer` で App Groups を指定する
-
-```swift
-@MainActor struct PersistenceController {
-  static let types: [any PersistentModel.Type] = [
-    MorningAnswer.self,
-    // 新しいモデルはここに追加
-  ]
-  static let schema = Schema(types)
-  static let shared = PersistenceController()
-  let container: ModelContainer
-}
-```
 
 ## 2. @Model 定義の慣習
 
-- `@Model final class` で宣言する
-- `@Attribute(.unique) var id: UUID` で一意な ID を持たせる
+- `@Model final class` で宣言し、`@Attribute(.unique) var id: UUID` で一意な ID を持たせる
 - `createdDateTime` はデフォルト値 `Date.now` で宣言する
-- 外部から更新されるプロパティは `private(set)` にし、ドメインメソッド経由で更新する
-- ドメインメソッド内で必ず `updatedDateTime = .now` を更新する（`.claude/rules/coding-rules-entity.md` 参照）
+- 更新は `private(set)` + ドメインメソッド経由で行い `updatedDateTime` を更新する（`.claude/rules/coding-rules-entity.md` が SSOT）
 
 ## 3. マイグレーション戦略
 
-### 方針: 軽量マイグレーションに頼る
+軽量マイグレーションに頼る。`VersionedSchema` / `SchemaMigrationPlan` は使わない。
 
-- `VersionedSchema` / `SchemaMigrationPlan` は使わない
 - 新規プロパティは「プリミティブ型の Optional」で追加する（SwiftData の自動軽量マイグレーションが適用される）
 - 独自の Codable オブジェクトをプロパティとして保存しない（マイグレーションが困難になるため）
 - 非 Optional のプリミティブ型を新規追加しない（既存データが nil でクラッシュする）
@@ -59,8 +43,5 @@ DB はローカルの SwiftData のみ（サーバー DB なし。documents/adr/
 
 ## 6. Preview での SwiftData
 
-- `#Preview` ではなく `PreviewProvider` を使用する
-- `PersistenceController.shared.container` から container を取得し、`ModelContext(container)` で modelContext を作成する
-- テストデータは `modelContext.insert()` で追加し、必ず `try! modelContext.save()` を呼ぶ
-- View に `.modelContainer(container)` modifier を付ける
+- `#Preview` ではなく `PreviewProvider` を使い、`PersistenceController.shared.container` から作った `ModelContext` にテストデータを `insert()` → `try! save()` して、View に `.modelContainer(container)` を付ける（既存の PreviewProvider を踏襲する）
 - `let _ =` で戻り値を破棄し（警告回避）、コメントでどのようなデータかを補足する
