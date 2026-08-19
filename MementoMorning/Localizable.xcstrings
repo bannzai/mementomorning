@@ -5837,10 +5837,214 @@
     },
     "Each row is a week. Answered mornings remain as dots." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كل صف يمثل أسبوعًا. تبقى الصباحات التي أجبت فيها على شكل نقاط."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada fila representa una setmana. Els matins en què has respost queden com a punts."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každý řádek představuje týden. Rána s odpovědí zůstávají jako tečky."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver række er en uge. Besvarede morgener bliver stående som prikker."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jede Zeile entspricht einer Woche. Beantwortete Morgen bleiben als Punkte erhalten."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κάθε σειρά είναι μία εβδομάδα. Τα πρωινά που απάντησες παραμένουν ως τελείες."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada fila representa una semana. Las mañanas en las que respondiste quedan como puntos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada fila representa una semana. Las mañanas en las que respondiste quedan como puntos."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jokainen rivi on yksi viikko. Aamut, joina vastasit, säilyvät pisteinä."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque ligne représente une semaine. Les matins où vous avez répondu restent affichés sous forme de points."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כל שורה מייצגת שבוע. הבקרים שבהם ענית נשארים כנקודות."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हर पंक्ति एक सप्ताह दर्शाती है। जिन सुबहों में आपने जवाब दिया है, वे बिंदुओं के रूप में बनी रहती हैं।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svaki redak predstavlja tjedan. Jutra s odgovorom ostaju kao točkice."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minden sor egy hetet jelöl. A megválaszolt reggelek pontokként maradnak meg."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap baris mewakili satu minggu. Pagi yang sudah kamu jawab tetap ditampilkan sebagai titik."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni riga rappresenta una settimana. Le mattine in cui hai risposto restano come punti."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1行が1週間。答えた日が点として残る"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 행은 일주일을 나타내요. 답한 아침은 점으로 남아요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap baris mewakili satu minggu. Pagi yang anda jawab kekal sebagai titik."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver rad er én uke. Besvarte morgener blir stående som prikker."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elke rij staat voor een week. Ochtenden waarop je hebt geantwoord blijven als stippen staan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy wiersz przedstawia tydzień. Poranki, w których udzieliłeś odpowiedzi, pozostają kropkami."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada linha representa uma semana. As manhãs em que você respondeu permanecem como pontos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada linha representa uma semana. As manhãs em que respondeste permanecem como pontos."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiecare rând reprezintă o săptămână. Diminețile în care ai răspuns rămân ca puncte."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждая строка — это неделя. Утра, когда вы отвечали, сохраняются в виде точек."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každý riadok predstavuje týždeň. Rána s odpoveďou zostávajú ako bodky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varje rad är en vecka. Besvarade morgnar finns kvar som punkter."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แต่ละแถวแทนหนึ่งสัปดาห์ เช้าที่ตอบแล้วจะแสดงเป็นจุด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her satır bir haftadır. Yanıtladığın sabahlar nokta olarak kalır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кожен рядок — це тиждень. Ранки, коли ви відповідали, зберігаються у вигляді крапок."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mỗi hàng là một tuần. Những buổi sáng bạn đã trả lời vẫn được giữ lại dưới dạng các chấm."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每一行代表一週。回答過的早晨會以圓點保留。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每行代表一周。回答过的早晨会以圆点保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每行代表一週。回答過的早晨會以圓點保留。"
           }
         }
       }
