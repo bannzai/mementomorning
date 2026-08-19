@@ -1557,10 +1557,214 @@
     },
     "Alarm & notification permissions are requested next" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في الخطوة التالية، سيُطلب منك السماح بالمنبّه والإشعارات."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A continuació, se't demanaran els permisos per a l'alarma i les notificacions."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V dalším kroku se zobrazí žádost o povolení budíku a oznámení."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du bliver bedt om at give tilladelse til alarm og notifikationer som det næste."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als Nächstes wirst du um die Berechtigung für Wecker und Mitteilungen gebeten."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στη συνέχεια, θα σου ζητηθεί να επιτρέψεις το ξυπνητήρι και τις ειδοποιήσεις."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A continuación, se te pedirán permisos para la alarma y las notificaciones."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A continuación, se te solicitarán permisos para la alarma y las notificaciones."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuraavaksi sinulta pyydetään lupaa herätyksille ja ilmoituksille."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les autorisations pour l’alarme et les notifications vous seront demandées ensuite."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בשלב הבא תתבקש לאשר הרשאות לשעון המעורר ולהתראות."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अगले चरण में आपसे अलार्म और सूचनाओं की अनुमति मांगी जाएगी।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "U sljedećem koraku zatražit će se dopuštenje za alarm i obavijesti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A következő lépésben engedélyt kérünk az ébresztőhöz és az értesítésekhez."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selanjutnya, kamu akan diminta memberikan izin untuk alarm dan notifikasi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In seguito, ti verranno richieste le autorizzazioni per la sveglia e le notifiche."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "次の画面でアラームと通知の許可をお願いします"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 단계에서 알람 및 알림 권한을 요청해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seterusnya, anda akan diminta memberikan kebenaran untuk penggera dan pemberitahuan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deretter blir du bedt om å gi tillatelse til alarm og varslinger."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hierna wordt je gevraagd om toestemming voor alarmen en meldingen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W następnym kroku poprosimy cię o zgodę na alarmy i powiadomienia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em seguida, serão solicitadas as permissões para o alarme e as notificações."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De seguida, ser-te-ão pedidas permissões para o alarme e as notificações."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În continuare, ți se vor solicita permisiuni pentru alarmă și notificări."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Далее вам будет предложено разрешить доступ к будильнику и уведомлениям."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V ďalšom kroku sa zobrazí žiadosť o povolenie budíka a upozornení."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Därefter ombeds du att ge behörighet till alarm och notiser."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ในขั้นตอนถัดไป ระบบจะขอสิทธิ์ใช้งานนาฬิกาปลุกและการแจ้งเตือน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sırada alarm ve bildirim izinleri istenecek."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Далі вам буде запропоновано надати дозволи для будильника та сповіщень."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiếp theo, bạn sẽ được yêu cầu cấp quyền cho báo thức và thông báo."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步會要求你授予鬧鐘及通知的權限。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接下来会请求闹钟和通知权限。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接下來會請求鬧鐘與通知權限。"
           }
         }
       }
