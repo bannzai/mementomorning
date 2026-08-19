@@ -4,16 +4,220 @@
     "NSAlarmKitUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لإطلاق المنبّه في الوقت الذي حددته وإيقافه بالإجابة عن سؤال اليوم."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per fer sonar l'alarma a l'hora que has establert i aturar-la responent la pregunta d'avui."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží ke spuštění budíku v nastavený čas a jeho vypnutí odpovědí na dnešní otázku."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at få alarmen til at ringe på det indstillede tidspunkt og stoppe den ved at besvare dagens spørgsmål."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um den Wecker zur festgelegten Zeit klingeln zu lassen und ihn durch die Beantwortung der heutigen Frage zu stoppen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για να χτυπά το ξυπνητήρι την ώρα που έχεις ορίσει και να το σταματάς απαντώντας στην ερώτηση της ημέρας."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Used to ring the alarm at your set time and stop it by answering today's question."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora que has establecido y detenerla al responder a la pregunta de hoy."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora que configuraste y detenerla al responder la pregunta de hoy."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään herättämään hälytys asettamaasi aikaan ja pysäyttämään se vastaamalla päivän kysymykseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sert à faire sonner l’alarme à l’heure que vous avez définie et à l’arrêter en répondant à la question du jour."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמשת להשמעת האזעקה בשעה שהגדרת ולעצירתה באמצעות מענה על שאלת היום."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके तय समय पर अलार्म बजाने और आज के सवाल का जवाब देकर उसे बंद करने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koristi se za oglašavanje alarma u postavljeno vrijeme i njegovo isključivanje odgovaranjem na današnje pitanje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A beállított időpontban megszólaltatja az ébresztőt, és a mai kérdés megválaszolásával leállítja."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan alarm pada waktu yang kamu tetapkan dan menghentikannya dengan menjawab pertanyaan hari ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve a far suonare la sveglia all’ora impostata e a interromperla rispondendo alla domanda di oggi."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정한 시간에 알람을 울리고 오늘의 질문에 답해 알람을 끄는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan penggera pada masa yang anda tetapkan dan menghentikannya dengan menjawab soalan hari ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ringe med alarmen på det innstilte tidspunktet og stoppe den ved å svare på dagens spørsmål."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om het alarm op het door je ingestelde tijdstip te laten afgaan en het te stoppen door de vraag van vandaag te beantwoorden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do uruchamiania alarmu o ustawionej godzinie i wyłączania go po udzieleniu odpowiedzi na dzisiejsze pytanie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para tocar o alarme no horário que você definiu e interrompê-lo ao responder à pergunta de hoje."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para fazer soar o alarme à hora que definiste e pará-lo ao responderes à pergunta de hoje."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a declanșa alarma la ora setată și a o opri răspunzând la întrebarea zilei."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется, чтобы будильник сработал в установленное вами время и выключился после ответа на вопрос дня."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na spustenie budíka v nastavenom čase a jeho vypnutie po zodpovedaní dnešnej otázky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att ringa på alarmet vid den inställda tiden och stänga av det genom att svara på dagens fråga."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้สำหรับปลุกตามเวลาที่ตั้งไว้และหยุดการปลุกเมื่อคุณตอบคำถามประจำวัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmı belirlediğin saatte çaldırmak ve bugünün sorusunu yanıtlayarak durdurmak için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується, щоб будильник спрацював у встановлений вами час і вимкнувся після відповіді на запитання дня."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng để báo thức vào thời gian bạn đã đặt và tắt báo thức bằng cách trả lời câu hỏi hôm nay."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今日問題將其停止。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于在你设定的时间响起闹钟，并通过回答今天的问题将其停止。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今天的問題將其停止。"
           }
         }
       }
