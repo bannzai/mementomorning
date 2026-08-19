@@ -1,7 +1,7 @@
 ---
 feature: AnswerLog
 verification: mobile-mcp
-last_verified_commit: f07f0fd
+last_verified_commit: 4cdfeff
 last_verified_at: 2026-08-19
 ---
 
@@ -137,7 +137,7 @@ last_verified_at: 2026-08-19
 
 - [x] **動画の見返し**: 動画で答えた回答の行に「動画を見返す」リンク (journal_video_replay_link) が表示され、タップすると再生画面 (answer_video_player) が sheet で開いて保存済みの動画が再生される。テキスト回答の行にはリンクが出ない
   - 自動化: maestro（開発者メニューの「動画回答を疑似再現」ON →「アラーム発火を今すぐ記録」→ 朝の問いで録画開始・停止 → ジャーナル → リンクをタップ、の flow で再現できる）
-  - 確認範囲: ローカル simulator (日本語ロケール) で、疑似録画のフィクスチャ動画 (2.6 秒・0x111111 の単色フレーム + 発話音声) を写真ライブラリへ保存した回答行にリンクが出て、タップで再生画面が開き、シークバーが末尾 (0:03 / -0:00) まで進むことを確認した。フィクスチャ動画は単色フレームのため映像の内容自体は目視できない。音声の再生 (playback カテゴリでサイレントスイッチ ON でも鳴ること) は simulator では未検証。写真の権限取り消し時・動画削除時のメッセージ表示は未検証 (判定は MementoMorningTests/AnswerVideoPlayerTests.swift がカバー)
+  - 確認範囲: ローカル simulator (日本語ロケール) で、疑似録画のフィクスチャ動画 (2.6 秒・0x111111 の単色フレーム + 発話音声) を写真ライブラリへ保存した回答行にリンクが出て、タップで再生画面が開き、シークバーが末尾 (0:03 / -0:00) まで進むことを確認した。フィクスチャ動画は単色フレームのため映像の内容自体は目視できない。音声の再生 (playback カテゴリでサイレントスイッチ ON でも鳴ること) は simulator では未検証。写真の権限取り消し時・動画削除時・読み込み失敗時 (「もう一度試す」) のメッセージ表示は未検証 (判定は MementoMorningTests/AnswerVideoPlayerTests.swift がカバー)
 
 #### 動作確認
 <details>
