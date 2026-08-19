@@ -148,7 +148,8 @@ private struct RootView: View {
     var body: some View {
         ZStack {
             if hasCompletedOnboarding {
-                ContentView()
+                // 朝の問い・夜の振り返りの提示中はホームが前面に無いため、ホームが出す共有を促すダイアログ (issue #74) を閉じるまで待たせる
+                ContentView(isRootModalPresented: isMorningQuestionPresented || notificationRouter.isNightReflectionPresented)
                     .fullScreenCover(isPresented: $isMorningQuestionPresented) {
                         MorningQuestionPage()
                             // 「回答するまで閉じられない」を明示する。fullScreenCover は現状スワイプでは閉じられないが、

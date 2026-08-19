@@ -5,6 +5,10 @@ import SwiftData
 /// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる。
 /// 回答が 7 件に達したら、7 日の節目「七つの朝」(SevenMorningsPage) を一度だけ表示する
 struct ContentView: View {
+    /// RootView が朝の問い (fullScreenCover) や夜の振り返り (sheet) を提示中かどうか。
+    /// 共有を促すダイアログ (issue #74) はホームが前面にある時にだけ出すため、提示中は出さず閉じた後に判定し直す
+    var isRootModalPresented = false
+
     @Environment(\.scenePhase) private var scenePhase
     /// ホームの基準日 (今日の 0 時)。HomeContent のクエリ条件と粒ストリップの今日判定の基準になる
     @State private var today = Calendar.current.startOfDay(for: .now)
@@ -20,7 +24,11 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            HomeContent(today: today)
+            HomeContent(
+                today: today,
+                // 7 日の節目のシートも同じモーダル層に出るため、閉じるまで共有を促すダイアログを出さない
+                isCoveredByOtherScreen: isRootModalPresented || isSevenMorningsPagePresented
+            )
                 // 基準日が変わったら @Query の predicate を組み直すため view ごと作り直す
                 .id(today)
         }
@@ -68,16 +76,27 @@ private struct HomeContent: View {
     @State private var answeredCount = 0
     /// 編集画面 (AnswerEditPage) を開く対象の回答
     @State private var editTargetAnswer: MorningAnswer?
+    /// 共有カード (AnswerShareCardPage) を開く対象の回答。「共有」リンクと共有を促すダイアログの両方から開く
+    @State private var shareTargetAnswer: MorningAnswer?
+    /// 共有を促すダイアログ (issue #74) を表示中かどうか
+    @State private var isSharePromptPresented = false
+    /// 共有を促すダイアログを直近に表示した日時 (epoch 秒。0 = 未記録)。
+    /// Date は @AppStorage で扱えないため Double で監視し、読み取りは lastSharePromptDate() を使う
+    @AppStorage(.lastSharePromptDate) private var lastSharePromptDate: Double = 0
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
     /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
 
     /// ホームの基準日 (今日の 0 時)。ContentView が日付跨ぎで更新する
     let today: Date
+    /// ホームの上に別画面 (朝の問い・夜の振り返り・7 日の節目) が提示されているかどうか。
+    /// 提示中に共有を促すダイアログを出すと、その画面と一緒に閉じられたり提示に失敗したりするため、閉じた後に出す
+    let isCoveredByOtherScreen: Bool
 
     /// 今日・直近 14 日の predicate は初期化時にしか組めないため、明示的に init を定義する
-    init(today: Date) {
+    init(today: Date, isCoveredByOtherScreen: Bool) {
         self.today = today
+        self.isCoveredByOtherScreen = isCoveredByOtherScreen
         var todayDescriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate == today })
         // 1 日 1 件のため 1 件だけ取得する
         todayDescriptor.fetchLimit = 1
@@ -118,9 +137,57 @@ private struct HomeContent: View {
         .sheet(item: $editTargetAnswer) { answer in
             AnswerEditPage(answer: answer)
         }
+        .sheet(item: $shareTargetAnswer) { answer in
+            AnswerShareCardPage(answer: answer)
+        }
+        // ja: 今朝のことばを、共有しませんか
+        .alert("Share this morning's words?", isPresented: $isSharePromptPresented, presenting: todayAnswers.first) { answer in
+            Button {
+                shareTargetAnswer = answer
+            } label: {
+                // ja: 共有
+                Text("Share")
+            }
+            Button(role: .cancel) {
+            } label: {
+                // ja: 今はしない
+                Text("Not now")
+            }
+        } message: { _ in
+            // ja: 今朝のことばが、静かな一枚のカードになります
+            Text("Your answer becomes a quiet card you can pass along.")
+        }
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
+        // 回答が成立してホームへ戻った時 (今日の回答が現れた時) と、起動時点で今日の回答がある時に判定する
+        .onChange(of: todayAnswers.count, initial: true) { _, _ in
+            presentSharePromptIfNeeded()
+        }
+        // 朝の問い・7 日の節目などが閉じてホームが前面に戻った時に判定し直す
+        .onChange(of: isCoveredByOtherScreen) { _, _ in
+            presentSharePromptIfNeeded()
+        }
+        // 表示記録のリセット (DEBUG の開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
+        .onChange(of: lastSharePromptDate) { _, _ in
+            presentSharePromptIfNeeded()
+        }
+    }
+
+    /// 今日の回答があり、初回または前回の表示から 2 週間以上経っていれば、共有を促すダイアログを表示する。
+    /// 表示した時点で日時を記録し、ユーザーが「あとで」を選んでも同じ 2 週間の中では再表示しない
+    private func presentSharePromptIfNeeded() {
+        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中にダイアログの表示と記録の書き込みが走らないよう打ち切る。
+        // 多言語スクリーンショット・Preview は今日の回答を持つサンプルを表示するため、撮影・描画確認をダイアログで覆わない
+        if isUnitTest || isSnapshotUITest || isPreview { return }
+        if isCoveredByOtherScreen || isSharePromptPresented { return }
+        guard shouldPresentSharePrompt(
+            hasTodayAnswer: !todayAnswers.isEmpty,
+            lastPromptedDate: MementoMorning.lastSharePromptDate(),
+            today: today
+        ) else { return }
+        recordSharePromptPresented(date: .now)
+        isSharePromptPresented = true
     }
 
     /// 次の朝のアラーム時刻 (大時刻・残り時間・トグル)
@@ -243,17 +310,28 @@ private struct HomeContent: View {
                         todayAnswerText(todayAnswer: todayAnswer)
                     }
                 }
-                Button {
-                    editTargetAnswer = todayAnswer
-                } label: {
-                    // ja: 直す
-                    Text("Fix")
-                        .font(.system(size: 13))
-                        .foregroundStyle(Color.warmWhite.opacity(0.55))
-                        .underline()
+                HStack(spacing: 20) {
+                    Button {
+                        editTargetAnswer = todayAnswer
+                    } label: {
+                        // ja: 直す
+                        Text("Fix")
+                            .underline()
+                    }
+                    .accessibilityIdentifier("home_today_answer_edit_link")
+                    // 撮影後にジャーナルへ回らなくても、今朝のことばをその場から共有カードにできる導線 (issue #74)
+                    Button {
+                        shareTargetAnswer = todayAnswer
+                    } label: {
+                        // ja: 共有
+                        Text("Share")
+                            .underline()
+                    }
+                    .accessibilityIdentifier("home_today_answer_share_link")
                 }
+                .font(.system(size: 13))
+                .foregroundStyle(Color.warmWhite.opacity(0.55))
                 .padding(.top, 5)
-                .accessibilityIdentifier("home_today_answer_edit_link")
             }
             .padding(.top, 56)
             // accessibilityIdentifier を素の VStack に付けると子要素の identifier まで上書きされ、

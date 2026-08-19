@@ -1128,6 +1128,26 @@
           }
         }
       }
+    },
+    "Share this morning's words?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことばを、共有しませんか"
+          }
+        }
+      }
+    },
+    "Your answer becomes a quiet card you can pass along.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことばが、静かな一枚のカードになります"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
