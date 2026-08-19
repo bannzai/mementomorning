@@ -8,7 +8,10 @@ BUNDLE_ID := com.bannzai.MementoMorning
 SIMULATOR_UDID ?= $(shell SCRIPT_QUIET=1 sim-boot | sed -n 's/^DEVICE_UDID=//p' | tail -n 1)
 DESTINATION ?= platform=iOS Simulator,id=$(SIMULATOR_UDID)
 
-.PHONY: build device install-device run test clean
+# fastlane lane への追加引数 (例: make beta FASTLANE_ARGS=skip_upload:true でアップロード直前に止める)
+FASTLANE_ARGS ?=
+
+.PHONY: build device install-device run test beta release clean
 
 # Simulator 向けビルド。generic destination なら simulator の起動なしでビルドできる
 build:
@@ -44,6 +47,14 @@ test:
 	destination="$(DESTINATION)"; \
 	[ -n "$$destination" ] && [ "$$destination" != "platform=iOS Simulator,id=" ] || { echo "Error: sim-boot でSimulatorを解決できません (sim-bootがPATHにあるか確認するか、DESTINATION='<destination>'またはSIMULATOR_UDID=<UDID>を指定してください)" >&2; exit 1; }; \
 	xcodebuild -project $(XCODEPROJ) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -destination "$$destination" test
+
+# build number +1 → Release アーカイブ → TestFlight へアップロード。前提 (Config.local.xcconfig・App Store Connect API key の env) は fastlane/Fastfile のコメント参照
+beta:
+	bundle exec fastlane ios beta $(FASTLANE_ARGS)
+
+# Release アーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)
+release:
+	bundle exec fastlane ios release $(FASTLANE_ARGS)
 
 clean:
 	rm -rf $(DERIVED_DATA)
