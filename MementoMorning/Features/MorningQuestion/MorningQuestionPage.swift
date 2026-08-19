@@ -128,7 +128,7 @@ struct MorningQuestionPage: View {
                         .padding(.horizontal, 32)
                         .accessibilityIdentifier("morning_question_retry_save_button")
                     } else if camera.isSessionRunning {
-                        recordButton
+                        recordingControls
                     } else {
                         preparingRecordingIndicator
                     }
@@ -176,39 +176,16 @@ struct MorningQuestionPage: View {
         .accessibilityIdentifier("morning_question_camera_preparing")
     }
 
-    /// 録画の開始/停止ボタン。録画中は停止 (= 回答確定) の印として夜明け色の角丸を表示する
-    private var recordButton: some View {
-        Button {
-            if camera.isRecording {
-                camera.stopRecording()
-            } else {
-                camera.startRecording()
-            }
-        } label: {
-            ZStack {
-                Circle()
-                    .stroke(Color.warmWhite.opacity(0.8), lineWidth: 3)
-                    .frame(width: 72, height: 72)
-                if camera.isRecording {
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.dawn)
-                        .frame(width: 28, height: 28)
-                } else {
-                    Circle()
-                        .fill(Color.warmWhite)
-                        .frame(width: 58, height: 58)
-                }
-            }
-        }
-        .disabled(!camera.isSessionRunning || isSaving)
-        .accessibilityLabel(
-            camera.isRecording
-                // ja: 録画を止めて回答を確定する
-                ? Text("Stop recording and finish your answer")
-                // ja: 録画を始める
-                : Text("Start recording")
+    /// 録画ボタンと録画中のインジケーター (VideoAnswerRecordingControls)。録画中の停止 = 回答確定のため、停止の読み上げに確定の意味を含める
+    private var recordingControls: some View {
+        VideoAnswerRecordingControls(
+            camera: camera,
+            // 写真ライブラリへの保存・確定の実行中は再録画させない
+            isDisabled: isSaving,
+            // ja: 録画を止めて回答を確定する
+            stopAccessibilityLabel: Text("Stop recording and finish your answer"),
+            accessibilityIdentifierPrefix: "morning_question"
         )
-        .accessibilityIdentifier("morning_question_record_button")
     }
 
     /// 代替手段: テキスト入力での回答フロー (issue #4 の画面骨格)
