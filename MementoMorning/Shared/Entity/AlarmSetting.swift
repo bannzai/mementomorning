@@ -19,13 +19,20 @@ final class AlarmSetting {
     private(set) var minute: Int
     /// 有効フラグ。OFF の間はスケジュール対象外
     private(set) var isEnabled: Bool = true
+    /// スヌーズ (追撃アラーム) の上限回数。nil は無制限。
+    /// ユーザーが選んだ希望値であり、実際に効く回数は課金状態と合わせて effectiveSnoozeLimit で決める
+    /// (無料は freeTierSnoozeLimit を超えない)。既存レコードには nil (無制限) として追加される
+    private(set) var snoozeLimit: Int?
 
-    /// @Model は memberwise init を自動生成しないため明示的に定義する
-    init(id: UUID = .init(), hour: Int, minute: Int, isEnabled: Bool = true) {
+    /// @Model は memberwise init を自動生成しないため明示的に定義する。
+    /// snoozeLimit の既定 nil は軽量マイグレーションで既存レコードに入る値と同じ「未選択」であり、
+    /// 実効値は effectiveSnoozeLimit が課金状態から決める (無料は freeTierSnoozeLimit、プレミアムは無制限)
+    init(id: UUID = .init(), hour: Int, minute: Int, isEnabled: Bool = true, snoozeLimit: Int? = nil) {
         self.id = id
         self.hour = hour
         self.minute = minute
         self.isEnabled = isEnabled
+        self.snoozeLimit = snoozeLimit
     }
 
     /// 発火時刻を更新する
@@ -38,6 +45,12 @@ final class AlarmSetting {
     /// 有効フラグを更新する
     func setIsEnabled(isEnabled: Bool) {
         self.isEnabled = isEnabled
+        self.updatedDateTime = .now
+    }
+
+    /// スヌーズの上限回数を更新する (nil = 無制限)
+    func setSnoozeLimit(snoozeLimit: Int?) {
+        self.snoozeLimit = snoozeLimit
         self.updatedDateTime = .now
     }
 }

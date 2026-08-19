@@ -8,12 +8,6 @@ description: 多言語スクリーンショットを比較して翻訳品質を�
 多言語スクリーンショットを比較して翻訳品質をチェックし、問題があれば GitHub Issue を作成する。
 スクリーンショット生成の基盤は `MementoMorningSnapshotUITests` ターゲット + `scripts/snapshot_ui_tests/` (詳細は `scripts/snapshot_ui_tests/README.md`)。
 
-## 使用タイミング
-
-- 翻訳追加後の品質チェック
-- 多言語対応の検証
-- リリース前の翻訳確認
-
 ## 実行手順
 
 ### 1. ガイドラインの確認
@@ -51,16 +45,4 @@ description: 多言語スクリーンショットを比較して翻訳品質を�
 2. Issue の内容を確認し、本番の `MementoMorning/Localizable.xcstrings` を修正する (App Store スクショのキャッチコピーは `AppStoreScreenshots/Localizable.xcstrings` が別カタログ)
 3. 修正後、再度スクリーンショットを生成してチェックする
 
-## チェックリスト
-
-- [ ] すべての対象言語でスクリーンショットが生成されているか
-- [ ] 未翻訳の箇所がないか
-- [ ] 翻訳が文脈に合っているか
-- [ ] 用語が統一されているか
-- [ ] 文字切れ・表示崩れがないか
-
-## 参考ドキュメント
-
-- `.claude/rules/localization-guidelines.md` - 翻訳ガイドライン
-- `scripts/snapshot_ui_tests/README.md` - スクリーンショット生成基盤の詳細
-- `scripts/find_missing_ja_translations.py` - 日本語翻訳の欠落検出
+完了基準: すべての対象言語でスクリーンショットが生成され、上記チェック項目の問題が検出されないこと。日本語訳の欠落は `scripts/find_missing_ja_translations.py` で別途検出できる

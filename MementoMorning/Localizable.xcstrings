@@ -74,7 +74,35 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "答えた朝 %lld"
+            "value": "答えた日数 %lld日"
+          }
+        }
+      }
+    },
+    "%lld times": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld time"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld times"
+                }
+              }
+            }
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 回"
           }
         }
       }
@@ -204,7 +232,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "点は、いつかつながる。"
+            "value": "点はいつかつながる"
           }
         }
       }
@@ -254,17 +282,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。答えた朝が、点として残る。"
-          }
-        }
-      }
-    },
-    "Endless follow-up alarm": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "無限追撃アラーム"
+            "value": "1行が1週間。答えた日が点として残る"
           }
         }
       }
@@ -829,16 +847,6 @@
         }
       }
     },
-    "Up to %lld times (free)": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld 回まで (無料)"
-          }
-        }
-      }
-    },
     "You can change permissions in the Settings app.": {
       "localizations": {
         "ja": {
@@ -1185,6 +1193,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "もう一度試す"
+          }
+        }
+      }
+    },
+    "Share this morning's words?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことばを、共有しませんか"
+          }
+        }
+      }
+    },
+    "Your answer becomes a quiet card you can pass along.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことばが、静かな一枚のカードになります"
           }
         }
       }

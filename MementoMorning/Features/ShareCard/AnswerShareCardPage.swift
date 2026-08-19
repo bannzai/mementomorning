@@ -4,7 +4,7 @@ import SwiftUI
 struct AnswerShareCardPage: View {
     let answer: MorningAnswer
 
-    /// 書き出し済みのカード画像。表示時に 1 回だけレンダリングする
+    /// 書き出し済みのカード画像。表示時にレンダリングし、本文が変わったら作り直す
     @State private var cardImage: UIImage?
 
     var body: some View {
@@ -24,6 +24,11 @@ struct AnswerShareCardPage: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
+            cardImage = renderAnswerShareCardImage(answeredDate: answer.answeredDate, text: answer.text)
+        }
+        // 動画回答の文字起こしは画面を開いた後にも完了し得るため、本文が置き換わったら共有画像も作り直す
+        // (開いた時点の本文で書き出した画像を共有し続けない)
+        .onChange(of: answer.text) { _, _ in
             cardImage = renderAnswerShareCardImage(answeredDate: answer.answeredDate, text: answer.text)
         }
     }

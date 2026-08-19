@@ -385,7 +385,7 @@ struct OnboardingPage: View {
                     .foregroundStyle(Color.warmWhite.opacity(0.55))
                     .padding(.top, 14)
                 Spacer()
-                practiceRecordButton
+                practiceRecordingControls
                     .padding(.bottom, 32)
             }
         }
@@ -395,39 +395,16 @@ struct OnboardingPage: View {
         }
     }
 
-    /// 練習用の録画の開始/停止ボタン (MorningQuestionPage の recordButton と同じ見た目)
-    private var practiceRecordButton: some View {
-        Button {
-            if practiceCamera.isRecording {
-                practiceCamera.stopRecording()
-            } else {
-                practiceCamera.startRecording()
-            }
-        } label: {
-            ZStack {
-                Circle()
-                    .stroke(Color.warmWhite.opacity(0.8), lineWidth: 3)
-                    .frame(width: 72, height: 72)
-                if practiceCamera.isRecording {
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.dawn)
-                        .frame(width: 28, height: 28)
-                } else {
-                    Circle()
-                        .fill(Color.warmWhite)
-                        .frame(width: 58, height: 58)
-                }
-            }
-        }
-        .disabled(!practiceCamera.isSessionRunning)
-        .accessibilityLabel(
-            practiceCamera.isRecording
-                // ja: 録画を止める
-                ? Text("Stop recording")
-                // ja: 録画を始める
-                : Text("Start recording")
+    /// 練習用の録画ボタンと録画中のインジケーター (朝の問いと同じ VideoAnswerRecordingControls)。
+    /// 練習でも 10 秒の上限で自動停止するため、本番と同じタイマーとリングで予告する
+    private var practiceRecordingControls: some View {
+        VideoAnswerRecordingControls(
+            camera: practiceCamera,
+            isDisabled: false,
+            // ja: 録画を止める
+            stopAccessibilityLabel: Text("Stop recording"),
+            accessibilityIdentifierPrefix: "onboarding_practice"
         )
-        .accessibilityIdentifier("onboarding_practice_record_button")
     }
 
     /// 練習の完了。朝の本番の動きを一言添えて次のステップへ進める

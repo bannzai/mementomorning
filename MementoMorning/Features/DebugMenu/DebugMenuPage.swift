@@ -140,6 +140,30 @@ struct DebugMenuPage: View {
                 Text(verbatim: "動画回答 (issue #52)")
             }
             Section {
+                Text(verbatim: "共有ダイアログの直近表示: \(sharePromptStateText)")
+                    .accessibilityIdentifier("debug_share_prompt_state")
+
+                Button {
+                    // 削除は未記録でも成功する (冪等)。リセットすると今日の回答があればホームが共有を促すダイアログを再表示する
+                    UserDefaults.standard.removeObject(forKey: .lastSharePromptDate)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "共有ダイアログの記録をリセット")
+                }
+                .accessibilityIdentifier("debug_reset_share_prompt")
+
+                Button {
+                    // 「2 週間おき」の再表示を待たずに確認するため、記録を 14 日前の同時刻へ戻す (何度押しても同じ日時に収束する冪等な操作)
+                    recordSharePromptPresented(date: Calendar.current.date(byAdding: .day, value: -sharePromptIntervalDays, to: .now)!)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "共有ダイアログの記録を 14 日前にする")
+                }
+                .accessibilityIdentifier("debug_backdate_share_prompt")
+            } header: {
+                Text(verbatim: "共有 (issue #74)")
+            }
+            Section {
                 Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")
                     .accessibilityIdentifier("debug_onboarding_state")
                 // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
@@ -185,6 +209,11 @@ struct DebugMenuPage: View {
     /// アラーム発火記録の表示用の文字列
     private var alarmFiredStateText: String {
         lastAlarmFiredDate()?.formatted(.iso8601) ?? "なし"
+    }
+
+    /// 共有を促すダイアログの直近表示日時の表示用の文字列
+    private var sharePromptStateText: String {
+        lastSharePromptDate()?.formatted(.iso8601) ?? "なし"
     }
 
     /// 回答件数と今日の回答の表示を最新化する
