@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 2824d8aab92be555347c4c93a7c02b699cbb2e2e
-last_verified_at: 2026-08-17
+last_verified_commit: 8f079671f1747b887851cfb59ea46bbfc78e1d09
+last_verified_at: 2026-08-19
 ---
 
 # LifeCalendar QA
@@ -30,9 +30,9 @@ last_verified_at: 2026-08-17
 - [ ] **初期スクロール位置**: 履歴が画面を超える件数でも、開いた時に今日の週 (末尾) が見えている
   - ⏭️ スキップ: 開発者メニューで投入できる回答は 10 日分 (13 週の最低保証グリッドに収まる) で、履歴が画面を超える状態を作る手段が現状ない。長期履歴の投入手段ができたら確認する
   - 自動化: manual（スクロール位置の目視確認）
-- [x] **答えた日数**: フッターに「答えた日数 N日」が全期間の回答数で表示される。英語では 1 件のときだけ単数形 (1 morning answered) になる
+- [x] **答えた日数**: フッターに「答えた日数 N日」(英語では N mornings answered) が全期間の回答数で表示される。英語では 1 件のときだけ単数形 (1 morning answered) になる
   - 自動化: manual（件数表示の目視確認）
-  - 確認範囲: 複数件 (10 mornings answered) を確認済み。1 件の単数形は issue #50 で対応し、ホームのフッター (同じ文言) で確認した
+  - 確認範囲: 複数件 (答えた日数 10日) を確認済み。1 件の単数形は issue #50 で対応し、ホームのフッター (同じ文言) で確認した
 
 #### 動作確認
 <details>
@@ -42,10 +42,10 @@ last_verified_at: 2026-08-17
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/a91e72fd-c640-46ff-9e9c-7f18f4b0a5f3.jpg" width="320">
+**確認日: 2026-08-19**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
 
-(投入した 10 日分が白い粒、未回答が暗い粒)
+(投入した 10 日分が白い粒、未回答が暗い粒。グリッドはキャプションとフッターの間の中央に配置される)
 
 </details>
 
@@ -53,8 +53,8 @@ last_verified_at: 2026-08-17
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/a91e72fd-c640-46ff-9e9c-7f18f4b0a5f3.jpg" width="320">
+**確認日: 2026-08-19**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
 
 </details>
 
@@ -62,8 +62,8 @@ last_verified_at: 2026-08-17
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/a91e72fd-c640-46ff-9e9c-7f18f4b0a5f3.jpg" width="320">
+**確認日: 2026-08-19**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
 
 (回答歴 10 日のため最低保証の 13 週分が表示され、破綻なし)
 
@@ -81,10 +81,10 @@ last_verified_at: 2026-08-17
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/a91e72fd-c640-46ff-9e9c-7f18f4b0a5f3.jpg" width="320">
+**確認日: 2026-08-19**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
 
-(全期間 10 件で「10 mornings answered」)
+(全期間 10 件で「答えた日数 10日」。日本語設定の simtunnel で確認)
 
 </details>
 
