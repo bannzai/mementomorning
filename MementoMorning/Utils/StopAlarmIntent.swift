@@ -34,7 +34,7 @@ public struct StopAlarmIntent: LiveActivityIntent {
 
     /// アラームを停止し、未回答なら追撃アラームを再登録する (「答えるまで止まらない」の中核)。
     /// 回答完了の判定は「今日の MorningAnswer が成立しているか」だけに依存し、回答手段 (テキスト / 動画) に依存しない。
-    /// 追撃の可否は課金状態で決める (無料: freeTierSnoozeLimit 回まで / プレミアム: 無限追撃。issue #9)。
+    /// 追撃の可否はスヌーズ設定と課金状態で決める (無料: freeTierSnoozeLimit 回まで / プレミアム: 設定した回数または無制限。issue #9 / #73)。
     /// 追撃の途中経過は appendStopIntentSpikeLog で逐次記録し、途中で kill されても直前までの痕跡が残るようにする
     public func perform() async throws -> some IntentResult {
         // applicationState は MainActor 経由でのみ読める。
@@ -95,9 +95,19 @@ public struct StopAlarmIntent: LiveActivityIntent {
         }
 
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
-        guard shouldChase(chaseCount: chaseCount, isPremium: PremiumEntitlement.isPremium) else {
-            appendStopIntentSpikeLog(message: "chase skipped: free tier snooze limit reached (\(chaseCount))")
-            // 先行登録済みのバックアップを放置すると無料枠 (freeTierSnoozeLimit) を超えて発火するため、
+        // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)。
+        // 設定の読み取り失敗は「設定値が nil (無制限)」と区別し、無料枠 freeTierSnoozeLimit を上限にする
+        // (プレミアムで有限回数を設定していても、一時的な読み取りエラーで設定回数を超えて追撃し続けないため。PR #78 レビュー指摘)
+        let snoozeLimit: Int?
+        do {
+            snoozeLimit = try PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>()).first.flatMap(\.snoozeLimit)
+        } catch {
+            appendStopIntentSpikeLog(message: "alarm setting fetch failed, fallback to free tier snooze limit error=\(error)")
+            snoozeLimit = freeTierSnoozeLimit
+        }
+        guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) else {
+            appendStopIntentSpikeLog(message: "chase skipped: snooze limit reached (\(chaseCount))")
+            // 先行登録済みのバックアップを放置するとスヌーズ上限を超えて発火するため、
             // 上限到達時に当日分の残りをキャンセルする (PR #30 レビュー指摘)
             cancelTodaysBackupAlarms()
             return

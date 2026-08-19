@@ -280,7 +280,7 @@ private struct HomeContent: View {
         } label: {
             ZStack(alignment: alarmSetting.isEnabled ? .trailing : .leading) {
                 Capsule()
-                    .fill(alarmSetting.isEnabled ? Color.dawn.opacity(0.45) : Color.warmWhite.opacity(0.14))
+                    .fill(alarmSetting.isEnabled ? Color.alarmToggleOn : Color.warmWhite.opacity(0.14))
                 Circle()
                     .fill(Color.warmWhite)
                     .frame(width: 28, height: 28)
