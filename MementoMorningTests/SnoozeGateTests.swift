@@ -2,28 +2,60 @@ import XCTest
 import SwiftData
 @testable import MementoMorning
 
-/// shouldChase (追撃アラーム再登録の可否判定) のテスト。
-/// 無料は freeTierSnoozeLimit (2 回) を境界に打ち切られ、プレミアムは回数によらず追撃されることを確認する
+/// スヌーズ上限の判定 (isSnoozeLimitSelectable / effectiveSnoozeLimit / shouldChase) のテスト。
+/// 無料は freeTierSnoozeLimit (2 回) を境界に打ち切られ、プレミアムは設定した回数まで・無制限なら回数によらず追撃されることを確認する
 final class SnoozeGateTests: XCTestCase {
     func testFreeTierChasesUntilLimit() {
-        XCTAssertTrue(shouldChase(chaseCount: 0, isPremium: false))
-        XCTAssertTrue(shouldChase(chaseCount: 1, isPremium: false))
+        XCTAssertTrue(shouldChase(chaseCount: 0, snoozeLimit: nil, isPremium: false))
+        XCTAssertTrue(shouldChase(chaseCount: 1, snoozeLimit: nil, isPremium: false))
     }
 
     func testFreeTierStopsChasingAtLimit() {
-        XCTAssertFalse(shouldChase(chaseCount: freeTierSnoozeLimit, isPremium: false))
-        XCTAssertFalse(shouldChase(chaseCount: freeTierSnoozeLimit + 1, isPremium: false))
+        XCTAssertFalse(shouldChase(chaseCount: freeTierSnoozeLimit, snoozeLimit: nil, isPremium: false))
+        XCTAssertFalse(shouldChase(chaseCount: freeTierSnoozeLimit + 1, snoozeLimit: nil, isPremium: false))
     }
 
-    func testPremiumChasesWithoutLimit() {
-        XCTAssertTrue(shouldChase(chaseCount: 0, isPremium: true))
-        XCTAssertTrue(shouldChase(chaseCount: freeTierSnoozeLimit, isPremium: true))
-        XCTAssertTrue(shouldChase(chaseCount: 100, isPremium: true))
+    func testFreeTierRespectsSmallerSelectedLimit() {
+        XCTAssertTrue(shouldChase(chaseCount: 0, snoozeLimit: 1, isPremium: false))
+        XCTAssertFalse(shouldChase(chaseCount: 1, snoozeLimit: 1, isPremium: false))
+    }
+
+    func testFreeTierClampsPremiumOnlyLimitToFreeTier() {
+        // プレミアム失効後に残った回数や無制限は無料枠 (freeTierSnoozeLimit) に丸める
+        XCTAssertEqual(effectiveSnoozeLimit(snoozeLimit: 10, isPremium: false), freeTierSnoozeLimit)
+        XCTAssertEqual(effectiveSnoozeLimit(snoozeLimit: nil, isPremium: false), freeTierSnoozeLimit)
+        XCTAssertFalse(shouldChase(chaseCount: freeTierSnoozeLimit, snoozeLimit: 10, isPremium: false))
+    }
+
+    func testPremiumChasesUntilSelectedLimit() {
+        XCTAssertEqual(effectiveSnoozeLimit(snoozeLimit: 5, isPremium: true), 5)
+        XCTAssertTrue(shouldChase(chaseCount: 4, snoozeLimit: 5, isPremium: true))
+        XCTAssertFalse(shouldChase(chaseCount: 5, snoozeLimit: 5, isPremium: true))
+    }
+
+    func testPremiumUnlimitedChasesWithoutLimit() {
+        XCTAssertNil(effectiveSnoozeLimit(snoozeLimit: nil, isPremium: true))
+        XCTAssertTrue(shouldChase(chaseCount: 0, snoozeLimit: nil, isPremium: true))
+        XCTAssertTrue(shouldChase(chaseCount: freeTierSnoozeLimit, snoozeLimit: nil, isPremium: true))
+        XCTAssertTrue(shouldChase(chaseCount: 100, snoozeLimit: nil, isPremium: true))
+    }
+
+    func testSnoozeLimitSelectability() {
+        // 無料は freeTierSnoozeLimit までの回数だけ選べ、それを超える回数と無制限はプレミアム限定
+        XCTAssertTrue(isSnoozeLimitSelectable(snoozeLimit: 1, isPremium: false))
+        XCTAssertTrue(isSnoozeLimitSelectable(snoozeLimit: freeTierSnoozeLimit, isPremium: false))
+        XCTAssertFalse(isSnoozeLimitSelectable(snoozeLimit: freeTierSnoozeLimit + 1, isPremium: false))
+        XCTAssertFalse(isSnoozeLimitSelectable(snoozeLimit: nil, isPremium: false))
+        XCTAssertTrue(isSnoozeLimitSelectable(snoozeLimit: snoozeLimitChoices.upperBound, isPremium: true))
+        XCTAssertTrue(isSnoozeLimitSelectable(snoozeLimit: nil, isPremium: true))
     }
 
     func testFreeTierSnoozeLimitMatchesPricingPlan() {
         // documents/PROJECT.md の課金設計「スヌーズ 2 回まで」と一致していることを固定する
         XCTAssertEqual(freeTierSnoozeLimit, 2)
+        // issue #73 の選択肢「1〜10 の数字と無限」。無料枠は選択肢の範囲内にある
+        XCTAssertEqual(snoozeLimitChoices, 1...10)
+        XCTAssertTrue(snoozeLimitChoices.contains(freeTierSnoozeLimit))
     }
 
     /// 追撃カウントのリセット条件 (今日の回答の有無) の判定を in-memory DB で確認する
