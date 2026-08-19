@@ -18465,10 +18465,214 @@
     "Stop, and the alarm stops too." : {
       "comment" : "朝の回答画面で録画停止ボタンの下に出る説明。「録画を止めると、アラームも止まる」の意味。ユーザー自身が立ち止まる意味ではない",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أوقف التسجيل، وسيتوقف المنبّه أيضًا."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atura l’enregistrament i l’alarma també s’aturarà."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastav nahrávání a budík se také zastaví."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop optagelsen, så stopper alarmen også."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stoppe die Aufnahme, dann stoppt auch der Wecker."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σταμάτησε την εγγραφή και θα σταματήσει και το ξυπνητήρι."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detén la grabación y también se detendrá la alarma."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detén la grabación y la alarma también se detendrá."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kun lopetat tallennuksen, myös herätys loppuu."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêtez l’enregistrement, et l’alarme s’arrêtera aussi."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "עצור את ההקלטה, וגם השעון המעורר ייפסק."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकॉर्डिंग रोकें, अलार्म भी रुक जाएगा।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaustavi snimanje i alarm će se također zaustaviti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Állítsd le a felvételt, és az ébresztő is leáll."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hentikan rekaman, dan alarm juga akan berhenti."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferma la registrazione e anche la sveglia si fermerà."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "止めると、アラームも止まります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "녹화를 중지하면 알람도 중지돼요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hentikan rakaman, dan penggera juga akan berhenti."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopp opptaket, så stopper alarmen også."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop de opname, dan stopt het alarm ook."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymaj nagrywanie, a budzik też się wyłączy."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pare a gravação, e o alarme também será interrompido."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando parares a gravação, o alarme também para."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprește înregistrarea, iar alarma se va opri și ea."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановите запись, и будильник тоже остановится."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zastav nahrávanie a budík sa tiež zastaví."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stoppa inspelningen, så stängs alarmet också av."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หยุดการบันทึก แล้วนาฬิกาปลุกจะหยุดด้วย"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydı durdur, alarm da durur."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зупиніть запис, і будильник теж зупиниться."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dừng quay, báo thức cũng sẽ dừng."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止錄影，鬧鐘也會停止。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止录制，闹钟也会停止。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止錄製，鬧鐘也會停止。"
           }
         }
       }
