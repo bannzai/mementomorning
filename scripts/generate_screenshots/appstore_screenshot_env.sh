@@ -8,13 +8,58 @@
 #
 
 export SCHEME="AppStoreScreenshotsUITests"
-# シミュレータ名は DESTINATION_SIM_NAME で上書きできる。
-# 複数の worktree / セッションが同時にスクショ生成すると、同名シミュレータの
-# 奪い合いで UITest が互いのアプリを落とし合うため、専用名を渡して分離する。
-# iPhone 13 Pro Max (1284×2778) は App Store の 6.5インチ表示サイズの要求解像度
-export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-iPhone 13 Pro Max},OS=26.0"
 export DERIVED_DATA_PATH=artifacts/appstore_screenshots/derived_data
 export VARIANT_OUTPUT_BASE_DIR="scripts/generate_screenshots/artifacts"
+
+# 撮影デバイス (App Store Connect の表示サイズ区分)。
+#   69: 6.9 インチ (iPhone 17 Pro Max, 1320×2868)。ASC で必須の表示サイズ
+#   65: 6.5 インチ (iPhone 13 Pro Max, 1284×2778)。任意 (未提供なら 6.9 インチの縮小が使われる)
+# SCREENSHOT_DEVICES は生成・適用の対象デバイス一覧 (カンマ区切り。generate の -d で上書き)、
+# SCREENSHOT_DEVICE は現在の 1 デバイス (generate がデバイスごとに export し、子スクリプトが引き継ぐ)
+export SCREENSHOT_DEVICES="${SCREENSHOT_DEVICES:-69,65}"
+
+# デバイス区分から出力ファイル名に使う表示サイズ名を返す関数。
+# 名前は fastlane deliver の DisplayType (Spaceship::ConnectAPI::AppScreenshotSet::DisplayType) に合わせる。
+# deliver は 6.9 インチ (1320×2868) を APP_IPHONE_67 として扱う (判定自体は画像の解像度で行われるが、名前も一致させて紛れをなくす)
+# Usage: get_display_type <69|65>
+get_display_type() {
+  case "$1" in
+    69) echo "APP_IPHONE_67" ;;
+    65) echo "APP_IPHONE_65" ;;
+    *) echo "Error: 未対応の SCREENSHOT_DEVICE です: $1 (対応: 69, 65)" >&2; return 1 ;;
+  esac
+}
+
+# デバイス区分からシミュレータのデバイスタイプ名を返す関数
+# Usage: get_device_type_name <69|65>
+get_device_type_name() {
+  case "$1" in
+    69) echo "iPhone 17 Pro Max" ;;
+    65) echo "iPhone 13 Pro Max" ;;
+    *) echo "Error: 未対応の SCREENSHOT_DEVICE です: $1 (対応: 69, 65)" >&2; return 1 ;;
+  esac
+}
+
+# 現在の撮影デバイスを設定し、依存する環境変数 (表示サイズ名・デバイスタイプ・DESTINATION) を更新する関数。
+# シミュレータ名は DESTINATION_SIM_NAME で上書きできる。
+# 複数の worktree / セッションが同時にスクショ生成すると、同名シミュレータの
+# 奪い合いで UITest が互いのアプリを落とし合うため、専用名を渡して分離する
+# (専用名は 1 デバイス分にしか付けられないため、渡す時は generate の -d で 1 デバイスに絞る)。
+# Usage: configure_screenshot_device <69|65>
+configure_screenshot_device() {
+  export SCREENSHOT_DEVICE="$1"
+  SCREENSHOT_DISPLAY_TYPE=$(get_display_type "$SCREENSHOT_DEVICE") || return 1
+  export SCREENSHOT_DISPLAY_TYPE
+  SCREENSHOT_DEVICE_TYPE=$(get_device_type_name "$SCREENSHOT_DEVICE") || return 1
+  export SCREENSHOT_DEVICE_TYPE
+  # simulator_common.sh の自動作成が使うデバイスタイプ (専用名のシミュレータでも正しい機種で作る)
+  export DESTINATION_SIM_DEVICE_TYPE="$SCREENSHOT_DEVICE_TYPE"
+  export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-$SCREENSHOT_DEVICE_TYPE},OS=26.0"
+}
+
+# 既定は 6.9 インチ。generate がデバイスごとに configure_screenshot_device を呼び直し、
+# 子スクリプト (run / organize) は export 済みの SCREENSHOT_DEVICE を引き継ぐ
+configure_screenshot_device "${SCREENSHOT_DEVICE:-69}" || return 1
 
 # テストファイルパスからテスト実行パスとartifactパスを取得する共通関数
 # Usage: get_test_info <test_file_path>

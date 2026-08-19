@@ -4,8 +4,8 @@
 #
 # xcrun xcresulttool で抽出したスクリーンショットを fastlane 形式に整理するスクリプト。
 # manifest.json の suggestedHumanReadableName を解析し、
-# scripts/generate_screenshots/artifacts/_variant-{name}/{言語}/{インデックス}_APP_IPHONE_65_{インデックス}.png
-# の形式でリネーム・配置する。
+# scripts/generate_screenshots/artifacts/_variant-{name}/{言語}/{インデックス}_{表示サイズ名}_{インデックス}.png
+# の形式でリネーム・配置する (表示サイズ名は SCREENSHOT_DEVICE に対応する APP_IPHONE_67 / APP_IPHONE_65)。
 # (取り込み元: bannzai/Focus の同名スクリプト)
 #
 # 【使い方】
@@ -100,8 +100,8 @@ jq -c '.[] | .attachments[]' "$MANIFEST_FILE" | while read -r attachment; do
   output_dir="$VARIANT_OUTPUT_BASE_DIR/_variant-${variant_name}/$fastlane_lang"
   mkdir -p "$output_dir"
 
-  # fastlane 形式のファイル名にリネームして配置
-  new_filename="${variant_index}_APP_IPHONE_65_${variant_index}.png"
+  # fastlane 形式のファイル名にリネームして配置 (表示サイズ名は撮影デバイスに対応。appstore_screenshot_env.sh の get_display_type が正)
+  new_filename="${variant_index}_${SCREENSHOT_DISPLAY_TYPE}_${variant_index}.png"
   dest_file="$output_dir/$new_filename"
 
   mv "$source_file" "$dest_file"

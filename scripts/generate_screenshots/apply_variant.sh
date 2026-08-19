@@ -53,9 +53,9 @@ echo "==== Applying variant: $VARIANT_NAME ===="
 echo "==== Source: $VARIANT_DIR ===="
 echo "==== Destination: $FASTLANE_DIR ===="
 
-# バリアントの期待枚数 = このバリアントの番号帯に属するテストファイル数。
-# 一部だけ生成した状態 (-n "1" 等) で適用すると、適用先の完成済み一式を消して欠落した素材を作るため、
-# 各言語が期待枚数に達していることを削除前に検証する
+# バリアントの期待枚数 = このバリアントの番号帯に属するテストファイル数 × 撮影デバイス数 (SCREENSHOT_DEVICES)。
+# 一部だけ生成した状態 (-n "1" や -d "69" 等) で適用すると、適用先の完成済み一式を消して欠落した素材を作るため、
+# 各言語がデバイスごとに期待枚数に達していることを削除前に検証する
 expected_count=0
 for test_file in AppStoreScreenshotsUITests/Features/AppStoreScreenshot/AppStoreScreenshot*PageSnapshotUITest.swift; do
   [ -f "$test_file" ] || continue
@@ -70,14 +70,20 @@ if [ "$expected_count" -eq 0 ]; then
   exit 1
 fi
 
+IFS=',' read -ra device_list <<< "$SCREENSHOT_DEVICES"
 incomplete=""
 for lang_dir in "$VARIANT_DIR"/*/; do
   [ -d "$lang_dir" ] || continue
   lang=$(basename "$lang_dir")
-  actual_count=$(ls -1 "$lang_dir"*.png 2>/dev/null | wc -l | tr -d ' ')
-  if [ "$actual_count" -ne "$expected_count" ]; then
-    incomplete+="  - ${lang}: ${actual_count}/${expected_count} 枚"$'\n'
-  fi
+  for device in "${device_list[@]}"; do
+    device=$(echo "$device" | tr -d ' ')
+    [ -n "$device" ] || continue
+    display_type=$(get_display_type "$device")
+    actual_count=$(ls -1 "$lang_dir"*_"${display_type}"_*.png 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$actual_count" -ne "$expected_count" ]; then
+      incomplete+="  - ${lang} (${display_type}): ${actual_count}/${expected_count} 枚"$'\n'
+    fi
+  done
 done
 
 if [ -z "$(find "$VARIANT_DIR" -name '*.png' -print -quit 2>/dev/null)" ] || [ -n "$incomplete" ]; then
@@ -85,7 +91,7 @@ if [ -z "$(find "$VARIANT_DIR" -name '*.png' -print -quit 2>/dev/null)" ] || [ -
   if [ -n "$incomplete" ]; then
     echo "$incomplete"
   fi
-  echo "先に ./scripts/generate_screenshots/generate_appstore_screenshots.sh で全番号を生成してください"
+  echo "先に ./scripts/generate_screenshots/generate_appstore_screenshots.sh で全番号・全デバイス (SCREENSHOT_DEVICES=$SCREENSHOT_DEVICES) を生成してください"
   exit 1
 fi
 

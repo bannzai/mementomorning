@@ -3,7 +3,7 @@
 # generate_appstore_screenshots.sh
 #
 # App Storeスクリーンショットを自動生成するメインスクリプト。
-# AppStoreScreenshot 用の UITest を実行し、全言語のスクリーンショットを
+# AppStoreScreenshot 用の UITest をデバイス (6.9 インチ / 6.5 インチ) ごとに実行し、全言語のスクリーンショットを
 # scripts/generate_screenshots/artifacts/_variant-{name}/ に生成する。
 # (取り込み元: bannzai/Focus の同名スクリプト)
 #
@@ -21,6 +21,9 @@
 # 3. 特定の番号のスクリーンショットのみ生成:
 #    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -n "1-6"
 #    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -n "1,3,5"
+#
+# 3-2. 特定のデバイス (表示サイズ) のみで生成 (デフォルトは 6.9 インチと 6.5 インチの両方):
+#    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -d "69"
 #
 # 4. 並列数を指定して実行:
 #    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -p 2
@@ -86,6 +89,7 @@ SKIP_BUILD=false
 OVERWRITE=false
 LANGUAGES=""
 SCREENSHOT_NUMBERS=""
+DEVICES="$SCREENSHOT_DEVICES"
 # 並列数のデフォルトは 1 (直列)。同一シミュレータへの並列 test 実行はランナー同士が
 # kill し合い "Early unexpected exit" で落ちることを実測したため (2026-08-16、iOS 26.0 sim)。
 # -p 2 以上を使う時は DESTINATION_SIM_NAME で worktree ごとに専用シミュレータを分けても
@@ -99,6 +103,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -n|--numbers)
       SCREENSHOT_NUMBERS="$2"
+      shift 2
+      ;;
+    -d|--devices)
+      DEVICES="$2"
       shift 2
       ;;
     -p|--parallel)
@@ -119,6 +127,7 @@ while [[ $# -gt 0 ]]; do
       echo "Options:"
       echo "  -l LANGS           実行する言語をカンマ区切りで指定 (例: \"ja,en\", デフォルト: 全言語)"
       echo "  -n NUMS            実行するスクリーンショット番号を指定 (例: \"1,2,3\" or \"1-6\", デフォルト: 全番号)"
+      echo "  -d DEVICES         撮影デバイス (表示サイズ) をカンマ区切りで指定 (69: 6.9インチ iPhone 17 Pro Max, 65: 6.5インチ iPhone 13 Pro Max。デフォルト: $SCREENSHOT_DEVICES)"
       echo "  -p NUM             並列実行数を指定 (デフォルト: 1。同一シミュレータでの並列はランナーが落ちやすい)"
       echo "  --skip-build       build-for-testing をスキップ"
       echo "  --overwrite        既存スクリーンショットを上書き（デフォルト: 全言語分揃っていればスキップ）"
@@ -195,7 +204,7 @@ is_test_complete() {
   local screenshot_number=$(echo "$filename" | sed -E 's/AppStoreScreenshot([0-9]+)PageSnapshotUITest/\1/')
   local variant_name=$(get_variant_name "$screenshot_number")
   local variant_index=$(get_variant_index "$screenshot_number")
-  local expected_file="${variant_index}_APP_IPHONE_65_${variant_index}.png"
+  local expected_file="${variant_index}_${SCREENSHOT_DISPLAY_TYPE}_${variant_index}.png"
 
   # 対象言語リストを決定 (未指定時の全言語は AppStoreScreenshotsUITests/Languages.swift と揃える)
   local target_languages
@@ -225,7 +234,7 @@ remove_test_outputs() {
   local screenshot_number=$(echo "$filename" | sed -E 's/AppStoreScreenshot([0-9]+)PageSnapshotUITest/\1/')
   local variant_name=$(get_variant_name "$screenshot_number")
   local variant_index=$(get_variant_index "$screenshot_number")
-  local expected_file="${variant_index}_APP_IPHONE_65_${variant_index}.png"
+  local expected_file="${variant_index}_${SCREENSHOT_DISPLAY_TYPE}_${variant_index}.png"
 
   local target_languages
   if [ -n "$LANGUAGES" ]; then
@@ -282,7 +291,7 @@ run_single_test() {
     # テストが失敗しても結果バンドル (artifact ディレクトリ) は作られるため、
     # ディレクトリの存在ではなく「対象言語分の出力が実際に揃ったか」で成功を判定する
     if is_test_complete "$test_file"; then
-      touch "${temp_dir}/.success_$(basename "$test_file" .swift)"
+      touch "${temp_dir}/.success_${SCREENSHOT_DEVICE}_$(basename "$test_file" .swift)"
     fi
 
     # テストごとの一時ディレクトリを削除
@@ -300,6 +309,30 @@ mkdir -p "$TEMP_SCREENSHOTS_DIR"
 if [ -n "$LANGUAGES" ]; then
   sep "Languages: $LANGUAGES"
 fi
+
+# デバイス (表示サイズ) 一覧の検証。未対応の区分は撮影前に落とす
+IFS=',' read -ra device_list <<< "$DEVICES"
+device_list=($(printf '%s\n' "${device_list[@]}" | tr -d ' ' | grep -v '^$'))
+if [ "${#device_list[@]}" -eq 0 ]; then
+  echo "Error: -d に撮影デバイスが指定されていません" >&3
+  exit 1
+fi
+for device in "${device_list[@]}"; do
+  if ! get_display_type "$device" > /dev/null; then
+    echo "Error: 未対応の撮影デバイスです: $device (対応: 69, 65)" >&3
+    exit 1
+  fi
+done
+# 専用シミュレータ名は 1 デバイス分にしか付けられない (別機種を同名では作れない) ため、複数デバイスとの併用は拒否する
+if [ -n "${DESTINATION_SIM_NAME:-}" ] && [ "${#device_list[@]}" -gt 1 ]; then
+  echo "Error: DESTINATION_SIM_NAME を使う時は -d で撮影デバイスを 1 つに絞ってください (指定: $DEVICES)" >&3
+  exit 1
+fi
+sep "Devices: ${device_list[*]}"
+
+# 最初のデバイスでシミュレータを用意してビルドする。
+# build-for-testing の成果物は simulator SDK 共通で、他デバイスの test-without-building にもそのまま使える
+configure_screenshot_device "${device_list[0]}"
 
 # シミュレータが存在しない場合は自動作成
 ensure_simulator_exists
@@ -337,75 +370,92 @@ fi
 total_count=$(echo "$test_files" | wc -l | tr -d ' ')
 sep "Found $total_count AppStore screenshot test(s), running with $PARALLEL parallel job(s)"
 
-# 並列実行ループ
-# 並列数の制御は PID を FIFO で待つ方式にする (macOS 標準の Bash 3.2 には wait -n が無く、
-# `wait -n || true` は失敗が握り潰されて実際には待機しないため)
-job_pids=()
-test_count=0
-for test_file in $test_files; do
-  test_count=$((test_count + 1))
+# 1 デバイス分の全テスト実行 (並列実行 → 失敗分の逐次リトライ) を行う関数。
+# 成否は成功マーカー (.success_{device}_{test}) で記録し、最後にデバイス横断で集計する
+run_all_tests_for_device() {
+  local device=$1
+  configure_screenshot_device "$device"
+  sep "Device: $device ($SCREENSHOT_DEVICE_TYPE, $SCREENSHOT_DISPLAY_TYPE)"
 
-  # --overwrite の場合は既存出力を先に削除し、今回の生成物だけで成否を判定する
-  if [ "$OVERWRITE" = true ]; then
-    remove_test_outputs "$test_file"
-  fi
+  # シミュレータが存在しない場合は自動作成 (2 台目以降のデバイスはここで用意する)
+  ensure_simulator_exists
 
-  # --overwrite でない場合、全言語分のファイルが揃っていればスキップ
-  if [ "$OVERWRITE" = false ] && is_test_complete "$test_file"; then
-    sep "Skipping test $test_count/$total_count (already complete): $(basename "$test_file")"
-    continue
-  fi
+  # 並列実行ループ
+  # 並列数の制御は PID を FIFO で待つ方式にする (macOS 標準の Bash 3.2 には wait -n が無く、
+  # `wait -n || true` は失敗が握り潰されて実際には待機しないため)
+  job_pids=()
+  test_count=0
+  for test_file in $test_files; do
+    test_count=$((test_count + 1))
 
-  run_single_test "$test_file" "$test_count" "$total_count" "$TEMP_SCREENSHOTS_DIR" &
-  job_pids+=($!)
+    # --overwrite の場合は既存出力を先に削除し、今回の生成物だけで成否を判定する
+    if [ "$OVERWRITE" = true ]; then
+      remove_test_outputs "$test_file"
+    fi
 
-  # 並列数上限に達したら最も古いジョブの完了を待つ
-  if [ "${#job_pids[@]}" -ge "$PARALLEL" ]; then
-    wait "${job_pids[0]}" 2>/dev/null || true
-    job_pids=(${job_pids[@]+"${job_pids[@]:1}"})
-  fi
-done
-
-# 残りのバックグラウンドジョブ完了を待つ
-wait 2>/dev/null || true
-
-# 失敗テストの検出とリトライ
-failed_tests=""
-for test_file in $test_files; do
-  marker="${TEMP_SCREENSHOTS_DIR}/.success_$(basename "$test_file" .swift)"
-  if [ ! -f "$marker" ]; then
-    failed_tests+="$test_file"$'\n'
-  fi
-done
-failed_tests=$(echo "$failed_tests" | grep -v '^$' || true)
-
-if [ -n "$failed_tests" ]; then
-  failed_count=$(echo "$failed_tests" | wc -l | tr -d ' ')
-  sep "Retrying $failed_count failed test(s) sequentially"
-
-  retry_count=0
-  for test_file in $failed_tests; do
-    retry_count=$((retry_count + 1))
-
-    # リトライ前にもう一度チェック（他のテストの副作用等で揃っている可能性）
+    # --overwrite でない場合、全言語分のファイルが揃っていればスキップ
     if [ "$OVERWRITE" = false ] && is_test_complete "$test_file"; then
-      sep "Skipping retry $retry_count/$failed_count (already complete): $(basename "$test_file")"
-      # リトライ不要なのでsuccessマーカーを作成
-      touch "${TEMP_SCREENSHOTS_DIR}/.success_$(basename "$test_file" .swift)"
+      sep "Skipping test $test_count/$total_count (already complete): $(basename "$test_file")"
       continue
     fi
 
-    run_single_test "$test_file" "$retry_count" "$failed_count" "$TEMP_SCREENSHOTS_DIR"
-  done
-fi
+    run_single_test "$test_file" "$test_count" "$total_count" "$TEMP_SCREENSHOTS_DIR" &
+    job_pids+=($!)
 
-# 最終的な失敗テストの確認
-final_failed=""
-for test_file in $test_files; do
-  marker="${TEMP_SCREENSHOTS_DIR}/.success_$(basename "$test_file" .swift)"
-  if [ ! -f "$marker" ]; then
-    final_failed+="  - $(basename "$test_file")"$'\n'
+    # 並列数上限に達したら最も古いジョブの完了を待つ
+    if [ "${#job_pids[@]}" -ge "$PARALLEL" ]; then
+      wait "${job_pids[0]}" 2>/dev/null || true
+      job_pids=(${job_pids[@]+"${job_pids[@]:1}"})
+    fi
+  done
+
+  # 残りのバックグラウンドジョブ完了を待つ
+  wait 2>/dev/null || true
+
+  # 失敗テストの検出とリトライ
+  failed_tests=""
+  for test_file in $test_files; do
+    marker="${TEMP_SCREENSHOTS_DIR}/.success_${SCREENSHOT_DEVICE}_$(basename "$test_file" .swift)"
+    if [ ! -f "$marker" ]; then
+      failed_tests+="$test_file"$'\n'
+    fi
+  done
+  failed_tests=$(echo "$failed_tests" | grep -v '^$' || true)
+
+  if [ -n "$failed_tests" ]; then
+    failed_count=$(echo "$failed_tests" | wc -l | tr -d ' ')
+    sep "Retrying $failed_count failed test(s) sequentially"
+
+    retry_count=0
+    for test_file in $failed_tests; do
+      retry_count=$((retry_count + 1))
+
+      # リトライ前にもう一度チェック（他のテストの副作用等で揃っている可能性）
+      if [ "$OVERWRITE" = false ] && is_test_complete "$test_file"; then
+        sep "Skipping retry $retry_count/$failed_count (already complete): $(basename "$test_file")"
+        # リトライ不要なのでsuccessマーカーを作成
+        touch "${TEMP_SCREENSHOTS_DIR}/.success_${SCREENSHOT_DEVICE}_$(basename "$test_file" .swift)"
+        continue
+      fi
+
+      run_single_test "$test_file" "$retry_count" "$failed_count" "$TEMP_SCREENSHOTS_DIR"
+    done
   fi
+}
+
+for device in "${device_list[@]}"; do
+  run_all_tests_for_device "$device"
+done
+
+# 最終的な失敗テストの確認 (全デバイス横断)
+final_failed=""
+for device in "${device_list[@]}"; do
+  for test_file in $test_files; do
+    marker="${TEMP_SCREENSHOTS_DIR}/.success_${device}_$(basename "$test_file" .swift)"
+    if [ ! -f "$marker" ]; then
+      final_failed+="  - [$device] $(basename "$test_file")"$'\n'
+    fi
+  done
 done
 
 # 一時ファイル・ディレクトリの最終クリーンアップ
