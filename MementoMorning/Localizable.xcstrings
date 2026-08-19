@@ -24458,10 +24458,214 @@
     },
     "Your answers will gather here, one morning at a time." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ستتجمع إجاباتك هنا، صباحًا بعد صباح."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les teves respostes s’aniran aplegant aquí, matí rere matí."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvé odpovědi se tu budou postupně shromažďovat, jedno ráno za druhým."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dine svar samler sig her, én morgen ad gangen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Antworten sammeln sich hier, Morgen für Morgen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι απαντήσεις σου θα συγκεντρώνονται εδώ, ένα πρωινό τη φορά."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus respuestas se irán reuniendo aquí, una mañana a la vez."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus respuestas se irán reuniendo aquí, una mañana a la vez."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastauksesi kertyvät tänne, yksi aamu kerrallaan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos réponses se rassembleront ici, matin après matin."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "התשובות שלך יצטברו כאן, בוקר אחר בוקר."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके जवाब यहाँ, हर सुबह एक-एक करके, इकट्ठा होते जाएँगे।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoji će se odgovori ovdje skupljati, jedno jutro za drugim."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A válaszaid itt gyűlnek majd össze, reggelről reggelre."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawabanmu akan terkumpul di sini, satu pagi demi satu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le tue risposte si raccoglieranno qui, mattino dopo mattino."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "回答は、ひと朝ずつここに集まっていきます"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "답변은 아침마다 이곳에 차곡차곡 쌓여갑니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawapan anda akan terkumpul di sini, satu pagi demi satu pagi."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svarene dine samler seg her, én morgen av gangen."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je antwoorden verzamelen zich hier, ochtend na ochtend."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje odpowiedzi będą się tutaj gromadzić, poranek po poranku."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suas respostas vão se reunir aqui, uma manhã de cada vez."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As tuas respostas vão-se reunindo aqui, manhã após manhã."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Răspunsurile tale se vor aduna aici, dimineață după dimineață."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваши ответы будут накапливаться здесь, утро за утром."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje odpovede sa tu budú zhromažďovať, ráno za ránom."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dina svar samlas här, morgon efter morgon."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำตอบของคุณจะค่อย ๆ สะสมอยู่ที่นี่ ทีละเช้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yanıtların burada, sabah sabah birikecek."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваші відповіді збиратимуться тут, ранок за ранком."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Câu trả lời của bạn sẽ dần được lưu lại tại đây, từng buổi sáng một."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的答案會在這裡，一天一天累積起來。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的回答会在这里，一天一天积累起来。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的回答會在這裡，一天一天累積起來。"
           }
         }
       }
