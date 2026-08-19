@@ -667,16 +667,220 @@
     "NSPhotoLibraryUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لحفظ إجابات الفيديو المسجّلة في ألبوم 'Memento Morning' في تطبيق الصور."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per desar les teves respostes de vídeo enregistrades a l'àlbum 'Memento Morning' de Fotos."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží k ukládání nahraných videoodpovědí do alba 'Memento Morning' v aplikaci Fotky."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at gemme dine optagede videosvar i albummet 'Memento Morning' i Fotos."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um deine aufgezeichneten Videoantworten im Album 'Memento Morning' in Fotos zu sichern."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για την αποθήκευση των εγγεγραμμένων απαντήσεων βίντεο στο άλμπουμ 'Memento Morning' στις Φωτογραφίες."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para guardar tus respuestas de vídeo grabadas en el álbum 'Memento Morning' de Fotos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para guardar tus respuestas de video grabadas en el álbum 'Memento Morning' de Fotos."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään tallennettujen videovastaustesi tallentamiseen Kuvien Memento Morning -albumiin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour enregistrer vos réponses vidéo dans l’album 'Memento Morning' de Photos."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש לשמירת תשובות הווידאו שהקלטת באלבום 'Memento Morning' ב״תמונות״."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके रिकॉर्ड किए गए वीडियो उत्तरों को फ़ोटो में 'Memento Morning' एल्बम में सहेजने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za spremanje tvojih snimljenih videoodgovora u album 'Memento Morning' u aplikaciji Foto."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rögzített videóválaszaid 'Memento Morning' albumba való mentésére szolgál a Fotókban."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk menyimpan jawaban video yang kamu rekam ke album 'Memento Morning' di Foto."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve per salvare le tue risposte video registrate nell’album 'Memento Morning' in Foto."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "録画した動画回答を写真アプリのアルバム「Memento Morning」に保存するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "녹화한 동영상 답변을 사진 앱의 'Memento Morning' 앨범에 저장하는 데 사용해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk menyimpan jawapan video yang anda rakam ke album 'Memento Morning' dalam Foto."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å lagre de innspilte videosvarene dine i albumet 'Memento Morning' i Bilder."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om je opgenomen videoantwoorden op te slaan in het album 'Memento Morning' in Foto's."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do zapisywania nagranych przez ciebie odpowiedzi wideo w albumie 'Memento Morning' w aplikacji Zdjęcia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para salvar os vídeos das suas respostas gravadas no álbum 'Memento Morning' do Fotos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É utilizado para guardar as tuas respostas em vídeo gravadas no álbum 'Memento Morning' da app Fotografias."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a salva răspunsurile video înregistrate de tine în albumul 'Memento Morning' din Poze."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для сохранения записанных вами видеоответов в альбоме «Memento Morning» в приложении «Фото»."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na uloženie tvojich nahratých videoodpovedí do albumu 'Memento Morning' v aplikácii Fotky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att spara dina inspelade videosvar i albumet 'Memento Morning' i Bilder."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อบันทึกคำตอบวิดีโอที่คุณบันทึกไว้ลงในอัลบั้ม 'Memento Morning' ในแอปรูปภาพ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çektiğin video yanıtlarını Fotoğraflar'daki 'Memento Morning' albümüne kaydetmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для збереження записаних вами відеовідповідей в альбомі «Memento Morning» у програмі «Фото»."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng để lưu các câu trả lời video bạn đã quay vào album 'Memento Morning' trong Ảnh."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於將你錄製的影片回答儲存至「相片」App 中的「Memento Morning」相簿。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于将你录制的视频回答存储到“照片”中的“Memento Morning”相簿。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於將你錄製的影片回答儲存至「照片」中的「Memento Morning」相簿。"
           }
         }
       }
