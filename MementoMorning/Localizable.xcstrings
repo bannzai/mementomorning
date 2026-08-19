@@ -5623,10 +5623,214 @@
     },
     "Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كل صباح، سجّل إجابتك بالكاميرا الأمامية لإيقاف المنبّه.\nجرّب ذلك مرة واحدة قبل صباحك الأول."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada matí, grava la teva resposta amb la càmera frontal per aturar l'alarma.\nProva-ho una vegada abans que arribi el teu primer matí."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každé ráno nahraj svou odpověď přední kamerou, abys vypnul budík.\nVyzkoušej si to jednou ještě před svým prvním ránem."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver morgen optager du dit svar med frontkameraet for at stoppe alarmen.\nPrøv det én gang, før din første morgen begynder."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeden Morgen nimmst du deine Antwort mit der Frontkamera auf, um den Wecker auszuschalten.\nProbier es einmal aus, bevor dein erster Morgen anbricht."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κάθε πρωί, καταγράφεις την απάντησή σου με την μπροστινή κάμερα για να σταματήσεις το ξυπνητήρι.\nΔοκίμασέ το μία φορά πριν από το πρώτο σου πρωινό."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada mañana, grabas tu respuesta con la cámara frontal para apagar la alarma.\nPruébalo una vez antes de que llegue tu primera mañana."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada mañana, grabas tu respuesta con la cámara frontal para apagar la alarma.\nPruébalo una vez antes de que llegue tu primera mañana."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joka aamu tallennat vastauksesi etukameralla sammuttaaksesi herätyksen.\nKokeile sitä kerran ennen ensimmäistä aamuasi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque matin, enregistrez votre réponse avec la caméra frontale pour arrêter l’alarme.\nEssayez une fois avant votre premier matin."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בכל בוקר, הקלט את התשובה שלך במצלמה הקדמית כדי לעצור את השעון המעורר.\nנסה זאת פעם אחת לפני הבוקר הראשון שלך."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हर सुबह, अलार्म बंद करने के लिए फ्रंट कैमरे से अपना जवाब रिकॉर्ड करें।\nअपनी पहली सुबह से पहले इसे एक बार आज़माएँ।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svako jutro snimi svoj odgovor prednjom kamerom da zaustaviš alarm.\nIsprobaj to jednom prije svog prvog jutra."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minden reggel a frontkamerával rögzítsd a válaszod az ébresztő leállításához.\nPróbáld ki egyszer az első reggeled előtt."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap pagi, rekam jawabanmu dengan kamera depan untuk menghentikan alarm.\nCobalah sekali sebelum pagi pertamamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni mattina, registra la tua risposta con la fotocamera anteriore per fermare la sveglia.\nProvala una volta prima che arrivi il tuo primo mattino."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "毎朝、インカメラで答えを録画してアラームを止めます。\n最初の朝が来る前に、一度だけ試しておきましょう。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "매일 아침, 전면 카메라로 답변을 녹화하면 알람을 끌 수 있어요.\n첫 아침이 오기 전에 한 번 시도해 보세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap pagi, rakam jawapan anda dengan kamera hadapan untuk menghentikan penggera.\nCuba sekali sebelum pagi pertama anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver morgen tar du opp svaret ditt med frontkameraet for å stoppe alarmen.\nPrøv det én gang før den første morgenen din."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elke ochtend neem je je antwoord op met de frontcamera om het alarm uit te zetten.\nProbeer het één keer voordat je eerste ochtend aanbreekt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdego ranka nagrywasz swoją odpowiedź przednią kamerą, aby wyłączyć budzik.\nWypróbuj to raz, zanim nadejdzie twój pierwszy poranek."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas as manhãs, grave sua resposta com a câmera frontal para desligar o alarme.\nExperimente uma vez antes de chegar sua primeira manhã."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas as manhãs, grava a tua resposta com a câmara frontal para desligar o alarme.\nExperimenta uma vez antes de chegar a tua primeira manhã."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În fiecare dimineață, înregistrează-ți răspunsul cu camera frontală pentru a opri alarma.\nÎncearcă o dată înainte de prima ta dimineață."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждое утро записывайте свой ответ с помощью фронтальной камеры, чтобы выключить будильник.\nПопробуйте один раз, прежде чем наступит ваше первое утро."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Každé ráno nahraj svoju odpoveď prednou kamerou na zastavenie budíka.\nVyskúšaj si to raz ešte pred svojím prvým ránom."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varje morgon spelar du in ditt svar med frontkameran för att stänga av alarmet.\nProva en gång innan din första morgon kommer."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทุกเช้า ให้บันทึกคำตอบด้วยกล้องหน้าเพื่อหยุดนาฬิกาปลุก\nลองทำสักครั้งก่อนถึงเช้าแรกของคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her sabah, alarmı durdurmak için cevabını ön kamerayla kaydedersin.\nİlk sabahından önce bir kez dene."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Щоранку записуйте свою відповідь на фронтальну камеру, щоб вимкнути будильник.\nСпробуйте це один раз, перш ніж настане ваш перший ранок."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mỗi sáng, bạn quay câu trả lời bằng camera trước để tắt báo thức.\nHãy thử một lần trước buổi sáng đầu tiên của bạn."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天早上，用前置鏡頭錄下你的回答來停止鬧鐘。\n在你的第一個早晨到來前，先試一次。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天早上，用前置摄像头录下你的回答来关闭闹钟。\n在你的第一个早晨到来前，先试一次。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每天早上，用前置相機錄下你的回答來關閉鬧鐘。\n在你的第一個早晨到來前，先試一次。"
           }
         }
       }
