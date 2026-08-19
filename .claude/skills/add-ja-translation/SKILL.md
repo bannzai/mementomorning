@@ -11,91 +11,18 @@ allowed-tools:
 
 # Add Japanese Translation
 
-このスキルは、SwiftUIコード内の翻訳対象文字列に `// ja:` コメントを追加し、必要に応じて `Localizable.xcstrings` に日本語翻訳エントリーを追加します。
+SwiftUI コード内の翻訳対象文字列に `// ja:` コメントを追加し、`Localizable.xcstrings` に日本語翻訳エントリーを追加する。新しい UI テキストを追加した時、`// ja:` コメントの不足や翻訳漏れを修正する時に使う。
 
-## 使用タイミング
+書き方のルール（`// ja:` の付け方・固有名詞の埋め込み・ja のみ追加）は `.claude/rules/localization-guidelines.md` が SSOT（対象ファイル操作時に自動ロード）。エンティティに入れる文字列の扱いは `.claude/rules/coding-rules-entity.md` に従う。
 
-- 新しいUIテキストを追加した時
-- `// ja:` コメントが不足している箇所を修正する時
-- 翻訳漏れを検出・修正する時
+## 手順
 
-## 実行手順（Progressive Disclosure）
+1. `python scripts/find_missing_ja_translations.py` で翻訳漏れを検出する
+2. 検出箇所の `Text()` / `String(localized:)` の直上に `// ja:` コメントを追加する（`scripts/add_translation_comments.py` で機械的に追加できる）
+3. `Localizable.xcstrings` に該当の英語文言のエントリーを追加し、ja の localization のみを入れる（既存エントリーの形式に合わせる）
 
-### 1. ガイドラインの確認
+## 完了基準
 
-まず、翻訳ガイドラインを確認します：
-
-- `.claude/rules/localization-guidelines.md` を参照（対象ファイル操作時に自動ロード）
-
-### 2. 翻訳漏れの検出
-
-以下のスクリプトで翻訳漏れを検出します：
-
-```bash
-python scripts/find_missing_ja_translations.py
-```
-
-### 3. コメントの追加
-
-`Text()` や `String(localized:)` の上に `// ja:` コメントを追加します。
-
-#### ルール
-
-- `// ja:` コメントは「アプリのUI翻訳が必要な箇所」のみに付ける
-- `Text()` や `String(localized:)` の上に書く
-- enum ケースの説明コメントやプロパティの説明コメントには `// ja:` を付けない
-
-#### 例
-
-```swift
-// ja: 保存
-Text("Save")
-
-// ja: 招待コードをシェア
-Text("Share Invite Code")
-```
-
-### 4. 固有名詞の扱い
-
-アプリ内の固有名詞や機能名が文中に出てくる場合は、必ず `Text()` で埋め込む：
-
-```swift
-// ja: 「達成」の使い方
-Text("How to use '\(Text("Achievement"))'")
-```
-
-### 5. Localizable.xcstrings への追加
-
-`Localizable.xcstrings` に日本語翻訳エントリーを追加します：
-
-```json
-"Share Invite Code" : {
-  "localizations" : {
-    "ja" : {
-      "stringUnit" : {
-        "state" : "translated",
-        "value" : "招待コードをシェア"
-      }
-    }
-  }
-}
-```
-
-**注意**: 日本語（ja）の翻訳のみ追加してください。他言語は後で一括翻訳します。
-
-## チェック項目
-
-- [ ] `// ja:` コメントが適切に追加されているか
-- [ ] 固有名詞が `Text()` で埋め込まれているか
-- [ ] `Localizable.xcstrings` に日本語エントリーが追加されているか
-- [ ] 英文が英語圏の文化やテンションになぞって作成されているか
-
-## 参考ドキュメント
-
-- `.claude/rules/localization-guidelines.md` - 翻訳ガイドライン（対象ファイル操作時に自動ロード）
-- `.claude/rules/coding-rules-entity.md` - エンティティに入れる文字列は翻訳済み（対象ファイル操作時に自動ロード）
-
-## 参考スクリプト
-
-- `scripts/find_missing_ja_translations.py` - 日本語翻訳の欠落検出
-- `scripts/add_translation_comments.py` - 翻訳コメント追加
+- [ ] `find_missing_ja_translations.py` の検出が 0 件
+- [ ] 固有名詞が `Text()` の補間で埋め込まれている
+- [ ] 英文が英語圏の文化やテンションになぞって作成されている
