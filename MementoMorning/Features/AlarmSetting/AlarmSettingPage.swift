@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-/// 毎朝のアラーム設定画面。設定できるのは時刻と ON/OFF だけ (設定要素は最小限)
+/// 毎朝のアラーム設定画面。設定できるのは時刻・ON/OFF・スヌーズ回数だけ (設定要素は最小限)
 struct AlarmSettingPage: View {
     /// モデルコンテキスト
     @Environment(\.modelContext) private var modelContext
@@ -13,6 +13,9 @@ struct AlarmSettingPage: View {
     @State private var time: Date = .now
     /// アラームの有効フラグ
     @State private var isEnabled: Bool = true
+    /// スヌーズ (追撃アラーム) の上限回数の選択値。nil は無制限。
+    /// 初期値は無料枠 freeTierSnoozeLimit で、保存済み設定があれば onAppear で effectiveSnoozeLimit に置き換える
+    @State private var snoozeLimit: Int? = freeTierSnoozeLimit
     /// 保存に失敗した場合のエラー。nil 以外でアラート表示する
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
@@ -23,7 +26,7 @@ struct AlarmSettingPage: View {
     /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
     /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
     @State private var isSaving: Bool = false
-    /// ペイウォールを表示中かどうか。無料状態で「無限追撃アラーム」行のタップで開く
+    /// ペイウォールを表示中かどうか。無料状態でプレミアム限定のスヌーズ回数 (無料枠超・無制限) を選んだ時に開く
     @State private var isPaywallPresented = false
 
     /// RevenueCat の entitlement キャッシュ。値の変化で再描画を起こすために監視する (判定は PremiumEntitlement.isPremium が SSOT)
@@ -37,38 +40,29 @@ struct AlarmSettingPage: View {
         Form {
             // ja: アラーム
             Toggle(String(localized: "Alarm"), isOn: $isEnabled)
+                // ON 色はホームの pill トグルと同じ夜明け色にする。親の tint (温白) のままだとトラックが白く、ON / OFF の区別がつかない (issue #73)
+                .tint(Color.alarmToggleOn)
             // ja: 時刻
             DatePicker(String(localized: "Time"), selection: $time, displayedComponents: .hourAndMinute)
-            // スヌーズ (追撃) の無料枠と、プレミアムの無限追撃への導線 (design handoff §10。課金設計は documents/PROJECT.md)
-            if PremiumEntitlement.isPremium {
-                LabeledContent {
-                    // ja: 無制限
-                    Text("Unlimited")
-                } label: {
-                    // ja: スヌーズ
-                    Text("Snooze")
+            // スヌーズ (追撃) の回数。無料は freeTierSnoozeLimit まで選べ、それ以上と無制限はプレミアム限定で、
+            // 選ぶとペイウォールへ誘導する (issue #73。課金設計は documents/PROJECT.md)
+            Picker(selection: $snoozeLimit) {
+                ForEach(Array(snoozeLimitChoices), id: \.self) { count in
+                    snoozeLimitOptionLabel(snoozeLimit: count)
+                        .tag(Optional(count))
                 }
-            } else {
-                LabeledContent {
-                    // ja: %lld 回まで (無料)
-                    Text("Up to \(freeTierSnoozeLimit) times (free)")
-                } label: {
-                    // ja: スヌーズ
-                    Text("Snooze")
-                }
-                Button {
-                    isPaywallPresented = true
-                } label: {
-                    LabeledContent {
-                        // ja: プレミアム
-                        Text("Premium")
-                    } label: {
-                        // ja: 無限追撃アラーム
-                        Text("Endless follow-up alarm")
-                            .foregroundStyle(.primary)
-                    }
-                }
-                .accessibilityIdentifier("alarm_setting_endless_alarm_row")
+                snoozeLimitOptionLabel(snoozeLimit: nil)
+                    .tag(Int?.none)
+            } label: {
+                // ja: スヌーズ
+                Text("Snooze")
+            }
+            .accessibilityIdentifier("alarm_setting_snooze_picker")
+            .onChange(of: snoozeLimit) { oldValue, newValue in
+                guard !isSnoozeLimitSelectable(snoozeLimit: newValue, isPremium: PremiumEntitlement.isPremium) else { return }
+                // 無料で選べない回数は選択を戻し、代わりにペイウォールを開く (戻した値は選択可能なため再帰しない)
+                snoozeLimit = oldValue
+                isPaywallPresented = true
             }
             // 夜リマインドがいつ届くかを可視化する (issue #44)。時刻の SSOT は NightReminder の固定値 (カスタマイズはプレミアム機能で未実装)
             LabeledContent {
@@ -136,6 +130,38 @@ struct AlarmSettingPage: View {
                 time = date
             }
             isEnabled = alarmSetting.isEnabled
+            snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
+        }
+    }
+
+    /// スヌーズ回数の選択肢の文言。無制限は nil
+    private func snoozeLimitText(snoozeLimit: Int?) -> Text {
+        if let snoozeLimit {
+            // ja: %lld 回
+            return Text("\(snoozeLimit) times")
+        }
+        // ja: 無制限
+        return Text("Unlimited")
+    }
+
+    /// スヌーズ回数の選択肢のラベル。無制限は nil。
+    /// 現在の課金状態で選べない選択肢には錠前を付け、プレミアム限定であることを選ぶ前に示す
+    @ViewBuilder
+    private func snoozeLimitOptionLabel(snoozeLimit: Int?) -> some View {
+        if !isSnoozeLimitSelectable(snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) {
+            Label {
+                snoozeLimitText(snoozeLimit: snoozeLimit)
+            } icon: {
+                Image(systemName: "lock")
+            }
+        } else if snoozeLimit == nil {
+            Label {
+                snoozeLimitText(snoozeLimit: snoozeLimit)
+            } icon: {
+                Image(systemName: "infinity")
+            }
+        } else {
+            snoozeLimitText(snoozeLimit: snoozeLimit)
         }
     }
 
@@ -159,8 +185,9 @@ struct AlarmSettingPage: View {
         if let alarmSetting = alarmSettings.first {
             alarmSetting.setTime(hour: hour, minute: minute)
             alarmSetting.setIsEnabled(isEnabled: isEnabled)
+            alarmSetting.setSnoozeLimit(snoozeLimit: snoozeLimit)
         } else {
-            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled))
+            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit))
         }
         do {
             try modelContext.save()
