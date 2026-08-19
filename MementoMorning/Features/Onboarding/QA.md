@@ -28,6 +28,8 @@ last_verified_at: null
   - 許可ダイアログの説明文: 英語ロケールで Info.plist に書いた用途説明文が表示される (issue #50 でキー名表示を解消済み)
 - [ ] **許可拒否時の設定誘導**: アラームまたは通知の許可を拒否すると、設定アプリへの誘導が表示される。設定アプリで許可して戻ると表示が追従する
   - 自動化: manual（画面上の導線の目視確認。誘導要否の判定ロジックは MementoMorningTests/OnboardingPermissionTests.swift がカバー済み）
+- [x] **練習の録画にも上限とインジケーター**: 練習ステップの録画は朝の問いと同じ 10 秒の上限で自動停止し、録画中は同じ点 + タイマー「0:02 / 0:10」とリングで予告する (issue #71)。自動停止で練習完了「You're ready for the morning.」へ進む
+  - 自動化: manual（開発者メニューの疑似録画モードで simulator から確認。共通 View は MementoMorning/Features/MorningQuestion/VideoAnswerRecordingControls.swift）
 
 #### 動作確認
 <details>
@@ -68,6 +70,22 @@ last_verified_at: null
 <details><summary>動作確認スクショ</summary>
 
 （未実行）
+
+</details>
+
+### **練習の録画にも上限とインジケーター**: 練習ステップの録画は朝の問いと同じ 10 秒の上限で自動停止し、録画中は同じ点 + タイマー「0:02 / 0:10」とリングで予告する (issue #71)。自動停止で練習完了「You're ready for the morning.」へ進む
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-19** (iPhone 17 / iOS 26.5、simtunnel セッション `mementomorning-issue-71`、`--ref issue-71`、英語ロケール。commit `0ca3bfc`。開発者メニューで「動画回答を疑似再現」を ON → 「オンボーディングをリセット」→ 練習ステップ「Try it once」)
+
+1. 録画開始から約 3 秒: 「0:02 / 0:10」と点、外リングの一部が夜明け色
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/5d71cbc4-de14-4ee1-a91a-cb0fa74e4628.jpg" width="320" />
+
+2. 約 15 秒: ボタン操作なしで練習完了「You're ready for the morning.」へ進んでいる (10 秒で自動停止)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/21736772-7b95-4009-b5c7-7f8ea6614d52.jpg" width="320" />
 
 </details>
 
