@@ -64,7 +64,7 @@ private struct HomeContent: View {
     @Query private var todayAnswers: [MorningAnswer]
     /// 粒ストリップに表示する直近 14 日分の回答
     @Query private var stripAnswers: [MorningAnswer]
-    /// 全期間の回答数 (答えた朝 N)。件数だけ必要なため fetchCount で取得して保持する
+    /// 全期間の回答数 (答えた日数 N)。件数だけ必要なため fetchCount で取得して保持する
     @State private var answeredCount = 0
     /// 編集画面 (AnswerEditPage) を開く対象の回答
     @State private var editTargetAnswer: MorningAnswer?
@@ -274,7 +274,7 @@ private struct HomeContent: View {
             .padding(.horizontal, 36)
     }
 
-    /// 直近 14 日の粒ストリップ + 答えた朝 N + テキストリンク行
+    /// 直近 14 日の粒ストリップ + 答えた日数 N + テキストリンク行
     private var footerSection: some View {
         let calendar = Calendar.current
         let answeredDays = Set(stripAnswers.map { calendar.startOfDay(for: $0.answeredDate) })
@@ -296,7 +296,7 @@ private struct HomeContent: View {
                         }
                 }
             }
-            // ja: 答えた朝 %lld
+            // ja: 答えた日数 %lld日
             Text("\(answeredCount) mornings answered")
                 .font(.system(size: 11))
                 .tracking(1.1)
