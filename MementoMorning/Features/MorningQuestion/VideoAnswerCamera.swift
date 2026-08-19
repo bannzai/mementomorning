@@ -104,6 +104,11 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
         #if DEBUG
         if isSimulating {
             isSessionRunning = false
+            // 疑似録画中に画面が閉じられた (回答完了以外の理由で onDisappear が来た) 場合、
+            // 録画状態を消して上限の自動停止タスクを空振りさせる。残すと画面が閉じた後にフィクスチャが
+            // onFinished へ渡り、意図しない回答が成立する
+            isRecording = false
+            recordingStartedAt = nil
             return
         }
         #endif

@@ -32,6 +32,31 @@ final class VideoAnswerRecordingLimitTests: XCTestCase {
         XCTAssertEqual(videoAnswerRecordingTimerText(elapsed: -1), "0:00 / 0:10")
     }
 
+    /// 疑似録画モード (DEBUG) で録画中に stop() (画面を離れる時に呼ばれる) が来たら録画状態が消え、
+    /// 上限の自動停止タスクが空振りすること (画面が閉じた後にフィクスチャが onFinished へ渡らない)
+    @MainActor
+    func testSimulatedRecordingStateIsClearedByStop() async {
+        let previous = UserDefaults.standard.object(forKey: .debugSimulateVideoAnswer)
+        UserDefaults.standard.set(true, forKey: .debugSimulateVideoAnswer)
+        defer { UserDefaults.standard.set(previous, forKey: .debugSimulateVideoAnswer) }
+
+        let camera = VideoAnswerCamera()
+        var finishedURLs: [URL] = []
+        camera.onFinished = { finishedURLs.append($0) }
+        camera.start()
+        camera.startRecording()
+        XCTAssertTrue(camera.isRecording)
+        XCTAssertNotNil(camera.recordingStartedAt)
+
+        camera.stop()
+        XCTAssertFalse(camera.isRecording)
+        XCTAssertNil(camera.recordingStartedAt)
+
+        // 上限 (10 秒) を過ぎても自動停止による完了通知が来ない
+        try? await Task.sleep(for: .seconds(videoAnswerMaxRecordingDuration + 1))
+        XCTAssertTrue(finishedURLs.isEmpty)
+    }
+
     func testDotOpacityBlinksBetweenDesignRange() {
         // 開始時が最も明るく (0.8)、半周期 (0.8 秒) 後に最も暗く (0.25)、1 周期 (1.6 秒) で戻る
         XCTAssertEqual(videoAnswerRecordingDotOpacity(elapsed: 0), 0.8, accuracy: 0.001)
