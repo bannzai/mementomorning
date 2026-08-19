@@ -14,7 +14,7 @@ Yalnızca tek bir soru var.
 - Yedinci sabah, yedi cevabınız ilk kez tek bir sayfada bir araya gelir
 
 ■ Akşam kontrolü
-- Akşam yalnızca tek bir şey sorarız: "Bugünkü cevabını tuttun mu?"
+- Akşam yalnızca tek bir şey sorarız: "Bugünkü cevabınızı tuttunuz mu?"
 - Tuttuğunuz günler de tutamadığınız günler de olduğu gibi kalır
 
 ■ Gizlilik

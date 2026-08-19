@@ -7145,7 +7145,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno, i po uplynutí posledních 7 dnů."
+            "value" : "Každé ráno, i starší než posledních 7 dní."
           }
         },
         "da" : {
@@ -7235,7 +7235,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지난 7일 이후의 모든 아침까지."
+            "value" : "지난 7일보다 오래된 아침도 모두."
           }
         },
         "ms" : {
@@ -7253,13 +7253,13 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elke ochtend, ook na de afgelopen 7 dagen."
+            "value" : "Elke ochtend, ook ouder dan de afgelopen 7 dagen."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Każdego ranka, także po upływie ostatnich 7 dni."
+            "value" : "Każdy poranek, także starszy niż ostatnie 7 dni."
           }
         },
         "pt-BR" : {
@@ -7289,7 +7289,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Každé ráno, aj po uplynutí posledných 7 dní."
+            "value" : "Každé ráno, aj staršie než posledných 7 dní."
           }
         },
         "sv" : {
