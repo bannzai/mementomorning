@@ -74,7 +74,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "答えた朝 %lld"
+            "value": "答えた日数 %lld日"
           }
         }
       }
@@ -232,7 +232,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "点は、いつかつながる。"
+            "value": "点はいつかつながる"
           }
         }
       }
@@ -282,7 +282,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1行が一週間。答えた朝が、点として残る。"
+            "value": "1行が1週間。答えた日が点として残る"
           }
         }
       }
