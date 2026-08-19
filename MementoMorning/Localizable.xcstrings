@@ -24244,10 +24244,214 @@
     },
     "Your answer becomes a quiet card you can pass along." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يصبح جوابك بطاقة هادئة يمكنك مشاركتها."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La teva resposta es converteix en una targeta serena que pots compartir."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje odpověď se promění v tichou kartičku, kterou můžeš předat dál."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit svar bliver til et stille kort, du kan give videre."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Antwort wird zu einer stillen Karte, die du weitergeben kannst."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η απάντησή σου γίνεται μια ήσυχη κάρτα που μπορείς να μοιραστείς."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu respuesta se convierte en una tarjeta serena que puedes compartir."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu respuesta se convierte en una tarjeta serena que puedes compartir."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastauksestasi tulee hiljainen kortti, jonka voit välittää eteenpäin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre réponse devient une carte paisible que vous pouvez transmettre."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "התשובה שלך הופכת לכרטיס שקט שאתה יכול להעביר הלאה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका जवाब एक शांत कार्ड बन जाता है, जिसे आप आगे साझा कर सकते हैं।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoj odgovor postaje tiha kartica koju možeš proslijediti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A válaszod egy csendes kártyává válik, amelyet továbbadhatsz."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawabanmu menjadi kartu hening yang bisa kamu teruskan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua risposta diventa una tessera silenziosa che puoi condividere."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "今朝のことばが、静かな一枚のカードになります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "답변이 조용한 카드가 되어 전할 수 있어요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jawapan anda menjadi kad yang tenang yang boleh anda kongsikan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svaret ditt blir til et stille kort du kan gi videre."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je antwoord wordt een rustige kaart die je kunt doorgeven."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja odpowiedź staje się cichą kartą, którą możesz przekazać dalej."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua resposta se transforma em um cartão sereno que você pode compartilhar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A tua resposta transforma-se num cartão sereno que podes partilhar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Răspunsul tău devine un cartonaș liniștit pe care îl poți da mai departe."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш ответ становится тихой карточкой, которую вы можете передать дальше."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoja odpoveď sa stane tichou kartou, ktorú môžeš posunúť ďalej."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ditt svar blir till ett stilla kort som du kan dela vidare."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำตอบของคุณจะกลายเป็นการ์ดแผ่นหนึ่งที่เงียบสงบ ซึ่งคุณสามารถส่งต่อได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yanıtın, başkalarına iletebileceğin sakin bir karta dönüşür."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша відповідь стане тихою карткою, якою ви зможете поділитися."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Câu trả lời của bạn trở thành một tấm thẻ lặng yên mà bạn có thể trao lại."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的答案會變成一張寧靜的卡片，讓你可以傳遞給別人。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的回答会变成一张安静的卡片，可以传递给别人。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的回答會變成一張安靜的卡片，可以傳遞給別人。"
           }
         }
       }
