@@ -1,6 +1,87 @@
 default_platform(:ios)
 
+# build_app が最初に走らせる `xcodebuild -showBuildSettings` は SwiftPM 依存の解決を伴い、
+# 既定の 3 秒 (×4 回リトライ) では間に合わずタイムアウトで lane が落ちるため延ばす (未設定時のみ)
+ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] ||= '180'
+
+XCODEPROJ = "MementoMorning.xcodeproj".freeze
+SCHEME = "MementoMorning".freeze
+# Release ビルドに必須の RevenueCat 実キー (appl_) を置くローカル設定 (git 管理外)。
+# 無いと MementoMorning ターゲットの Build Phase "Require App Store REVENUECAT_API_KEY for Release" が
+# ビルドエラーにする。手順は Config.xcconfig のコメント参照
+CONFIG_LOCAL_XCCONFIG = File.expand_path("../Config.local.xcconfig", __dir__).freeze
+# アーカイブ (.xcarchive / .ipa / dSYM) の出力先。tmp/ は gitignore 済み
+BUILD_OUTPUT_DIRECTORY = File.expand_path("../tmp/fastlane", __dir__).freeze
+
+# ---------------------------------------------------------------------------
+# beta / release lane の実行手順
+#
+# 実行コマンド (Makefile 経由):
+#   make beta                              # build number +1 → Release アーカイブ → TestFlight へアップロード
+#   make release                           # Release アーカイブ → App Store Connect へアップロード (metadata は上げない)
+#   make beta FASTLANE_ARGS=skip_upload:true   # アップロード直前で止める (アーカイブ経路の確認用)
+#
+# 必要なもの:
+#   1. Config.local.xcconfig (リポジトリ直下。REVENUECAT_API_KEY = appl_... の 1 行。手順は Config.xcconfig のコメント参照)
+#      無ければ lane 冒頭で手順付きの user_error! で止まる
+#   2. App Store Connect API key を direnv の .envrc (git 管理外) に置く。キー名は env-secret-registry の正準名:
+#        ASC_API_KEY_ID          — キー ID (App Store Connect > ユーザとアクセス > 統合 > App Store Connect API)
+#        ASC_API_KEY_ISSUER_ID   — Issuer ID
+#        ASC_API_KEY_P8_BASE64   — .p8 の中身を base64 にしたもの (`base64 < AuthKey_XXXX.p8 | tr -d '\n'`)
+#      3 つ揃っていれば app_store_connect_api_key で認証する (2FA 不要)。揃っていなければ
+#      FASTLANE_USER (Apple ID) での対話ログインにフォールバックする (Appfile 参照)
+#   3. 署名は Automatic (DEVELOPMENT_TEAM は project.pbxproj に設定済み)。build_app に
+#      -allowProvisioningUpdates を渡すので、Xcode の Accounts に Apple ID が追加されていれば
+#      Apple Distribution 証明書と App Store 用 provisioning profile を CLI から自動生成・取得する
+#
+# 初回のみの操作:
+#   - Xcode > Settings > Accounts に Apple ID (FASTLANE_USER) を追加する (自動署名の証明書取得に必要)
+#   - App Store Connect にアプリ (com.bannzai.MementoMorning) を作成しておく (`fastlane produce` か Web)
+#   - App Store Connect API key を発行して上記 3 変数を .envrc に書き、`direnv allow` する
+#
+# 注意:
+#   - beta は increment_build_number で project.pbxproj の CURRENT_PROJECT_VERSION を +1 する。
+#     アップロード成功後にその差分をコミットする (次回の build number 重複を防ぐ)
+#   - release は binary だけを上げる (skip_metadata / skip_screenshots)。metadata と screenshots は
+#     metadata_upload lane に任せる。審査提出 (submit_for_review) は行わず、App Store Connect で手動提出する
+# ---------------------------------------------------------------------------
+
 platform :ios do
+  desc "build number を +1 → Release でアーカイブ → TestFlight へアップロード。skip_upload:true でアップロード直前に止める"
+  lane :beta do |options|
+    ensure_release_config
+    api_key = asc_api_key
+    increment_build_number(xcodeproj: XCODEPROJ)
+    archive_release
+    next if skip_upload?(options)
+
+    upload_to_testflight(
+      api_key: api_key,
+      # 処理完了を待たない (待つと 10 分以上ブロックする。配布は App Store Connect / TestFlight 側で行う)
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Release でアーカイブ → App Store Connect へ binary をアップロード (metadata・screenshots は metadata_upload lane に任せる)。skip_upload:true でアップロード直前に止める"
+  lane :release do |options|
+    ensure_release_config
+    api_key = asc_api_key
+    archive_release
+    next if skip_upload?(options)
+
+    upload_to_app_store(
+      api_key: api_key,
+      skip_metadata: true,
+      skip_screenshots: true,
+      # 審査提出は App Store Connect で手動で行う (提出前の最終確認を人が挟むため)
+      submit_for_review: false,
+      # precheck は App Store Connect API key では IAP を検査できず失敗するため無効化 (metadata_upload lane と同じ)
+      run_precheck_before_submit: false,
+      # skip check with preview.html
+      force: true
+    )
+  end
+
   # metadata と screenshots を App Store Connect へ同期する (binary は上げない)
   lane :metadata_upload do
     ENV['FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS'] = 'true'
@@ -20,5 +101,57 @@ platform :ios do
       submit_for_review: false,
       ignore_language_directory_validation: true
     )
+  end
+
+  # Release アーカイブの前提 (Config.local.xcconfig) を検査し、無ければ手順付きで止める
+  private_lane :ensure_release_config do
+    next if File.exist?(CONFIG_LOCAL_XCCONFIG)
+
+    UI.user_error!(<<~MESSAGE)
+      Config.local.xcconfig がありません: #{CONFIG_LOCAL_XCCONFIG}
+      Release ビルドは RevenueCat の App Store 用実キー (appl_...) が必須です。次の 1 行を書いたファイルを作ってから再実行してください:
+
+        echo 'REVENUECAT_API_KEY = appl_xxxxxxxxxxxxxxxxxxxxxxxxxxx' > #{CONFIG_LOCAL_XCCONFIG}
+
+      キーは RevenueCat Dashboard の Project Settings > API Keys、または次で取得できます (詳細は Config.xcconfig のコメント参照):
+        bash ~/.claude/skills/revenuecat-product-setup/scripts/rc_get_public_api_key.sh <APP_ID>
+    MESSAGE
+  end
+
+  # App Store Connect API key (env-secret-registry の正準名 ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64) が
+  # 揃っていれば api_key ハッシュを返す。揃っていなければ nil を返し、FASTLANE_USER (Apple ID) での認証に任せる
+  private_lane :asc_api_key do
+    key_id = ENV['ASC_API_KEY_ID'].to_s
+    issuer_id = ENV['ASC_API_KEY_ISSUER_ID'].to_s
+    key_content = ENV['ASC_API_KEY_P8_BASE64'].to_s
+    if key_id.empty? || issuer_id.empty? || key_content.empty?
+      UI.important("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 が揃っていないため、FASTLANE_USER (Apple ID) で認証します (2FA の対話が発生します)")
+      next nil
+    end
+
+    app_store_connect_api_key(
+      key_id: key_id,
+      issuer_id: issuer_id,
+      key_content: key_content,
+      is_key_content_base64: true
+    )
+  end
+
+  # Release 構成で App Store 配布用にアーカイブする。署名は Automatic なので -allowProvisioningUpdates を渡して
+  # 証明書・profile を CLI から取得できるようにする (gym は xcargs を archive と -exportArchive の両方に渡す)
+  private_lane :archive_release do
+    build_app(
+      project: XCODEPROJ,
+      scheme: SCHEME,
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: BUILD_OUTPUT_DIRECTORY,
+      xcargs: "-allowProvisioningUpdates"
+    )
+  end
+
+  # lane 引数 skip_upload:true (fastlane は "true" を true に変換するが、文字列のまま来る経路にも備える)
+  def skip_upload?(options)
+    [true, 'true', '1'].include?(options[:skip_upload])
   end
 end
