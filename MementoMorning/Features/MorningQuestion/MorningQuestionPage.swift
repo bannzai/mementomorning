@@ -176,85 +176,16 @@ struct MorningQuestionPage: View {
         .accessibilityIdentifier("morning_question_camera_preparing")
     }
 
-    /// 録画ボタンと、録画中のインジケーター (issue #71)。
-    /// 録画には上限 (videoAnswerMaxRecordingDuration = 10 秒) があり、到達すると自動で停止して回答が確定するため、
-    /// 録画中は開始時刻を基準に 0.1 秒ごとに経過時間を取り直し、タイマーと録画ボタンのリングで上限までの進み具合を示す。
-    /// インジケーターは録画ボタンの上に置き、ボタンとその下の導線の位置は録画の前後で動かさない
+    /// 録画ボタンと録画中のインジケーター (VideoAnswerRecordingControls)。録画中の停止 = 回答確定のため、停止の読み上げに確定の意味を含める
     private var recordingControls: some View {
-        Group {
-            if let recordingStartedAt = camera.recordingStartedAt {
-                TimelineView(.periodic(from: recordingStartedAt, by: 0.1)) { context in
-                    let elapsed = context.date.timeIntervalSince(recordingStartedAt)
-                    VStack(spacing: 16) {
-                        recordingIndicator(elapsed: elapsed)
-                        recordButton(recordingElapsed: elapsed)
-                    }
-                }
-            } else {
-                recordButton(recordingElapsed: nil)
-            }
-        }
-    }
-
-    /// 録画中の点 (夜明け色・ゆっくり明滅) と mono 数字のタイマー (`0:03 / 0:10` = 経過 / 上限)。
-    /// design_handoff_memento_morning/README.md「朝の問い」の録画中表示に沿い、SNS 的な赤い REC は使わない
-    private func recordingIndicator(elapsed: TimeInterval) -> some View {
-        HStack(spacing: 8) {
-            Circle()
-                .fill(Color.dawn)
-                .frame(width: 6, height: 6)
-                .opacity(videoAnswerRecordingDotOpacity(elapsed: elapsed))
-            Text(videoAnswerRecordingTimerText(elapsed: elapsed))
-                .font(.system(size: 13, design: .monospaced))
-                .foregroundStyle(Color.warmWhite.opacity(0.8))
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("morning_question_recording_timer")
-    }
-
-    /// 録画の開始/停止ボタン。録画中は停止 (= 回答確定) の印として夜明け色の角丸を表示し、
-    /// 外リングを上限 (10 秒) までの進み具合ぶんだけ夜明け色で埋める (recordingElapsed は録画中の経過秒。録画前は nil)
-    private func recordButton(recordingElapsed: TimeInterval?) -> some View {
-        Button {
-            if camera.isRecording {
-                camera.stopRecording()
-            } else {
-                camera.startRecording()
-            }
-        } label: {
-            ZStack {
-                Circle()
-                    .stroke(Color.warmWhite.opacity(0.8), lineWidth: 3)
-                    .frame(width: 72, height: 72)
-                if let recordingElapsed {
-                    Circle()
-                        .trim(from: 0, to: videoAnswerRecordingProgress(elapsed: recordingElapsed))
-                        .stroke(Color.dawn, style: StrokeStyle(lineWidth: 3, lineCap: .round))
-                        // 12 時の位置から時計回りに埋める
-                        .rotationEffect(.degrees(-90))
-                        .frame(width: 72, height: 72)
-                        .accessibilityHidden(true)
-                }
-                if camera.isRecording {
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.dawn)
-                        .frame(width: 28, height: 28)
-                } else {
-                    Circle()
-                        .fill(Color.warmWhite)
-                        .frame(width: 58, height: 58)
-                }
-            }
-        }
-        .disabled(!camera.isSessionRunning || isSaving)
-        .accessibilityLabel(
-            camera.isRecording
-                // ja: 録画を止めて回答を確定する
-                ? Text("Stop recording and finish your answer")
-                // ja: 録画を始める
-                : Text("Start recording")
+        VideoAnswerRecordingControls(
+            camera: camera,
+            // 写真ライブラリへの保存・確定の実行中は再録画させない
+            isDisabled: isSaving,
+            // ja: 録画を止めて回答を確定する
+            stopAccessibilityLabel: Text("Stop recording and finish your answer"),
+            accessibilityIdentifierPrefix: "morning_question"
         )
-        .accessibilityIdentifier("morning_question_record_button")
     }
 
     /// 代替手段: テキスト入力での回答フロー (issue #4 の画面骨格)

@@ -73,6 +73,7 @@
 		6B48E90D61A815896E3BF5A2 /* DebugVideoAnswerFixture_ja.mov in Resources */ = {isa = PBXBuildFile; fileRef = 6335688B0718AE4CD9B7BA31 /* DebugVideoAnswerFixture_ja.mov */; };
 		72AD46DE1066E5C75D102504 /* VideoAnswerGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */; };
 		F0AB25A8CD579811FBB16CE1 /* VideoAnswerRecordingLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1E8CB0CA754F567CB52B26 /* VideoAnswerRecordingLimit.swift */; };
+		6367E57AD5DDC593143993A5 /* VideoAnswerRecordingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD678761283E9C83482C9742 /* VideoAnswerRecordingControls.swift */; };
 		761AE3021FFE67D48666BC4D /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
 		7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368460825E5F8390F0948A64 /* SnoozeGateTests.swift */; };
 		7D513E0EFC28AB38EF46B78B /* AnswerShareCardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D62A1161E864CA8A81EAAA /* AnswerShareCardPage.swift */; };
@@ -235,6 +236,7 @@
 		6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotDawnFrame.swift; sourceTree = "<group>"; };
 		62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGate.swift; sourceTree = "<group>"; };
 		5E1E8CB0CA754F567CB52B26 /* VideoAnswerRecordingLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerRecordingLimit.swift; sourceTree = "<group>"; };
+		CD678761283E9C83482C9742 /* VideoAnswerRecordingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerRecordingControls.swift; sourceTree = "<group>"; };
 		6335688B0718AE4CD9B7BA31 /* DebugVideoAnswerFixture_ja.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = DebugVideoAnswerFixture_ja.mov; sourceTree = "<group>"; };
 		667A962B9B52C49CE132D4AC /* AppStoreScreenshot4PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot4PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWidgetTimeline.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */,
 				62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */,
 				1D2DCAE518E4646F494381B0 /* VideoAnswerPhotoLibrary.swift */,
+				CD678761283E9C83482C9742 /* VideoAnswerRecordingControls.swift */,
 				5E1E8CB0CA754F567CB52B26 /* VideoAnswerRecordingLimit.swift */,
 				DAE926B6A5377D11AC3B2C09 /* VideoAnswerTranscriber.swift */,
 			);
@@ -1200,6 +1203,7 @@
 				939A8E8262D62CD1915EFADF /* VideoAnswerCamera.swift in Sources */,
 				72AD46DE1066E5C75D102504 /* VideoAnswerGate.swift in Sources */,
 				22C52EF86ADC9C19455FCCA8 /* VideoAnswerPhotoLibrary.swift in Sources */,
+				6367E57AD5DDC593143993A5 /* VideoAnswerRecordingControls.swift in Sources */,
 				F0AB25A8CD579811FBB16CE1 /* VideoAnswerRecordingLimit.swift in Sources */,
 				B35F977FB07F68FD87D0FD4A /* VideoAnswerTranscriber.swift in Sources */,
 			);
