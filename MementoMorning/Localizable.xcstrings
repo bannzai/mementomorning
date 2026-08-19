@@ -14398,10 +14398,214 @@
     },
     "Rings at your time, even in silent mode." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يرنّ في الوقت الذي تحدده، حتى في الوضع الصامت."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sona a l’hora que triïs, fins i tot en mode silenciós."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zazvoní v nastavený čas i v tichém režimu."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringer på det valgte tidspunkt, selv i lydløs tilstand."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klingelt zur eingestellten Zeit, auch im Lautlosmodus."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χτυπά την ώρα που έχεις ορίσει, ακόμη και σε αθόρυβη λειτουργία."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suena a la hora que elijas, incluso en modo silencio."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suena a la hora que elijas, incluso en modo silencio."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hälyttää valitsemaasi aikaan myös äänettömässä tilassa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonne à l’heure définie, même en mode silencieux."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מצלצל בשעה שקבעת, גם במצב שקט."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके तय समय पर, साइलेंट मोड में भी बजता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zvonit će u vrijeme koje odrediš, čak i u tihom načinu rada."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A beállított időpontban csörög, néma módban is."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berbunyi pada waktu yang kamu tentukan, bahkan dalam mode hening."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suona all’ora che scegli, anche in modalità silenziosa."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定した時刻に、サイレントモードでも鳴ります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무음 모드에서도 설정한 시간에 울려요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Berdering pada waktu yang anda tetapkan, walaupun dalam mod senyap."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringer på det valgte tidspunktet, selv i stillemodus."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gaat af op het ingestelde tijdstip, zelfs in stille modus."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dzwoni o wybranej godzinie, nawet w trybie cichym."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca no horário definido, mesmo no modo silencioso."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca à hora definida, mesmo no modo silencioso."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sună la ora stabilită, chiar și în modul silențios."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Звонит в заданное время даже в беззвучном режиме."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zazvoní v nastavenom čase aj v tichom režime."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ringer vid den valda tiden, även i tyst läge."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปลุกตามเวลาที่ตั้งไว้ แม้อยู่ในโหมดเงียบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sessiz modda bile belirlediğin saatte çalar."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дзвонить у встановлений час навіть у беззвучному режимі."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đổ chuông vào thời gian bạn đặt, ngay cả khi ở chế độ im lặng."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即使處於靜音模式，也會在你設定的時間響鈴。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即使处于静音模式，也会在你设定的时间响铃。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即使處於靜音模式，也會在你設定的時間響鈴。"
           }
         }
       }
