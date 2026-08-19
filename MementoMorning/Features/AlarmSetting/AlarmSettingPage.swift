@@ -185,7 +185,11 @@ struct AlarmSettingPage: View {
         if let alarmSetting = alarmSettings.first {
             alarmSetting.setTime(hour: hour, minute: minute)
             alarmSetting.setIsEnabled(isEnabled: isEnabled)
-            alarmSetting.setSnoozeLimit(snoozeLimit: snoozeLimit)
+            // Picker には課金状態での実効値を表示しているため、ユーザーが変更していない時は保存済みの希望値を上書きしない
+            // (プレミアム失効中に時刻だけ保存しても、以前選んだ回数が無料枠に書き換わらず、再購読後に戻る。PR #78 レビュー指摘)
+            if snoozeLimit != effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium) {
+                alarmSetting.setSnoozeLimit(snoozeLimit: snoozeLimit)
+            }
         } else {
             modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit))
         }

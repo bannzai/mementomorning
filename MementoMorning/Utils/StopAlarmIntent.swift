@@ -95,8 +95,16 @@ public struct StopAlarmIntent: LiveActivityIntent {
         }
 
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
-        // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)
-        let snoozeLimit = ((try? PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>())) ?? []).first.flatMap(\.snoozeLimit)
+        // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)。
+        // 設定の読み取り失敗は「設定値が nil (無制限)」と区別し、無料枠 freeTierSnoozeLimit を上限にする
+        // (プレミアムで有限回数を設定していても、一時的な読み取りエラーで設定回数を超えて追撃し続けないため。PR #78 レビュー指摘)
+        let snoozeLimit: Int?
+        do {
+            snoozeLimit = try PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>()).first.flatMap(\.snoozeLimit)
+        } catch {
+            appendStopIntentSpikeLog(message: "alarm setting fetch failed, fallback to free tier snooze limit error=\(error)")
+            snoozeLimit = freeTierSnoozeLimit
+        }
         guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: snooze limit reached (\(chaseCount))")
             // 先行登録済みのバックアップを放置するとスヌーズ上限を超えて発火するため、
