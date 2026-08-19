@@ -3,6 +3,12 @@
   "strings" : {
     "%@ / month" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / Monat"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
