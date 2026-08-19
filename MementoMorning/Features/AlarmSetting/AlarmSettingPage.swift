@@ -74,6 +74,32 @@ struct AlarmSettingPage: View {
                 Text("Check tonight against this morning's answer.")
             }
             .accessibilityIdentifier("alarm_setting_night_reminder_row")
+            // 利用規約・プライバシーポリシー・特商法表記・問い合わせへの導線とバージョン表示 (issue #83)。
+            // 課金アプリは審査で特商法表記の到達性を見られるため、設定画面から必ず辿れるようにする
+            Section {
+                // ja: 利用規約
+                Link(String(localized: "Terms of Use"), destination: LegalLinks.terms)
+                    .accessibilityIdentifier("alarm_setting_terms_link")
+                // ja: プライバシーポリシー
+                Link(String(localized: "Privacy Policy"), destination: LegalLinks.privacyPolicy)
+                    .accessibilityIdentifier("alarm_setting_privacy_policy_link")
+                // ja: 特定商取引法に基づく表記
+                Link(String(localized: "Legal Notice (Specified Commercial Transaction Act)"), destination: LegalLinks.specifiedCommercialTransactionAct)
+                    .accessibilityIdentifier("alarm_setting_specified_commercial_transaction_act_link")
+                // ja: 問い合わせ
+                Link(String(localized: "Contact"), destination: LegalLinks.contact)
+                    .accessibilityIdentifier("alarm_setting_contact_link")
+                LabeledContent {
+                    Text(verbatim: appVersionText())
+                } label: {
+                    // ja: バージョン
+                    Text("Version")
+                }
+                .accessibilityIdentifier("alarm_setting_version_row")
+            } header: {
+                // ja: 情報
+                Text("About")
+            }
             if let lastRescheduleError, !lastRescheduleError.isEmpty {
                 // エラーメッセージはそのまま表示する (加工しない)
                 Text(lastRescheduleError)
