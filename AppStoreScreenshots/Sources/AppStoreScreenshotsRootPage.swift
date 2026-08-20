@@ -44,6 +44,12 @@ struct AppStoreScreenshotsRootPage: View {
                     SnapshotUITest<AppStoreScreenshot34Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot35Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot36Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot37Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot38Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot39Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot40Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot41Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot42Page_Previews>()
                 }
             }
         }

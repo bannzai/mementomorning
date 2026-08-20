@@ -89,7 +89,8 @@ map_language_to_fastlane() {
 # 19-24: kumo (明るい雲色の地 + 左揃え太字見出し + ブランドラベル。stoic. 型)
 # 25-30: kohaku (夜明け色のベタ地 + 墨の太字見出し。5 Minute Journal 型)
 # 31-36: bold (墨背景 + 極太・左揃え見出し。Alarmy 型)
-# 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当てる (37-42: 次のバリアント、...)
+# 37-42: hero (1 枚目のクリエイティブ案の比較バンド。fastlane へは適用しない)
+# 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当てる (43-48: 次のバリアント、...)
 get_variant_name() {
   local num=$1
   case $(( (num - 1) / 6 )) in
@@ -99,6 +100,7 @@ get_variant_name() {
     3) echo "kumo" ;;
     4) echo "kohaku" ;;
     5) echo "bold" ;;
+    6) echo "hero" ;;
     *) echo "unknown" ;;
   esac
 }

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		011D9FDA0CBBAB4AA172468C /* AppStoreScreenshotHeroFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DB620F218845230C9CC30 /* AppStoreScreenshotHeroFrame.swift */; };
+		5010793154E1451EC97ABB6E /* MockAlarmRingingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */; };
+		977C9D0122921CFF368E78DF /* AppStoreScreenshot37PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBBBBD9600DAFD63B0600A /* AppStoreScreenshot37PageSnapshotUITest.swift */; };
+		75DFCCE94B72205C9C45B636 /* AppStoreScreenshot38PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A01C99B36D1EACFA62BFBA /* AppStoreScreenshot38PageSnapshotUITest.swift */; };
+		7A71EB0EA183E1CEEEF0E509 /* AppStoreScreenshot39PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8552A8748CDC52130090A8F /* AppStoreScreenshot39PageSnapshotUITest.swift */; };
+		85BE277B6DEFACF9FAFF78E0 /* AppStoreScreenshot40PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD649B1B15E3CE7DA723DC2A /* AppStoreScreenshot40PageSnapshotUITest.swift */; };
+		264E2C82C18EDB6E91B1BDC1 /* AppStoreScreenshot41PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C868777AE9F028AAC93C48 /* AppStoreScreenshot41PageSnapshotUITest.swift */; };
+		110C6A3DB5144BF206A72A5E /* AppStoreScreenshot42PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DD1591260C95B28B511FF8 /* AppStoreScreenshot42PageSnapshotUITest.swift */; };
 		1728CDDF79D835D152BF0AFD /* AppStoreScreenshotKumoFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E6739B44BCE308C59FB71 /* AppStoreScreenshotKumoFrame.swift */; };
 		110544CEED1A752D244DBB0E /* AppStoreScreenshotKohakuFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6546970F6ED4707C2BCF55 /* AppStoreScreenshotKohakuFrame.swift */; };
 		A607421FB3A0C9D1A226CC81 /* AppStoreScreenshotBoldFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D54EFE54BA130F4E464194 /* AppStoreScreenshotBoldFrame.swift */; };
@@ -219,6 +227,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D83DB620F218845230C9CC30 /* AppStoreScreenshotHeroFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotHeroFrame.swift; sourceTree = "<group>"; };
+		22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlarmRingingScreen.swift; sourceTree = "<group>"; };
+		D3EBBBBD9600DAFD63B0600A /* AppStoreScreenshot37PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot37PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		C6A01C99B36D1EACFA62BFBA /* AppStoreScreenshot38PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot38PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		F8552A8748CDC52130090A8F /* AppStoreScreenshot39PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot39PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		CD649B1B15E3CE7DA723DC2A /* AppStoreScreenshot40PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot40PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		90C868777AE9F028AAC93C48 /* AppStoreScreenshot41PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot41PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		42DD1591260C95B28B511FF8 /* AppStoreScreenshot42PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot42PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		EA1E6739B44BCE308C59FB71 /* AppStoreScreenshotKumoFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotKumoFrame.swift; sourceTree = "<group>"; };
 		6B6546970F6ED4707C2BCF55 /* AppStoreScreenshotKohakuFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotKohakuFrame.swift; sourceTree = "<group>"; };
 		03D54EFE54BA130F4E464194 /* AppStoreScreenshotBoldFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotBoldFrame.swift; sourceTree = "<group>"; };
@@ -714,6 +730,12 @@
 				16ED935E820FAE0E7AB42162 /* AppStoreScreenshot34PageSnapshotUITest.swift */,
 				125BC5B73ECB5FC2A6A70BC0 /* AppStoreScreenshot35PageSnapshotUITest.swift */,
 				6437A7F5CFC4362C57E125EB /* AppStoreScreenshot36PageSnapshotUITest.swift */,
+				D3EBBBBD9600DAFD63B0600A /* AppStoreScreenshot37PageSnapshotUITest.swift */,
+				C6A01C99B36D1EACFA62BFBA /* AppStoreScreenshot38PageSnapshotUITest.swift */,
+				F8552A8748CDC52130090A8F /* AppStoreScreenshot39PageSnapshotUITest.swift */,
+				CD649B1B15E3CE7DA723DC2A /* AppStoreScreenshot40PageSnapshotUITest.swift */,
+				90C868777AE9F028AAC93C48 /* AppStoreScreenshot41PageSnapshotUITest.swift */,
+				42DD1591260C95B28B511FF8 /* AppStoreScreenshot42PageSnapshotUITest.swift */,
 			);
 			path = AppStoreScreenshot;
 			sourceTree = "<group>";
@@ -721,6 +743,7 @@
 		7C26BE6346E6E30EE4D0C5F4 /* MockScreens */ = {
 			isa = PBXGroup;
 			children = (
+				22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */,
 				D69B1B73C832A569BF7DBDA9 /* MockHomeScreen.swift */,
 				E17E85BA3B68068B127904EF /* MockJournalScreen.swift */,
 				5FF7772591D5B5491D85CAAB /* MockLifeCalendarScreen.swift */,
@@ -830,6 +853,7 @@
 				895A3521B9362DA2665F05F0 /* AppStoreScreenshotHelper.swift */,
 				999DC90CFBABE7969E4C78E5 /* AppStoreScreenshotInkFrame.swift */,
 				3A199CC8340D9967021378FA /* AppStoreScreenshotWashiFrame.swift */,
+				D83DB620F218845230C9CC30 /* AppStoreScreenshotHeroFrame.swift */,
 				EA1E6739B44BCE308C59FB71 /* AppStoreScreenshotKumoFrame.swift */,
 				6B6546970F6ED4707C2BCF55 /* AppStoreScreenshotKohakuFrame.swift */,
 				03D54EFE54BA130F4E464194 /* AppStoreScreenshotBoldFrame.swift */,
@@ -1241,6 +1265,12 @@
 				0702CB62D93377C323044314 /* AppStoreScreenshot34PageSnapshotUITest.swift in Sources */,
 				C0586EFF36A5C0621E344588 /* AppStoreScreenshot35PageSnapshotUITest.swift in Sources */,
 				6C627CDBF8224442301FF618 /* AppStoreScreenshot36PageSnapshotUITest.swift in Sources */,
+				977C9D0122921CFF368E78DF /* AppStoreScreenshot37PageSnapshotUITest.swift in Sources */,
+				75DFCCE94B72205C9C45B636 /* AppStoreScreenshot38PageSnapshotUITest.swift in Sources */,
+				7A71EB0EA183E1CEEEF0E509 /* AppStoreScreenshot39PageSnapshotUITest.swift in Sources */,
+				85BE277B6DEFACF9FAFF78E0 /* AppStoreScreenshot40PageSnapshotUITest.swift in Sources */,
+				264E2C82C18EDB6E91B1BDC1 /* AppStoreScreenshot41PageSnapshotUITest.swift in Sources */,
+				110C6A3DB5144BF206A72A5E /* AppStoreScreenshot42PageSnapshotUITest.swift in Sources */,
 				32050BF6D6FFFC03FAABD8F6 /* AppStoreScreenshot1PageSnapshotUITest.swift in Sources */,
 				37F5305F32C4517FD5A654AF /* AppStoreScreenshot2PageSnapshotUITest.swift in Sources */,
 				DDA857A1ABEDB7F5BA5C1A5D /* AppStoreScreenshot3PageSnapshotUITest.swift in Sources */,
@@ -1366,6 +1396,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				07108F5661BFA7443756CA95 /* AppStoreScreenshotDawnFrame.swift in Sources */,
+				011D9FDA0CBBAB4AA172468C /* AppStoreScreenshotHeroFrame.swift in Sources */,
+				5010793154E1451EC97ABB6E /* MockAlarmRingingScreen.swift in Sources */,
 				1728CDDF79D835D152BF0AFD /* AppStoreScreenshotKumoFrame.swift in Sources */,
 				110544CEED1A752D244DBB0E /* AppStoreScreenshotKohakuFrame.swift in Sources */,
 				A607421FB3A0C9D1A226CC81 /* AppStoreScreenshotBoldFrame.swift in Sources */,

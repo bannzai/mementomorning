@@ -1,162 +1,12 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "If today were your last day, what would you want to do?": {
+    "%lld mornings answered": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日死ぬとしたら、何をやりたいか"
-          }
-        }
-      }
-    },
-    "Answer the question to stop the alarm.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "問いに答えて、アラームを止める。"
-          }
-        }
-      }
-    },
-    "It keeps ringing until you answer.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えるまで、鳴り止まない。"
-          }
-        }
-      }
-    },
-    "Follow-up alarms return until this morning's answer exists.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答が成立するまで、追撃アラームが戻ってきます。"
-          }
-        }
-      }
-    },
-    "Every morning's answer becomes a journal of your life.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "毎朝の答えが、\n人生の記録になる。"
-          }
-        }
-      }
-    },
-    "Your answers gather here, one morning at a time.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "回答は、ひと朝ずつここに集まっていきます。"
-          }
-        }
-      }
-    },
-    "Answered mornings remain as dots.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "答えた朝が、\n点として残る。"
-          }
-        }
-      }
-    },
-    "Each row is a week. The dots will connect.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1行が一週間。点は、いつかつながる。"
-          }
-        }
-      }
-    },
-    "At night, check in with your morning self.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "夜、朝の自分と\n答え合わせ。"
-          }
-        }
-      }
-    },
-    "A quiet reminder asks: are you keeping it?": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「守れてますか?」のリマインドでループを閉じます。"
-          }
-        }
-      }
-    },
-    "On day seven, meet your seven answers.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "七日目、七つの答えと再会する。"
-          }
-        }
-      }
-    },
-    "Quiet milestones keep you coming back.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "静かな節目が、続く理由になります。"
-          }
-        }
-      }
-    },
-    "Go see the ocean with my family": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "家族と海を見に行く"
-          }
-        }
-      }
-    },
-    "Make it today's answer": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "これで確定する"
-          }
-        }
-      }
-    },
-    "In 7 hr 20 min · Tap the time to change": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "あと 7 時間 20 分 · 時刻をタップして変更"
-          }
-        }
-      }
-    },
-    "This morning's words": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "今朝のことば"
+            "value": "答えた朝 %lld"
           }
         }
       }
@@ -171,132 +21,62 @@
         }
       }
     },
-    "Journal": {
+    "A morning alarm that asks one question.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ジャーナル"
+            "value": "毎朝、ひとつの問いで\n起こす目覚まし。"
           }
         }
       }
     },
-    "Life Calendar": {
+    "A quiet reminder asks: are you keeping it?": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "人生カレンダー"
+            "value": "「守れてますか?」のリマインドでループを閉じます。"
           }
         }
       }
     },
-    "Settings": {
+    "Answer it, and the alarm stops.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "設定"
+            "value": "答えると、アラームは止まります。"
           }
         }
       }
     },
-    "Today": {
+    "Answer the question to stop the alarm.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "今日"
+            "value": "問いに答えて、アラームを止める。"
           }
         }
       }
     },
-    "Call my mother and talk for a while": {
+    "Answer to stop": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "母に長い電話をかける"
+            "value": "答えて、止める"
           }
         }
       }
     },
-    "I did": {
+    "Answered mornings remain as dots.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "やれた"
-          }
-        }
-      }
-    },
-    "Write a letter to an old friend": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "友人に手紙を書く"
-          }
-        }
-      }
-    },
-    "Watch the sunrise to the end": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝日を最後まで眺める"
-          }
-        }
-      }
-    },
-    "Say what I never could": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "誰にも言えなかったことを伝える"
-          }
-        }
-      }
-    },
-    "Older mornings unlock with Premium.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "7日より前の朝は、プレミアムで。"
-          }
-        }
-      }
-    },
-    "See every morning": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "すべての朝を見る"
-          }
-        }
-      }
-    },
-    "Each row is a week. Answered mornings remain as dots.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1行が一週間。答えた朝が、点として残る。"
-          }
-        }
-      }
-    },
-    "The dots will connect.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点は、いつかつながる。"
+            "value": "答えた朝が、\n点として残る。"
           }
         }
       }
@@ -311,6 +91,186 @@
         }
       }
     },
+    "At night, check in with your morning self.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "夜、朝の自分と\n答え合わせ。"
+          }
+        }
+      }
+    },
+    "Call my mother and talk for a while": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "母に長い電話をかける"
+          }
+        }
+      }
+    },
+    "Dawn comes with a question.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "夜明けは、問いとともに。"
+          }
+        }
+      }
+    },
+    "Each row is a week. Answered mornings remain as dots.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1行が一週間。答えた朝が、点として残る。"
+          }
+        }
+      }
+    },
+    "Each row is a week. The dots will connect.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1行が一週間。点は、いつかつながる。"
+          }
+        }
+      }
+    },
+    "Eat my favorite meal at my favorite place": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行きつけの店で好きなものを食べる"
+          }
+        }
+      }
+    },
+    "Every morning's answer becomes a journal of your life.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝の答えが、\n人生の記録になる。"
+          }
+        }
+      }
+    },
+    "Follow-up alarms return until this morning's answer exists.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答が成立するまで、追撃アラームが戻ってきます。"
+          }
+        }
+      }
+    },
+    "Go see the ocean with my family": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "家族と海を見に行く"
+          }
+        }
+      }
+    },
+    "I did": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "やれた"
+          }
+        }
+      }
+    },
+    "If today were your last day, what would you want to do?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日死ぬとしたら、何をやりたいか"
+          }
+        }
+      }
+    },
+    "In 7 hr 20 min · Tap the time to change": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あと 7 時間 20 分 · 時刻をタップして変更"
+          }
+        }
+      }
+    },
+    "It keeps ringing until you answer.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えるまで、鳴り止まない。"
+          }
+        }
+      }
+    },
+    "Journal": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ジャーナル"
+          }
+        }
+      }
+    },
+    "Keep these seven days on one card": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この七日を、一枚に"
+          }
+        }
+      }
+    },
+    "Life Calendar": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "人生カレンダー"
+          }
+        }
+      }
+    },
+    "Make it today's answer": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "これで確定する"
+          }
+        }
+      }
+    },
+    "Memento mori, every morning.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎朝、死を想ってから\n起きる。"
+          }
+        }
+      }
+    },
     "Not yet": {
       "localizations": {
         "ja": {
@@ -321,12 +281,72 @@
         }
       }
     },
+    "Older mornings unlock with Premium.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7日より前の朝は、プレミアムで。"
+          }
+        }
+      }
+    },
+    "On day seven, meet your seven answers.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "七日目、七つの答えと再会する。"
+          }
+        }
+      }
+    },
     "On the seventh morning": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
             "value": "7日目の朝に"
+          }
+        }
+      }
+    },
+    "Quiet milestones keep you coming back.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "静かな節目が、続く理由になります。"
+          }
+        }
+      }
+    },
+    "Say what I never could": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
+    "See every morning": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての朝を見る"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
           }
         }
       }
@@ -351,16 +371,6 @@
         }
       }
     },
-    "Eat my favorite meal at my favorite place": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "行きつけの店で好きなものを食べる"
-          }
-        }
-      }
-    },
     "Spend the whole day with my kids": {
       "localizations": {
         "ja": {
@@ -371,32 +381,112 @@
         }
       }
     },
-    "Keep these seven days on one card": {
+    "The alarm is ringing": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "この七日を、一枚に"
+            "value": "アラームが鳴っています"
           }
         }
       }
     },
-    "Memento mori, every morning.": {
+    "The dots will connect.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "毎朝、死を想ってから\n起きる。"
+            "value": "点は、いつかつながる。"
           }
         }
       }
     },
-    "%lld mornings answered": {
+    "The question waits for tomorrow's you.": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "答えた朝 %lld"
+            "value": "問いが、明日のあなたを待っています。"
+          }
+        }
+      }
+    },
+    "This morning's words": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今朝のことば"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日"
+          }
+        }
+      }
+    },
+    "Tomorrow morning, the question rings.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "明日の朝、問いが鳴る。"
+          }
+        }
+      }
+    },
+    "Tonight, set the alarm. Morning changes.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今夜セットすれば、\n朝が変わる。"
+          }
+        }
+      }
+    },
+    "Wake up to the question.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "問いで、目を覚ます。"
+          }
+        }
+      }
+    },
+    "Watch the sunrise to the end": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "朝日を最後まで眺める"
+          }
+        }
+      }
+    },
+    "Write a letter to an old friend": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "友人に手紙を書く"
+          }
+        }
+      }
+    },
+    "Your answers gather here, one morning at a time.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "回答は、ひと朝ずつここに集まっていきます。"
           }
         }
       }

@@ -46,6 +46,7 @@ scripts/generate_screenshots/
 13〜18 が `dawn` (墨背景 + 夜明けグラデーション強め + 太字見出し)、19〜24 が `kumo`
 (明るい雲色の地 + 左揃え太字見出し + ブランドラベル)、25〜30 が `kohaku` (夜明け色のベタ地 + 墨の太字見出し)、
 31〜36 が `bold` (墨背景 + 極太・左揃え見出し) の 6 バリアント。
+37〜42 の `hero` は 1 枚目のクリエイティブ案の比較バンドで、fastlane へは適用しない。
 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当て、対応する
 `AppStoreScreenshots/Sources/Layouts/` のレイアウト・ページと
 `AppStoreScreenshotsUITests/Features/AppStoreScreenshot/` のテストを追加する。
