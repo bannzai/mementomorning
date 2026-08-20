@@ -8,7 +8,7 @@ import SwiftUI
 struct AppStoreScreenshotInkLayout<Content: View>: View {
     /// メインのキャッチコピー
     let title: Text
-    /// サブコピー (二次テキスト 55% 白)
+    /// サブコピー (二次テキスト 75% 白)
     let subtitle: LocalizedStringResource
     /// 下部に夜明けグラデーション (オンボーディングの地平線表現) を敷くかどうか。
     /// アクセントは各画面 1 箇所までのため、モック画面側で夜明け色を使うページでは敷かない
@@ -27,21 +27,24 @@ struct AppStoreScreenshotInkLayout<Content: View>: View {
             VStack(spacing: 0) {
                 VStack(spacing: 16) {
                     title
-                        .font(.system(size: 34, weight: .light))
-                        .tracking(1.7)
+                        // 34pt light はストア一覧のサムネイルで文字が沈む (PR #89 のフィードバック) ため、
+                        // 静かな世界観を保てる範囲で medium に上げる。36pt + 横 padding 28 は
+                        // washi と同じ 1 行あたり約 10 文字の折り返し位置を保つ組み合わせ (washi の実測に基づく)
+                        .font(.system(size: 36, weight: .medium))
+                        .tracking(1.2)
                         .lineSpacing(12)
                         .foregroundStyle(Color.warmWhite)
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.8)
                     Text(subtitle)
-                        .font(.system(size: 15, weight: .light))
+                        .font(.system(size: 16, weight: .regular))
                         .tracking(0.9)
                         .lineSpacing(6)
-                        .foregroundStyle(Color.warmWhite.opacity(0.55))
+                        .foregroundStyle(Color.warmWhite.opacity(0.75))
                         .multilineTextAlignment(.center)
                 }
                 .padding(.top, 70)
-                .padding(.horizontal, 36)
+                .padding(.horizontal, 28)
 
                 Spacer()
 
