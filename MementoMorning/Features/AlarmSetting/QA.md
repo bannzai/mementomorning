@@ -1,7 +1,7 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: e1c36da
+last_verified_commit: 67e24f4
 last_verified_at: 2026-08-19
 ---
 
@@ -31,6 +31,8 @@ last_verified_at: 2026-08-19
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **プレミアム状態のスヌーズ Picker**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では錠前が消え、「無制限」に ∞ アイコンが付く。未設定 (保存済み値なし) の初期選択は「無制限」
   - 自動化: manual（課金状態の表示分岐は目視確認）
+- [x] **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
+  - 自動化: manual（外部リンクの確認）
 
 #### 動作確認
 <details>
@@ -80,6 +82,28 @@ OFF:
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/a723c50b-0b83-4ab0-bda8-311990fcdf2a.png" width="320">
 
 (錠前なし。「∞ 無制限」にチェック)
+
+</details>
+
+### **情報セクション**: 画面末尾の「情報」セクションに利用規約・プライバシーポリシー・特定商取引法に基づく表記・問い合わせ・バージョンが表示され、https の 3 リンクは Safari で正しいページが開く
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-19 (Maestro でタップ、スクショは xcrun simctl)**
+
+情報セクションの表示 (バージョン 1.0 (1) を含む):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/9a12332c-a000-4131-9b26-e7962ea29e5f.png" width="320" />
+
+利用規約リンク → Safari (bannzai.github.io。読み込み中):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/ecd1e852-906f-41fe-bcca-29f7f08a0e79.png" width="320" />
+
+プライバシーポリシーリンク → Safari:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/5f7f4af2-bb49-4940-9abb-d462f224ccb9.png" width="320" />
+
+特定商取引法に基づく表記リンク → Safari:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/fe2490db-1bbd-4ac1-911c-1ad1def7586e.png" width="320" />
+
+(問い合わせ (mailto) はシミュレータにメール App が無くタップしても遷移しないため、URL の正しさは LegalLinksTests で担保)
 
 </details>
 
