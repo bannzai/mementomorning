@@ -1,91 +1,1111 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "NSAlarmKitUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to ring the alarm at your set time and stop it by answering today's question."
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAlarmKitUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لإطلاق المنبّه في الوقت الذي حددته وإيقافه بالإجابة عن سؤال اليوم."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per fer sonar l'alarma a l'hora que has establert i aturar-la responent la pregunta d'avui."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží ke spuštění budíku v nastavený čas a jeho vypnutí odpovědí na dnešní otázku."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at få alarmen til at ringe på det indstillede tidspunkt og stoppe den ved at besvare dagens spørgsmål."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um den Wecker zur festgelegten Zeit klingeln zu lassen und ihn durch die Beantwortung der heutigen Frage zu stoppen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για να χτυπά το ξυπνητήρι την ώρα που έχεις ορίσει και να το σταματάς απαντώντας στην ερώτηση της ημέρας."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to ring the alarm at your set time and stop it by answering today's question."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora que has establecido y detenerla al responder a la pregunta de hoy."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para hacer sonar la alarma a la hora que configuraste y detenerla al responder la pregunta de hoy."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään herättämään hälytys asettamaasi aikaan ja pysäyttämään se vastaamalla päivän kysymykseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sert à faire sonner l’alarme à l’heure que vous avez définie et à l’arrêter en répondant à la question du jour."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמשת להשמעת האזעקה בשעה שהגדרת ולעצירתה באמצעות מענה על שאלת היום."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके तय समय पर अलार्म बजाने और आज के सवाल का जवाब देकर उसे बंद करने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koristi se za oglašavanje alarma u postavljeno vrijeme i njegovo isključivanje odgovaranjem na današnje pitanje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A beállított időpontban megszólaltatja az ébresztőt, és a mai kérdés megválaszolásával leállítja."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan alarm pada waktu yang kamu tetapkan dan menghentikannya dengan menjawab pertanyaan hari ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve a far suonare la sveglia all’ora impostata e a interromperla rispondendo alla domanda di oggi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定した時刻にアラームを鳴らし、今日の問いに答えて止めるために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정한 시간에 알람을 울리고 오늘의 질문에 답해 알람을 끄는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk membunyikan penggera pada masa yang anda tetapkan dan menghentikannya dengan menjawab soalan hari ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ringe med alarmen på det innstilte tidspunktet og stoppe den ved å svare på dagens spørsmål."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om het alarm op het door je ingestelde tijdstip te laten afgaan en het te stoppen door de vraag van vandaag te beantwoorden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do uruchamiania alarmu o ustawionej godzinie i wyłączania go po udzieleniu odpowiedzi na dzisiejsze pytanie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para tocar o alarme no horário que você definiu e interrompê-lo ao responder à pergunta de hoje."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para fazer soar o alarme à hora que definiste e pará-lo ao responderes à pergunta de hoje."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a declanșa alarma la ora setată și a o opri răspunzând la întrebarea zilei."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется, чтобы будильник сработал в установленное вами время и выключился после ответа на вопрос дня."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na spustenie budíka v nastavenom čase a jeho vypnutie po zodpovedaní dnešnej otázky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att ringa på alarmet vid den inställda tiden och stänga av det genom att svara på dagens fråga."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้สำหรับปลุกตามเวลาที่ตั้งไว้และหยุดการปลุกเมื่อคุณตอบคำถามประจำวัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alarmı belirlediğin saatte çaldırmak ve bugünün sorusunu yanıtlayarak durdurmak için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується, щоб будильник спрацював у встановлений вами час і вимкнувся після відповіді на запитання дня."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng để báo thức vào thời gian bạn đã đặt và tắt báo thức bằng cách trả lời câu hỏi hôm nay."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今日問題將其停止。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于在你设定的时间响起闹钟，并通过回答今天的问题将其停止。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在你設定的時間響起鬧鐘，並透過回答今天的問題將其停止。"
           }
         }
       }
     },
-    "NSCameraUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to record your video answer to the morning question with the front camera."
+    "NSCameraUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لتسجيل إجابتك المصوّرة عن سؤال الصباح باستخدام الكاميرا الأمامية."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝の問いに答える動画をインカメラで録画するために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per gravar la teva resposta en vídeo a la pregunta del matí amb la càmera frontal."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží k nahrání videoodpovědi na ranní otázku pomocí přední kamery."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at optage dit videosvar på morgenens spørgsmål med frontkameraet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um deine Videoantwort auf die Morgenfrage mit der Frontkamera aufzunehmen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για την καταγραφή της απάντησής σου σε βίντεο στην πρωινή ερώτηση με την μπροστινή κάμερα."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to record your video answer to the morning question with the front camera."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar tu respuesta en video a la pregunta de la mañana con la cámara frontal."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar tu respuesta en video a la pregunta de la mañana con la cámara frontal."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään aamukysymyksen videovastauksen tallentamiseen etukameralla."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour enregistrer votre réponse vidéo à la question du matin avec la caméra frontale."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמשת להקלטת תשובת הווידאו שלך לשאלת הבוקר באמצעות המצלמה הקדמית."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुबह के सवाल का वीडियो में आपका जवाब फ्रंट कैमरे से रिकॉर्ड करने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za snimanje tvog videoodgovora na jutarnje pitanje prednjom kamerom."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A reggeli kérdésre adott videóválaszod rögzítésére használjuk az előlapi kamerát."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merekam jawaban video kamu atas pertanyaan pagi dengan kamera depan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizzato per registrare la tua risposta video alla domanda del mattino con la fotocamera anteriore."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝の問いに答える動画をインカメラで録画するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아침 질문에 대한 영상 답변을 전면 카메라로 녹화하는 데 사용해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merakam jawapan video anda kepada soalan pagi menggunakan kamera hadapan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ta opp videosvaret ditt på morgenspørsmålet med frontkameraet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om je videoantwoord op de ochtendvraag op te nemen met de frontcamera."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do nagrywania twojej odpowiedzi wideo na poranne pytanie przednim aparatem."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para gravar sua resposta em vídeo à pergunta da manhã com a câmera frontal."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para gravar a tua resposta em vídeo à pergunta da manhã com a câmara frontal."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a înregistra răspunsul tău video la întrebarea de dimineață cu camera frontală."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для записи вашего видеоответа на утренний вопрос с помощью фронтальной камеры."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na nahrávanie tvojej videoodpovede na rannú otázku pomocou prednej kamery."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att spela in ditt videosvar på morgonens fråga med frontkameran."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้บันทึกวิดีโอคำตอบของคุณสำหรับคำถามยามเช้าด้วยกล้องหน้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah sorusuna verdiğin video yanıtını ön kamerayla kaydetmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для запису вашої відеовідповіді на ранкове запитання за допомогою фронтальної камери."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được dùng để quay video câu trả lời của bạn cho câu hỏi buổi sáng bằng camera trước."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於以前置鏡頭錄製你對早晨問題的影片回答。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于通过前置摄像头录制你对晨间问题的视频回答。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於透過前置相機錄製你對早晨問題的影片回答。"
           }
         }
       }
     },
-    "NSMicrophoneUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to record the audio of your video answer."
+    "NSMicrophoneUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لتسجيل الصوت المصاحب لإجابتك المصوّرة."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画回答の音声を録音するために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per gravar l'àudio de la teva resposta en vídeo."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používá se k nahrávání zvuku tvé odpovědi ve videu."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at optage lyden i dit videosvar."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird zum Aufnehmen des Tons deiner Videoantwort verwendet."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για την εγγραφή του ήχου της βιντεοαπάντησής σου."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to record the audio of your video answer."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar el audio de tu respuesta en vídeo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para grabar el audio de tu respuesta en video."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään videovastauksesi äänen tallentamiseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour enregistrer l’audio de votre réponse vidéo."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש להקלטת השמע של תשובת הווידאו שלך."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके वीडियो उत्तर का ऑडियो रिकॉर्ड करने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za snimanje zvuka tvog videoodgovora."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A videóválaszod hangjának rögzítésére szolgál."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merekam audio jawaban video kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usato per registrare l'audio della tua risposta video."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画回答の音声を録音するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동영상 답변의 오디오를 녹음하는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk merakam audio jawapan video anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å ta opp lyden i videosvaret ditt."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om de audio van je videoantwoord op te nemen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do nagrywania dźwięku twojej odpowiedzi wideo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para gravar o áudio da sua resposta em vídeo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para gravar o áudio da tua resposta em vídeo."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosit pentru a înregistra sunetul răspunsului tău video."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для записи звука вашего видеоответа."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa sa na nahrávanie zvuku tvojej videoodpovede."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att spela in ljudet i ditt videosvar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้บันทึกเสียงของคำตอบในวิดีโอของคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Video yanıtının sesini kaydetmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для запису звуку вашої відеовідповіді."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được dùng để ghi âm phần trả lời bằng video của bạn."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於錄製影片回答的音訊。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于录制视频回答的音频。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於錄製影片回答的音訊。"
           }
         }
       }
     },
-    "NSPhotoLibraryUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
+    "NSPhotoLibraryUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لحفظ إجابات الفيديو المسجّلة في ألبوم 'Memento Morning' في تطبيق الصور."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "録画した動画回答を写真アプリのアルバム「Memento Morning」に保存するために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza per desar les teves respostes de vídeo enregistrades a l'àlbum 'Memento Morning' de Fotos."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží k ukládání nahraných videoodpovědí do alba 'Memento Morning' v aplikaci Fotky."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at gemme dine optagede videosvar i albummet 'Memento Morning' i Fotos."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um deine aufgezeichneten Videoantworten im Album 'Memento Morning' in Fotos zu sichern."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για την αποθήκευση των εγγεγραμμένων απαντήσεων βίντεο στο άλμπουμ 'Memento Morning' στις Φωτογραφίες."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to save your recorded video answers to the 'Memento Morning' album in Photos."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para guardar tus respuestas de vídeo grabadas en el álbum 'Memento Morning' de Fotos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para guardar tus respuestas de video grabadas en el álbum 'Memento Morning' de Fotos."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään tallennettujen videovastaustesi tallentamiseen Kuvien Memento Morning -albumiin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour enregistrer vos réponses vidéo dans l’album 'Memento Morning' de Photos."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש לשמירת תשובות הווידאו שהקלטת באלבום 'Memento Morning' ב״תמונות״."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके रिकॉर्ड किए गए वीडियो उत्तरों को फ़ोटो में 'Memento Morning' एल्बम में सहेजने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za spremanje tvojih snimljenih videoodgovora u album 'Memento Morning' u aplikaciji Foto."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rögzített videóválaszaid 'Memento Morning' albumba való mentésére szolgál a Fotókban."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk menyimpan jawaban video yang kamu rekam ke album 'Memento Morning' di Foto."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve per salvare le tue risposte video registrate nell’album 'Memento Morning' in Foto."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画した動画回答を写真アプリのアルバム「Memento Morning」に保存するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "녹화한 동영상 답변을 사진 앱의 'Memento Morning' 앨범에 저장하는 데 사용해요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk menyimpan jawapan video yang anda rakam ke album 'Memento Morning' dalam Foto."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å lagre de innspilte videosvarene dine i albumet 'Memento Morning' i Bilder."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om je opgenomen videoantwoorden op te slaan in het album 'Memento Morning' in Foto's."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do zapisywania nagranych przez ciebie odpowiedzi wideo w albumie 'Memento Morning' w aplikacji Zdjęcia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para salvar os vídeos das suas respostas gravadas no álbum 'Memento Morning' do Fotos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É utilizado para guardar as tuas respostas em vídeo gravadas no álbum 'Memento Morning' da app Fotografias."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a salva răspunsurile video înregistrate de tine în albumul 'Memento Morning' din Poze."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для сохранения записанных вами видеоответов в альбоме «Memento Morning» в приложении «Фото»."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na uloženie tvojich nahratých videoodpovedí do albumu 'Memento Morning' v aplikácii Fotky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att spara dina inspelade videosvar i albumet 'Memento Morning' i Bilder."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อบันทึกคำตอบวิดีโอที่คุณบันทึกไว้ลงในอัลบั้ม 'Memento Morning' ในแอปรูปภาพ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çektiğin video yanıtlarını Fotoğraflar'daki 'Memento Morning' albümüne kaydetmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для збереження записаних вами відеовідповідей в альбомі «Memento Morning» у програмі «Фото»."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dùng để lưu các câu trả lời video bạn đã quay vào album 'Memento Morning' trong Ảnh."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於將你錄製的影片回答儲存至「相片」App 中的「Memento Morning」相簿。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于将你录制的视频回答存储到“照片”中的“Memento Morning”相簿。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於將你錄製的影片回答儲存至「照片」中的「Memento Morning」相簿。"
           }
         }
       }
     },
-    "NSSpeechRecognitionUsageDescription": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Used to transcribe the audio of your video answer into text on this device."
+    "NSSpeechRecognitionUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لتحويل الصوت من إجابتك المصوّرة إلى نص على هذا الجهاز."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "動画回答の音声を端末上でテキストに変換するために使用します"
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S’utilitza per transcriure l’àudio de la teva resposta en vídeo a text en aquest dispositiu."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa se k přepisu zvuku tvé videoodpovědi do textu na tomto zařízení."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at transskribere lyden fra dit videosvar til tekst på denne enhed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um den Ton deiner Videoantwort auf diesem Gerät in Text umzuwandeln."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για τη μεταγραφή του ήχου της βιντεοαπάντησής σου σε κείμενο σε αυτήν τη συσκευή."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to transcribe the audio of your video answer into text on this device."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para transcribir el audio de tu respuesta en vídeo a texto en este dispositivo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para transcribir el audio de tu respuesta en video a texto en este dispositivo."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään videovastauksesi äänen muuntamiseen tekstiksi tällä laitteella."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour transcrire l’audio de votre réponse vidéo en texte sur cet appareil."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש לתמלול השמע של תשובת הווידאו שלך לטקסט במכשיר הזה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस डिवाइस पर आपके वीडियो उत्तर के ऑडियो को टेक्स्ट में लिखने के लिए उपयोग किया जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upotrebljava se za transkripciju zvuka tvog videoodgovora u tekst na ovom uređaju."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A videóválaszod hangjának szöveggé alakítására szolgál ezen az eszközön."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk mentranskripsikan audio jawaban video kamu menjadi teks di perangkat ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usato per trascrivere l’audio della tua risposta video in testo su questo dispositivo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動画回答の音声を端末上でテキストに変換するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 기기에서 동영상 답변의 오디오를 텍스트로 변환하는 데 사용돼요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk mentranskripsikan audio jawapan video anda kepada teks pada peranti ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å transkribere lyden fra videosvaret ditt til tekst på denne enheten."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om de audio van je videoantwoord op dit apparaat om te zetten in tekst."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do transkrypcji dźwięku twojej odpowiedzi wideo na tekst na tym urządzeniu."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para transcrever o áudio da sua resposta em vídeo para texto neste dispositivo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para transcrever o áudio da tua resposta em vídeo para texto neste dispositivo."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosit pentru transcrierea sunetului răspunsului tău video în text pe acest dispozitiv."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется для преобразования аудио вашего видеоответа в текст на этом устройстве."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa sa na prepis zvuku tvojej videoodpovede na text v tomto zariadení."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att transkribera ljudet från ditt videosvar till text på den här enheten."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อถอดเสียงคำตอบในวิดีโอของคุณเป็นข้อความบนอุปกรณ์นี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu aygıtta video yanıtının sesini metne dönüştürmek için kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується для перетворення аудіо вашої відеовідповіді на текст на цьому пристрої."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được dùng để chuyển âm thanh trong câu trả lời bằng video của bạn thành văn bản trên thiết bị này."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在此裝置上將影片回答的音訊轉錄成文字。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于在此设备上将视频回答的音频转录成文字。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於在此裝置上將影片回答的音訊轉錄成文字。"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

@@ -1,0 +1,24 @@
+Memento Morning on herätyskello, jonka pysäytät vastaamalla yhteen kysymykseen joka aamu.
+
+Kysymyksiä on vain yksi.
+"Jos tämä olisi viimeinen päiväsi, mitä haluaisit tehdä?"
+
+■ Aamurituaali
+- Herätys soi valitsemanasi aikana
+- Vastaa päivän kysymykseen, ja aamusi alkaa
+- Kunnes vastaat, herätys kutsuu sinua hiljaa uudelleen
+
+■ Elämäsi päiväkirja
+- Yksi vastaus päivässä, hiljalleen kertyen
+- Elämänkalenterisi täyttyy aamu kerrallaan
+- Seitsemäntenä aamuna seitsemän vastaustasi kokoontuvat ensimmäistä kertaa yhdelle sivulle
+
+■ Iltatarkistus
+- Illalla kysymme vain yhden asian: "Piditkö tämän päivän vastauksesi?"
+- Päivät, jolloin pidit, ja päivät, jolloin et, säilyvät sellaisinaan
+
+■ Yksityisyys
+- Vastauksesi tallennetaan vain laitteellesi. Mitään ei lähetetä palvelimelle
+
+Ei konfettia, ei merkkejä, ei liekehtiviä putkia.
+Vain hiljainen kysymys ja sinun vastauksesi.

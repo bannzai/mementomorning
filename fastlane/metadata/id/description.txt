@@ -1,0 +1,24 @@
+Memento Morning adalah alarm yang berhenti saat kamu menjawab satu pertanyaan setiap pagi.
+
+Hanya ada satu pertanyaan.
+"Jika hari ini adalah hari terakhirmu, apa yang ingin kamu lakukan?"
+
+■ Ritual pagi
+- Alarm berbunyi pada waktu yang kamu atur
+- Jawab pertanyaan hari ini, dan pagimu dimulai
+- Sampai kamu menjawab, alarm terus memanggilmu dengan lembut
+
+■ Jurnal kehidupanmu
+- Satu jawaban sehari, terkumpul dalam diam
+- Kalender kehidupanmu terisi, satu pagi demi satu pagi
+- Pada pagi ketujuh, tujuh jawabanmu berkumpul untuk pertama kalinya di satu halaman
+
+■ Peninjauan malam
+- Di malam hari kami hanya bertanya satu hal: "Apakah kamu menepati jawabanmu hari ini?"
+- Hari-hari yang berhasil dan yang tidak, tetap apa adanya
+
+■ Privasi
+- Jawabanmu disimpan hanya di perangkatmu. Tidak ada yang dikirim ke server
+
+Tanpa konfeti, tanpa lencana, tanpa runtunan menyala.
+Hanya sebuah pertanyaan yang hening, dan jawaban-jawabanmu.

@@ -168,12 +168,13 @@ snapshot_screenshots_complete() {
   local screenshot_dir=$1
   [ -d "$screenshot_dir" ] || return 1
 
-  # 対象言語リスト (未指定時の全言語は MementoMorningSnapshotUITests/Languages.swift と揃える)
+  # 対象言語リスト (未指定時の全言語は MementoMorningSnapshotUITests/Languages.swift の
+  # languageCodeAndLanguageWithRegion から読み取り、Swift 側と二重管理しない)
   local target_languages
   if [ -n "$LANGUAGES" ]; then
     IFS=',' read -ra target_languages <<< "$LANGUAGES"
   else
-    target_languages=(ja en)
+    target_languages=($(sed -nE 's/^[[:space:]]*\("([A-Za-z-]+)",.*/\1/p' MementoMorningSnapshotUITests/Languages.swift))
   fi
 
   for lang in "${target_languages[@]}"; do
