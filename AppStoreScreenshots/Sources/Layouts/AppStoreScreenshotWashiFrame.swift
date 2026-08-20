@@ -61,7 +61,8 @@ struct AppStoreScreenshotWashiLayout<Content: View>: View {
     }
 }
 
-/// App Store スクリーンショット 7 枚目 - washi - 朝の問い (コアコンセプト)
+/// App Store スクリーンショット 7 枚目 - washi - アラーム鳴動 (朝・起きる時に使うアプリであることを 1 枚目で伝える。
+/// hero 案の比較 (PR #89) で washi × 鳴動モック × 既存コピーを採用)
 struct AppStoreScreenshot7Page: View {
     var body: some View {
         AppStoreScreenshotWashiLayout(
@@ -72,7 +73,7 @@ struct AppStoreScreenshot7Page: View {
             // ja: 問いに答えて、アラームを止める。
             subtitle: "Answer the question to stop the alarm."
         ) {
-            MockMorningQuestionScreen()
+            MockAlarmRingingScreen()
         }
     }
 }

@@ -47,8 +47,9 @@ final class AppStoreScreenshot34PageSnapshotUITest: XCTestCase {
                     app.descendants(matching: .any)["SnapshotPreview_\(previewType)_\(index)"]
                         .waitForExistence(timeout: 5)
                 )
-                // push 遷移のアニメーションが完了してから撮影する
-                sleep(1)
+                // push 遷移のアニメーションの完了と、ホームインジケーターの自動非表示
+                // (persistentSystemOverlays(.hidden) は自動非表示の許可で、最終タッチから数秒後に消える) を待って撮影する
+                sleep(6)
 
                 let attachment = XCTAttachment(screenshot: app.screenshot())
                 attachment.name = "\(fileName)---\(functionName)---\(language)---\(index)"
