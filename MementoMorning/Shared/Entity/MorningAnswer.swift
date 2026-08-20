@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-/// 毎朝の問い「今日死ぬとしたら何をやりたいか」へのユーザーの回答。1 日 1 件蓄積され、人生ジャーナルの最小単位になる
+/// 毎朝の問い「今日死ぬとしたら何をやりたいですか？」へのユーザーの回答。1 日 1 件蓄積され、人生ジャーナルの最小単位になる
 @Model
 final class MorningAnswer {
     @Attribute(.unique) var id: UUID

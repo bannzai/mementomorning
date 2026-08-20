@@ -26,6 +26,30 @@ struct AppStoreScreenshotsRootPage: View {
                     SnapshotUITest<AppStoreScreenshot16Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot17Page_Previews>()
                     SnapshotUITest<AppStoreScreenshot18Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot19Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot20Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot21Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot22Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot23Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot24Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot25Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot26Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot27Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot28Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot29Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot30Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot31Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot32Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot33Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot34Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot35Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot36Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot37Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot38Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot39Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot40Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot41Page_Previews>()
+                    SnapshotUITest<AppStoreScreenshot42Page_Previews>()
                 }
             }
         }
@@ -76,6 +100,9 @@ struct SnapshotUITestLazyPreview<T: PreviewProvider>: View {
         T._allPreviews[index].content
             .navigationBarBackButtonHidden()
             .statusBarHidden()
+            // ホームインジケーターを非表示にする。明背景バリアントの 6.5 インチ (iPhone 13 Pro Max) で
+            // インジケーターがデバイスフレーム下部に写り込むことを実測したため (PR #89)
+            .persistentSystemOverlays(.hidden)
             // UITest が「遷移先の Preview が表示されてから撮影する」ための目印
             .accessibilityIdentifier("SnapshotPreview_\(T.self)_\(index)")
     }

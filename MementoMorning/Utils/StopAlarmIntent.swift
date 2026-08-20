@@ -124,7 +124,7 @@ public struct StopAlarmIntent: LiveActivityIntent {
         UserDefaults.standard.set(chaseAlarmID.uuidString, forKey: .stopIntentChaseAlarmID)
         UserDefaults.standard.set(chaseFireDate.timeIntervalSince1970, forKey: .stopIntentChaseFireDate)
         do {
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
             try await AlarmKitManager.schedule(id: chaseAlarmID, fireDate: chaseFireDate, title: title)
             // 登録に失敗した試行で無料枠を消費しないよう、カウントは schedule() の成功後に更新する (PR #30 レビュー指摘)

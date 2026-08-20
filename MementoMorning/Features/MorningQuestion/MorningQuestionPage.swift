@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-/// 朝の問い画面。アラーム発火後に全画面で表示し、「今日死ぬとしたら、何をやりたいか」に答えるまで閉じられないコア画面。
+/// 朝の問い画面。アラーム発火後に全画面で表示し、「今日死ぬとしたら何をやりたいですか？」に答えるまで閉じられないコア画面。
 /// 回答が保存される (今日の MorningAnswer が成立する) と当日の残アラーム (バックアップ・追撃含む) を全キャンセルして閉じる。
 /// 第一入力はインカメラ動画回答 (issue #24): 問いをプレビューにオーバーレイした状態で録画し、
 /// 停止 = 回答完了として動画を写真アプリへ保存する。テキスト入力は代替手段として残し、
@@ -83,7 +83,7 @@ struct MorningQuestionPage: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // ja: 今日死ぬとしたら、何をやりたいか
+                // ja: 今日死ぬとしたら何をやりたいですか？
                 Text(String(localized: "If today were your last day, what would you want to do?"))
                     .font(.system(size: 27, weight: .light))
                     .lineSpacing(10)
@@ -196,7 +196,7 @@ struct MorningQuestionPage: View {
             // 操作ボタンはスクロール外の下部固定にして常に押せるようにする
             ScrollView {
                 VStack(spacing: 40) {
-                    // ja: 今日死ぬとしたら、何をやりたいか
+                    // ja: 今日死ぬとしたら何をやりたいですか？
                     Text(String(localized: "If today were your last day, what would you want to do?"))
                         .font(.system(size: 27, weight: .light))
                         .lineSpacing(10)

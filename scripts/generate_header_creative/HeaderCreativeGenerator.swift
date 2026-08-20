@@ -39,11 +39,11 @@ enum CreativeAssetLanguage: String, CaseIterable {
     case enUS = "en-US"
 
     /// 問いの本文。SSOT は MementoMorning/Localizable.xcstrings の
-    /// "If today were your last day, what would you want to do?" (ja 訳: 今日死ぬとしたら、何をやりたいか)。
+    /// "If today were your last day, what would you want to do?" (ja 訳: 今日死ぬとしたら何をやりたいですか？)。
     /// 折り返し位置を制御するため明示的な改行を入れて転記する
     var questionText: String {
         switch self {
-        case .ja: "今日死ぬとしたら、\n何をやりたいか"
+        case .ja: "今日死ぬとしたら\n何をやりたいですか？"
         case .enUS: "If today were your last day,\nwhat would you want to do?"
         }
     }

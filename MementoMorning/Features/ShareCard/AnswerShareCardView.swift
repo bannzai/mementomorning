@@ -10,7 +10,7 @@ struct AnswerShareCardView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             Text("If today were your last day, what would you want to do?")
                 .font(.system(size: 13, design: .serif))
                 .foregroundStyle(.white.opacity(0.6))

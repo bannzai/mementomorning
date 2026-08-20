@@ -7,7 +7,7 @@ AppStoreScreenshotsUITests を実行して、App Store 用スクリーンショ�
 
 1. `AppStoreScreenshots/Sources/` のスクショページ (背景 + キャッチコピー + デバイスフレーム + モック画面) を SwiftUI で実装
 2. `AppStoreScreenshotsUITests` が各ページを言語ごとに起動してキャプチャ (`XCTAttachment`)
-3. `xcresulttool` で画像を抽出し、fastlane 形式 (`{index}_APP_IPHONE_65_{index}.png`) に整理
+3. `xcresulttool` で画像を抽出し、fastlane 形式 (`{index}_{表示サイズ名}_{index}.png`) に整理
 4. バリアント別に `artifacts/_variant-{name}/{言語}/` へ出力し、`apply_variant.sh` で `fastlane/screenshots/` に適用
 
 ## スクリプト構成
@@ -15,7 +15,7 @@ AppStoreScreenshotsUITests を実行して、App Store 用スクリーンショ�
 ```
 scripts/generate_screenshots/
 ├── README.md                          # このファイル
-├── appstore_screenshot_env.sh         # 環境変数・共通関数 (バリアント定義・言語マッピング・シミュレータ自動作成)
+├── appstore_screenshot_env.sh         # 環境変数・共通関数 (バリアント定義・撮影デバイス定義・言語マッピング・シミュレータ自動作成)
 ├── build_appstore_screenshot.sh       # build-for-testing
 ├── run_appstore_screenshot.sh         # 個別テストを test-without-building で実行
 ├── organize_appstore_screenshots.sh   # 抽出画像を fastlane 形式に整理
@@ -26,11 +26,11 @@ scripts/generate_screenshots/
 ## 使い方
 
 ```bash
-# 全言語 (ja, en)・全番号で生成
+# 全言語 (ja, en)・全番号・全デバイス (6.9 インチ + 6.5 インチ) で生成
 ./scripts/generate_screenshots/generate_appstore_screenshots.sh
 
-# 1枚だけ日本語で生成 (動作確認用)
-./scripts/generate_screenshots/generate_appstore_screenshots.sh -l "ja" -n "1"
+# 1枚だけ日本語・6.9 インチで生成 (動作確認用)
+./scripts/generate_screenshots/generate_appstore_screenshots.sh -l "ja" -n "1" -d "69"
 
 # 並列数・ビルドスキップ・上書き
 ./scripts/generate_screenshots/generate_appstore_screenshots.sh -p 1 --skip-build --overwrite
@@ -43,10 +43,27 @@ scripts/generate_screenshots/
 
 スクリーンショット番号とバリアントの対応は `appstore_screenshot_env.sh` の `get_variant_name` が SSOT。
 現状は 1〜6 が `ink` (静かな世界観そのままの墨背景)、7〜12 が `washi` (温白地に墨の太字見出し)、
-13〜18 が `dawn` (墨背景 + 夜明けグラデーション強め + 太字見出し) の 3 バリアント。
+13〜18 が `dawn` (墨背景 + 夜明けグラデーション強め + 太字見出し)、19〜24 が `kumo`
+(明るい雲色の地 + 左揃え太字見出し + ブランドラベル)、25〜30 が `kohaku` (夜明け色のベタ地 + 墨の太字見出し)、
+31〜36 が `bold` (墨背景 + 極太・左揃え見出し) の 6 バリアント。
+37〜42 の `hero` は 1 枚目のクリエイティブ案の比較バンドで、fastlane へは適用しない。
 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当て、対応する
 `AppStoreScreenshots/Sources/Layouts/` のレイアウト・ページと
 `AppStoreScreenshotsUITests/Features/AppStoreScreenshot/` のテストを追加する。
+
+## 撮影デバイス (表示サイズ)
+
+デバイスと出力ファイル名の対応は `appstore_screenshot_env.sh` の `get_display_type` / `get_device_type_name` が SSOT。
+`-d` (または `SCREENSHOT_DEVICES`) で指定し、既定は両方 (`69,65`)。
+
+| 区分 | シミュレータ | 解像度 | ファイル名 | App Store Connect での扱い |
+| --- | --- | --- | --- | --- |
+| `69` | iPhone 17 Pro Max | 1320×2868 | `{index}_APP_IPHONE_67_{index}.png` | 6.9 インチ (必須) |
+| `65` | iPhone 13 Pro Max | 1284×2778 | `{index}_APP_IPHONE_65_{index}.png` | 6.5 インチ (任意。未提供なら 6.9 インチの縮小が使われる) |
+
+ファイル名の表示サイズ名は fastlane deliver の DisplayType に合わせる (deliver は 6.9 インチを `APP_IPHONE_67` として扱う。
+アップロード時の区分判定は画像の解像度で行われる)。
+参照: https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/
 
 ## 対象言語
 
@@ -57,10 +74,11 @@ fastlane ディレクトリ名への変換 (en → en-US) は `appstore_screensh
 
 - Xcode (xcresulttool 同梱)
 - jq (`brew install jq`)
-- iOS 26.0 ランタイムのシミュレータ (無ければ `iPhone 13 Pro Max` を自動作成する)
+- iOS 26.0 ランタイムのシミュレータ (無ければ `iPhone 17 Pro Max` / `iPhone 13 Pro Max` を自動作成する)
 
 ## 注意事項
 
 - UITest はローカルシミュレータでしか実行できないため、リモート simulator (simtunnel) では生成できない
   (CLAUDE.md「検証方法」のローカル sim フォールバックに該当)
-- 複数 worktree で同時に生成する時は `DESTINATION_SIM_NAME` で専用シミュレータ名を渡して分離する
+- 複数 worktree で同時に生成する時は `DESTINATION_SIM_NAME` で専用シミュレータ名を渡して分離する (専用名は 1 機種分にしか付けられないため、`-d` で 1 デバイスに絞って実行する)
+- 生成した画像は `apply_variant.sh` で `fastlane/screenshots/{locale}/` に配置し、git にコミットする (Focus は別リポジトリ管理だが、本プロジェクトは同一リポジトリで管理する)

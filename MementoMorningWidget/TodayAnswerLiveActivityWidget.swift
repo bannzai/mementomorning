@@ -15,7 +15,7 @@ struct TodayAnswerLiveActivityWidget: Widget {
                 DynamicIslandExpandedRegion(.center) {
                     Group {
                         if context.isStale {
-                            // ja: 今日死ぬとしたら、何をやりたいか
+                            // ja: 今日死ぬとしたら何をやりたいですか？
                             Text("If today were your last day, what would you want to do?")
                         } else {
                             Text(context.state.text)
@@ -53,7 +53,7 @@ struct TodayAnswerLockScreenView: View {
     var body: some View {
         VStack(spacing: 10) {
             if isStale {
-                // ja: 今日死ぬとしたら、何をやりたいか
+                // ja: 今日死ぬとしたら何をやりたいですか？
                 Text("If today were your last day, what would you want to do?")
                     .font(.system(size: 17, weight: .light))
                     .lineSpacing(6)
