@@ -75,7 +75,7 @@ struct QuestionPage: View {
     /// 問いの本文と英語サブラベル
     private var questionSection: some View {
         VStack(spacing: 14) {
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             Text("If today were your last day, what would you want to do?")
                 .font(.system(size: 27, weight: .light))
                 .tracking(1.35)

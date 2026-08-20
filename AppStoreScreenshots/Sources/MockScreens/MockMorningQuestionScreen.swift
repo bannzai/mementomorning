@@ -6,7 +6,7 @@ struct MockMorningQuestionScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 40) {
-                // ja: 今日死ぬとしたら、何をやりたいか
+                // ja: 今日死ぬとしたら何をやりたいですか？
                 Text("If today were your last day, what would you want to do?")
                     .font(.system(size: 27, weight: .light))
                     .lineSpacing(10)

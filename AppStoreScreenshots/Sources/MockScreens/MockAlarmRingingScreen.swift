@@ -30,7 +30,7 @@ struct MockAlarmRingingScreen: View {
 
             Spacer()
 
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             Text("If today were your last day, what would you want to do?")
                 .font(.system(size: 26, weight: .light))
                 .lineSpacing(10)

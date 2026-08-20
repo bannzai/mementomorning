@@ -55,7 +55,7 @@ struct TodayAnswerWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             Text("If today were your last day, what would you want to do?")
                 .font(.system(size: 11, weight: .regular))
                 .tracking(0.55)

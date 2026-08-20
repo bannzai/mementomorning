@@ -372,7 +372,7 @@ struct OnboardingPage: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // ja: 今日死ぬとしたら、何をやりたいか
+                // ja: 今日死ぬとしたら何をやりたいですか？
                 Text(String(localized: "If today were your last day, what would you want to do?"))
                     .font(.system(size: 27, weight: .light))
                     .lineSpacing(10)

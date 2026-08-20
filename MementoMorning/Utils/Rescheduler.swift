@@ -155,7 +155,7 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     for plan in planned.sorted(by: { $0.fireDate < $1.fireDate }).prefix(maxScheduledAlarmCount) {
         let alarmID = UUID()
         do {
-            // ja: 今日死ぬとしたら、何をやりたいか
+            // ja: 今日死ぬとしたら何をやりたいですか？
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
             try await AlarmKitManager.schedule(id: alarmID, fireDate: plan.fireDate, title: title)
         } catch {
