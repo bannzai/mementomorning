@@ -10340,10 +10340,214 @@
     },
     "Legal Notice (Specified Commercial Transaction Act)" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إشعار قانوني (قانون المعاملات التجارية المحددة)"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avís legal (Llei de transaccions comercials especificades)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Právní oznámení (zákon o specifikovaných obchodních transakcích)"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk meddelelse (lov om specificerede kommercielle transaktioner)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechtliche Hinweise (Gesetz über bestimmte Handelsgeschäfte)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νομική ενημέρωση (Νόμος περί καθορισμένων εμπορικών συναλλαγών)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal (Ley de Transacciones Comerciales Especificadas)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal (Ley de Transacciones Comerciales Específicas)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oikeudellinen ilmoitus (laki määritetyistä kaupallisista liiketoimista)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentions légales (Loi sur les transactions commerciales spécifiées)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הודעה משפטית (חוק העסקאות המסחריות המפורטות)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कानूनी सूचना (निर्दिष्ट वाणिज्यिक लेन-देन अधिनियम)"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pravna obavijest (Zakon o određenim trgovačkim transakcijama)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogi tájékoztató (a meghatározott kereskedelmi ügyletekről szóló törvény)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pemberitahuan Hukum (Undang-Undang Transaksi Komersial Tertentu)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note legali (Legge sulle transazioni commerciali specificate)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "特定商取引法に基づく表記"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "법적 고지 (특정상거래법)"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notis Undang-undang (Akta Transaksi Komersial Tertentu)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk merknad (lov om spesifiserte kommersielle transaksjoner)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridische kennisgeving (Wet inzake bepaalde commerciële transacties)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informacja prawna (ustawa o określonych transakcjach handlowych)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal (Lei sobre Transações Comerciais Especificadas)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal (Lei relativa às transações comerciais especificadas)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificare legală (Legea privind tranzacțiile comerciale specificate)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правовая информация (Закон об определённых коммерческих сделках)"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Právne oznámenie (zákon o špecifikovaných obchodných transakciách)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridiskt meddelande (lagen om specificerade kommersiella transaktioner)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประกาศทางกฎหมาย (กฎหมายว่าด้วยธุรกรรมทางการค้าเฉพาะ)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yasal bildirim (Belirli Ticari İşlemler Kanunu)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правова інформація (Закон про визначені комерційні транзакції)"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thông báo pháp lý (Luật Giao dịch Thương mại Cụ thể)"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "法律聲明（特定商業交易法）"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "法律声明（特定商业交易法）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "法律聲明（特定商業交易法）"
           }
         }
       }
