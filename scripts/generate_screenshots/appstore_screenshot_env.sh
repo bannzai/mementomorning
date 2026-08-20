@@ -86,13 +86,19 @@ map_language_to_fastlane() {
 # 1-6: ink (静かな世界観そのままの墨背景)
 # 7-12: washi (温白地に墨の太字見出し。ストア一覧での視認性重視)
 # 13-18: dawn (墨背景 + 夜明けグラデーション強め + 太字見出し)
-# 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当てる (19-24: 次のバリアント、...)
+# 19-24: kumo (明るい雲色の地 + 左揃え太字見出し + ブランドラベル。stoic. 型)
+# 25-30: kohaku (夜明け色のベタ地 + 墨の太字見出し。5 Minute Journal 型)
+# 31-36: bold (墨背景 + 極太・左揃え見出し。Alarmy 型)
+# 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当てる (37-42: 次のバリアント、...)
 get_variant_name() {
   local num=$1
   case $(( (num - 1) / 6 )) in
     0) echo "ink" ;;
     1) echo "washi" ;;
     2) echo "dawn" ;;
+    3) echo "kumo" ;;
+    4) echo "kohaku" ;;
+    5) echo "bold" ;;
     *) echo "unknown" ;;
   esac
 }

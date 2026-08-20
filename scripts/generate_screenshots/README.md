@@ -43,7 +43,9 @@ scripts/generate_screenshots/
 
 スクリーンショット番号とバリアントの対応は `appstore_screenshot_env.sh` の `get_variant_name` が SSOT。
 現状は 1〜6 が `ink` (静かな世界観そのままの墨背景)、7〜12 が `washi` (温白地に墨の太字見出し)、
-13〜18 が `dawn` (墨背景 + 夜明けグラデーション強め + 太字見出し) の 3 バリアント。
+13〜18 が `dawn` (墨背景 + 夜明けグラデーション強め + 太字見出し)、19〜24 が `kumo`
+(明るい雲色の地 + 左揃え太字見出し + ブランドラベル)、25〜30 が `kohaku` (夜明け色のベタ地 + 墨の太字見出し)、
+31〜36 が `bold` (墨背景 + 極太・左揃え見出し) の 6 バリアント。
 訴求軸のバリアントを追加する時は 6 枚単位で番号帯を割り当て、対応する
 `AppStoreScreenshots/Sources/Layouts/` のレイアウト・ページと
 `AppStoreScreenshotsUITests/Features/AppStoreScreenshot/` のテストを追加する。
