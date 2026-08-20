@@ -83,6 +83,7 @@ Xcode Cloud は既定で cloud signing (マネージド署名) を使う。初�
 |---|---|
 | アーカイブが「Release の REVENUECAT_API_KEY が App Store 用の実キー (appl_...) ではありません」で失敗する | Secret `REVENUECAT_API_KEY` が未登録、または値が `appl_` で始まっていない。「3. Secret の登録」をやり直す |
 | `ci_post_clone.sh` が実行されない | スクリプトの実行権限 (`chmod +x`) が落ちていないか、`ci_scripts/` がリポジトリルート (`.xcodeproj` と同じ階層) にあるかを確認する |
+| `ci_post_clone.sh` のログが「REVENUECAT_API_KEY が未設定のため …生成しません」 | Secret がビルド環境に渡っていない。環境変数の名前が正確に `REVENUECAT_API_KEY` (前後の空白なし) か、対象ワークフローの Environment に保存されているかを確認して再ビルドする (実例: 初回ビルド 2026-08-20 がこの状態で preBuild 検査により失敗した) |
 | scheme が選択肢に出ない | scheme が共有されているか確認する (`MementoMorning.xcodeproj/xcshareddata/xcschemes/MementoMorning.xcscheme`) |
 
 ## ローカルでの検証方法
