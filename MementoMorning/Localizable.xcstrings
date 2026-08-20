@@ -24679,10 +24679,214 @@
     },
     "Version" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإصدار"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versió"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verze"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκδοση"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "גרסה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संस्करण"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzija"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzió"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "バージョン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버전"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjon"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versiune"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verzia"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวอร์ชัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sürüm"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версія"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phiên bản"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
           }
         }
       }
