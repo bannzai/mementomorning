@@ -1,0 +1,24 @@
+Memento Morning är en väckarklocka som du stoppar genom att svara på en fråga varje morgon.
+
+Det finns bara en fråga.
+"Om i dag var din sista dag, vad skulle du vilja göra?"
+
+■ En morgonritual
+- Larmet ringer vid tiden du har valt
+- Svara på dagens fråga, så börjar din morgon
+- Tills du svarar fortsätter larmet att stilla kalla på dig
+
+■ En dagbok över ditt liv
+- Ett svar om dagen, som stilla samlas
+- Din livskalender fylls i, en morgon i taget
+- Den sjunde morgonen samlas dina sju svar för första gången på en enda sida
+
+■ En kvällskoll
+- På kvällen frågar vi bara en sak: "Höll du dagens svar?"
+- Dagarna det gick och dagarna det inte gick står kvar som de är
+
+■ Integritet
+- Dina svar sparas bara på din enhet. Inget skickas till någon server
+
+Inga konfetti, inga märken, inga brinnande sviter.
+Bara en stilla fråga och dina svar.

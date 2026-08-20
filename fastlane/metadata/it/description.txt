@@ -1,0 +1,24 @@
+Memento Morning è una sveglia che si ferma rispondendo ogni mattina a una domanda.
+
+C'è una sola domanda.
+«Se oggi fosse il tuo ultimo giorno, cosa vorresti fare?»
+
+■ Un rituale del mattino
+- La sveglia suona all'ora che hai impostato
+- Rispondi alla domanda di oggi e la tua mattina comincia
+- Finché non rispondi, la sveglia continua a richiamarti piano
+
+■ Un diario della tua vita
+- Una risposta al giorno, che si accumula in silenzio
+- Il tuo calendario della vita si riempie, un mattino alla volta
+- La settima mattina, le tue sette risposte si ritrovano per la prima volta su una sola pagina
+
+■ Un momento serale
+- La sera chiediamo solo una cosa: «Hai fatto oggi ciò che hai risposto stamattina?»
+- I giorni in cui ci sei riuscito e quelli in cui no restano così come sono
+
+■ Privacy
+- Le tue risposte restano solo sul tuo dispositivo. Nulla viene inviato a un server
+
+Niente coriandoli, niente badge, niente serie in fiamme.
+Solo una domanda silenziosa e le tue risposte.
