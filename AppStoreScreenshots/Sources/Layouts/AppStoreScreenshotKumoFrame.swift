@@ -1,8 +1,8 @@
 import SwiftUI
 
-/// 訴求軸 kumo (19〜24 枚目)。明るい雲色の地に、小さなブランドラベルと墨の太字見出しを
-/// 左揃えで置く editorial 構成。競合 stoic. の「明背景 × 左揃え太字見出し × ブランドラベル」型
-/// (2026-08-20 に iTunes API のスクリーンショットで実測) をデザイントークンで再現する。
+/// 訴求軸 kumo (19〜24 枚目)。明るい雲色の地に墨の太字見出しを左揃えで置く editorial 構成。
+/// 競合 stoic. の「明背景 × 左揃え太字見出し」型 (2026-08-20 に iTunes API のスクリーンショットで実測) を
+/// デザイントークンで再現する (ブランドラベルは PR #89 のフィードバックで不要と判断し置かない)。
 /// キャッチコピーは ink (1〜6 枚目) と同一にし、見せ方の差だけを比較できるようにする。
 /// スクリーンショット番号とバリアントの対応は scripts/generate_screenshots/appstore_screenshot_env.sh の get_variant_name が正
 
@@ -24,11 +24,6 @@ struct AppStoreScreenshotKumoLayout<Content: View>: View {
 
             VStack(spacing: 0) {
                 VStack(alignment: .leading, spacing: 14) {
-                    // ブランドラベル。ローカライズ対象外の固有名のため verbatim
-                    Text(verbatim: "MEMENTO MORNING")
-                        .font(.system(size: 13, weight: .semibold))
-                        .tracking(3)
-                        .foregroundStyle(Color.ink.opacity(0.45))
                     title
                         // 38pt + 横 padding 30 で 1 行あたり約 10 文字 (washi の実測に基づく組み合わせ) を保つ
                         .font(.system(size: 38, weight: .bold))
