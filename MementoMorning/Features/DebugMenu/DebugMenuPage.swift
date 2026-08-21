@@ -333,12 +333,31 @@ struct DebugMenuPage: View {
         }
         // reschedule (全キャンセル) と交錯すると登録直後のテストアラームが消され得るため、同じ直列キューで実行する
         await performSerializedAlarmOperation {
+            // 進行中の追撃列が残っていると新しいテストアラームと二列で鳴り、「テスト列は常に 1 本」が崩れるため、
+            // 旧追撃をキャンセルして保護記録も消す (発火済み・未登録 ID の cancel は失敗するだけで害がない)。
+            // 追撃カウントは無料枠の消費状況の確認に使うためここでは消さない (リセットは専用ボタンで行う)
+            if let chaseAlarmID = UserDefaults.standard.string(forKey: .stopIntentChaseAlarmID).flatMap(UUID.init(uuidString:)) {
+                try? AlarmKitManager.cancel(id: chaseAlarmID)
+            }
+            UserDefaults.standard.removeObject(forKey: .stopIntentChaseAlarmID)
+            UserDefaults.standard.removeObject(forKey: .stopIntentChaseFireDate)
+
             if let previousAlarmID = UserDefaults.standard.string(forKey: .debugChaseTestAlarmID).flatMap(UUID.init(uuidString:)) {
                 // 発火済み・reschedule で削除済みの ID のキャンセルは失敗するだけで害がないため無視する
                 try? AlarmKitManager.cancel(id: previousAlarmID)
                 if let previousScheduledAlarm = try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>()).first(where: { $0.id == previousAlarmID }) {
                     modelContext.delete(previousScheduledAlarm)
+                    do {
+                        // 削除はここで確定させる。未保存のまま新規登録に失敗すると、rollback で
+                        // 「キャンセル済みアラームの記録」が復活して実態とずれるため
+                        try modelContext.save()
+                    } catch {
+                        modelContext.rollback()
+                        chaseTestAlarmStatusText = "登録失敗 (旧テストアラームの記録を削除できない): \(error)"
+                        return
+                    }
                 }
+                UserDefaults.standard.removeObject(forKey: .debugChaseTestAlarmID)
             }
             let alarmID = UUID()
             let fireDate = Date.now.addingTimeInterval(debugChaseTestAlarmInterval)
@@ -351,17 +370,26 @@ struct DebugMenuPage: View {
                 UserDefaults.standard.set(alarmID.uuidString, forKey: .debugChaseTestAlarmID)
                 chaseTestAlarmStatusText = "登録済み (発火予定: \(fireDate.formatted(.iso8601)))"
             } catch {
-                // OS へ登録済みで記録だけ失敗しても、次回 reschedule の全キャンセルで回収されるため記録の変更だけ破棄する
                 modelContext.rollback()
+                // schedule() 成功後に save() だけ失敗すると、main 記録のない単発アラームが OS 側に残って
+                // 発火記録も追撃も動かないため、補償として新 ID をキャンセルする (未登録 ID の cancel は無害)
+                try? AlarmKitManager.cancel(id: alarmID)
                 chaseTestAlarmStatusText = "登録失敗: \(error)"
             }
         }
     }
 
-    /// 回答件数と今日の回答の表示を最新化する
+    /// 回答件数と今日の回答の表示を最新化する。
+    /// テストアラームの状態は、画面の再生成で @State が初期値に戻った時だけ永続記録 (debugChaseTestAlarmID) から復元する
+    /// (「登録失敗: ...」などの直近の操作結果は上書きしない)
     private func refreshAnswerStates() {
         morningAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         answer = fetchMorningAnswer(answeredDate: .now, modelContext: modelContext)
+        if chaseTestAlarmStatusText == "未登録",
+           let testAlarmID = UserDefaults.standard.string(forKey: .debugChaseTestAlarmID).flatMap(UUID.init(uuidString:)),
+           let scheduledAlarm = (try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>()))?.first(where: { $0.id == testAlarmID }) {
+            chaseTestAlarmStatusText = "\(scheduledAlarm.fireDate > .now ? "登録済み" : "発火済み") (発火予定: \(scheduledAlarm.fireDate.formatted(.iso8601)))"
+        }
     }
 
     /// 全回答を削除する (空の状態からやり直すためのデバッグ操作。空なら何もせず冪等)
