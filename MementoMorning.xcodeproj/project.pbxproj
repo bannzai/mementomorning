@@ -41,6 +41,8 @@
 		02F294E6F6C210AD1CFC19E0 /* AppStoreScreenshot5PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FD4E3DA4EFBE615E7CC7B /* AppStoreScreenshot5PageSnapshotUITest.swift */; };
 		07108F5661BFA7443756CA95 /* AppStoreScreenshotDawnFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */; };
 		080C509808EF0C4BA09D9C2F /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
+		2A1B7C4E9D3F60518A2C4B71 /* NightReminderSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */; };
+		2A1B7C4E9D3F60518A2C4B72 /* NightReminderSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */; };
 		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
 		0ECC3C0A25AA0B957B3CDF66 /* MorningQuestionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */; };
 		0FC3999F518B1E269B2888B7 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94CCB0BC323D020B94C795 /* Languages.swift */; };
@@ -289,6 +291,7 @@
 		4913283C795D7449EFB9586E /* DebugVideoAnswerFixture_en.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = DebugVideoAnswerFixture_en.mov; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
+		2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReminderSetting.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
 		5011A376181D3A8D00B8B0C4 /* LegalLinksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalLinksTests.swift; sourceTree = "<group>"; };
 		519682F7B11E3808988FEB3B /* AppStoreScreenshot7PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot7PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -479,6 +482,7 @@
 			children = (
 				ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */,
 				4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */,
+				2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */,
 				9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */,
 				FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */,
 			);
@@ -1258,6 +1262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1B7C4E9D3F60518A2C4B72 /* NightReminderSetting.swift in Sources */,
 				7FA67F319DC050731C8ACD5A /* AlarmLiveActivityWidget.swift in Sources */,
 				C1D0D47578C5998A3050C0CE /* AlarmSetting.swift in Sources */,
 				A668B97B6D507E7495624D52 /* DesignSystem.swift in Sources */,
@@ -1329,6 +1334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1B7C4E9D3F60518A2C4B71 /* NightReminderSetting.swift in Sources */,
 				8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */,
 				2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */,
 				E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */,

@@ -9,6 +9,8 @@ struct AlarmSettingPage: View {
     @Environment(\.dismiss) private var dismiss
     /// 保存済みのアラーム設定。単一レコード運用のため先頭 1 件のみ使う
     @Query private var alarmSettings: [AlarmSetting]
+    /// 保存済みの夜リマインド設定。画面上の並び順は登録順で、先頭が無料枠で有効になる 1 本目
+    @Query(sort: \NightReminderSetting.createdDateTime) private var nightReminderSettings: [NightReminderSetting]
     /// DatePicker 入力用。保存時に hour/minute へ分解する
     @State private var time: Date = .now
     /// アラームの有効フラグ
@@ -16,6 +18,9 @@ struct AlarmSettingPage: View {
     /// スヌーズ (追撃アラーム) の上限回数の選択値。nil は無制限。
     /// 初期値は無料枠 freeTierSnoozeLimit で、保存済み設定があれば onAppear で effectiveSnoozeLimit に置き換える
     @State private var snoozeLimit: Int? = freeTierSnoozeLimit
+    /// 夜リマインドの時刻の DatePicker 入力用。保存時に hour/minute へ分解する。
+    /// 初期値は空で、onAppear で保存済み設定の実効値 (未設定なら既定の 21:00 の 1 本) に置き換える
+    @State private var nightReminderTimes: [Date] = []
     /// 保存に失敗した場合のエラー。nil 以外でアラート表示する
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
@@ -64,16 +69,59 @@ struct AlarmSettingPage: View {
                 snoozeLimit = oldValue
                 isPaywallPresented = true
             }
-            // 夜リマインドがいつ届くかを可視化する (issue #44)。時刻の SSOT は NightReminder の固定値 (カスタマイズはプレミアム機能で未実装)
-            LabeledContent {
-                Text(nightReminderTime, format: .dateTime.hour().minute())
-            } label: {
+            // 夜リマインドの時刻 (issue #44 の可視化から issue #94 で編集可能にした)。
+            // 1 本目の時刻変更は無料、2・3 本目の追加はプレミアム限定で、追加を試すとペイウォールへ誘導する (課金設計は documents/PROJECT.md)
+            Section {
+                ForEach(nightReminderTimes.indices, id: \.self) { index in
+                    HStack {
+                        // ja: リマインド %lld
+                        DatePicker(
+                            String(localized: "Reminder \(index + 1)"),
+                            selection: $nightReminderTimes[index],
+                            displayedComponents: .hourAndMinute
+                        )
+                        // 1 本目は常に残す (夜リマインドを 0 本にはできない)
+                        if index > 0 {
+                            Button(role: .destructive) {
+                                nightReminderTimes.remove(at: index)
+                            } label: {
+                                // ja: リマインドを削除
+                                Label(String(localized: "Delete reminder"), systemImage: "minus.circle")
+                                    .labelStyle(.iconOnly)
+                            }
+                            // Form の行に置いたボタンは、既定では行全体のタップで反応してしまうためボタン自身の領域だけに限定する
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("alarm_setting_night_reminder_delete_button_\(index)")
+                        }
+                    }
+                    .accessibilityIdentifier("alarm_setting_night_reminder_row_\(index)")
+                }
+                if nightReminderTimes.count < maxNightReminderCount {
+                    Button {
+                        guard isNightReminderSelectable(index: nightReminderTimes.count, isPremium: PremiumEntitlement.isPremium) else {
+                            // 無料で追加できない本数はペイウォールへ誘導する (スヌーズ回数の選択肢と同じ導線)
+                            isPaywallPresented = true
+                            return
+                        }
+                        nightReminderTimes.append(addedNightReminderTime)
+                    } label: {
+                        Label {
+                            // ja: リマインドを追加
+                            Text("Add reminder")
+                        } icon: {
+                            // 現在の課金状態で追加できない本数には錠前を付け、プレミアム限定であることを押す前に示す
+                            Image(systemName: isNightReminderSelectable(index: nightReminderTimes.count, isPremium: PremiumEntitlement.isPremium) ? "plus" : "lock")
+                        }
+                    }
+                    .accessibilityIdentifier("alarm_setting_night_reminder_add_button")
+                }
+            } header: {
                 // ja: 夜のリマインド
                 Text("Night reminder")
+            } footer: {
                 // ja: 今朝の回答と答え合わせしましょう
                 Text("Check tonight against this morning's answer.")
             }
-            .accessibilityIdentifier("alarm_setting_night_reminder_row")
             // 利用規約・プライバシーポリシー・特商法表記・問い合わせへの導線とバージョン表示 (issue #83)。
             // 課金アプリは審査で特商法表記の到達性を見られるため、設定画面から必ず辿れるようにする
             Section {
@@ -148,6 +196,12 @@ struct AlarmSettingPage: View {
             Text(saveError ?? "")
         }
         .onAppear {
+            // スヌーズ回数と同じく、表示するのは現在の課金状態での実効値 (無料なら 1 本目だけ)。
+            // 保存済みが 0 件の時は既定の 21:00 の 1 本になる
+            nightReminderTimes = effectiveNightReminderTimes(
+                times: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
+                isPremium: PremiumEntitlement.isPremium
+            ).map { nightReminderDate(time: $0) }
             guard let alarmSetting = alarmSettings.first else { return }
             var components = Calendar.autoupdatingCurrent.dateComponents([.year, .month, .day], from: .now)
             components.hour = alarmSetting.hour
@@ -191,14 +245,29 @@ struct AlarmSettingPage: View {
         }
     }
 
-    /// 夜リマインドの通知時刻の表示用 Date (端末のロケールで時刻表記するために Date へ変換する)
-    private var nightReminderTime: Date {
+    /// 夜リマインドの通知時刻を DatePicker が扱う Date へ変換する (時・分だけを today の日付に載せる)
+    private func nightReminderDate(time: DateComponents) -> Date {
         Calendar.autoupdatingCurrent.date(
-            bySettingHour: NightReminder.hour,
-            minute: NightReminder.minute,
+            bySettingHour: time.hour ?? defaultNightReminderHour,
+            minute: time.minute ?? defaultNightReminderMinute,
             second: 0,
             of: .now
         ) ?? .now
+    }
+
+    /// DatePicker の Date から夜リマインドの通知時刻 (時・分) を取り出す
+    private func nightReminderTime(date: Date) -> DateComponents {
+        let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: date)
+        return DateComponents(hour: components.hour ?? 0, minute: components.minute ?? 0)
+    }
+
+    /// 「リマインドを追加」で足す時刻。
+    /// 最後のリマインドの 1 時間後にするのは、同じ時刻を重複登録すると識別子が衝突して通知が 1 本に潰れるため
+    private var addedNightReminderTime: Date {
+        guard let lastTime = nightReminderTimes.last else {
+            return nightReminderDate(time: DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute))
+        }
+        return Calendar.autoupdatingCurrent.date(byAdding: .hour, value: 1, to: lastTime) ?? lastTime
     }
 
     /// 入力内容を保存して再スケジュールする
@@ -219,6 +288,7 @@ struct AlarmSettingPage: View {
         } else {
             modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit))
         }
+        saveNightReminderSettings()
         do {
             try modelContext.save()
         } catch {
@@ -231,6 +301,9 @@ struct AlarmSettingPage: View {
         }
         Task {
             await reschedule(modelContext: modelContext)
+            // 夜リマインドは scenePhase の変化 (バックグラウンド遷移・foreground 復帰) でしか登録し直されないため、
+            // この画面で変更した時刻がその場で反映されるようここでも登録し直す
+            await rescheduleNightReminder(modelContext: modelContext)
             // dismiss 後は lastRescheduleError の表示先 (この画面) が無くなるため、
             // 再スケジュールの完了を待ってから、失敗時は画面を閉じずにエラーを表示する
             if let error = UserDefaults.standard.string(forKey: .lastRescheduleError) {
@@ -239,6 +312,34 @@ struct AlarmSettingPage: View {
             } else {
                 dismiss()
             }
+        }
+    }
+
+    /// 画面上の夜リマインドの時刻を保存済み設定へ反映する (登録順に更新し、増えた分は追加、減った分は削除する)。
+    /// 呼び出し側 (save) がまとめて modelContext.save() するため、この関数自身は保存しない
+    private func saveNightReminderSettings() {
+        let isPremium = PremiumEntitlement.isPremium
+        let times = nightReminderTimes.map { nightReminderTime(date: $0) }
+        // 画面には課金状態での実効値を表示しているため、ユーザーが変更していない時は保存済みの設定を上書きしない
+        // (プレミアム失効中に 1 本目の時刻だけ変えても、以前追加した 2・3 本目が消えず、再購読後に戻る。PR #78 レビュー指摘)
+        guard times != effectiveNightReminderTimes(
+            times: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
+            isPremium: isPremium
+        ) else {
+            return
+        }
+        for (index, time) in times.enumerated() {
+            if index < nightReminderSettings.count {
+                nightReminderSettings[index].setTime(hour: time.hour ?? 0, minute: time.minute ?? 0)
+            } else {
+                modelContext.insert(NightReminderSetting(hour: time.hour ?? 0, minute: time.minute ?? 0))
+            }
+        }
+        // 削除の対象は画面に表示していた分だけにする。無料で隠れている 2・3 本目 (プレミアム失効中に残った設定) は、
+        // ユーザーが消したわけではないため残す
+        let shownCount = min(nightReminderSettings.count, isPremium ? maxNightReminderCount : freeTierNightReminderCount)
+        for setting in nightReminderSettings[min(times.count, shownCount)..<shownCount] {
+            modelContext.delete(setting)
         }
     }
 }

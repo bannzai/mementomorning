@@ -2205,6 +2205,16 @@
         }
       }
     },
+    "Add reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを追加"
+          }
+        }
+      }
+    },
     "Alarm" : {
       "localizations" : {
         "ar" : {
@@ -6909,6 +6919,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無法載入影片。請檢查網路連線後再試。"
+          }
+        }
+      }
+    },
+    "Delete reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを削除"
           }
         }
       }
@@ -15938,6 +15958,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "記住死亡。\n然後開始你的早晨。"
+          }
+        }
+      }
+    },
+    "Reminder %lld" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインド %lld"
           }
         }
       }

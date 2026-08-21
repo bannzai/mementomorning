@@ -70,7 +70,10 @@ struct MementoMorningApp: App {
                         // オンボーディング未完了の間は、通知の認可リクエストをオンボーディングの許可ステップに委ねるため夜リマインドを登録しない
                         // (起動直後にダイアログを出さない。完了直後の登録は RootView 側の task が行う)
                         guard UserDefaults.standard.bool(forKey: .hasCompletedOnboarding) else { return }
-                        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: answerText)
+                        await NightReminder.requestAuthorizationAndSchedule(
+                            times: scheduledNightReminderTimes(modelContext: PersistenceController.shared.container.mainContext),
+                            todayAnswerText: answerText
+                        )
                     } catch {
                         // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
                         print("[MementoMorningApp] failed to fetch today's answer: \(error)")
@@ -97,12 +100,7 @@ struct MementoMorningApp: App {
             backgroundTaskIdentifier = .invalid
         }
         Task {
-            do {
-                await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: try todayAnswerText())
-            } catch {
-                // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
-                print("[MementoMorningApp] failed to fetch today's answer: \(error)")
-            }
+            await rescheduleNightReminder(modelContext: PersistenceController.shared.container.mainContext)
             // 期限切れの expirationHandler が先に終了させている場合があるため、二重に終了させないよう .invalid を見てから終了する
             guard backgroundTaskIdentifier != .invalid else { return }
             UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
@@ -164,18 +162,7 @@ private struct RootView: View {
                         if isUnitTest { return }
                         // オンボーディング完了直後は scenePhase が変化せず MementoMorningApp 側の再登録が走らないため、ここで登録する。
                         // 許可ステップで認可済み (または拒否済み) のため、ダイアログなしで夜リマインドの登録だけが走る
-                        do {
-                            await NightReminder.requestAuthorizationAndSchedule(
-                                todayAnswerText: try MorningAnswer.answer(
-                                    day: .now,
-                                    calendar: .current,
-                                    modelContext: PersistenceController.shared.container.mainContext
-                                )?.text
-                            )
-                        } catch {
-                            // 回答の取得に失敗した時は、登録済みのパーソナライズ通知を汎用文言で上書きしないよう再登録しない。次の scenePhase の変化で再試行される
-                            print("[RootView] failed to fetch today's answer: \(error)")
-                        }
+                        await rescheduleNightReminder(modelContext: PersistenceController.shared.container.mainContext)
                     }
             } else {
                 OnboardingPage()
