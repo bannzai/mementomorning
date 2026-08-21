@@ -65,15 +65,32 @@ bash demo-video/scripts/enhance-morning-question.sh
 maestro --device $DEVICE_UDID test demo-video/flows/prep/alarm.yaml
 bash $SKILL/record-scene.sh demo-video/config.json alarm
 
-# ナレーション (Gemini TTS。要 GEMINI_API_KEY) と BGM のミックスを生成する
-bash demo-video/scripts/generate-narration.sh
+# 訴求カット (黒背景テキストカード) のクリップを生成する (Maestro 収録ではなく ffmpeg 生成。
+# flows/why-*.yaml は validate-config.sh を通すためのプレースホルダで record-scene.sh 不要)
+bash demo-video/scripts/generate-appeal-cards.sh
 
-# 合成と機械検証
+# ナレーション (Gemini TTS。要 GEMINI_API_KEY) と BGM のミックスを生成し、合成・機械検証する。
+# ミックスの出力先は config によらず共通のため、必ず config ごとに「ナレーション → 合成」の順で実行する
+bash demo-video/scripts/generate-narration.sh demo-video/config.json
 bash $SKILL/compose-video.sh demo-video/config.json
 bash $SKILL/verify-output.sh demo-video/config.json
 ```
 
-出力: `demo-video/output/memento-morning-demo.mp4` (gitignore 対象。動画バイナリはコミットしない)
+出力: `demo-video/output/memento-morning-demo-founder.mp4` (gitignore 対象。動画バイナリはコミットしない)
+
+## 訴求文言のバリアント
+
+冒頭の訴求カット (フック) の文言違いを比較するため、config が 3 つある。差分はフックシーンの
+カード文言・ナレーションと出力ファイル名のみ (実名を出すかは App Store 審査・パブリシティ権の
+リスク判断が絡むため、documents/PROJECT.md の決定と合わせて選ぶ):
+
+| config | フック | 出力 |
+| --- | --- | --- |
+| `config.json` | ぼかし表現 (A famous founder) | `memento-morning-demo-founder.mp4` |
+| `config.variant-jobs.json` | 実名 (Steve Jobs) | `memento-morning-demo-jobs.mp4` |
+| `config.variant-no-person.json` | 人物に触れない (目覚め方の効用) | `memento-morning-demo-no-person.mp4` |
+
+バリアントを作る時は config を差し替えて「generate-narration.sh → compose-video.sh → verify-output.sh」を繰り返す。
 
 ## アセット
 

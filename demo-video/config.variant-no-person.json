@@ -1,7 +1,7 @@
 {
   "profile": "demo-portrait",
   "output_dir": "output",
-  "output_name": "memento-morning-demo-founder.mp4",
+  "output_name": "memento-morning-demo-no-person.mp4",
   "bgm": {
     "file": "output/narration/bgm-mix.m4a",
     "volume": 1.0
@@ -14,9 +14,9 @@
   },
   "scenes": [
     {
-      "id": "why-founder",
-      "flow": "flows/why-founder.yaml",
-      "narration": "A famous founder asked himself one question, every morning.",
+      "id": "why-no-person",
+      "flow": "flows/why-no-person.yaml",
+      "narration": "How you wake up decides how you live the day.",
       "target_duration": 6,
       "trim_start": 0
     },
