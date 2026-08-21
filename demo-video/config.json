@@ -2,6 +2,10 @@
   "profile": "demo-portrait",
   "output_dir": "output",
   "output_name": "memento-morning-demo.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
   "title_card": {
     "text": "Memento Morning",
     "subtext": "Remember death. Then begin your morning.",
@@ -20,7 +24,7 @@
       "id": "morning-question",
       "flow": "flows/morning-question.yaml",
       "subtitle": "Recording your answer is the only way to stop it.",
-      "target_duration": 16.5,
+      "target_duration": 12.3,
       "trim_start": 3.6
     },
     {

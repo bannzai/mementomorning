@@ -57,12 +57,15 @@ bash $SKILL/record-scene.sh demo-video/config.json night-reflection
 
 maestro --device $DEVICE_UDID test demo-video/flows/prep/morning-question.yaml
 bash $SKILL/record-scene.sh demo-video/config.json morning-question
-# 録画後にクリップを演出加工する (人物セルフィーの合成・保存リトライ表示のカット・回答テキストの赤下線。
+# 録画後にクリップを演出加工する (人物セルフィーの口パク合成・保存リトライ表示のカット。
 # 詳細と実測値の測り直し方はスクリプトのヘッダーコメントを参照)
 bash demo-video/scripts/enhance-morning-question.sh
 
 maestro --device $DEVICE_UDID test demo-video/flows/prep/alarm.yaml
 bash $SKILL/record-scene.sh demo-video/config.json alarm
+
+# ナレーション (Gemini TTS。要 GEMINI_API_KEY) と BGM のミックスを生成する
+bash demo-video/scripts/generate-narration.sh
 
 # 合成と機械検証
 bash $SKILL/compose-video.sh demo-video/config.json
@@ -70,6 +73,14 @@ bash $SKILL/verify-output.sh demo-video/config.json
 ```
 
 出力: `demo-video/output/memento-morning-demo.mp4` (gitignore 対象。動画バイナリはコミットしない)
+
+## アセット
+
+- `assets/selfie.png` / `assets/selfie-talk-{1,2,3}.png`: Nano Banana Pro (gemini-3-pro-image-preview) で
+  生成した寝起きセルフィー。talk 系は selfie.png を入力にした image-to-image で口の開きだけ変えたもので、
+  enhance-morning-question.sh が切り替えて口パクにする
+- `assets/bgm.m4a`: Erik Satie - Gymnopédie No.1 (Robin Alciatore 演奏、パブリックドメイン、帰属表記不要)。
+  出典: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg
 
 ## 注意 (シミュレータで撮れないもの)
 
