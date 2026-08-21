@@ -42,18 +42,26 @@ for candidate in \
 done
 [[ -n "$FONT" ]] || { echo "ERROR: drawtext 用フォントが見つかりません" >&2; exit 1; }
 
-# id|1 行目|2 行目
-CARDS='why-founder|A famous founder asked himself|one question, every morning.
-why-jobs|Steve Jobs asked himself|one question, every morning.
-why-no-person|How you wake|decides how you live the day.
-why-value|Wake to a goal.|A reason to rise, not to snooze.'
+# フックカードに載せる肖像イラスト (assets/founder-portrait.png)。実写・実名画像ではなく
+# Nano Banana Pro で生成した線画で「わかる程度」に留める (採用判断の経緯は PR #95 コメント参照)
+PORTRAIT=demo-video/assets/founder-portrait.png
+
+# id|1 行目|2 行目|肖像を載せるか (portrait / 空)
+CARDS='why-founder|A famous founder asked himself|one question, every morning.|portrait
+why-jobs|Steve Jobs asked himself|one question, every morning.|portrait
+why-no-person|How you wake|decides how you live the day.|
+why-value|Wake to a goal.|A reason to rise, not to snooze.|'
 
 # タイトルカード (compose-video.sh の card-main/card-sub) と同じ見た目に寄せる:
 # 黒背景に白文字・中央寄せ。drawtext の複数行は左寄せになるため 1 行ずつ中央に描く。
 # fontsize は最長行が画面幅 92% に収まるように縮小する (compose-video.sh の
 # ラテン文字係数 62% と同じ近似。カード文言は英語のみの前提)
-while IFS='|' read -r id line1 line2; do
+while IFS='|' read -r id line1 line2 with_portrait; do
     [[ -n "$id" ]] || continue
+    if [[ "$with_portrait" == "portrait" && ! -f "$PORTRAIT" ]]; then
+        echo "ERROR: $PORTRAIT がありません" >&2
+        exit 1
+    fi
 
     max_chars=0
     for line in "$line1" "$line2"; do
@@ -66,8 +74,15 @@ while IFS='|' read -r id line1 line2; do
         fontsize=$((max_width * 100 / (max_chars * 62)))
     fi
 
-    y1="(h-text_h)/2-${fontsize}"
-    y2="(h-text_h)/2+${fontsize}"
+    # 肖像ありのカードは肖像を上寄せ中央に置き、テキストをその下に配置する。
+    # 肖像なしのカードは従来どおりテキストを画面中央に置く
+    if [[ "$with_portrait" == "portrait" ]]; then
+        y1="1280-${fontsize}"
+        y2="1280+${fontsize}"
+    else
+        y1="(h-text_h)/2-${fontsize}"
+        y2="(h-text_h)/2+${fontsize}"
+    fi
     mkdir -p demo-video/output/work
     t1=demo-video/output/work/appeal-$id-1.txt
     t2=demo-video/output/work/appeal-$id-2.txt
@@ -77,12 +92,23 @@ while IFS='|' read -r id line1 line2; do
     draw="drawtext=fontfile='$FONT':textfile='$t1':expansion=none:fontsize=$fontsize:fontcolor=white:x=(w-text_w)/2:y=$y1"
     draw="$draw,drawtext=fontfile='$FONT':textfile='$t2':expansion=none:fontsize=$fontsize:fontcolor=white:x=(w-text_w)/2:y=$y2"
 
-    echo "--- カード生成: $id (fontsize=$fontsize)"
-    ffmpeg -y -v error \
-        -f lavfi -i "color=c=black:s=${WIDTH}x${HEIGHT}:d=${DURATION}:r=${FPS}" \
-        -vf "$draw" \
-        -c:v libx264 -pix_fmt yuv420p -an \
-        "$CLIP_DIR/$id.mp4"
+    echo "--- カード生成: $id (fontsize=$fontsize${with_portrait:+, portrait})"
+    if [[ "$with_portrait" == "portrait" ]]; then
+        # colorlevels は肖像画像の背景 (実測 RGB 約 21/255 ≒ 0.08) をカードの純黒に潰し、
+        # 画像の矩形の縁が見えないようにするため
+        ffmpeg -y -v error \
+            -f lavfi -i "color=c=black:s=${WIDTH}x${HEIGHT}:d=${DURATION}:r=${FPS}" \
+            -i "$PORTRAIT" \
+            -filter_complex "[1:v]scale=640:-1,colorlevels=rimin=0.12:gimin=0.12:bimin=0.12[p];[0:v][p]overlay=x=(W-w)/2:y=330[bg];[bg]$draw" \
+            -c:v libx264 -pix_fmt yuv420p -an \
+            "$CLIP_DIR/$id.mp4"
+    else
+        ffmpeg -y -v error \
+            -f lavfi -i "color=c=black:s=${WIDTH}x${HEIGHT}:d=${DURATION}:r=${FPS}" \
+            -vf "$draw" \
+            -c:v libx264 -pix_fmt yuv420p -an \
+            "$CLIP_DIR/$id.mp4"
+    fi
 done <<<"$CARDS"
 
 echo "--- 生成完了: $CLIP_DIR/why-*.mp4"

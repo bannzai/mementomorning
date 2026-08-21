@@ -97,6 +97,9 @@ bash $SKILL/verify-output.sh demo-video/config.json
 - `assets/selfie.png` / `assets/selfie-talk-{1,2,3}.png`: Nano Banana Pro (gemini-3-pro-image-preview) で
   生成した寝起きセルフィー。talk 系は selfie.png を入力にした image-to-image で口の開きだけ変えたもので、
   enhance-morning-question.sh が切り替えて口パクにする
+- `assets/founder-portrait.png`: Nano Banana Pro (gemini-3-pro-image-preview) で生成した創業者の
+  線画イラスト (黒背景・白線画)。フックカード (why-founder / why-jobs) に載せる。実写・報道写真は
+  使わない (肖像の権利リスクを生成イラストに留める判断。経緯は PR #95 のフィードバック第 4 弾コメント)
 - `assets/bgm.m4a`: Erik Satie - Gymnopédie No.1 (Robin Alciatore 演奏、パブリックドメイン、帰属表記不要)。
   出典: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg
 
