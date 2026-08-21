@@ -16,6 +16,10 @@ appId: com.bannzai.MementoMorning
       - tapOn: "Not now"
 - tapOn:
     id: "debug_menu_link"
+# サンプル投入は「回答が 1 件でもあれば何もしない」冪等仕様のため、
+# 再実行時に中途半端な回答が残っていても必ず 10 件の状態になるよう、先に全回答を削除して正規化する
+- tapOn:
+    id: "debug_delete_all_answers"
 - tapOn:
     id: "debug_seed_sample_answers"
 # 回答が 7 件を超えると七つの朝の節目 sheet が即座に被さるため、出ていたら下スワイプで閉じる

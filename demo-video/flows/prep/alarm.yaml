@@ -52,5 +52,16 @@ appId: com.bannzai.MementoMorning
     direction: DOWN
 - tapOn:
     id: "debug_set_alarm_seven_am"
+# 設定は非同期 Task (保存 + AlarmKit 再スケジュール) のため、完了を待ってから再起動する
+# (待たずに stopApp すると 7:00 の設定が保存される前にプロセスが止まり得る)
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 5000
+    optional: true
+    label: "setAlarm の保存と再スケジュールを 5 秒待つ"
 - launchApp:
     stopApp: true
+# 再起動後のホームで 7:00 の設定が永続化されていることを確認する
+- extendedWaitUntil:
+    visible: "7:00"
+    timeout: 15000

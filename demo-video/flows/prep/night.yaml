@@ -25,3 +25,8 @@ appId: com.bannzai.MementoMorning
     direction: DOWN
 - tapOn:
     id: "debug_schedule_night_reminder_test"
+# 登録は非同期 Task のため、完了表示を待ってから終了する
+# (待たずに次の flow の launchApp (stopApp) でプロセスが止まると、テスト通知が未登録のままになる)
+- extendedWaitUntil:
+    visible: "検証用夜リマインド: 登録済み"
+    timeout: 10000

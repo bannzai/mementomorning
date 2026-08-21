@@ -22,6 +22,9 @@ struct DebugMenuPage: View {
 
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
+    /// 検証用の夜リマインド (debug-night-reminder) が保留中かどうか。
+    /// 登録の非同期 Task の完了を E2E が画面表示で待てるようにする
+    @State private var isTestNightReminderScheduled = false
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
     @State private var answer: MorningAnswer?
 
@@ -93,12 +96,18 @@ struct DebugMenuPage: View {
                 Button {
                     Task {
                         await scheduleNightReminderForTest()
+                        await refreshTestNightReminderState()
                         refreshAnswerStates()
                     }
                 } label: {
                     Text(verbatim: "夜リマインドを 1 分後に登録")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+
+                // 登録は非同期 Task のため、E2E (Maestro) はこの表示が「登録済み」へ変わるのを待ってから
+                // アプリを再起動する (完了前に stopApp するとテスト通知が登録されないままになる)
+                Text(verbatim: "検証用夜リマインド: \(isTestNightReminderScheduled ? "登録済み" : "なし")")
+                    .accessibilityIdentifier("debug_night_reminder_test_state")
 
                 Button {
                     // 通知タップと同じ経路 (NotificationRouter) で夜の振り返りを開く。
@@ -127,6 +136,12 @@ struct DebugMenuPage: View {
                     Text(verbatim: "アラームを 2 分後に設定")
                 }
                 .accessibilityIdentifier("debug_set_alarm_in_two_minutes")
+
+                // 回答済みの日は planAlarms が計画から除外するため、今日回答済みだと 2 分後に設定しても当日は鳴らない。
+                // ボタンの前提条件として明示する (発火確認は「全回答を削除」→ 本ボタンの順で行う)
+                Text(verbatim: "2 分後の発火確認は今日未回答が前提 (回答済みの日は鳴らない)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             } header: {
                 Text(verbatim: "アラーム設定 (issue #94)")
             }
@@ -225,7 +240,15 @@ struct DebugMenuPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             refreshAnswerStates()
+            Task { await refreshTestNightReminderState() }
         }
+    }
+
+    /// 検証用の夜リマインドが保留中かを問い合わせて表示を最新化する
+    private func refreshTestNightReminderState() async {
+        isTestNightReminderScheduled = await UNUserNotificationCenter.current()
+            .pendingNotificationRequests()
+            .contains { $0.identifier == Self.testRequestIdentifier }
     }
 
     /// 今日の回答の有無と夜の振り返りの記録状態を表す表示用の文字列
