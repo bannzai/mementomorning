@@ -3,8 +3,10 @@ set -euo pipefail
 
 # デモ動画のナレーション (TTS) を生成し、BGM と 1 本にミックスする (issue #94 のデモ動画レビュー対応)。
 #
-# 1. config.json の title_card と各シーンの字幕文を Gemini TTS (gemini-2.5-flash-preview-tts) で
-#    読み上げ音声にする。Gemini API が使えない場合は macOS say (英語ボイス) にフォールバックする
+# 1. config.json の title_card と各シーンの読み上げ文を Gemini TTS (gemini-2.5-flash-preview-tts) で
+#    読み上げ音声にする。読み上げ文はシーンの narration があればそれ、無ければ subtitle
+#    (字幕より詳しく語りたいシーンだけ narration を書く)。Gemini API が使えない場合は
+#    macOS say (英語ボイス) にフォールバックする
 # 2. 各ナレーションを動画タイムライン上のシーン開始 + 0.3s の位置に配置し、
 #    BGM (assets/bgm.m4a: Erik Satie - Gymnopedie No.1、Robin Alciatore 演奏、パブリックドメイン。
 #    出典 https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg )
@@ -44,6 +46,8 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 # --- 1 文を TTS して wav にする。Gemini 失敗時は say にフォールバック ---
+# Gemini は一時エラー (レート制限等) があるため 3 回まで再試行する。1 行だけ say に落ちると
+# 声が混ざって不自然になるので、フォールバックは再試行が尽きた時の最終手段
 tts_line() {
     local text="$1" wav="$2"
     if [[ -n "${GEMINI_API_KEY:-}" ]]; then
@@ -55,16 +59,20 @@ tts_line() {
                 speechConfig: {voiceConfig: {prebuiltVoiceConfig: {voiceName: $v}}}
             }
         }' >"$req"
-        if curl -sS -X POST \
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent" \
-            -H "x-goog-api-key: $GEMINI_API_KEY" -H "Content-Type: application/json" \
-            -d @"$req" >"$res" \
-            && [[ "$(jq -r '.candidates[0].content.parts[0].inlineData.data // ""' "$res")" != "" ]]; then
-            jq -r '.candidates[0].content.parts[0].inlineData.data' "$res" | base64 -d >"$OUT_DIR/line.pcm"
-            ffmpeg -y -v error -f s16le -ar 24000 -ac 1 -i "$OUT_DIR/line.pcm" "$wav"
-            return 0
-        fi
-        echo "警告: Gemini TTS に失敗したため say にフォールバックします: $text" >&2
+        local api_attempt
+        for api_attempt in 1 2 3; do
+            if curl -sS -X POST \
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent" \
+                -H "x-goog-api-key: $GEMINI_API_KEY" -H "Content-Type: application/json" \
+                -d @"$req" >"$res" \
+                && [[ "$(jq -r '.candidates[0].content.parts[0].inlineData.data // ""' "$res")" != "" ]]; then
+                jq -r '.candidates[0].content.parts[0].inlineData.data' "$res" | base64 -d >"$OUT_DIR/line.pcm"
+                ffmpeg -y -v error -f s16le -ar 24000 -ac 1 -i "$OUT_DIR/line.pcm" "$wav"
+                return 0
+            fi
+            [[ "$api_attempt" -lt 3 ]] && sleep 2
+        done
+        echo "警告: Gemini TTS に 3 回失敗したため say にフォールバックします: $text" >&2
         [[ -f "$res" ]] && jq -r '.error.message // empty' "$res" >&2
     fi
     command -v say >/dev/null || { echo "ERROR: GEMINI_API_KEY も say も使えません" >&2; exit 1; }
@@ -87,11 +95,11 @@ fi
 OFFSET="$TITLE_DURATION"
 SCENE_COUNT=$(jq -r '.scenes | length' "$CONFIG")
 for i in $(seq 0 $((SCENE_COUNT - 1))); do
-    SUBTITLE=$(jq -r ".scenes[$i].subtitle // \"\"" "$CONFIG")
+    NARRATION=$(jq -r ".scenes[$i].narration // .scenes[$i].subtitle // \"\"" "$CONFIG")
     TARGET=$(jq -r ".scenes[$i].target_duration // \"\"" "$CONFIG")
     [[ -n "$TARGET" ]] || { echo "ERROR: scenes[$i] に target_duration がありません (ナレーション配置に必要)" >&2; exit 1; }
-    if [[ -n "$SUBTITLE" ]]; then
-        LINES_TEXT+=("$SUBTITLE")
+    if [[ -n "$NARRATION" ]]; then
+        LINES_TEXT+=("$NARRATION")
         LINES_START+=("$OFFSET")
         LINES_BUDGET+=("$TARGET")
     fi
@@ -100,14 +108,29 @@ done
 TOTAL="$OFFSET"
 
 # --- 各行を TTS し、シーン尺に収まるか確認する ---
+# TTS の話速は生成のたびに揺らぐため、シーン尺を超えたテイクは作り直し (最大 3 回) て
+# 最短のテイクを採用する。それでも収まらない場合は警告して続行する (文面の見直しが必要)
+TTS_MAX_ATTEMPTS=3
 INPUTS=(-i "$BGM")
 FILTERS=""
 MIX_LABELS="[bgm]"
 for idx in "${!LINES_TEXT[@]}"; do
     WAV="$OUT_DIR/line-$idx.wav"
     echo "--- TTS [$((idx + 1))/${#LINES_TEXT[@]}]: ${LINES_TEXT[$idx]}"
-    tts_line "${LINES_TEXT[$idx]}" "$WAV"
-    DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$WAV")
+    BEST_DUR=""
+    for attempt in $(seq 1 "$TTS_MAX_ATTEMPTS"); do
+        TAKE="$OUT_DIR/line-$idx-take.wav"
+        tts_line "${LINES_TEXT[$idx]}" "$TAKE"
+        TAKE_DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$TAKE")
+        if [[ -z "$BEST_DUR" ]] || awk -v a="$TAKE_DUR" -v b="$BEST_DUR" 'BEGIN { exit !(a < b) }'; then
+            mv "$TAKE" "$WAV"
+            BEST_DUR="$TAKE_DUR"
+        fi
+        # 収まったら打ち切り、超えていたら取り直す
+        awk -v d="$BEST_DUR" -v lead="$LEAD_IN" -v budget="${LINES_BUDGET[$idx]}" 'BEGIN { exit !(lead + d <= budget) }' && break
+        [[ "$attempt" -lt "$TTS_MAX_ATTEMPTS" ]] && echo "    take $attempt = ${TAKE_DUR}s > 枠 ${LINES_BUDGET[$idx]}s のため取り直し"
+    done
+    DUR="$BEST_DUR"
     if awk -v d="$DUR" -v lead="$LEAD_IN" -v budget="${LINES_BUDGET[$idx]}" 'BEGIN { exit !(lead + d > budget) }'; then
         echo "警告: ナレーション ${idx} (${DUR}s) がシーン尺 ${LINES_BUDGET[$idx]}s に収まっていません (次のシーンへ食み出します)" >&2
     fi

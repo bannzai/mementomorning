@@ -24,6 +24,7 @@
       "id": "morning-question",
       "flow": "flows/morning-question.yaml",
       "subtitle": "Recording your answer is the only way to stop it.",
+      "narration": "If today were your last day, what would you want to do? Recording your answer is the only way to stop the alarm.",
       "target_duration": 12.3,
       "trim_start": 3.6
     },
@@ -31,20 +32,29 @@
       "id": "journal",
       "flow": "flows/journal.yaml",
       "subtitle": "Your answers become a journal of your life.",
-      "target_duration": 13,
-      "trim_start": 2
+      "narration": "Your answers become a journal of your life. Every night, every week, every month.",
+      "target_duration": 10.3,
+      "trim_start": 7.4
     },
     {
       "id": "seven-mornings",
       "flow": "flows/seven-mornings.yaml",
       "subtitle": "Day 7. Seven answers, together for the first time.",
-      "target_duration": 13,
+      "narration": "Seven answers, together for the first time.",
+      "target_duration": 5.8,
       "trim_start": 7
+    },
+    {
+      "id": "share-card",
+      "flow": "flows/share-card.yaml",
+      "subtitle": "Share any morning as a quiet card.",
+      "target_duration": 5.5,
+      "trim_start": 13.6
     },
     {
       "id": "night-banner",
       "flow": "flows/night-banner.yaml",
-      "subtitle": "At night, one more quiet question arrives.",
+      "subtitle": "A quiet reminder, at the times you choose.",
       "target_duration": 7,
       "trim_start": 47
     },
@@ -53,13 +63,14 @@
       "flow": "flows/night-reflection.yaml",
       "subtitle": "Did you keep this morning's words?",
       "target_duration": 4.5,
-      "trim_start": 5
+      "trim_start": 6.2
     },
     {
       "id": "paywall",
       "flow": "flows/paywall.yaml",
       "subtitle": "Premium keeps every morning.",
-      "target_duration": 6.5,
+      "narration": "Premium keeps ringing until you answer — so you never miss a morning. And it keeps every morning you have ever answered.",
+      "target_duration": 11,
       "trim_start": 6.5
     },
     {
@@ -67,7 +78,7 @@
       "flow": "flows/life-calendar.yaml",
       "subtitle": "The dots will connect.",
       "target_duration": 8.5,
-      "trim_start": 3
+      "trim_start": 5.2
     }
   ]
 }

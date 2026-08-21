@@ -3,10 +3,10 @@ set -euo pipefail
 
 # 朝の問いシーンのクリップを演出加工する (issue #94 のデモ動画レビュー対応):
 # 1. カメラ画面の区間に assets/selfie*.png (Nano Banana Pro で生成した寝起きセルフィー。
-#    口の開きだけ違う 4 枚を image-to-image で揃えた) を短い間隔で切り替えながら
-#    lighten 合成し、インカメラで喋りながら回答している実機の見た目を再現する
-#    (疑似録画モードはプレビューが墨色のままでカメラ感が出ないため。白い UI 文字は
-#    lighten で必ず画像より明るく残るので可読性は保たれる)
+#    口の開きだけ違う 4 枚を image-to-image で揃えた) を lighten 合成し、インカメラで
+#    回答している実機の見た目を再現する (疑似録画モードはプレビューが墨色のままで
+#    カメラ感が出ないため。白い UI 文字は lighten で必ず画像より明るく残るので可読性は保たれる)。
+#    録画開始前は口を閉じた 1 枚で静止させ、録画開始後だけ口パク (短い間隔の切り替え) にする
 # 2. 録画停止直後に一瞬表示される「Try saving again」(保存は成功しているのにエラー UI が
 #    約 1 秒出る。2 回の収録で再現) の区間を切り落とす
 #
@@ -36,6 +36,8 @@ done
 # カメラ画面の区間 (起動アニメ後〜録画停止直前)。フレーム実測: 3.0〜15.9s
 CAMERA_START=3.0
 CAMERA_END=15.9
+# 録画開始 (録画タイマー 0:00/0:10 の出現)。フレーム実測: 7.2s。ここまでは静止、ここから口パク
+TALK_START=7.2
 # 「Try saving again」が映る区間 (停止〜ホーム遷移)。フレーム実測: 15.9〜16.95s
 CUT_START=15.9
 CUT_END=16.95
@@ -73,13 +75,18 @@ ffmpeg -y -v error \
     -c:v libx264 -pix_fmt yuv420p -preset medium -crf 18 \
     "$TALK_LOOP"
 
-# --- カメラ区間に口パクループを lighten 合成し、「Try saving again」区間をカットする ---
+# --- カメラ区間にセルフィーを lighten 合成し、「Try saving again」区間をカットする ---
+# 録画開始前 (CAMERA_START〜TALK_START) は口を閉じた静止画、録画開始後 (TALK_START〜CAMERA_END) は
+# 口パクループを合成する
 ffmpeg -y -v error \
     -i "$RAW" \
     -stream_loop -1 -i "$TALK_LOOP" \
+    -loop 1 -i "$ASSETS/selfie.png" \
     -filter_complex "\
 [0:v]fps=30[base];\
-[base][1:v]blend=all_mode=lighten:enable='between(t,${CAMERA_START},${CAMERA_END})':shortest=1[cam];\
+[2:v]scale=1206:2622,setsar=1,colorlevels=romax=0.72:gomax=0.72:bomax=0.72[still];\
+[base][still]blend=all_mode=lighten:enable='between(t,${CAMERA_START},${TALK_START})':shortest=1[pre];\
+[pre][1:v]blend=all_mode=lighten:enable='between(t,${TALK_START},${CAMERA_END})':shortest=1[cam];\
 [cam]select='not(between(t,${CUT_START},${CUT_END}))',setpts=N/30/TB[out]" \
     -map "[out]" -an \
     -c:v libx264 -pix_fmt yuv420p -preset medium -crf 18 \

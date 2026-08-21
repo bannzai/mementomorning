@@ -48,6 +48,7 @@ maestro --device $DEVICE_UDID test demo-video/flows/prep/setup.yaml
 # シーン録画 (prep が必要なシーンは直前に実行する)
 bash $SKILL/record-scene.sh demo-video/config.json journal
 bash $SKILL/record-scene.sh demo-video/config.json seven-mornings
+bash $SKILL/record-scene.sh demo-video/config.json share-card
 bash $SKILL/record-scene.sh demo-video/config.json paywall
 bash $SKILL/record-scene.sh demo-video/config.json life-calendar
 
