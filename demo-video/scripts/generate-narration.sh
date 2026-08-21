@@ -15,7 +15,11 @@ set -euo pipefail
 #    動画に載る
 #
 # 使い方 (compose-video.sh の前に実行する):
-#   bash demo-video/scripts/generate-narration.sh
+#   bash demo-video/scripts/generate-narration.sh [CONFIG_JSON]
+#   (CONFIG_JSON 省略時は demo-video/config.json。訴求文言のバリアント config を渡せる)
+#
+# ミックスの出力先は config によらず 1 箇所 (output/narration/bgm-mix.m4a) のため、
+# バリアントを複数作る時は「本スクリプト → compose-video.sh」を config ごとに続けて実行する
 #
 # 必要環境: GEMINI_API_KEY (未設定なら say フォールバック)、ffmpeg、jq、curl
 #
@@ -24,7 +28,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/../.."
 
-CONFIG=demo-video/config.json
+CONFIG="${1:-demo-video/config.json}"
 BGM=demo-video/assets/bgm.m4a
 OUT_DIR=demo-video/output/narration
 MIX="$OUT_DIR/bgm-mix.m4a"
