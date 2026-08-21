@@ -73,6 +73,11 @@ enum AlarmKitManager {
         return alarms.contains { !preservedAlarmIDs.contains($0.id) }
     }
 
+    /// 登録済みアラームを個別キャンセルする
+    static func cancel(id: UUID) throws {
+        try AlarmManager.shared.cancel(id: id)
+    }
+
     /// 鳴動中アラームを停止する
     static func stop(id: UUID) throws {
         try AlarmManager.shared.stop(id: id)

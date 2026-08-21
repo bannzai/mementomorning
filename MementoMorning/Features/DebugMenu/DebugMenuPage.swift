@@ -13,8 +13,17 @@ struct DebugMenuPage: View {
 
     @Environment(\.modelContext) private var modelContext
 
+    /// 保存済みのアラーム設定。単一レコード運用のため先頭 1 件のみ使う (無限アラーム検証の前提表示・一括作成に使う)
+    @Query private var alarmSettings: [AlarmSetting]
+
     /// オンボーディング完了フラグ。false に戻すと RootView が即座にオンボーディングへ切り替わる
     @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+    /// 連続追撃回数 (スヌーズ消費数)。StopAlarmIntent が加算し、回答成立時の reschedule がリセットする。
+    /// 停止操作のたびに増えることを画面上で確認できるように監視する
+    @AppStorage(.stopIntentChaseCount) private var stopIntentChaseCount = 0
+    /// 追撃アラームの発火予定日時 (epoch 秒。0 = 記録なし)。StopAlarmIntent が書き込む。
+    /// 停止操作で追撃が登録されたことを画面上で確認できるように監視する (Date は @AppStorage で扱えないため Double)
+    @AppStorage(.stopIntentChaseFireDate) private var stopIntentChaseFireDate: Double = 0
     /// 検証用のプレミアム強制フラグ。課金状態のゲート (全履歴・無限追撃) の動作確認に使う (再実行しても壊れない冪等なトグル)
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
     /// 疑似録画モードのフラグ。カメラの無いシミュレータで動画回答のパイプラインを検証するために使う (冪等なトグル)
@@ -24,6 +33,8 @@ struct DebugMenuPage: View {
     @State private var morningAnswerCount = 0
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
     @State private var answer: MorningAnswer?
+    /// テストアラームの登録結果。登録の成否と発火予定日時を画面上で確認できるように表示する
+    @State private var chaseTestAlarmStatusText = "未登録"
 
     var body: some View {
         List {
@@ -164,6 +175,51 @@ struct DebugMenuPage: View {
                 Text(verbatim: "共有 (issue #74)")
             }
             Section {
+                Text(verbatim: "追撃カウント (スヌーズ消費数): \(stopIntentChaseCount)")
+                    .accessibilityIdentifier("debug_chase_count")
+
+                Text(verbatim: "追撃の発火予定: \(chaseFireDateText)")
+                    .accessibilityIdentifier("debug_chase_fire_date")
+
+                Text(verbatim: "実効スヌーズ上限: \(effectiveSnoozeLimitText)")
+                    .accessibilityIdentifier("debug_effective_snooze_limit")
+
+                Text(verbatim: "検証を妨げる状態: \(chaseBlockersText)")
+                    .accessibilityIdentifier("debug_infinite_chase_blockers")
+
+                Button {
+                    prepareInfiniteChaseSetting()
+                } label: {
+                    Text(verbatim: "アラーム設定を ON + スヌーズ無制限にする")
+                }
+                .accessibilityIdentifier("debug_prepare_infinite_chase_setting")
+
+                Button {
+                    Task {
+                        await scheduleChaseTestAlarm()
+                        refreshAnswerStates()
+                    }
+                } label: {
+                    Text(verbatim: "テストアラームを 1 分後に登録")
+                }
+                .accessibilityIdentifier("debug_schedule_chase_test_alarm")
+
+                Text(verbatim: "テストアラーム: \(chaseTestAlarmStatusText)")
+                    .accessibilityIdentifier("debug_chase_test_alarm_state")
+
+                Button {
+                    // 0 への上書きは未設定 (integer(forKey:) の既定値) と同義のため、何度押しても同じ状態に収束する (冪等)
+                    stopIntentChaseCount = 0
+                } label: {
+                    Text(verbatim: "追撃カウントをリセット")
+                }
+                .accessibilityIdentifier("debug_reset_chase_count")
+            } header: {
+                Text(verbatim: "無限アラーム (issue #97)")
+            } footer: {
+                Text(verbatim: "手順: プレミアムを強制 ON → アラーム設定を ON + スヌーズ無制限 → テストアラームを登録し、アプリを離れてロック画面で発火を待つ。停止するたびに \(Int(stopIntentChaseInterval / 60)) 分後の追撃が再登録され続け、回答すると全て止まる")
+            }
+            Section {
                 Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")
                     .accessibilityIdentifier("debug_onboarding_state")
                 // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
@@ -214,6 +270,92 @@ struct DebugMenuPage: View {
     /// 共有を促すダイアログの直近表示日時の表示用の文字列
     private var sharePromptStateText: String {
         lastSharePromptDate()?.formatted(.iso8601) ?? "なし"
+    }
+
+    /// 追撃アラームの発火予定日時の表示用の文字列 (0 = 記録なし)
+    private var chaseFireDateText: String {
+        stopIntentChaseFireDate > 0 ? Date(timeIntervalSince1970: stopIntentChaseFireDate).formatted(.iso8601) : "なし"
+    }
+
+    /// 実効スヌーズ上限の表示用の文字列 (nil = 無制限)
+    private var effectiveSnoozeLimitText: String {
+        if let limit = effectiveSnoozeLimit(snoozeLimit: alarmSettings.first?.snoozeLimit, isPremium: PremiumEntitlement.isPremium) {
+            return "\(limit) 回"
+        }
+        return "無制限"
+    }
+
+    /// 無限追撃の検証を妨げる状態の表示用の文字列
+    private var chaseBlockersText: String {
+        let blockers = debugInfiniteChaseBlockers(
+            alarmSettingIsEnabled: alarmSettings.first?.isEnabled,
+            snoozeLimit: alarmSettings.first?.snoozeLimit,
+            isPremium: PremiumEntitlement.isPremium,
+            hasTodayAnswer: answer != nil
+        )
+        return blockers.isEmpty ? "なし" : blockers.joined(separator: " / ")
+    }
+
+    /// 無限追撃の検証前提 (有効なアラーム設定 + スヌーズ無制限) を一括で作る。
+    /// 既に満たされている項目には触れない (冪等)。プレミアム強制は既存のトグルで行う (責務を重複させない)
+    private func prepareInfiniteChaseSetting() {
+        if let alarmSetting = alarmSettings.first {
+            if !alarmSetting.isEnabled {
+                alarmSetting.setIsEnabled(isEnabled: true)
+            }
+            if alarmSetting.snoozeLimit != nil {
+                alarmSetting.setSnoozeLimit(snoozeLimit: nil)
+            }
+        } else {
+            // 時・分はテストアラーム (now + debugChaseTestAlarmInterval) に影響しないため、
+            // 一般的な起床時刻として AlarmSettingPage の Preview と同じ 7:00 を使う
+            modelContext.insert(AlarmSetting(hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil))
+        }
+        do {
+            try modelContext.save()
+        } catch {
+            // 永続化されていない変更を残すと foreground 復帰時の reschedule が未保存の値を拾うため破棄する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+        }
+    }
+
+    /// 検証用テストアラームを 1 分後に登録する。停止操作 (StopAlarmIntent) が本番と同じ経路で
+    /// 追撃を再登録するため、アラーム設定の時刻を毎回変えなくても「答えるまで止まらない」を短時間で確認できる。
+    /// StopAlarmIntent.perform() は発火記録 (lastAlarmFiredDate) を ScheduledAlarm の main の発火予定日時から
+    /// 導くため、本番の main と同じ形で ScheduledAlarm にも記録する。
+    /// 前回のテストアラームはキャンセルして置き換え、何度押してもテストアラームを 1 本に保つ (冪等)。
+    /// 登録後に foreground へ復帰すると reschedule の全キャンセルで消えるため、登録したらそのままアプリを離れて発火を待つ
+    private func scheduleChaseTestAlarm() async {
+        // 設定画面を経由していないと認可が未確定のことがある。拒否済みの場合は schedule() が throw して登録失敗として表示される
+        if AlarmKitManager.authorizationState == .notDetermined {
+            _ = try? await AlarmKitManager.requestAuthorization()
+        }
+        // reschedule (全キャンセル) と交錯すると登録直後のテストアラームが消され得るため、同じ直列キューで実行する
+        await performSerializedAlarmOperation {
+            if let previousAlarmID = UserDefaults.standard.string(forKey: .debugChaseTestAlarmID).flatMap(UUID.init(uuidString:)) {
+                // 発火済み・reschedule で削除済みの ID のキャンセルは失敗するだけで害がないため無視する
+                try? AlarmKitManager.cancel(id: previousAlarmID)
+                if let previousScheduledAlarm = try? modelContext.fetch(FetchDescriptor<ScheduledAlarm>()).first(where: { $0.id == previousAlarmID }) {
+                    modelContext.delete(previousScheduledAlarm)
+                }
+            }
+            let alarmID = UUID()
+            let fireDate = Date.now.addingTimeInterval(debugChaseTestAlarmInterval)
+            do {
+                // ja: 今日死ぬとしたら何をやりたいですか？
+                let title = LocalizedStringResource("If today were your last day, what would you want to do?")
+                try await AlarmKitManager.schedule(id: alarmID, fireDate: fireDate, title: title)
+                modelContext.insert(ScheduledAlarm(id: alarmID, fireDate: fireDate, origin: ScheduledAlarmOrigin.main))
+                try modelContext.save()
+                UserDefaults.standard.set(alarmID.uuidString, forKey: .debugChaseTestAlarmID)
+                chaseTestAlarmStatusText = "登録済み (発火予定: \(fireDate.formatted(.iso8601)))"
+            } catch {
+                // OS へ登録済みで記録だけ失敗しても、次回 reschedule の全キャンセルで回収されるため記録の変更だけ破棄する
+                modelContext.rollback()
+                chaseTestAlarmStatusText = "登録失敗: \(error)"
+            }
+        }
     }
 
     /// 回答件数と今日の回答の表示を最新化する
