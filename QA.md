@@ -36,6 +36,7 @@ last_verified_at: null
 - 朝の問いの提示状態は、開発者メニューの「Record alarm fired now」で発火記録を作って再現できる (解除は「Clear alarm fired record」)
 - 回答データの投入は「Seed sample answers (10 days)」「Seed today's answer」「Seed yesterday's answer」、削除は「Delete all answers」。**Seed sample answers は回答が 1 件でもあると何もしない (SampleAnswerSeeder.swift の冪等仕様) ため、既に回答がある場合は「Delete all answers」→「Seed sample answers」の順で実行する**
 - オンボーディングの再表示は「Reset onboarding」(回答・アラーム設定は消えない)
+- 無限追撃アラーム (スヌーズ) の検証は開発者メニューの「無限アラーム (issue #97)」セクションで行う: プレミアムを強制 ON →「アラーム設定を ON + スヌーズ無制限にする」→「テストアラームを 1 分後に登録」→ アプリを離れて発火を待つ。前提の不足は「検証を妨げる状態」行に表示される。**シミュレータでは停止操作の StopAlarmIntent.perform() が実行されないため、発火までは確認できるが停止後の追撃ループは確認できない (.claude/rules/ios-alarmkit-constraints.md の検証結果参照。実機検証は issue #2)**
 
 ## 実行ナレッジ
 
