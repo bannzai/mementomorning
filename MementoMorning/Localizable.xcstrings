@@ -7341,6 +7341,16 @@
         }
       }
     },
+    "Eat my favorite meal at my usual place" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行きつけの店で好きなものを食べる"
+          }
+        }
+      }
+    },
     "Endless follow-up alarms" : {
       "comment" : "プレミアム機能名 (ペイウォールの見出し)。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
@@ -8408,6 +8418,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修改"
+          }
+        }
+      }
+    },
+    "Have a long phone call with my mother" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "母に長い電話をかける"
           }
         }
       }
@@ -10120,6 +10140,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍後"
+          }
+        }
+      }
+    },
+    "Leave my own words behind" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分の言葉を書き残す"
           }
         }
       }
@@ -13762,6 +13792,16 @@
         }
       }
     },
+    "Play with my kids all day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子どもと一日中遊ぶ"
+          }
+        }
+      }
+    },
     "Practice your answer" : {
       "localizations" : {
         "ar" : {
@@ -16758,6 +16798,16 @@
         }
       }
     },
+    "Say the things I've never been able to say" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
     "See every morning" : {
       "localizations" : {
         "ar" : {
@@ -16968,6 +17018,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看每個早晨"
+          }
+        }
+      }
+    },
+    "See the ocean with my family" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族と海を見に行く"
           }
         }
       }
@@ -20607,6 +20667,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點一下時間來設定你的鬧鐘"
+          }
+        }
+      }
+    },
+    "Tend the garden I've grown" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "育てた庭の手入れをする"
           }
         }
       }
@@ -24891,6 +24961,26 @@
         }
       }
     },
+    "Visit my old friends" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昔の仲間に会いに行く"
+          }
+        }
+      }
+    },
+    "Watch the sunrise to the very end" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝日を最後まで眺める"
+          }
+        }
+      }
+    },
     "Watch the video" : {
       "localizations" : {
         "ar" : {
@@ -25530,6 +25620,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "寫另一個答案"
+          }
+        }
+      }
+    },
+    "Write a letter to a friend" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "友人に手紙を書く"
           }
         }
       }
