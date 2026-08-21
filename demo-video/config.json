@@ -20,8 +20,8 @@
       "id": "morning-question",
       "flow": "flows/morning-question.yaml",
       "subtitle": "Recording your answer is the only way to stop it.",
-      "target_duration": 17,
-      "trim_start": 2
+      "target_duration": 16.5,
+      "trim_start": 3.6
     },
     {
       "id": "journal",

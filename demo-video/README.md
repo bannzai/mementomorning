@@ -57,6 +57,9 @@ bash $SKILL/record-scene.sh demo-video/config.json night-reflection
 
 maestro --device $DEVICE_UDID test demo-video/flows/prep/morning-question.yaml
 bash $SKILL/record-scene.sh demo-video/config.json morning-question
+# 録画後にクリップを演出加工する (人物セルフィーの合成・保存リトライ表示のカット・回答テキストの赤下線。
+# 詳細と実測値の測り直し方はスクリプトのヘッダーコメントを参照)
+bash demo-video/scripts/enhance-morning-question.sh
 
 maestro --device $DEVICE_UDID test demo-video/flows/prep/alarm.yaml
 bash $SKILL/record-scene.sh demo-video/config.json alarm
