@@ -1,0 +1,13 @@
+# 夜リマインドのバナー到着シーン (デモ動画 issue #94)。
+# 前提: prep/night.yaml で 1 分後の夜リマインドを登録した直後に録画を開始する。
+# バナーは Maestro の要素検出に安定して映らないため、アサーションせず固定時間ホームを映して
+# バナー到着 (登録の約 60 秒後) を録画に収める。到着までの待ちは config の trim_start で切り落とす
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 85000
+    optional: true
+    label: "バナー到着までホームを映し続ける"

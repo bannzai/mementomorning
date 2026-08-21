@@ -1,0 +1,35 @@
+# 夜リマインド → 夜の振り返りのシーン (デモ動画 issue #94)。
+# 前提: prep/night.yaml で夜リマインドを 1 分後に登録済み (今日の回答があるため引用つきの本文になる)。
+# フォアグラウンドでもバナー表示される (NotificationDelegate.willPresent)。
+# バナー到着までの待ちは録画後に config の trim_start で切り落とす
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+# 夜リマインドのバナー (今朝の回答の引用つき) を待ってタップする
+- extendedWaitUntil:
+    visible: "Are you keeping it?"
+    timeout: 90000
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 2000
+    optional: true
+    label: "バナーを 2 秒見せる"
+- tapOn: "Are you keeping it?"
+- extendedWaitUntil:
+    visible:
+      id: "night_reflection_fulfilled_button"
+    timeout: 10000
+# 朝の回答との答え合わせ画面を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 4000
+    optional: true
+    label: "夜の振り返りを 4 秒見せる"
+- tapOn:
+    id: "night_reflection_fulfilled_button"
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 3000
+    optional: true
+    label: "記録後を 3 秒見せる"

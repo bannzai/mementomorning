@@ -1,0 +1,32 @@
+# 夜の振り返り (答え合わせ) のシーン (デモ動画 issue #94)。
+# 通知タップの再現はデバッグメニューの「夜の振り返りを開く (通知タップ相当)」で行う。
+# sheet が覆うまでのメニュー操作は config の trim_start で切り落とす
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- scrollUntilVisible:
+    element:
+      id: "debug_open_night_reflection"
+    direction: DOWN
+- tapOn:
+    id: "debug_open_night_reflection"
+- extendedWaitUntil:
+    visible:
+      id: "night_reflection_fulfilled_button"
+    timeout: 10000
+# 朝の回答との答え合わせ画面を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 5000
+    optional: true
+    label: "夜の振り返りを 5 秒見せる"
+- tapOn:
+    id: "night_reflection_fulfilled_button"
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 3000
+    optional: true
+    label: "記録後を 3 秒見せる"

@@ -1,0 +1,27 @@
+# 夜リマインドの検証通知を 1 分後に登録する (録画しない準備 flow)。
+# 今日の回答 (サンプル投入済み) があるため、引用つきのパーソナライズ本文になる
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+# 日付を跨いでアラームが発火済みだと朝の問いが全画面で被さる。出ていたら「昨日の回答を今日やる」で回答して閉じる
+# (今日の回答ができ、夜リマインドの引用つき本文と夜の振り返りの前提にもなる)
+- runFlow:
+    when:
+      visible:
+        id: "morning_question_yes_button"
+    commands:
+      - tapOn:
+          id: "morning_question_yes_button"
+      - extendedWaitUntil:
+          visible:
+            id: "debug_menu_link"
+          timeout: 15000
+- tapOn:
+    id: "debug_menu_link"
+- scrollUntilVisible:
+    element:
+      id: "debug_schedule_night_reminder_test"
+    direction: DOWN
+- tapOn:
+    id: "debug_schedule_night_reminder_test"

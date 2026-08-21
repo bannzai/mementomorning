@@ -1,0 +1,29 @@
+# 七つの朝 (7 日の節目) → 共有カードのシーン (デモ動画 issue #94)。
+# 前提: prep/setup.yaml でサンプル回答 10 日分を投入済み。
+# 表示済みフラグを開発者メニューでリセットすると、その場で節目 sheet が全画面に被さる (ContentView の onChange)。
+# sheet が覆うまでの操作 (メニュー遷移・リセット) は config の trim_start で切り落とす
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- tapOn:
+    id: "debug_reset_seven_mornings_milestone"
+- extendedWaitUntil:
+    visible:
+      id: "seven_mornings_title"
+    timeout: 10000
+# 7 つの回答が 1 画面に並ぶ aha moment を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 5000
+    optional: true
+    label: "七つの朝を 5 秒見せる"
+# 回答行をタップして共有カードを開く (最初の 7 件 = 古い順のため、3 日前の回答が一覧に見えている)
+- tapOn: "Write a letter to a friend"
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 6000
+    optional: true
+    label: "共有カードを 6 秒見せる"

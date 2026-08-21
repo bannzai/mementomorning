@@ -1,0 +1,56 @@
+# アラーム待機シーンの準備 (録画しない準備 flow)。
+# 残留しているアラームバナー (シミュレータでは中身が描画されない空のピル) を閉じ、
+# アラームを 7:00 に設定し、回答 0 件のまっさらなホームで終わる。
+# 注: システムのアラーム発火 UI はシミュレータでは空バナーになり画にならない (実測)。
+# 発火 UI の実映像は実機収録カットとし、デモのアラームシーンは 7:00 待機のホームで構成する
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+# 発火記録が残っていると朝の問いが全画面で被さる。出ていたら疑似録画で回答して閉じる
+# (直後に全回答を削除するため回答内容は残らない)
+- runFlow:
+    when:
+      visible:
+        id: "morning_question_record_button"
+    commands:
+      - tapOn:
+          id: "morning_question_record_button"
+      - extendedWaitUntil:
+          visible: "__pause__"
+          timeout: 2000
+          optional: true
+          label: "2 秒録画する"
+      - tapOn:
+          id: "morning_question_record_button"
+      - extendedWaitUntil:
+          visible:
+            id: "debug_menu_link"
+          timeout: 30000
+# 残留バナーがあれば × (右上のピル内ボタン) で閉じる
+- runFlow:
+    when:
+      visible:
+        id: "debug_menu_link"
+    commands:
+      - tapOn:
+          point: "345, 58"
+          optional: true
+- tapOn:
+    id: "debug_menu_link"
+- tapOn:
+    id: "debug_delete_all_answers"
+- scrollUntilVisible:
+    element:
+      id: "debug_clear_alarm_fired"
+    direction: DOWN
+- tapOn:
+    id: "debug_clear_alarm_fired"
+- scrollUntilVisible:
+    element:
+      id: "debug_set_alarm_seven_am"
+    direction: DOWN
+- tapOn:
+    id: "debug_set_alarm_seven_am"
+- launchApp:
+    stopApp: true
