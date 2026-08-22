@@ -32,11 +32,11 @@ platform :ios do
       sync_screenshots: true,
       run_precheck_before_submit: false,
       automatic_release: true,
-      # 段階的リリースは App Store Connect の仕様で初回バージョンには設定できず、
-      # true のままだと "Creating phased release" ステップが `No data` (RuntimeError) で落ちる
-      # (fastlane の既知事象「Uploading the very first version of my app yields `No data`」)。
-      # v1.0 のリリース後、アップデートの入稿からは true に戻してよい
-      phased_release: false,
+      # phased_release は初回バージョンでは指定しない (App Store Connect の仕様で初回バージョンに
+      # 段階的リリースのリソースが存在せず、true は作成が・false は既存取得→削除がどちらも
+      # `No data` (RuntimeError) で落ちる。2026-08-22 の入稿で両方を実測)。
+      # オプション自体を渡さなければ deliver は段階的リリースに触れない。
+      # v1.0 のリリース後、アップデートの入稿からは phased_release: true を指定してよい
       reset_ratings: false,
       metadata_path: 'fastlane/metadata',
       screenshots_path: 'fastlane/screenshots',
