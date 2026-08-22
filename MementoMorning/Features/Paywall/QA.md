@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: 67e24f4
-last_verified_at: 2026-08-19
+last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_at: 2026-08-22
 ---
 
 # Paywall QA
@@ -27,7 +27,8 @@ last_verified_at: 2026-08-19
 - [x] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
   - 自動化: `.maestro/flows/paywall-teststore.yaml`（Test Store のストア価格は USD のため、見本価格 (¥) と画面上で判別できる。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
 - [ ] **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
-  - ⏭️ スキップ: Test Store の年額商品には introductory offer を設定していないため、Debug ビルドの既定では「offer なし → 表記なし」側しか確認できない (2026-08-17 の Test Store 検証でも表記なしを確認)。eligible 時に表示される側は StoreKit Configuration (Xcode の Run) / Sandbox での課金検証時に確認する
+  - ⏭️ スキップ: Test Store の年額商品には introductory offer を設定していないため、Debug ビルドの既定では「offer なし → 表記なし」側しか確認できない (2026-08-17 の Test Store 検証でも表記なしを確認)。eligible 時に表示される側は**実機 QA へ** (Sandbox / StoreKit Configuration の Xcode Run で確認する)
+  - 確認範囲 (2026-08-22): StoreKit Configuration の CLI 検証 (`xcodebuild test -only-testing:MementoMorningTests/StoreKitConfigurationTests`、iOS 26.2 simulator) で、`.storekit` の 3 商品の価格・年額のみの 7 日間無料トライアル offer 定義・購入による entitlement 付与までは 2 テスト成功 (exit 0) を確認。残るのは eligible 時の paywall_yearly_free_trial の目視のみ
   - 自動化: manual（画面上の表記の目視確認。期間の変換ロジックは MementoMorningTests/PaywallSubscriptionPeriodTests.swift、.storekit の offer 定義は MementoMorningTests/StoreKitConfigurationTests.swift がカバー済み）
 - [ ] **取得失敗時の再読み込み**: offering の取得に失敗した場合、「料金を再読み込み」(paywall_reload_offering) が表示され、タップで再取得できる
   - 自動化: todo

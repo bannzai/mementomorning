@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 import SwiftData
 
@@ -72,7 +73,8 @@ private struct HomeContent: View {
     @Query private var todayAnswers: [MorningAnswer]
     /// 粒ストリップに表示する直近 14 日分の回答
     @Query private var stripAnswers: [MorningAnswer]
-    /// 全期間の回答数 (答えた日数 N)。件数だけ必要なため fetchCount で取得して保持する
+    /// 全期間の回答数 (答えた日数 N)。件数だけ必要なため全 MorningAnswer を @Query で保持せず fetchCount で取得し、
+    /// SwiftData の保存通知 (ModelContext.didSave) で再計算して過去分を含む回答の追加・削除に追随させる
     @State private var answeredCount = 0
     /// 編集画面 (AnswerEditPage) を開く対象の回答
     @State private var editTargetAnswer: MorningAnswer?
@@ -160,6 +162,11 @@ private struct HomeContent: View {
             Text("Your answer becomes a quiet card you can pass along.")
         }
         .onAppear {
+            answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+        }
+        // 回答の保存・削除 (過去分を含む) のたびに「答えた日数」を再計算する。
+        // 朝の問い (fullScreenCover) が閉じてもホームの onAppear は再発火しないため、保存通知を再計算の起点にする
+        .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
         // 回答が成立してホームへ戻った時 (今日の回答が現れた時)・起動時点で今日の回答がある時に加え、

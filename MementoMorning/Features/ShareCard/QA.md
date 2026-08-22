@@ -1,8 +1,8 @@
 ---
 feature: ShareCard
 verification: mobile-mcp
-last_verified_commit: 71f6fb02baf601ce2616a17bb4262660d05f374e
-last_verified_at: 2026-08-19
+last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_at: 2026-08-22
 ---
 
 # ShareCard QA
@@ -25,12 +25,12 @@ last_verified_at: 2026-08-19
 
 - [x] **カードの表示**: ジャーナルまたは「七つの朝」の回答行をタップすると、日付と回答本文が入ったカードのプレビューが表示される
   - 自動化: manual（表示内容の目視確認）
-- [ ] **share sheet での共有**: 「共有」ボタンで share sheet が開き、カードが 1 枚画像として共有できる
+- [x] **share sheet での共有**: 「共有」ボタンで share sheet が開き、カードが 1 枚画像として共有できる
   - 自動化: manual（share sheet は OS UI のため目視確認）
-  - ⏭️ スキップ: 2026-08-19 の確認 (issue #74) ではカードのプレビュー表示までを対象にし、share sheet (OS UI) はリモート simulator で開いていない。ローカル simulator での確認に回す
-- [ ] **レイアウトの言語耐性**: 日本語・英語どちらの回答本文でもカードのレイアウトが崩れない
+  - 確認範囲: ローカル simulator で share sheet を開くところまで。実際の送信先アプリ (メッセージ・メール等) への引き渡しは未確認
+- [x] **レイアウトの言語耐性**: 日本語・英語どちらの回答本文でもカードのレイアウトが崩れない
   - 自動化: manual（見た目の崩れの目視確認。日英ロケールでの書き出しは MementoMorningTests/AnswerShareCardRenderTests.swift がカバー済み）
-  - ⏭️ スキップ: 2026-08-19 の確認 (issue #74) では日本語の回答本文のみ表示した。英語本文の目視は未実施 (書き出し自体は AnswerShareCardRenderTests がカバー)
+  - 確認範囲: 日本語の回答本文は 2026-08-19 (issue #74、リモート simulator)、英語の回答本文は 2026-08-22 (ローカル simulator) に目視確認した
 
 #### 動作確認
 <details>
@@ -51,7 +51,11 @@ last_verified_at: 2026-08-19
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/36f03c16-ee08-4f8e-8391-8931e11ffe25.png" width="320">
+
+共有カードのプレビューで「共有」をタップすると share sheet が開いた。共有対象が画像 1 枚であることは、ヘッダーにカードのサムネイルが 1 つだけ (タイトル「Memento Morning」) 並ぶことと、アクション行に画像専用の項目 (「画像を保存」「連絡先に割り当てる」「プレビュー」) が出ていることで判定した。share sheet は下方向のスワイプで閉じる。
 
 </details>
 
@@ -59,7 +63,11 @@ last_verified_at: 2026-08-19
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (英語本文。iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/718f44a4-4c83-4e40-a33a-dc9c9bd2c895.png" width="320">
+
+ホームの「直す」で本文を「Go see the sea with my family and watch the sunrise」(51 文字) に書き換えてから共有カードを開いた。本文がカード内で 3 行に折り返され、上の問い・下の日付・「Memento Morning」のウォードマークのいずれもカードの外にはみ出さず、文字の切れも無かった。日本語本文でのレイアウトは 2026-08-19 の「カードの表示」で確認済み。
 
 </details>
 

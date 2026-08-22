@@ -4,6 +4,26 @@ platform :ios do
   # metadata と screenshots を App Store Connect へ同期する (binary は上げない)
   lane :metadata_upload do
     ENV['FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS'] = 'true'
+    # App Store Connect API key (env-secret-registry の正準名 ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64) が
+    # 揃っていれば API key で認証する (2FA 不要。deliver は lane_context の api_key を自動で使う)。
+    # 揃っていなければ FASTLANE_USER (Apple ID) での対話ログインにフォールバックする (Appfile 参照)
+    key_id = ENV['ASC_API_KEY_ID'].to_s
+    issuer_id = ENV['ASC_API_KEY_ISSUER_ID'].to_s
+    key_content = ENV['ASC_API_KEY_P8_BASE64'].to_s
+    api_key_values = [key_id, issuer_id, key_content]
+    if api_key_values.any?(&:empty?) && api_key_values.any? { |value| !value.empty? }
+      # 一部だけ設定されている状態は設定ミスの可能性が高く、別アカウントでの認証や 2FA 待ちハングを防ぐため即座に失敗させる
+      UI.user_error!("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 は 3 つセットで設定してください (一部だけ設定されています)")
+    elsif api_key_values.all?(&:empty?)
+      UI.important("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 が未設定のため、FASTLANE_USER (Apple ID) で認証します (2FA の対話が発生します)")
+    else
+      app_store_connect_api_key(
+        key_id: key_id,
+        issuer_id: issuer_id,
+        key_content: key_content,
+        is_key_content_base64: true
+      )
+    end
     upload_to_app_store(
       # force is true means skip check with preview.html
       force: true,
@@ -12,7 +32,11 @@ platform :ios do
       sync_screenshots: true,
       run_precheck_before_submit: false,
       automatic_release: true,
-      phased_release: true,
+      # phased_release は初回バージョンでは指定しない。App Store Connect の仕様で初回バージョンには
+      # 段階的リリースのリソースが存在せず、true を渡すと作成ステップが、false を渡すと既存リソースの
+      # 取得→削除ステップが、いずれも `No data` (RuntimeError) で落ちる (2026-08-22 の入稿で両方を実測)。
+      # オプション自体を渡さなければ deliver は段階的リリースに触れない。
+      # v1.0 のリリース後、アップデートの入稿からは phased_release: true を指定してよい
       reset_ratings: false,
       metadata_path: 'fastlane/metadata',
       screenshots_path: 'fastlane/screenshots',

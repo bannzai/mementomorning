@@ -1,8 +1,8 @@
 ---
 feature: AnswerLog
 verification: mobile-mcp
-last_verified_commit: 4cdfeff
-last_verified_at: 2026-08-19
+last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_at: 2026-08-22
 ---
 
 # AnswerLog QA
@@ -22,12 +22,14 @@ last_verified_at: 2026-08-19
 
 ## 1. 一覧表示
 
-- [ ] **空状態**: 回答が 1 件もない状態でジャーナルを開くと「回答は、ひと朝ずつここに集まっていきます」の空状態文言が表示される
+- [x] **空状態**: 回答が 1 件もない状態でジャーナルを開くと「回答は、ひと朝ずつここに集まっていきます」の空状態文言が表示される
   - 自動化: manual（空状態の目視確認。開発者メニューの Delete all answers で再現できる）
 - [x] **回答一覧の表示**: 回答がある状態 (開発者メニューの「Delete all answers」→「Seed sample answers」で 10 日分投入) で、回答が新しい順に日付 + 本文で一覧表示される。今日の行は日付が「今日」表記で夜明け色になる
   - 自動化: manual（並び順・配色の目視確認）
 - [ ] **夜の結果の表示**: 夜の振り返りを記録済みの過去の行の右端に「やれた」(isFulfilled=true) または「—」(false) が表示され、未記録の行には何も出ない
   - 自動化: manual（記録状態ごとの表示の目視確認）
+  - ⏭️ スキップ (2026-08-22): 「未記録の行には何も出ない」だけ確認できた (エビデンス参照)。「やれた」「—」の表示は**当日中には再現できない**。夜の振り返りを記録できるのは当日の回答だけ (NightReflectionPage は通知の配信日時 = 当日の回答を引く) なのに対し、結果の表示は過去の行だけ (AnswerLogPage.swift:137 の `if !isToday`) のため、記録した回答が過去の行になる翌日まで待つか、シミュレータの日付を進める必要がある。日付変更は同一シミュレータで並行する他の QA (アラーム系) を壊すため実施しなかった
+  - 再現するには: 開発者メニューに「昨日の回答に やれた / やれていない を記録する」操作を足せば当日中に確認できるようになる (未実装。追加の判断は呼び出し元へ)
 
 #### 動作確認
 <details>
@@ -37,7 +39,9 @@ last_verified_at: 2026-08-19
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール、開発者メニューの「全回答を削除」で 0 件にした状態)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/070bdd57-fb87-4b09-8fc0-7952ca00cb0f.png" width="320">
 
 </details>
 
@@ -56,7 +60,13 @@ last_verified_at: 2026-08-19
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (部分確認。当日回答「Go see the sea with my family」に「やれた」を記録した直後の一覧)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/b9697b38-0101-49bc-bfd5-d6bb20f4b8df.png" width="320">
+
+- 未記録の過去の行 (2026年8月21日「母に長い電話をかける」) の右端には何も出ていない
+- 「やれた」を記録済みの当日行にも何も出ていない。これは `if !isToday` による仕様どおりの挙動で、記録が反映されていないわけではない (開発者メニューでは isFulfilled: true)
+- 「やれた」「—」が実際に描画されることは未確認 (上記チェック項目のスキップ理由を参照)。**サンプル回答の投入データ (SampleAnswerSeeder.swift) には振り返りの記録が含まれない**ため、「Seed sample answers」では記録済みの行は作れない
 
 </details>
 
@@ -114,8 +124,9 @@ last_verified_at: 2026-08-19
 
 ## 3. 共有カード導線
 
-- [ ] **行タップで共有カード**: 回答行のどこをタップしても AnswerShareCardPage が sheet で開く
+- [x] **行タップで共有カード**: 回答行のどこをタップしても AnswerShareCardPage が sheet で開く
   - 自動化: manual（sheet 遷移の確認）
+  - 確認範囲: 本文も日付も無い行の右端の空白 (行の右上、日付の右隣) をタップして開くことを確認した (contentShape(Rectangle()) が効いている)
 
 #### 動作確認
 <details>
@@ -125,7 +136,11 @@ last_verified_at: 2026-08-19
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (2026年8月21日「母に長い電話をかける」の行の**右端の空白**をタップした結果)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/c2e34c60-1334-4569-aa58-fdf0bd76f53a.png" width="320">
+
+(問い・回答本文・日付・Memento Morning の署名が入った共有カードと「共有」ボタンが sheet で表示された)
 
 </details>
 
