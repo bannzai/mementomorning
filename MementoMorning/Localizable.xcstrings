@@ -2205,6 +2205,16 @@
         }
       }
     },
+    "Add reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを追加"
+          }
+        }
+      }
+    },
     "Alarm" : {
       "localizations" : {
         "ar" : {
@@ -4127,6 +4137,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用文字回答"
+          }
+        }
+      }
+    },
+    "Answer my own alarm for the first time" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自作のアラームに初めて答える"
           }
         }
       }
@@ -6913,6 +6933,26 @@
         }
       }
     },
+    "Delete reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを削除"
+          }
+        }
+      }
+    },
+    "Design an alarm that asks one question" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ひとつの質問をするアラームを設計する"
+          }
+        }
+      }
+    },
     "Each morning, you record your answer with the front camera to stop the alarm.\nTry it once, before your first morning." : {
       "localizations" : {
         "ar" : {
@@ -7337,6 +7377,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "每行代表一週。回答過的早晨會以圓點保留。"
+          }
+        }
+      }
+    },
+    "Eat my favorite meal at my usual place" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行きつけの店で好きなものを食べる"
           }
         }
       }
@@ -8408,6 +8458,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修改"
+          }
+        }
+      }
+    },
+    "Fix the bug that kept me up all night" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "徹夜の原因になったバグを直す"
+          }
+        }
+      }
+    },
+    "Have a long phone call with my mother" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "母に長い電話をかける"
           }
         }
       }
@@ -10120,6 +10190,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍後"
+          }
+        }
+      }
+    },
+    "Leave my own words behind" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分の言葉を書き残す"
           }
         }
       }
@@ -13762,6 +13842,26 @@
         }
       }
     },
+    "Play with my kids all day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子どもと一日中遊ぶ"
+          }
+        }
+      }
+    },
+    "Polish every screen until it feels right" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "納得がいくまで画面を磨く"
+          }
+        }
+      }
+    },
     "Practice your answer" : {
       "localizations" : {
         "ar" : {
@@ -15046,6 +15146,16 @@
         }
       }
     },
+    "Record my demo video in one take" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デモ動画を一発撮りする"
+          }
+        }
+      }
+    },
     "Recorded: %@" : {
       "localizations" : {
         "ar" : {
@@ -15898,6 +16008,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "記住死亡。\n然後開始你的早晨。"
+          }
+        }
+      }
+    },
+    "Reminder %lld" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインド %lld"
           }
         }
       }
@@ -16758,6 +16878,16 @@
         }
       }
     },
+    "Say the things I've never been able to say" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
     "See every morning" : {
       "localizations" : {
         "ar" : {
@@ -16968,6 +17098,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看每個早晨"
+          }
+        }
+      }
+    },
+    "See the ocean with my family" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族と海を見に行く"
           }
         }
       }
@@ -18256,6 +18396,26 @@
         }
       }
     },
+    "Ship my app to the world" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分のアプリを世界に出す"
+          }
+        }
+      }
+    },
+    "Show my rough build to a friend" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作りかけのアプリを友人に見せる"
+          }
+        }
+      }
+    },
     "Snooze" : {
       "localizations" : {
         "ar" : {
@@ -18894,6 +19054,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "語音辨識"
+          }
+        }
+      }
+    },
+    "Start building the app I keep dreaming about" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夢に見続けたアプリを作り始める"
           }
         }
       }
@@ -20397,6 +20567,16 @@
         }
       }
     },
+    "Submit my app to the Shipaton" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shipaton にアプリを提出する"
+          }
+        }
+      }
+    },
     "Tap the time to set your alarm" : {
       "localizations" : {
         "ar" : {
@@ -20607,6 +20787,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點一下時間來設定你的鬧鐘"
+          }
+        }
+      }
+    },
+    "Tend the garden I've grown" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "育てた庭の手入れをする"
           }
         }
       }
@@ -24891,6 +25081,26 @@
         }
       }
     },
+    "Visit my old friends" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昔の仲間に会いに行く"
+          }
+        }
+      }
+    },
+    "Watch the sunrise to the very end" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝日を最後まで眺める"
+          }
+        }
+      }
+    },
     "Watch the video" : {
       "localizations" : {
         "ar" : {
@@ -25530,6 +25740,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "寫另一個答案"
+          }
+        }
+      }
+    },
+    "Write a letter to a friend" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "友人に手紙を書く"
+          }
+        }
+      }
+    },
+    "Write the first line of code" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最初の一行のコードを書く"
           }
         }
       }

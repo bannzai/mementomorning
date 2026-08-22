@@ -1,0 +1,16 @@
+# 朝の始まり (7:00 待機のホーム) のシーン (デモ動画 issue #94)。
+# 前提: prep/alarm.yaml でアラーム 7:00・回答 0 件にしてある。
+# システムのアラーム発火 UI はシミュレータで描画されない (空バナー) ため、
+# 発火の実映像は実機収録カットとし、ここでは「鳴る前の静かなホーム」を見せる
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: "NEXT MORNING"
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 8000
+    optional: true
+    label: "7:00 待機のホームを 8 秒見せる"

@@ -1,0 +1,112 @@
+{
+  "profile": "demo-portrait",
+  "output_dir": "output",
+  "output_name": "memento-morning-demo-upbeat-founder.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
+  "narration_mix": {
+    "voice": "Puck",
+    "style_prompt": "Speak in a bright, energetic, upbeat tone, with warmth and a smile in your voice:",
+    "bgm": "assets/bgm-upbeat.m4a",
+    "bgm_gain": 0.4
+  },
+  "title_card": {
+    "text": "Memento Morning",
+    "subtext": "Remember death. Then begin your morning.",
+    "duration": 2.5,
+    "background": "black"
+  },
+  "scenes": [
+    {
+      "id": "why-founder-safe",
+      "flow": "flows/why-founder-safe.yaml",
+      "narration": "A famous founder asked himself one question, every morning.",
+      "target_duration": 5,
+      "trim_start": 0
+    },
+    {
+      "id": "why-founder-legacy",
+      "flow": "flows/why-founder-legacy.yaml",
+      "narration": "That one habit made every day count.",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
+      "id": "alarm",
+      "flow": "flows/alarm.yaml",
+      "subtitle": "Now, your alarm asks you the same question.",
+      "target_duration": 5,
+      "trim_start": 2
+    },
+    {
+      "id": "morning-question",
+      "flow": "flows/morning-question.yaml",
+      "subtitle": "You can't snooze this question.",
+      "narration": "If today were your last day, what would you want to do? Say it to your own face — it's the only way to stop the alarm.",
+      "target_duration": 11.5,
+      "trim_start": 3.6
+    },
+    {
+      "id": "why-value",
+      "flow": "flows/why-value.yaml",
+      "narration": "When you know what today is for, you have a reason to rise — not to snooze.",
+      "target_duration": 7,
+      "trim_start": 0
+    },
+    {
+      "id": "journal",
+      "flow": "flows/journal.yaml",
+      "subtitle": "Morning by morning, your answers become the story of your life.",
+      "narration": "Morning by morning, your answers become the story of your life.",
+      "target_duration": 8.5,
+      "trim_start": 7.4
+    },
+    {
+      "id": "seven-mornings",
+      "flow": "flows/seven-mornings.yaml",
+      "subtitle": "Day 7. You start to see what you keep coming back to.",
+      "narration": "Seven mornings in, you see what you keep coming back to.",
+      "target_duration": 5.3,
+      "trim_start": 7
+    },
+    {
+      "id": "share-card",
+      "flow": "flows/share-card.yaml",
+      "subtitle": "Some mornings deserve to be shared.",
+      "target_duration": 5,
+      "trim_start": 10
+    },
+    {
+      "id": "night-banner",
+      "flow": "flows/night-banner.yaml",
+      "subtitle": "At night, the question quietly returns.",
+      "target_duration": 5,
+      "trim_start": 47
+    },
+    {
+      "id": "night-reflection",
+      "flow": "flows/night-reflection.yaml",
+      "subtitle": "Did you keep this morning's words?",
+      "target_duration": 4,
+      "trim_start": 11
+    },
+    {
+      "id": "paywall",
+      "flow": "flows/paywall.yaml",
+      "subtitle": "Premium keeps every morning.",
+      "narration": "Premium keeps ringing until you answer — so you never miss a morning. And every morning you have ever answered stays with you.",
+      "target_duration": 10.5,
+      "trim_start": 4.6,
+      "speed": 0.85
+    },
+    {
+      "id": "life-calendar",
+      "flow": "flows/life-calendar.yaml",
+      "subtitle": "The dots will connect.",
+      "target_duration": 7.5,
+      "trim_start": 5.2
+    }
+  ]
+}

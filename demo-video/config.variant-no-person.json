@@ -1,0 +1,98 @@
+{
+  "profile": "demo-portrait",
+  "output_dir": "output",
+  "output_name": "memento-morning-demo-no-person.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
+  "title_card": {
+    "text": "Memento Morning",
+    "subtext": "Remember death. Then begin your morning.",
+    "duration": 3,
+    "background": "black"
+  },
+  "scenes": [
+    {
+      "id": "why-no-person",
+      "flow": "flows/why-no-person.yaml",
+      "narration": "How you wake up decides how you live the day.",
+      "target_duration": 6,
+      "trim_start": 0
+    },
+    {
+      "id": "alarm",
+      "flow": "flows/alarm.yaml",
+      "subtitle": "Every morning, the alarm asks one question.",
+      "target_duration": 6,
+      "trim_start": 2
+    },
+    {
+      "id": "morning-question",
+      "flow": "flows/morning-question.yaml",
+      "subtitle": "Recording your answer is the only way to stop it.",
+      "narration": "If today were your last day, what would you want to do? Recording your answer is the only way to stop the alarm.",
+      "target_duration": 12.3,
+      "trim_start": 3.6
+    },
+    {
+      "id": "why-value",
+      "flow": "flows/why-value.yaml",
+      "narration": "A goal in the morning gives you a meaningful start, and a reason not to snooze.",
+      "target_duration": 8,
+      "trim_start": 0
+    },
+    {
+      "id": "journal",
+      "flow": "flows/journal.yaml",
+      "subtitle": "Your answers become a journal of your life.",
+      "narration": "Your answers become a journal of your life. Every night, every week, every month.",
+      "target_duration": 9.5,
+      "trim_start": 7.4
+    },
+    {
+      "id": "seven-mornings",
+      "flow": "flows/seven-mornings.yaml",
+      "subtitle": "Day 7. Seven answers, together for the first time.",
+      "narration": "Seven answers, together for the first time.",
+      "target_duration": 5.8,
+      "trim_start": 7
+    },
+    {
+      "id": "share-card",
+      "flow": "flows/share-card.yaml",
+      "subtitle": "Share any morning as a quiet card.",
+      "target_duration": 5.5,
+      "trim_start": 13.6
+    },
+    {
+      "id": "night-banner",
+      "flow": "flows/night-banner.yaml",
+      "subtitle": "A quiet reminder, at the times you choose.",
+      "target_duration": 6,
+      "trim_start": 47
+    },
+    {
+      "id": "night-reflection",
+      "flow": "flows/night-reflection.yaml",
+      "subtitle": "Did you keep this morning's words?",
+      "target_duration": 4.5,
+      "trim_start": 6.2
+    },
+    {
+      "id": "paywall",
+      "flow": "flows/paywall.yaml",
+      "subtitle": "Premium keeps every morning.",
+      "narration": "Premium keeps ringing until you answer — so you never miss a morning. And it keeps every morning you have ever answered.",
+      "target_duration": 11,
+      "trim_start": 6.5
+    },
+    {
+      "id": "life-calendar",
+      "flow": "flows/life-calendar.yaml",
+      "subtitle": "The dots will connect.",
+      "target_duration": 7.5,
+      "trim_start": 5.2
+    }
+  ]
+}

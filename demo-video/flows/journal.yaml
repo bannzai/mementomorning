@@ -1,0 +1,35 @@
+# ホーム → ジャーナル (回答ログ) のシーン (デモ動画 issue #94)。
+# 前提: prep/setup.yaml でサンプル回答 10 日分・アラーム 7:00 を投入済み
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: "This morning's words"
+    timeout: 15000
+# ホーム (NEXT MORNING 7:00・今朝のことば・粒ストリップ) を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 4000
+    optional: true
+    label: "ホームを 4 秒見せる"
+- tapOn: "Journal"
+- extendedWaitUntil:
+    visible: "Ship my app to the world"
+    timeout: 10000
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 3000
+    optional: true
+    label: "ジャーナルを 3 秒見せる"
+# 無料枠の外 (プレミアムのロック行) までゆっくりスクロールする
+- scrollUntilVisible:
+    element:
+      id: "journal_paywall_link"
+    direction: DOWN
+    speed: 20
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 3000
+    optional: true
+    label: "ロック行を 3 秒見せる"

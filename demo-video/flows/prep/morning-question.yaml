@@ -1,0 +1,85 @@
+# 朝の問いシーンの準備 (録画しない準備 flow)。
+# 1 回目の疑似録画で音声認識の許可ダイアログを消化してから、
+# 回答を削除して発火記録を作り直し、「朝の問いが出る直前」の状態で終わる。
+# 前提: 写真ライブラリ許可を simctl privacy で付与済み。疑似録画モードはこの flow 内でトグルを ON にする
+# (simctl spawn defaults write は cfprefsd のキャッシュに阻まれ起動済みアプリの UserDefaults に反映されないため UI から切り替える。実測)
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- scrollUntilVisible:
+    element:
+      id: "debug_simulate_video_answer"
+    direction: DOWN
+    centerElement: true
+# OFF のときだけスイッチを ON にする (再実行しても OFF には戻さない冪等な操作)。
+# SwiftUI の Toggle は行中央 (ラベル) のタップでは切り替わらないため、行の右端にあるスイッチ部の座標を叩く。
+# x=360 は行の右端 (幅 402pt の List 行の switch 位置)、y=437 は centerElement で画面中央に寄せた行の高さ (実測)
+- runFlow:
+    when:
+      visible:
+        id: "debug_simulate_video_answer"
+        checked: false
+    commands:
+      - tapOn:
+          point: "360, 437"
+- assertVisible:
+    id: "debug_simulate_video_answer"
+    checked: true
+- scrollUntilVisible:
+    element:
+      id: "debug_delete_all_answers"
+    direction: UP
+- tapOn:
+    id: "debug_delete_all_answers"
+- scrollUntilVisible:
+    element:
+      id: "debug_record_alarm_fired"
+    direction: DOWN
+- tapOn:
+    id: "debug_record_alarm_fired"
+# 朝の問いが全画面で出る → 許可ダイアログ消化のための 1 回目の疑似録画
+- extendedWaitUntil:
+    visible:
+      id: "morning_question_record_button"
+    timeout: 20000
+- tapOn:
+    id: "morning_question_record_button"
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 2000
+    optional: true
+    label: "2 秒録画する"
+- tapOn:
+    id: "morning_question_record_button"
+# 保存が終わると全画面が閉じて開発者メニューに戻り、音声認識の許可ダイアログが出る
+- extendedWaitUntil:
+    visible:
+      id: "debug_record_alarm_fired"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 8000
+    optional: true
+- tapOn:
+    text: "Allow"
+    optional: true
+# 2 回目 (本番録画用): 回答を消して発火記録を作り直す。この flow は朝の問いが出た状態で終わる
+- scrollUntilVisible:
+    element:
+      id: "debug_delete_all_answers"
+    direction: UP
+- tapOn:
+    id: "debug_delete_all_answers"
+- scrollUntilVisible:
+    element:
+      id: "debug_record_alarm_fired"
+    direction: DOWN
+- tapOn:
+    id: "debug_record_alarm_fired"
+- extendedWaitUntil:
+    visible:
+      id: "morning_question_record_button"
+    timeout: 20000
