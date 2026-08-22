@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 import SwiftData
 
@@ -117,6 +118,11 @@ struct LifeCalendarPage: View {
         }
         .background(Color.ink.ignoresSafeArea())
         .onAppear {
+            answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+        }
+        // この画面を開いたまま朝の問い (fullScreenCover) で回答が保存されても onAppear は再発火しないため、
+        // 保存通知で「答えた日数」と七つの朝リンクの表示条件を再計算する (HomeContent と同じパターン)
+        .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
         .toolbar {
