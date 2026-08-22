@@ -14,6 +14,8 @@ set -euo pipefail
 #   why-no-person 人物に触れない (朝の目覚め方の効用)
 # 価値説明 1 枚 (全パターン共通):
 #   why-value     朝に目標を確認する効用 (有意義なスタート・二度寝防止)
+# フックと alarm の間のワンクッション (issue #94 フィードバック第 6 弾。習慣の効用を語る):
+#   why-jobs-legacy  その習慣が毎日を意味あるものにした
 #
 # 使い方 (compose-video.sh の前に実行する):
 #   bash demo-video/scripts/generate-appeal-cards.sh
@@ -49,6 +51,7 @@ PORTRAIT=demo-video/assets/founder-portrait.png
 # id|1 行目|2 行目|肖像を載せるか (portrait / 空)
 CARDS='why-founder|A famous founder asked himself|one question, every morning.|portrait
 why-jobs|Steve Jobs asked himself|one question, every morning.|portrait
+why-jobs-legacy|That one habit|made every day count.|portrait
 why-no-person|How you wake|decides how you live the day.|
 why-value|Wake to a goal.|A reason to rise, not to snooze.|'
 

@@ -89,7 +89,7 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 | `config.json` | フック: ぼかし表現 (A famous founder) | `memento-morning-demo-founder.mp4` |
 | `config.variant-jobs.json` | フック: 実名 (Steve Jobs) | `memento-morning-demo-jobs.mp4` |
 | `config.variant-no-person.json` | フック: 人物に触れない (目覚め方の効用) | `memento-morning-demo-no-person.mp4` |
-| `config.variant-upbeat.json` | 元気トーン (jobs フック + Puck ボイス + Maple Leaf Rag + 各シーン短縮) | `memento-morning-demo-upbeat.mp4` |
+| `config.variant-upbeat.json` | 元気トーン (jobs フック + Puck ボイス + Maple Leaf Rag + 各シーン短縮)。フィードバック第 6 弾の文言エモ化とワンクッションカット (why-jobs-legacy) を先行適用 | `memento-morning-demo-upbeat.mp4` |
 
 声・話し方・BGM は config の `narration_mix` (voice / style_prompt / bgm / bgm_gain) で
 上書きできる (省略時はしっとり版の既定値。generate-narration.sh のヘッダーコメント参照)。
@@ -101,7 +101,7 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
   生成した寝起きセルフィー。talk 系は selfie.png を入力にした image-to-image で口の開きだけ変えたもので、
   enhance-morning-question.sh が切り替えて口パクにする
 - `assets/founder-portrait.png`: Nano Banana Pro (gemini-3-pro-image-preview) で生成した創業者の
-  線画イラスト (黒背景・白線画)。フックカード (why-founder / why-jobs) に載せる。実写・報道写真は
+  線画イラスト (黒背景・白線画)。フックカード (why-founder / why-jobs / why-jobs-legacy) に載せる。実写・報道写真は
   使わない (肖像の権利リスクを生成イラストに留める判断。経緯は PR #95 のフィードバック第 4 弾コメント)
 - `assets/bgm.m4a`: Erik Satie - Gymnopédie No.1 (Robin Alciatore 演奏、パブリックドメイン、帰属表記不要)。
   出典: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg
