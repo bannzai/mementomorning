@@ -61,65 +61,72 @@ struct LifeCalendarPage: View {
                 .multilineTextAlignment(.center)
                 .padding(.top, 6)
                 .padding(.horizontal, 40)
-            // 曜日ヘッダー。グリッドの列 (firstWeekday 起点) と同じ並びで各列の意味を示す
-            HStack(spacing: lifeCalendarDotSpacing) {
-                Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
-                let weekdaySymbols = lifeCalendarWeekdaySymbols(calendar: calendar)
-                // 曜日記号は言語によって重複する (英語の S/T 等) ため列番号を id にする
-                ForEach(0..<7, id: \.self) { weekdayColumnIndex in
-                    Text(verbatim: weekdaySymbols[weekdayColumnIndex])
-                        .font(.system(size: 9))
-                        .foregroundStyle(Color.warmWhite.opacity(0.35))
-                        .frame(width: lifeCalendarDotSize)
-                }
-                Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
-            }
-            .padding(.top, 16)
-            .accessibilityHidden(true)
             ScrollViewReader { proxy in
                 GeometryReader { geometry in
                     ScrollView {
                         let weeks = lifeCalendarWeeks(days: days)
-                        LazyVStack(spacing: lifeCalendarDotSpacing) {
-                            // 週の中身は範囲が同じなら不変のため行番号を id にする
-                            ForEach(Array(weeks.enumerated()), id: \.offset) { weekIndex, week in
-                                HStack(spacing: lifeCalendarDotSpacing) {
-                                    Group {
-                                        if let anchorDay = lifeCalendarMonthAnchorDay(week: week, isFirstWeek: weekIndex == 0, calendar: calendar) {
-                                            Text(verbatim: lifeCalendarMonthLabel(anchorDay: anchorDay, isFirstWeek: weekIndex == 0, calendar: calendar))
-                                        } else {
-                                            Text(verbatim: "")
-                                        }
-                                    }
-                                    .font(.system(size: 9))
-                                    .foregroundStyle(Color.warmWhite.opacity(0.4))
-                                    .frame(width: lifeCalendarMonthLabelWidth, alignment: .trailing)
-                                    ForEach(week, id: \.self) { day in
-                                        Circle()
-                                            .fill(answeredDays.contains(day) ? Color.warmWhite : Color.warmWhite.opacity(0.09))
-                                            .frame(width: lifeCalendarDotSize, height: lifeCalendarDotSize)
-                                            .overlay {
-                                                // 今日の粒だけに夜明け色のリングを添える (アクセントは各画面 1 箇所まで)
-                                                if day == today {
-                                                    Circle()
-                                                        .stroke(Color.dawn.opacity(0.35), lineWidth: 3)
-                                                        .frame(width: 20, height: 20)
-                                                }
+                        // 曜日ヘッダーは pinned section header にする。履歴が浅くグリッドが中央寄せの間はグリッド直上に付き、
+                        // 履歴が長くスクロールする時は上部に固定されて列の意味を示し続ける
+                        LazyVStack(spacing: lifeCalendarDotSpacing, pinnedViews: [.sectionHeaders]) {
+                            Section {
+                                // 週の中身は範囲が同じなら不変のため行番号を id にする
+                                ForEach(Array(weeks.enumerated()), id: \.offset) { weekIndex, week in
+                                    HStack(spacing: lifeCalendarDotSpacing) {
+                                        Group {
+                                            if let anchorDay = lifeCalendarMonthAnchorDay(week: week, isFirstWeek: weekIndex == 0, calendar: calendar) {
+                                                Text(verbatim: lifeCalendarMonthLabel(anchorDay: anchorDay, isFirstWeek: weekIndex == 0, calendar: calendar))
+                                            } else {
+                                                Text(verbatim: "")
                                             }
-                                            .accessibilityLabel(
-                                                // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す
-                                                Text(verbatim: day.formatted(date: .complete, time: .omitted) + ", "
-                                                    + (answeredDays.contains(day)
-                                                        // ja: 回答済み
-                                                        ? String(localized: "Answered")
-                                                        // ja: 未回答
-                                                        : String(localized: "Not answered")))
-                                            )
-                                            .id(day)
+                                        }
+                                        .font(.system(size: 9))
+                                        .foregroundStyle(Color.warmWhite.opacity(0.4))
+                                        .frame(width: lifeCalendarMonthLabelWidth, alignment: .trailing)
+                                        ForEach(week, id: \.self) { day in
+                                            Circle()
+                                                .fill(answeredDays.contains(day) ? Color.warmWhite : Color.warmWhite.opacity(0.09))
+                                                .frame(width: lifeCalendarDotSize, height: lifeCalendarDotSize)
+                                                .overlay {
+                                                    // 今日の粒だけに夜明け色のリングを添える (アクセントは各画面 1 箇所まで)
+                                                    if day == today {
+                                                        Circle()
+                                                            .stroke(Color.dawn.opacity(0.35), lineWidth: 3)
+                                                            .frame(width: 20, height: 20)
+                                                    }
+                                                }
+                                                .accessibilityLabel(
+                                                    // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す
+                                                    Text(verbatim: day.formatted(date: .complete, time: .omitted) + ", "
+                                                        + (answeredDays.contains(day)
+                                                            // ja: 回答済み
+                                                            ? String(localized: "Answered")
+                                                            // ja: 未回答
+                                                            : String(localized: "Not answered")))
+                                                )
+                                                .id(day)
+                                        }
+                                        // 月ラベル列と対の余白。グリッド (粒の並び) を画面中央に保つ
+                                        Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
                                     }
-                                    // 月ラベル列と対の余白。グリッド (粒の並び) を画面中央に保つ
+                                }
+                            } header: {
+                                // 曜日ヘッダー。グリッドの列 (firstWeekday 起点) と同じ並びで各列の意味を示す。
+                                // 固定時に下の粒が透けないよう背景を敷く
+                                HStack(spacing: lifeCalendarDotSpacing) {
+                                    Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
+                                    let weekdaySymbols = lifeCalendarWeekdaySymbols(calendar: calendar)
+                                    // 曜日記号は言語によって重複する (英語の S/T 等) ため列番号を id にする
+                                    ForEach(0..<7, id: \.self) { weekdayColumnIndex in
+                                        Text(verbatim: weekdaySymbols[weekdayColumnIndex])
+                                            .font(.system(size: 9))
+                                            .foregroundStyle(Color.warmWhite.opacity(0.35))
+                                            .frame(width: lifeCalendarDotSize)
+                                    }
                                     Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
                                 }
+                                .padding(.vertical, 4)
+                                .background(Color.ink)
+                                .accessibilityHidden(true)
                             }
                         }
                         .padding(.vertical, 28)
