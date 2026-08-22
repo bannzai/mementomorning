@@ -11,6 +11,19 @@ private func startOfWeek(date: Date, calendar: Calendar) -> Date {
 /// 誕生日等の設定はまだ存在しないため、未設定時のデフォルト表示として
 /// 「最初の回答が属する週から今日が属する週まで」を表示する。
 /// 回答がない・回答歴が浅い場合でも最低 13 週分のグリッドを描画し、空のグリッドとして破綻なく表示できるようにする
+/// lifeCalendarDays が返す日列を週 (7 日) ごとの行に分割して古い順で返す
+func lifeCalendarWeeks(days: [Date]) -> [[Date]] {
+    stride(from: 0, to: days.count, by: 7).map { Array(days[$0..<min($0 + 7, days.count)]) }
+}
+
+/// 週の行頭に添える月ラベルの基準日を返す。
+/// 月初 (1 日) を含む週はその月初の日を返し、月の変わり目だけにラベルが付くようにする。
+/// 最初の週 (isFirstWeek) は月初を含まなくても週の先頭日を返し、グリッド最上段がどの月かわかるようにする。
+/// それ以外の週は nil (ラベルなし)
+func lifeCalendarMonthAnchorDay(week: [Date], isFirstWeek: Bool, calendar: Calendar) -> Date? {
+    week.first(where: { calendar.component(.day, from: $0) == 1 }) ?? (isFirstWeek ? week.first : nil)
+}
+
 func lifeCalendarDays(answeredDates: [Date], today: Date, calendar: Calendar) -> [Date] {
     let todayWeekStart = startOfWeek(date: today, calendar: calendar)
     // 13 週 (= 91 日) は、PROJECT.md の 90 日の節目「問い直し」までの道のりをひと目で見渡せる最小の週数として選んだ

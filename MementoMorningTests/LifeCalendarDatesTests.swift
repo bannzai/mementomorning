@@ -69,6 +69,54 @@ final class LifeCalendarDatesTests: XCTestCase {
         XCTAssertEqual(days.first, weekStart(date: earliestAnsweredDate))
     }
 
+    func testWeeksChunksDaysBySeven() {
+        let today = date(year: 2026, month: 8, day: 13)
+        let days = lifeCalendarDays(answeredDates: [], today: today, calendar: calendar)
+
+        let weeks = lifeCalendarWeeks(days: days)
+
+        XCTAssertEqual(weeks.count, 13)
+        XCTAssertTrue(weeks.allSatisfy { $0.count == 7 })
+        XCTAssertEqual(weeks.flatMap { $0 }, days)
+    }
+
+    func testMonthAnchorDayReturnsFirstOfMonth() {
+        // 2026-08-01 (土) を含む週 (日曜始まりのため 2026-07-26 開始)
+        let week = (0..<7).map { calendar.date(byAdding: .day, value: $0, to: date(year: 2026, month: 7, day: 26))! }
+
+        XCTAssertEqual(
+            lifeCalendarMonthAnchorDay(week: week, isFirstWeek: false, calendar: calendar),
+            date(year: 2026, month: 8, day: 1)
+        )
+    }
+
+    func testMonthAnchorDayIsNilForWeekWithoutFirstOfMonth() {
+        // 月初を含まない週 (2026-08-02 開始)
+        let week = (0..<7).map { calendar.date(byAdding: .day, value: $0, to: date(year: 2026, month: 8, day: 2))! }
+
+        XCTAssertNil(lifeCalendarMonthAnchorDay(week: week, isFirstWeek: false, calendar: calendar))
+    }
+
+    func testMonthAnchorDayFirstWeekFallsBackToWeekStart() {
+        // 月初を含まない週でも最初の週なら先頭日を返す
+        let week = (0..<7).map { calendar.date(byAdding: .day, value: $0, to: date(year: 2026, month: 8, day: 2))! }
+
+        XCTAssertEqual(
+            lifeCalendarMonthAnchorDay(week: week, isFirstWeek: true, calendar: calendar),
+            date(year: 2026, month: 8, day: 2)
+        )
+    }
+
+    func testMonthAnchorDayFirstWeekPrefersFirstOfMonth() {
+        // 最初の週が月初を含む場合は先頭日ではなく月初を返す
+        let week = (0..<7).map { calendar.date(byAdding: .day, value: $0, to: date(year: 2026, month: 7, day: 26))! }
+
+        XCTAssertEqual(
+            lifeCalendarMonthAnchorDay(week: week, isFirstWeek: true, calendar: calendar),
+            date(year: 2026, month: 8, day: 1)
+        )
+    }
+
     func testDaysAreConsecutiveStartOfDays() {
         let today = date(year: 2026, month: 8, day: 13)
 
