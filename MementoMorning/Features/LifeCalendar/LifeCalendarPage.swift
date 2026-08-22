@@ -22,19 +22,29 @@ private let lifeCalendarDotSpacing: CGFloat = 11
 /// グリッドの中央寄せを保つため、行の右端にも同じ幅の余白を置いて対で使う
 private let lifeCalendarMonthLabelWidth: CGFloat = 56
 
+/// 月ラベル・曜日記号の表示言語。Locale.current は端末の言語設定そのものを返し、アプリが対応しない言語にもなり得るため、
+/// LegalLinks.swift と同じく Bundle.main.preferredLocalizations でアプリの実際の表示言語に合わせる。
+/// フォールバックの "en" はアプリの基本言語 (localization-guidelines.md) に合わせている
+private var lifeCalendarDisplayLocale: Locale {
+    Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en")
+}
+
 /// Calendar.firstWeekday を起点に並べ替えた曜日記号 (日月火... / S M T...)。
 /// lifeCalendarDays の週の区切りも同じ firstWeekday に従うため、ヘッダーの列とグリッドの列が一致する
 private func lifeCalendarWeekdaySymbols(calendar: Calendar) -> [String] {
-    (0..<7).map { calendar.veryShortStandaloneWeekdaySymbols[(calendar.firstWeekday - 1 + $0) % 7] }
+    // 記号の言語だけをアプリの表示言語に合わせ、週の起点 (firstWeekday) は引数の calendar のものを維持する
+    var localizedCalendar = calendar
+    localizedCalendar.locale = lifeCalendarDisplayLocale
+    return (0..<7).map { localizedCalendar.veryShortStandaloneWeekdaySymbols[(calendar.firstWeekday - 1 + $0) % 7] }
 }
 
 /// 週の行頭に表示する月ラベルの文字列。
 /// 年の変わり目 (1 月) と最初の行では年も併記し、複数年の履歴でもどの年の粒か辿れるようにする
 private func lifeCalendarMonthLabel(anchorDay: Date, isFirstWeek: Bool, calendar: Calendar) -> String {
     if isFirstWeek || calendar.component(.month, from: anchorDay) == 1 {
-        return anchorDay.formatted(.dateTime.month(.abbreviated).year())
+        return anchorDay.formatted(.dateTime.month(.abbreviated).year().locale(lifeCalendarDisplayLocale))
     }
-    return anchorDay.formatted(.dateTime.month(.abbreviated))
+    return anchorDay.formatted(.dateTime.month(.abbreviated).locale(lifeCalendarDisplayLocale))
 }
 
 /// 答えた朝が一粒ずつ墨のように埋まっていく人生カレンダー (週単位グリッド)。1 行が 1 週間、1 マスが 1 日。
@@ -80,6 +90,11 @@ struct LifeCalendarPage: View {
                                             }
                                         }
                                         .font(.system(size: 9))
+                                        // 月ラベルの折り返しでその週の行だけ高くなるのを防ぎ、必ず一行に収める。
+                                        // 0.7 は、対応ロケールの最長表記 (スロバキア語の september 2026 が 9pt で約 70pt) が
+                                        // 月ラベル列の幅 56pt に収まる縮小率として選んだ
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.7)
                                         .foregroundStyle(Color.warmWhite.opacity(0.4))
                                         .frame(width: lifeCalendarMonthLabelWidth, alignment: .trailing)
                                         ForEach(week, id: \.self) { day in
@@ -103,11 +118,14 @@ struct LifeCalendarPage: View {
                                                             // ja: 未回答
                                                             : String(localized: "Not answered")))
                                                 )
-                                                .id(day)
                                         }
                                         // 月ラベル列と対の余白。グリッド (粒の並び) を画面中央に保つ
                                         Color.clear.frame(width: lifeCalendarMonthLabelWidth, height: 1)
                                     }
+                                    // スクロール先の id は週行に付ける。LazyVStack の遅延生成単位は行のため、
+                                    // 直接の子である行の id なら未生成でも解決できる (行内の粒の id は解決できない)。
+                                    // 週は常に 7 要素のため week[0] を行の id にできる
+                                    .id(week[0])
                                 }
                             } header: {
                                 // 曜日ヘッダー。グリッドの列 (firstWeekday 起点) と同じ並びで各列の意味を示す。
@@ -137,8 +155,8 @@ struct LifeCalendarPage: View {
                     // defaultScrollAnchor(.bottom) はコンテンツが画面より小さい時にグリッドが下寄せになり
                     // コピーとの間に大きな空白ができるため、初回スクロールだけを行う
                     .onAppear {
-                        if let lastDay = days.last {
-                            proxy.scrollTo(lastDay, anchor: .bottom)
+                        if let lastWeekFirstDay = days.suffix(7).first {
+                            proxy.scrollTo(lastWeekFirstDay, anchor: .bottom)
                         }
                     }
                 }
