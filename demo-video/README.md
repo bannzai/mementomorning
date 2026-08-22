@@ -91,6 +91,7 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 | `config.variant-no-person.json` | フック: 人物に触れない (目覚め方の効用) | `memento-morning-demo-no-person.mp4` |
 | `config.variant-upbeat.json` | 元気トーン (jobs フック + Puck ボイス + Maple Leaf Rag + 各シーン短縮)。フィードバック第 6 弾の文言エモ化とワンクッションカット (why-jobs-legacy) を先行適用 | `memento-morning-demo-upbeat.mp4` |
 | `config.variant-upbeat-ja.json` | upbeat の日本語版 (字幕・ナレーション・訴求カードを日本語化。クリップは英語 UI のまま共用) | `memento-morning-demo-upbeat-ja.mp4` |
+| `config.variant-upbeat-founder.json` | upbeat の安全版 (フックを実名 → A famous founder に置き換え、肖像イラストも外す。Devpost の第三者素材ルール・パブリシティ権対策) | `memento-morning-demo-upbeat-founder.mp4` |
 
 声・話し方・BGM は config の `narration_mix` (voice / style_prompt / bgm / bgm_gain) で
 上書きできる (省略時はしっとり版の既定値。generate-narration.sh のヘッダーコメント参照)。

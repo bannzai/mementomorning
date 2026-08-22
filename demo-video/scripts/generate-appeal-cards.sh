@@ -18,6 +18,9 @@ set -euo pipefail
 #   why-jobs-legacy  その習慣が毎日を意味あるものにした
 # 日本語版 (config.variant-upbeat-ja.json が参照する -ja サフィックスの 3 枚):
 #   why-jobs-ja / why-jobs-legacy-ja / why-value-ja
+# 安全版 (config.variant-upbeat-founder.json が参照。実名・肖像を使わない Shipaton 提出用の保険。
+# 肖像も外すのは、パブリシティ権が氏名だけでなく肖像にも及び、線画でも人物が特定できるため):
+#   why-founder-safe / why-founder-legacy
 #
 # 使い方 (compose-video.sh の前に実行する):
 #   bash demo-video/scripts/generate-appeal-cards.sh
@@ -58,7 +61,9 @@ why-no-person|How you wake|decides how you live the day.|
 why-value|Wake to a goal.|A reason to rise, not to snooze.|
 why-jobs-ja|スティーブ・ジョブズは毎朝、|自分にひとつの質問をしていた。|portrait
 why-jobs-legacy-ja|そのひとつの習慣が、|毎日を意味あるものにした。|portrait
-why-value-ja|目標とともに、目覚める。|二度寝ではなく、起きる理由を。|'
+why-value-ja|目標とともに、目覚める。|二度寝ではなく、起きる理由を。|
+why-founder-safe|A famous founder asked himself|one question, every morning.|
+why-founder-legacy|That one habit|made every day count.|'
 
 # タイトルカード (compose-video.sh の card-main/card-sub) と同じ見た目に寄せる:
 # 黒背景に白文字・中央寄せ。drawtext の複数行は左寄せになるため 1 行ずつ中央に描く。
