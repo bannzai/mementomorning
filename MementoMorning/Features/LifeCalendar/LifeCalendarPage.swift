@@ -22,6 +22,8 @@ struct LifeCalendarPage: View {
     @Query(lifeCalendarAnswersDescriptor) private var answers: [MorningAnswer]
     /// 全期間の回答数 (答えた日数 N)。グリッド用クエリは 2 年分に制限しているため、件数は fetchCount で全期間から取得する
     @State private var answeredCount = 0
+    /// 7 日の節目「七つの朝」を見返すシートを表示中かどうか (issue #109)
+    @State private var isSevenMorningsPagePresented = false
 
     var body: some View {
         let calendar = Calendar.current
@@ -90,8 +92,28 @@ struct LifeCalendarPage: View {
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))
+                // 節目に達した後はいつでもカレンダーから振り返りカードを見返せるようにする (issue #109)。
+                // 30 日の節目「一ヶ月の手紙」の導線は実装後 (issue #96) にここへ追加する
+                if canRevisitSevenMorningsMilestone(answerCount: answeredCount) {
+                    Button {
+                        isSevenMorningsPagePresented = true
+                    } label: {
+                        // ja: 七つの朝
+                        Text("Seven Mornings")
+                            .underline()
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 14)
+                    }
+                    .font(.system(size: 13))
+                    .tracking(1.3)
+                    .foregroundStyle(Color.warmWhite.opacity(0.65))
+                    .accessibilityIdentifier("life_calendar_seven_mornings_link")
+                }
             }
             .padding(.bottom, 24)
+        }
+        .sheet(isPresented: $isSevenMorningsPagePresented) {
+            SevenMorningsPage()
         }
         .background(Color.ink.ignoresSafeArea())
         .onAppear {
