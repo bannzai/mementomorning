@@ -1,7 +1,7 @@
 {
   "profile": "demo-portrait",
   "output_dir": "output",
-  "output_name": "memento-morning-demo-upbeat.mp4",
+  "output_name": "memento-morning-demo-upbeat-founder.mp4",
   "bgm": {
     "file": "output/narration/bgm-mix.m4a",
     "volume": 1.0
@@ -20,15 +20,15 @@
   },
   "scenes": [
     {
-      "id": "why-jobs",
-      "flow": "flows/why-jobs.yaml",
-      "narration": "Steve Jobs asked himself one question, every morning.",
+      "id": "why-founder-safe",
+      "flow": "flows/why-founder-safe.yaml",
+      "narration": "A famous founder asked himself one question, every morning.",
       "target_duration": 5,
       "trim_start": 0
     },
     {
-      "id": "why-jobs-legacy",
-      "flow": "flows/why-jobs-legacy.yaml",
+      "id": "why-founder-legacy",
+      "flow": "flows/why-founder-legacy.yaml",
       "narration": "That one habit made every day count.",
       "target_duration": 4.5,
       "trim_start": 0

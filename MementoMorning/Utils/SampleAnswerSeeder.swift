@@ -7,27 +7,29 @@ import SwiftData
 func seedSampleAnswersIfNeeded(modelContext: ModelContext) {
     // 無料枠 (直近 7 日) の内外両方の見え方を確認するため、今日から 0〜9 日前の 10 件を投入する。
     // 永続化されるサンプルデータのため String(localized:) でアプリの言語に合わせる (.claude/rules/coding-rules-entity.md)
+    // Shipaton デモ動画 (issue #94) の題材を兼ねるため、「アプリを作って世界に出すメイカーの 10 日間」
+    // のストーリーになっている (index 0 = 今日 = 出荷の日、index 9 = 最も古い = 作り始めの日)
     let sampleTexts = [
-        // ja: 家族と海を見に行く
-        String(localized: "See the ocean with my family"),
-        // ja: 母に長い電話をかける
-        String(localized: "Have a long phone call with my mother"),
-        // ja: 行きつけの店で好きなものを食べる
-        String(localized: "Eat my favorite meal at my usual place"),
-        // ja: 友人に手紙を書く
-        String(localized: "Write a letter to a friend"),
-        // ja: 子どもと一日中遊ぶ
-        String(localized: "Play with my kids all day"),
-        // ja: 誰にも言えなかったことを伝える
-        String(localized: "Say the things I've never been able to say"),
-        // ja: 朝日を最後まで眺める
-        String(localized: "Watch the sunrise to the very end"),
-        // ja: 育てた庭の手入れをする
-        String(localized: "Tend the garden I've grown"),
-        // ja: 昔の仲間に会いに行く
-        String(localized: "Visit my old friends"),
-        // ja: 自分の言葉を書き残す
-        String(localized: "Leave my own words behind"),
+        // ja: 自分のアプリを世界に出す
+        String(localized: "Ship my app to the world"),
+        // ja: Shipaton にアプリを提出する
+        String(localized: "Submit my app to the Shipaton"),
+        // ja: 納得がいくまで画面を磨く
+        String(localized: "Polish every screen until it feels right"),
+        // ja: デモ動画を一発撮りする
+        String(localized: "Record my demo video in one take"),
+        // ja: 徹夜の原因になったバグを直す
+        String(localized: "Fix the bug that kept me up all night"),
+        // ja: 自作のアラームに初めて答える
+        String(localized: "Answer my own alarm for the first time"),
+        // ja: 作りかけのアプリを友人に見せる
+        String(localized: "Show my rough build to a friend"),
+        // ja: ひとつの質問をするアラームを設計する
+        String(localized: "Design an alarm that asks one question"),
+        // ja: 最初の一行のコードを書く
+        String(localized: "Write the first line of code"),
+        // ja: 夢に見続けたアプリを作り始める
+        String(localized: "Start building the app I keep dreaming about"),
     ]
     do {
         var descriptor = FetchDescriptor<MorningAnswer>()

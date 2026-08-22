@@ -16,6 +16,11 @@ set -euo pipefail
 #   why-value     朝に目標を確認する効用 (有意義なスタート・二度寝防止)
 # フックと alarm の間のワンクッション (issue #94 フィードバック第 6 弾。習慣の効用を語る):
 #   why-jobs-legacy  その習慣が毎日を意味あるものにした
+# 日本語版 (config.variant-upbeat-ja.json が参照する -ja サフィックスの 3 枚):
+#   why-jobs-ja / why-jobs-legacy-ja / why-value-ja
+# 安全版 (config.variant-upbeat-founder.json が参照。実名・肖像を使わない Shipaton 提出用の保険。
+# 肖像も外すのは、パブリシティ権が氏名だけでなく肖像にも及び、線画でも人物が特定できるため):
+#   why-founder-safe / why-founder-legacy
 #
 # 使い方 (compose-video.sh の前に実行する):
 #   bash demo-video/scripts/generate-appeal-cards.sh
@@ -53,7 +58,12 @@ CARDS='why-founder|A famous founder asked himself|one question, every morning.|p
 why-jobs|Steve Jobs asked himself|one question, every morning.|portrait
 why-jobs-legacy|That one habit|made every day count.|portrait
 why-no-person|How you wake|decides how you live the day.|
-why-value|Wake to a goal.|A reason to rise, not to snooze.|'
+why-value|Wake to a goal.|A reason to rise, not to snooze.|
+why-jobs-ja|スティーブ・ジョブズは毎朝、|自分にひとつの質問をしていた。|portrait
+why-jobs-legacy-ja|そのひとつの習慣が、|毎日を意味あるものにした。|portrait
+why-value-ja|目標とともに、目覚める。|二度寝ではなく、起きる理由を。|
+why-founder-safe|A famous founder asked himself|one question, every morning.|
+why-founder-legacy|That one habit|made every day count.|'
 
 # タイトルカード (compose-video.sh の card-main/card-sub) と同じ見た目に寄せる:
 # 黒背景に白文字・中央寄せ。drawtext の複数行は左寄せになるため 1 行ずつ中央に描く。
@@ -66,15 +76,20 @@ while IFS='|' read -r id line1 line2 with_portrait; do
         exit 1
     fi
 
+    # 全角 (CJK) を含む行は等幅 100%、ラテンのみは 62% で幅を見積もる
+    # (compose-video.sh の glyph_ratio と同じ近似。マルチバイト判定は bytes > chars)
     max_chars=0
+    glyph_ratio=62
     for line in "$line1" "$line2"; do
-        chars=$(printf '%s' "$line" | wc -m | tr -d ' ')
+        chars=$(printf '%s' "$line" | LC_ALL=en_US.UTF-8 wc -m | tr -d ' ')
+        bytes=$(printf '%s' "$line" | LC_ALL=C wc -c | tr -d ' ')
+        (( bytes > chars )) && glyph_ratio=100
         (( chars > max_chars )) && max_chars=$chars
     done
     fontsize=$((HEIGHT / 16))
     max_width=$((WIDTH * 92 / 100))
-    if (( max_chars * fontsize * 62 / 100 > max_width )); then
-        fontsize=$((max_width * 100 / (max_chars * 62)))
+    if (( max_chars * fontsize * glyph_ratio / 100 > max_width )); then
+        fontsize=$((max_width * 100 / (max_chars * glyph_ratio)))
     fi
 
     # 肖像ありのカードは肖像を上寄せ中央に置き、テキストをその下に配置する。

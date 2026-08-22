@@ -15,7 +15,7 @@ appId: com.bannzai.MementoMorning
     label: "ホームを 4 秒見せる"
 - tapOn: "Journal"
 - extendedWaitUntil:
-    visible: "See the ocean with my family"
+    visible: "Ship my app to the world"
     timeout: 10000
 - extendedWaitUntil:
     visible: "__pause__"
