@@ -18182,6 +18182,16 @@
         }
       }
     },
+    "Share these seven mornings as one card" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七つの朝を一枚にして共有"
+          }
+        }
+      }
+    },
     "Share this morning's words?" : {
       "localizations" : {
         "ar" : {
@@ -20573,6 +20583,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shipaton にアプリを提出する"
+          }
+        }
+      }
+    },
+    "Tap an answer to share it on its own." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "それぞれの答えをタップすると、一枚ずつ共有できます"
           }
         }
       }
