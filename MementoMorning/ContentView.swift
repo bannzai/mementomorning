@@ -162,6 +162,11 @@ private struct HomeContent: View {
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
+        // 回答の成立・削除で件数が変わった時に「答えた日数」を再計算する
+        // (朝の問いの fullScreenCover が閉じてもホームの onAppear は再発火しないため、onAppear だけだと反映が再起動まで遅れる)
+        .onChange(of: todayAnswers.count) { _, _ in
+            answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+        }
         // 回答が成立してホームへ戻った時 (今日の回答が現れた時)・起動時点で今日の回答がある時に加え、
         // 動画回答の文字起こしの完了や「直す」で本文が仮テキストから変わった時にも判定する
         .onChange(of: todayAnswers.first?.text, initial: true) { _, _ in
