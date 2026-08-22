@@ -76,21 +76,21 @@
       "flow": "flows/share-card.yaml",
       "subtitle": "Some mornings deserve to be shared.",
       "target_duration": 5,
-      "trim_start": 13.6
+      "trim_start": 10
     },
     {
       "id": "night-banner",
       "flow": "flows/night-banner.yaml",
       "subtitle": "At night, the question quietly returns.",
       "target_duration": 5,
-      "trim_start": 47.8
+      "trim_start": 47
     },
     {
       "id": "night-reflection",
       "flow": "flows/night-reflection.yaml",
       "subtitle": "Did you keep this morning's words?",
       "target_duration": 4,
-      "trim_start": 6.2
+      "trim_start": 11
     },
     {
       "id": "paywall",
@@ -98,7 +98,8 @@
       "subtitle": "Premium keeps every morning.",
       "narration": "Premium keeps ringing until you answer — so you never miss a morning. And every morning you have ever answered stays with you.",
       "target_duration": 10.5,
-      "trim_start": 6.5
+      "trim_start": 4.6,
+      "speed": 0.85
     },
     {
       "id": "life-calendar",
