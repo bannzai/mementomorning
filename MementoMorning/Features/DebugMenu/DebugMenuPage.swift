@@ -214,6 +214,19 @@ struct DebugMenuPage: View {
                     Text(verbatim: "追撃カウントをリセット")
                 }
                 .accessibilityIdentifier("debug_reset_chase_count")
+
+                Button {
+                    // 固定 2 行のサンプルで毎回上書きし、何度押しても同じ状態に収束させる (冪等)。
+                    // stopIntent はシミュレータで perform() が実行されない (ios-alarmkit-constraints.md) ため、
+                    // 開発者用のログ画面 (DeveloperLogPage) の表示・コピーの検証にはこのサンプルを使う
+                    UserDefaults.standard.set(
+                        "2026-08-22T07:00:00Z perform() start appState=background\n2026-08-22T07:00:01Z schedule() success",
+                        forKey: .stopIntentSpikeLog
+                    )
+                } label: {
+                    Text(verbatim: "スパイクログにサンプルを設定")
+                }
+                .accessibilityIdentifier("debug_set_sample_spike_log")
             } header: {
                 Text(verbatim: "無限アラーム (issue #97)")
             } footer: {
