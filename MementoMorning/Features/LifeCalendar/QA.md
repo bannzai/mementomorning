@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
-last_verified_at: 2026-08-22
+last_verified_commit: 082710fc026572a24bc8a96aa6164af087bb4aa7
+last_verified_at: 2026-08-23
 ---
 
 # LifeCalendar QA
@@ -10,7 +10,7 @@ last_verified_at: 2026-08-22
 ## 関連リンク
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/6 (受け入れ条件)
-- 関連: なし
+- 関連: https://github.com/bannzai/mementomorning/issues/109 (七つの朝を後から見返す導線)
 
 ## 仕様チェックリスト
 
@@ -85,6 +85,48 @@ last_verified_at: 2026-08-22
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
 
 (全期間 10 件で「答えた日数 10日」。日本語設定の simtunnel で確認)
+
+</details>
+
+</details>
+
+---
+
+## 2. 七つの朝への導線 (issue #109)
+
+- [x] **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+  - 自動化: manual（表示可否の目視確認。判定ロジックは MementoMorningTests/SevenMorningsMilestoneTests.swift がカバー済み）
+- [x] **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
+  - 自動化: manual（sheet 遷移の確認）
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (simtunnel、英語ロケール、回答 0 件)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/1091f20f-33cd-4503-8944-dfa44134c8fa.jpg" width="320">
+
+(フッターは「0 mornings answered / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は無い)
+
+</details>
+
+### **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 件投入後)
+
+1. フッターに「Seven Mornings」リンクが表示される
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/effa31e2-2f20-47cf-bf8e-ac6421fd5643.jpg" width="320">
+
+2. タップすると SevenMorningsPage が sheet で開き、最初の 7 件 (Aug 13〜19) が日付昇順で並ぶ。下スワイプで閉じるとカレンダーへ戻り、リンクは残る
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/e0dd0aaa-7db5-4b92-82b2-ae8d44b5f77f.jpg" width="320">
 
 </details>
 
