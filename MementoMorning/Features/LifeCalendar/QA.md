@@ -1,7 +1,7 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
 last_verified_at: 2026-08-22
 ---
 

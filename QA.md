@@ -1,7 +1,7 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
 last_verified_at: 2026-08-22
 ---
 
@@ -89,7 +89,7 @@ last_verified_at: 2026-08-22
 - [x] **アラームの一連**: アラーム設定 → 1〜2 分後に発火 → 朝の問い → 回答 → 以降鳴らない、のコアループが通る (詳細は AlarmSetting / MorningQuestion の QA.md)
   - 自動化: manual（発火待ちを含む通し確認）
   - 確認範囲: シミュレータで「設定 → 発火 → 停止ボタン → 朝の問い → テキスト回答 → ホーム反映 + 次アラームが翌朝」まで確認した。**アラートの停止ボタンからアプリが前面化して朝の問いが開くところまではシミュレータでも動く** (`openAppWhenRun`)。一方、停止操作を起点に走る `StopAlarmIntent.perform()` の中身 (未回答時の追撃アラーム再登録) はシミュレータで実行されないため、追撃ループは実機 QA (issue #2) に残る
-  - 気づいた不具合 (issue: 未起票): 回答成立でホームへ戻った直後、フッターの「答えた日数」が 0 日のまま更新されなかった。粒ストリップ・「今朝のことば」・次アラームは即時更新される。アプリを再起動すると 1 日になる。`ContentView.swift` の `answeredCount` が `.onAppear` でしか再計算されず、朝の問い (fullScreenCover) が閉じても onAppear が再発火しないため。2026-08-22 に ContentView.swift へ `.onChange(of: todayAnswers.count)` の再計算を追加して修正済み (再検証で回答成立直後に 1日 へ即時更新されることを確認)
+  - 気づいた不具合 (issue: 未起票): 回答成立でホームへ戻った直後、フッターの「答えた日数」が 0 日のまま更新されなかった。粒ストリップ・「今朝のことば」・次アラームは即時更新される。アプリを再起動すると 1 日になる。`ContentView.swift` の `answeredCount` が `.onAppear` でしか再計算されず、朝の問い (fullScreenCover) が閉じても onAppear が再発火しないため。2026-08-22 に ContentView.swift で全回答を `@Query` で保持して件数を導出する形 (レビュー対応で確定した実装) で修正済み (2026-08-22 に最終実装で再検証し、回答成立直後に 1日 へ即時更新されることを確認)
 
 #### 動作確認
 <details>
@@ -139,7 +139,7 @@ last_verified_at: 2026-08-22
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/cd6046a1-c786-4cd4-9a11-f35907a02d53.png" width="320">
 
-**「答えた日数」の即時更新の再検証: 2026-08-22** (同じ simulator。`ContentView.swift` に `.onChange(of: todayAnswers.count)` の再計算を追加した修正版アプリ)
+**「答えた日数」の即時更新の再検証: 2026-08-22** (同じ simulator。`ContentView.swift` で全回答を `@Query` で保持して件数を導出する修正版アプリ (25e17c2))
 
 手順: 開発者メニューで全回答を削除 → 「アラーム発火を今すぐ記録」→ ホームを表示した状態でアプリを background / foreground して朝の問いを**ホームの上に**提示させる (朝の問いを閉じた後にホームの onAppear が再発火しない、不具合の再現条件と同じ経路にするため) → テキストで回答して確定。
 
@@ -150,6 +150,22 @@ last_verified_at: 2026-08-22
 7. 逆方向の確認。開発者メニューで全回答を削除してホームへ戻ると「答えた日数 0日」に更新され、「今朝のことば」も消える
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/2b1777c6-5336-4e21-9406-4167daa98460.png" width="320">
+
+**最終実装 (25e17c2) での再確認: 2026-08-22** (同じ simulator。レビュー対応で確定した「全回答を `@Query` で保持して件数を導出する」実装のビルド)
+
+手順: 朝の問いにテキストで回答して確定 → ホームのフッターを確認 → 開発者メニューで全回答を削除 → ホームへ戻ってフッターを確認 → 「アラーム発火を今すぐ記録」で朝の問いを再提示させ、テキストで回答して確定 → ホームのフッターを確認。いずれもアプリの再起動を挟まない。
+
+8. 回答成立でホームへ戻った直後。再起動なしで「答えた日数 1日」になっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/3a285bbc-d3b7-4dca-a4b3-d983af811af6.png" width="320">
+
+9. 開発者メニューで全回答を削除してホームへ戻ると「答えた日数 0日」に即時更新され、「今朝のことば」も消える
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/ff8514cb-9cf9-40ee-9fa8-1caef17d652b.png" width="320">
+
+10. 0 件の状態から「アラーム発火を今すぐ記録」→ 朝の問いに回答すると、ホームのフッターが再起動なしで「答えた日数 1日」に戻る
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/f431d874-474b-4dc8-8652-7b9af4d8890b.png" width="320">
 
 </details>
 
