@@ -27,54 +27,61 @@
       "trim_start": 0
     },
     {
+      "id": "why-jobs-legacy",
+      "flow": "flows/why-jobs-legacy.yaml",
+      "narration": "That one habit made every day count.",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
       "id": "alarm",
       "flow": "flows/alarm.yaml",
-      "subtitle": "Every morning, the alarm asks one question.",
+      "subtitle": "Now, your alarm asks you the same question.",
       "target_duration": 5,
       "trim_start": 2
     },
     {
       "id": "morning-question",
       "flow": "flows/morning-question.yaml",
-      "subtitle": "Recording your answer is the only way to stop it.",
-      "narration": "If today were your last day, what would you want to do? Recording your answer is the only way to stop the alarm.",
+      "subtitle": "You can't snooze this question.",
+      "narration": "If today were your last day, what would you want to do? Say it to your own face — it's the only way to stop the alarm.",
       "target_duration": 11.5,
       "trim_start": 3.6
     },
     {
       "id": "why-value",
       "flow": "flows/why-value.yaml",
-      "narration": "A goal in the morning gives you a meaningful start, and a reason not to snooze.",
+      "narration": "When you know what today is for, you have a reason to rise — not to snooze.",
       "target_duration": 7,
       "trim_start": 0
     },
     {
       "id": "journal",
       "flow": "flows/journal.yaml",
-      "subtitle": "Your answers become a journal of your life.",
-      "narration": "Your answers become a journal of your life. Every night, every week, every month.",
+      "subtitle": "Morning by morning, your answers become the story of your life.",
+      "narration": "Morning by morning, your answers become the story of your life.",
       "target_duration": 8.5,
       "trim_start": 7.4
     },
     {
       "id": "seven-mornings",
       "flow": "flows/seven-mornings.yaml",
-      "subtitle": "Day 7. Seven answers, together for the first time.",
-      "narration": "Seven answers, together for the first time.",
+      "subtitle": "Day 7. You start to see what you keep coming back to.",
+      "narration": "Seven mornings in, you see what you keep coming back to.",
       "target_duration": 5.3,
       "trim_start": 7
     },
     {
       "id": "share-card",
       "flow": "flows/share-card.yaml",
-      "subtitle": "Share any morning as a quiet card.",
+      "subtitle": "Some mornings deserve to be shared.",
       "target_duration": 5,
       "trim_start": 13.6
     },
     {
       "id": "night-banner",
       "flow": "flows/night-banner.yaml",
-      "subtitle": "A quiet reminder, at the times you choose.",
+      "subtitle": "At night, the question quietly returns.",
       "target_duration": 5,
       "trim_start": 47.8
     },
@@ -89,7 +96,7 @@
       "id": "paywall",
       "flow": "flows/paywall.yaml",
       "subtitle": "Premium keeps every morning.",
-      "narration": "Premium keeps ringing until you answer — so you never miss a morning. And it keeps every morning you have ever answered.",
+      "narration": "Premium keeps ringing until you answer — so you never miss a morning. And every morning you have ever answered stays with you.",
       "target_duration": 10.5,
       "trim_start": 6.5
     },
