@@ -4,6 +4,22 @@ platform :ios do
   # metadata と screenshots を App Store Connect へ同期する (binary は上げない)
   lane :metadata_upload do
     ENV['FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS'] = 'true'
+    # App Store Connect API key (env-secret-registry の正準名 ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64) が
+    # 揃っていれば API key で認証する (2FA 不要。deliver は lane_context の api_key を自動で使う)。
+    # 揃っていなければ FASTLANE_USER (Apple ID) での対話ログインにフォールバックする (Appfile 参照)
+    key_id = ENV['ASC_API_KEY_ID'].to_s
+    issuer_id = ENV['ASC_API_KEY_ISSUER_ID'].to_s
+    key_content = ENV['ASC_API_KEY_P8_BASE64'].to_s
+    if key_id.empty? || issuer_id.empty? || key_content.empty?
+      UI.important("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 が揃っていないため、FASTLANE_USER (Apple ID) で認証します (2FA の対話が発生します)")
+    else
+      app_store_connect_api_key(
+        key_id: key_id,
+        issuer_id: issuer_id,
+        key_content: key_content,
+        is_key_content_base64: true
+      )
+    end
     upload_to_app_store(
       # force is true means skip check with preview.html
       force: true,
