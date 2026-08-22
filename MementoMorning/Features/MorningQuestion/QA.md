@@ -1,7 +1,7 @@
 ---
 feature: MorningQuestion
 verification: mobile-mcp
-last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
+last_verified_commit: df1562da3e044da995775ed350704e6b5ddccff2
 last_verified_at: 2026-08-22
 ---
 
@@ -31,7 +31,7 @@ last_verified_at: 2026-08-22
 
 - [x] **アラーム発火後の提示**: アラームが発火した朝 (未回答・アラーム ON) にアプリを前面化すると、朝の問いが全画面 (fullScreenCover) で表示され、スワイプでは閉じられない
   - 自動化: manual（発火状態は開発者メニューの「Record alarm fired now」で再現できる。実発火の確認は 1〜2 分後アラームで行う）
-  - 確認範囲: 提示は「Record alarm fired now」で確認。スワイプで閉じられないことの操作確認と実発火は未実施
+  - 確認範囲: 実発火からの提示は 2026-08-22 の通し実行で確認済み (実発火 12:43 → 前面化で全画面提示。エビデンスは root QA.md「アラームの一連」)。スワイプで閉じられないことも 2026-08-22 に操作確認済み
 - [x] **アラーム OFF 中は提示しない**: アラームを OFF にすると、発火記録が残っていても朝の問いが提示されない
   - 自動化: manual（画面上の挙動の目視確認。提示判定のロジックは MementoMorningTests/MorningQuestionGateTests.swift がカバー済み）
   - 実行ナレッジ: 朝の問いの提示は**発火記録が更新された瞬間**に走る。アラームを OFF → ON に戻しても、既存の発火記録では再提示されない。ON の状態で提示させたい時は開発者メニューの「アラーム発火を今すぐ記録」を押し直す
@@ -51,6 +51,11 @@ last_verified_at: 2026-08-22
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/9548a201-9da8-4110-b0db-aba1245ca520.jpg" width="320">
 
 (問いの全画面表示と同時にカメラ許可ダイアログ。説明文の位置に NSCameraUsageDescription のキー名が出ていたのは issue #50 で解消済み)
+
+**スワイプ不可の確認日: 2026-08-22**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/128e888f-29ea-4a63-952d-71a112fa0251.png" width="320">
+
+(開発者メニューの「アラーム発火を今すぐ記録」で全画面提示させた状態から、画面上端付近・上部・中央を起点に下方向のスワイプを 4 回、振り幅を変えて (250px / 400px / 500px / 650px) 試したが、いずれも問いは閉じず、問いのテキスト・入力欄・「これで確定する」がそのまま表示され続けた。スクショは 4 回目のスワイプ直後で、閉じるボタン等の解除手段も画面上に無い)
 
 </details>
 
