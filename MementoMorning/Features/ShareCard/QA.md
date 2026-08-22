@@ -67,7 +67,7 @@ last_verified_at: 2026-08-22
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/718f44a4-4c83-4e40-a33a-dc9c9bd2c895.png" width="320">
 
-ホームの「直す」で本文を「Go see the sea with my family and watch the sunrise」(50 文字) に書き換えてから共有カードを開いた。本文がカード内で 3 行に折り返され、上の問い・下の日付・「Memento Morning」のウォードマークのいずれもカードの外にはみ出さず、文字の切れも無かった。日本語本文でのレイアウトは 2026-08-19 の「カードの表示」で確認済み。
+ホームの「直す」で本文を「Go see the sea with my family and watch the sunrise」(51 文字) に書き換えてから共有カードを開いた。本文がカード内で 3 行に折り返され、上の問い・下の日付・「Memento Morning」のウォードマークのいずれもカードの外にはみ出さず、文字の切れも無かった。日本語本文でのレイアウトは 2026-08-19 の「カードの表示」で確認済み。
 
 </details>
 

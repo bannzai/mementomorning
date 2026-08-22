@@ -10,8 +10,12 @@ platform :ios do
     key_id = ENV['ASC_API_KEY_ID'].to_s
     issuer_id = ENV['ASC_API_KEY_ISSUER_ID'].to_s
     key_content = ENV['ASC_API_KEY_P8_BASE64'].to_s
-    if key_id.empty? || issuer_id.empty? || key_content.empty?
-      UI.important("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 が揃っていないため、FASTLANE_USER (Apple ID) で認証します (2FA の対話が発生します)")
+    api_key_values = [key_id, issuer_id, key_content]
+    if api_key_values.any?(&:empty?) && api_key_values.any? { |value| !value.empty? }
+      # 一部だけ設定されている状態は設定ミスの可能性が高く、別アカウントでの認証や 2FA 待ちハングを防ぐため即座に失敗させる
+      UI.user_error!("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 は 3 つセットで設定してください (一部だけ設定されています)")
+    elsif api_key_values.all?(&:empty?)
+      UI.important("ASC_API_KEY_ID / ASC_API_KEY_ISSUER_ID / ASC_API_KEY_P8_BASE64 が未設定のため、FASTLANE_USER (Apple ID) で認証します (2FA の対話が発生します)")
     else
       app_store_connect_api_key(
         key_id: key_id,

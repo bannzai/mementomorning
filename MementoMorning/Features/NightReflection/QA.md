@@ -29,7 +29,7 @@ last_verified_at: 2026-08-22
   - 自動化: maestro（ローカル simulator で `xcrun simctl push` に category `NIGHT_REMINDER` の payload を渡し、Maestro の repeat で画面上部中央 (50%,8%) をバナーが消える前に blind tap する。2026-08-19 にこの手順で確認）
   - 確認範囲: 開発者メニューの 1 分後登録ではなく simctl push で配信した通知で確認した (通知タップのルーティングは categoryIdentifier で判定するため同じ経路)。リモート simulator (simtunnel) では通知バナーを捕捉できない (発火 70 秒後の 1 フレーム撮影ではバナーが消えた後かを判別できず、WDA からは通知センターも開けなかった)
 
-#### 再現手順 (2026-08-22 に確立。ローカル simulator / iPhone / iOS 26.5)
+### 再現手順 (2026-08-22 に確立。ローカル simulator / iPhone / iOS 26.5)
 
 通知バナーはシステムの別レイヤーに描画され、`xcrun simctl io screenshot` にも mobile-mcp のアクセシビリティツリーにも一切写らない (AlarmKit のアラートと同じ。root QA.md「実行ナレッジ」)。見えないものをタップする前提で手順を組む。
 

@@ -174,13 +174,17 @@ OFF:
 
 **確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
 
-端末時刻 10:23 に 10:26 で保存し、アプリをバックグラウンドにして待機。10:26 に画面上部へアラームのアラートが出た (下のスクショの黒い角丸がアラート本体。AlarmKit のアラート内容はシステム側の別レイヤーで描画されるためスクリーンショットには写らず、右の ✕ = 停止ボタンだけが写る):
+端末時刻 12:21 に 2 分後の 12:23 で保存した。保存直後のホームは大時刻が 12:23、その下が「あと 0 時間 2 分」、アラームのトグルはオン:
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/e28deaf1-5738-45bb-91d7-2347a7e82e10.png" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/27756b12-f9bf-4e2e-9152-8f35b85e20b3.png" width="320">
 
-同じ瞬間のアクセシビリティツリー (発火の判定根拠):
+アプリをバックグラウンド (ホーム画面) にして待機し、12:23 に画面上部へアラームのアラートが出た (下のスクショの黒い角丸がアラート本体。AlarmKit のアラート内容はシステム側の別レイヤーで描画されるためスクリーンショットには写らず、右の ✕ = 停止ボタンだけが写る):
 
-```
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/e75c9f35-6e87-405d-9a7b-5eb7ced8858b.png" width="320">
+
+同じ瞬間 (12:23:15 取得) のアクセシビリティツリー (発火の判定根拠):
+
+```json
 {"type":"StaticText","label":"MementoMorning"}
 {"type":"StaticText","label":"今日死ぬとしたら何をやりたいですか？"}
 {"type":"Button","label":"停止","identifier":"xmark"}
