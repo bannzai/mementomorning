@@ -78,18 +78,21 @@ bash $SKILL/verify-output.sh demo-video/config.json
 
 出力: `demo-video/output/memento-morning-demo-founder.mp4` (gitignore 対象。動画バイナリはコミットしない)
 
-## 訴求文言のバリアント
+## バリアント
 
-冒頭の訴求カット (フック) の文言違いを比較するため、config が 3 つある。差分はフックシーンの
-カード文言・ナレーションと出力ファイル名のみ (実名を出すかは App Store 審査・パブリシティ権の
-リスク判断が絡むため、documents/PROJECT.md の決定と合わせて選ぶ):
+比較用の config が 4 つある。founder / jobs / no-person はフックシーンのカード文言・ナレーションと
+出力ファイル名のみの差分 (実名を出すかは App Store 審査・パブリシティ権のリスク判断が絡むため、
+documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い (明るい声・明るい BGM・短い尺):
 
-| config | フック | 出力 |
+| config | 内容 | 出力 |
 | --- | --- | --- |
-| `config.json` | ぼかし表現 (A famous founder) | `memento-morning-demo-founder.mp4` |
-| `config.variant-jobs.json` | 実名 (Steve Jobs) | `memento-morning-demo-jobs.mp4` |
-| `config.variant-no-person.json` | 人物に触れない (目覚め方の効用) | `memento-morning-demo-no-person.mp4` |
+| `config.json` | フック: ぼかし表現 (A famous founder) | `memento-morning-demo-founder.mp4` |
+| `config.variant-jobs.json` | フック: 実名 (Steve Jobs) | `memento-morning-demo-jobs.mp4` |
+| `config.variant-no-person.json` | フック: 人物に触れない (目覚め方の効用) | `memento-morning-demo-no-person.mp4` |
+| `config.variant-upbeat.json` | 元気トーン (jobs フック + Puck ボイス + Maple Leaf Rag + 各シーン短縮) | `memento-morning-demo-upbeat.mp4` |
 
+声・話し方・BGM は config の `narration_mix` (voice / style_prompt / bgm / bgm_gain) で
+上書きできる (省略時はしっとり版の既定値。generate-narration.sh のヘッダーコメント参照)。
 バリアントを作る時は config を差し替えて「generate-narration.sh → compose-video.sh → verify-output.sh」を繰り返す。
 
 ## アセット
@@ -102,6 +105,9 @@ bash $SKILL/verify-output.sh demo-video/config.json
   使わない (肖像の権利リスクを生成イラストに留める判断。経緯は PR #95 のフィードバック第 4 弾コメント)
 - `assets/bgm.m4a`: Erik Satie - Gymnopédie No.1 (Robin Alciatore 演奏、パブリックドメイン、帰属表記不要)。
   出典: https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg
+- `assets/bgm-upbeat.m4a`: Scott Joplin - Maple Leaf Rag (Joplin 本人の 1916 年ピアノロール演奏、
+  パブリックドメイン、帰属表記不要)。upbeat バリアントの BGM。
+  出典: https://commons.wikimedia.org/wiki/File:Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg
 
 ## 注意 (シミュレータで撮れないもの)
 

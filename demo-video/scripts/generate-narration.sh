@@ -8,7 +8,7 @@ set -euo pipefail
 #    (字幕より詳しく語りたいシーンだけ narration を書く)。Gemini API が使えない場合は
 #    macOS say (英語ボイス) にフォールバックする
 # 2. 各ナレーションを動画タイムライン上のシーン開始 + 0.3s の位置に配置し、
-#    BGM (assets/bgm.m4a: Erik Satie - Gymnopedie No.1、Robin Alciatore 演奏、パブリックドメイン。
+#    BGM (既定 assets/bgm.m4a: Erik Satie - Gymnopedie No.1、Robin Alciatore 演奏、パブリックドメイン。
 #    出典 https://commons.wikimedia.org/wiki/File:Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg )
 #    を小音量で敷いた 1 本のオーディオ (output/narration/bgm-mix.m4a) に合成する
 # 3. config.json の bgm.file がこのミックスを指しているので、続けて compose-video.sh を実行すると
@@ -29,22 +29,24 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 CONFIG="${1:-demo-video/config.json}"
-BGM=demo-video/assets/bgm.m4a
 OUT_DIR=demo-video/output/narration
 MIX="$OUT_DIR/bgm-mix.m4a"
 
-# ナレーションの音量に対する BGM のゲイン。実測 (TTS mean -21dB / BGM mean -29dB) で
-# BGM がナレーションより約 17dB 下がる値
-BGM_GAIN=0.35
-# シーン開始からナレーション開始までの間 (秒)
-LEAD_IN=0.3
-VOICE=Charon
-STYLE_PROMPT="Speak in a calm, quiet, contemplative tone:"
-
 [[ -f "$CONFIG" ]] || { echo "ERROR: $CONFIG がありません" >&2; exit 1; }
-[[ -f "$BGM" ]] || { echo "ERROR: $BGM がありません" >&2; exit 1; }
 command -v jq >/dev/null || { echo "ERROR: jq が必要です" >&2; exit 1; }
 command -v ffmpeg >/dev/null || { echo "ERROR: ffmpeg が必要です" >&2; exit 1; }
+
+# 声・話し方・BGM は config の narration_mix で上書きできる (省略時はしっとり版の既定値)。
+# bgm は config からの相対パス。bgm_gain はナレーションの音量に対する BGM のゲインで、
+# 既定値 0.35 は実測 (TTS mean -21dB / BGM mean -29dB) で BGM がナレーションより
+# 約 17dB 下がる値。BGM を差し替えたら volumedetect の mean で同等の相対差になるよう調整する
+VOICE=$(jq -r '.narration_mix.voice // "Charon"' "$CONFIG")
+STYLE_PROMPT=$(jq -r '.narration_mix.style_prompt // "Speak in a calm, quiet, contemplative tone:"' "$CONFIG")
+BGM="$(dirname "$CONFIG")/$(jq -r '.narration_mix.bgm // "assets/bgm.m4a"' "$CONFIG")"
+BGM_GAIN=$(jq -r '.narration_mix.bgm_gain // 0.35' "$CONFIG")
+# シーン開始からナレーション開始までの間 (秒)
+LEAD_IN=0.3
+[[ -f "$BGM" ]] || { echo "ERROR: $BGM がありません" >&2; exit 1; }
 
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
