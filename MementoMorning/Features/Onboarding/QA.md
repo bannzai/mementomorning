@@ -1,7 +1,7 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_commit: eaa784897b4930279ea014af01b8e3887fac37a7
 last_verified_at: 2026-08-22
 ---
 
@@ -28,6 +28,7 @@ last_verified_at: 2026-08-22
   - 許可ダイアログの説明文: 英語ロケールで Info.plist に書いた用途説明文が表示される (issue #50 でキー名表示を解消済み)
 - [x] **許可拒否時の設定誘導**: アラームまたは通知の許可を拒否すると、設定アプリへの誘導が表示される。設定アプリで許可して戻ると表示が追従する
   - 自動化: manual（画面上の導線の目視確認。誘導要否の判定ロジックは MementoMorningTests/OnboardingPermissionTests.swift がカバー済み）
+  - 確認範囲: アラーム拒否経路 (通知許可) と通知拒否経路 (アラーム許可) の両方で、誘導表示と設定アプリからの復帰追従を確認済み
   - 設定アプリで**アラーム**の許可を変える手順: `UIApplication.openSettingsURLString` での遷移はシミュレータでは設定アプリのルートに着くため、「アプリ」→「MementoMorning」まで自分でたどる。その画面の「アラーム」トグルが AlarmKit の許可で、ON にしてステータスバー左上の「◀ MementoMorning」でアプリへ戻ると、OnboardingPage の scenePhase 監視が許可状態を再取得して表示が追従する
 - [x] **練習の録画にも上限とインジケーター**: 練習ステップの録画は朝の問いと同じ 10 秒の上限で自動停止し、録画中は同じ点 + タイマー「0:02 / 0:10」とリングで予告する (issue #71)。自動停止で練習完了「You're ready for the morning.」へ進む
   - 自動化: manual（開発者メニューの疑似録画モードで simulator から確認。共通 View は MementoMorning/Features/MorningQuestion/VideoAnswerRecordingControls.swift）
@@ -83,6 +84,22 @@ last_verified_at: 2026-08-22
 3. アプリへ戻った直後。アラーム行が「許可済み」になり、設定誘導の文言と「設定を開く」が消えている
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/2898534f-b71e-4bd4-a1b4-251e35177aba.png" width="320">
+
+**通知拒否経路の確認日: 2026-08-22** (ローカル simulator iPhone / iOS 26.5、日本語ロケール。`xcrun simctl uninstall` → `privacy reset all` → `install` の新規インストール状態から実施。アラームは「許可」、通知だけ「許可しない」を選んだ逆の経路)
+
+1. 通知の許可ダイアログで「許可しない」を選んだ直後。「許可は設定アプリから変更できます」と「設定を開く」が現れ、夜のリマインド行だけ「許可済み」が付いていない (アラーム行には付いている)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/7e2c6f5f-fe6d-4b28-8808-d762c1837478.png" width="320">
+
+2. 「設定を開く」→「MementoMorning」→「通知」で「通知を許可」を ON にした状態
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/faaab9e0-730c-4b67-ad0c-c7da6c298599.png" width="320">
+
+3. アプリへ戻った直後。夜のリマインド行が「許可済み」になり、設定誘導の文言と「設定を開く」が消えている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/bbc0ce6e-c914-437a-ab1a-16009ef36efb.png" width="320">
+
+アラームの許可 (`AlarmKitManager.authorizationState`) と違い、通知は `UNUserNotificationCenter.current().notificationSettings().authorizationStatus` から別途認可状態を取得する経路になっている。どちらも OnboardingPage の scenePhase 監視 (`.active` で `refreshPermissionStates()`) で読み直されるため、設定アプリからの復帰で表示が追従する
 
 </details>
 
