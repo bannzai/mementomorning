@@ -64,16 +64,48 @@ struct AlarmSettingPage: View {
                 snoozeLimit = oldValue
                 isPaywallPresented = true
             }
-            // 夜リマインドがいつ届くかを可視化する (issue #44)。時刻の SSOT は NightReminder の固定値 (カスタマイズはプレミアム機能で未実装)
-            LabeledContent {
-                Text(nightReminderTime, format: .dateTime.hour().minute())
-            } label: {
-                // ja: 夜のリマインド
-                Text("Night reminder")
-                // ja: 今朝の回答と答え合わせしましょう
-                Text("Check tonight against this morning's answer.")
+            // 夜リマインドがいつ届くかを可視化する (issue #44)。時刻の SSOT は NightReminder の固定値。
+            // 時刻のカスタマイズはプレミアム機能 (未実装。documents/PROJECT.md の「リマインドカスタム」) のため、
+            // 無料の間はスヌーズの選択肢と同じく錠前で示し、タップでペイウォールへ誘導する (issue #104)
+            if PremiumEntitlement.isPremium {
+                nightReminderRow(isLocked: false)
+                    .accessibilityIdentifier("alarm_setting_night_reminder_row")
+            } else {
+                Button {
+                    isPaywallPresented = true
+                } label: {
+                    nightReminderRow(isLocked: true)
+                }
+                .accessibilityIdentifier("alarm_setting_night_reminder_row")
             }
-            .accessibilityIdentifier("alarm_setting_night_reminder_row")
+            // ペイウォールへの恒常導線 (issue #104)。ロック要素を経由しなくても有料機能のページへ到達できるようにする。
+            // 購読中はアップセルを出さず、購読状態の表示に切り替える
+            Section {
+                if PremiumEntitlement.isPremium {
+                    LabeledContent {
+                        // ja: 有効
+                        Text("Active")
+                    } label: {
+                        // ja: プレミアム
+                        Text("Premium")
+                    }
+                    .accessibilityIdentifier("alarm_setting_premium_status_row")
+                } else {
+                    Button {
+                        isPaywallPresented = true
+                    } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            // ja: プレミアム
+                            Text("Premium")
+                            // ja: 無限追撃アラームと、すべての履歴
+                            Text("Endless follow-up alarms and all your mornings.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .accessibilityIdentifier("alarm_setting_premium_link")
+                }
+            }
             // 利用規約・プライバシーポリシー・特商法表記・問い合わせへの導線とバージョン表示 (issue #83)。
             // 課金アプリは審査で特商法表記の到達性を見られるため、設定画面から必ず辿れるようにする
             Section {
@@ -189,6 +221,33 @@ struct AlarmSettingPage: View {
         } else {
             snoozeLimitText(snoozeLimit: snoozeLimit)
         }
+    }
+
+    /// 夜リマインドの行 (通知時刻の表示)。
+    /// isLocked (無料の間) は、時刻カスタマイズがプレミアム限定であることをスヌーズの選択肢と同じ錠前で示す
+    private func nightReminderRow(isLocked: Bool) -> some View {
+        LabeledContent {
+            Text(nightReminderTime, format: .dateTime.hour().minute())
+        } label: {
+            if isLocked {
+                Label {
+                    nightReminderLabelText
+                } icon: {
+                    Image(systemName: "lock")
+                }
+            } else {
+                nightReminderLabelText
+            }
+        }
+    }
+
+    /// 夜リマインドの行のタイトルと説明
+    @ViewBuilder
+    private var nightReminderLabelText: some View {
+        // ja: 夜のリマインド
+        Text("Night reminder")
+        // ja: 今朝の回答と答え合わせしましょう
+        Text("Check tonight against this morning's answer.")
     }
 
     /// 夜リマインドの通知時刻の表示用 Date (端末のロケールで時刻表記するために Date へ変換する)
