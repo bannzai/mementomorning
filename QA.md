@@ -1,7 +1,7 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
 last_verified_at: 2026-08-22
 ---
 
@@ -88,8 +88,8 @@ last_verified_at: 2026-08-22
   - 自動化: manual（DEBUG 限定 UI の確認）
 - [x] **アラームの一連**: アラーム設定 → 1〜2 分後に発火 → 朝の問い → 回答 → 以降鳴らない、のコアループが通る (詳細は AlarmSetting / MorningQuestion の QA.md)
   - 自動化: manual（発火待ちを含む通し確認）
-  - 確認範囲: シミュレータで「設定 → 発火 → 停止ボタン → 朝の問い → テキスト回答 → ホーム反映 + 次アラームが翌朝」まで確認した。**アラートの停止ボタンからアプリが前面化して朝の問いが開くところまではシミュレータでも動く** (`openAppWhenRun`)。一方、停止操作を起点に走る `StopAlarmIntent.perform()` の中身 (未回答時の追撃アラーム再登録) はシミュレータで実行されないため、追撃ループは実機 QA (issue #2) に残る
-  - 気づいた不具合 (issue: 未起票): 回答成立でホームへ戻った直後、フッターの「答えた日数」が 0 日のまま更新されなかった。粒ストリップ・「今朝のことば」・次アラームは即時更新される。アプリを再起動すると 1 日になる。`ContentView.swift` の `answeredCount` が `.onAppear` でしか再計算されず、朝の問い (fullScreenCover) が閉じても onAppear が再発火しないため。2026-08-22 に ContentView.swift で全回答を `@Query` で保持して件数を導出する形 (レビュー対応で確定した実装) で修正済み (2026-08-22 に最終実装で再検証し、回答成立直後に 1日 へ即時更新されることを確認)
+  - 確認範囲: シミュレータで「設定 → 発火 → 停止ボタン → 朝の問い → テキスト回答 → ホーム反映 + 次アラームが翌朝 → 以降鳴らない」まで、1 本の 2 分後アラームで通しで確認した。ただし**停止ボタンのタップでは `StopAlarmIntent.perform()` が実行されず、`openAppWhenRun` によるアプリの前面化も起きない** (`.claude/rules/ios-alarmkit-constraints.md` に記録済みのシミュレータ制約)。朝の問いは手動で前面化した時に `Rescheduler` が発火を検知して提示する経路で確認しており、停止操作を起点にした追撃アラームの再登録 (未回答時) は実機 QA (issue #2) に残る
+  - 気づいた不具合 (issue: 未起票): 回答成立でホームへ戻った直後、フッターの「答えた日数」が 0 日のまま更新されなかった。粒ストリップ・「今朝のことば」・次アラームは即時更新される。アプリを再起動すると 1 日になる。`ContentView.swift` の `answeredCount` が `.onAppear` でしか再計算されず、朝の問い (fullScreenCover) が閉じても onAppear が再発火しないため。2026-08-22 に ContentView.swift で fetchCount + SwiftData の保存通知 (`ModelContext.didSave`) で再計算する形 (レビュー対応で確定した実装。全回答を @Query でホームに保持しない) で修正済み (最終実装での再検証はエビデンス末尾を参照)
 
 #### 動作確認
 <details>
@@ -119,53 +119,41 @@ last_verified_at: 2026-08-22
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール、回答 0 件から開始)
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
 
-1. 端末時刻 12:21 に 2 分後の 12:23 でアラームを保存し、12:23 に発火した (2026-08-22 に「1〜2 分後」の指定どおりの間隔で再検証したもの。発火のスクショと判定根拠は AlarmSetting の「アラーム発火」)
+開発者メニューで「全回答を削除」+「アラーム発火記録を削除」を実行し、回答 0 件・発火記録なしの状態から、**1 本の 2 分後アラーム (設定 12:43 / 実発火 12:43:00) だけ**を使って通しで実行した記録。
 
-2. アラートの停止ボタン (✕) をタップするとアプリが前面化し、朝の問いが全画面で表示された (カメラの許可ダイアログ・「カメラを準備しています」・「テキストで答える」)
+1. 端末時刻 12:41 に 2 分後の 12:43 でアラームを保存した。保存直後のホームに、大時刻 12:43・「あと 0 時間 2 分」・「答えた日数 0日」が同じ画面で出ている (「今朝のことば」はまだ無い)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/f8520139-5750-4d32-bc29-5f8daa00bf22.png" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/7a14c000-3614-46ee-85de-d4adb14380f4.png" width="320">
 
-3. カメラを「許可しない」でテキスト入力にフォールバックし、本文を入力
+2. アプリをバックグラウンド (iOS ホーム画面) にして待機し、12:43:00 に画面上部へアラートが出た。スクショには黒い角丸と右の ✕ しか写らないため、発火の判定はアクセシビリティツリーで行った (アプリ名 `MementoMorning`・問いの本文「今日死ぬとしたら何をやりたいですか？」・停止ボタン `identifier: xmark`)。simulator の unified log でも同時刻に AlarmKitCore が `Scheduled alarm is due to begin` を出している
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/e8b1dbd1-e5ff-4606-8849-f0564fe34236.png" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/aabdd484-f688-459e-b720-879f7043ac28.png" width="320">
 
-4. 「これで確定する」で全画面が閉じ、ホームの「今朝のことば」に反映。次のアラームは同じ 10:26 のまま「あと 23 時間 55 分」= 翌朝になっている (当日ぶんは計画から外れている)
+3. アラートの停止ボタン (✕) をタップするとアラートは消えたが、**アプリは前面化しなかった** (下の「停止操作と追撃ループの扱い」を参照)。手動でアプリを前面化すると、朝の問いが全画面 (fullScreenCover) で表示された。カメラは以前の検証で拒否済みのため許可ダイアログは出ず、「カメラを使えないため、テキストで答えます」のテキスト入力へフォールバックしている
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/ae06f9df-c0c7-4982-9f31-8af38c084f5b.png" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/67eab817-f80d-4ccb-a5c6-be7aa5810d9e.png" width="320">
 
-5. アプリを再起動すると「答えた日数 1日」になる (直後は 0 日のまま。上記の「気づいた不具合」)
+4. テキストで「Watch the sunrise from the hill」を入力して「これで確定する」を押すと全画面が閉じ、ホームへ戻った。**アプリの再起動を挟まずに**、「今朝のことば」への反映・「答えた日数 1日」・次のアラームが翌朝 (12:43 / 「あと 23 時間 56 分」) の 3 点が同じ画面で揃っている。粒ストリップの当日の点も同時に埋まっている。「答えた日数」の即時更新は、レビュー対応で確定した最終実装 (`ContentView.swift` で `fetchCount` + SwiftData の保存通知 `ModelContext.didSave` で再計算する形) での確認
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/cd6046a1-c786-4cd4-9a11-f35907a02d53.png" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/ed614c7c-58fd-4330-a371-91bb227f170d.png" width="320">
 
-**「答えた日数」の即時更新の再検証: 2026-08-22** (同じ simulator。`ContentView.swift` で全回答を `@Query` で保持して件数を導出する修正版アプリ (25e17c2))
+5. そのままアプリをバックグラウンドにして、発火時刻を過ぎた 12:48 / 12:51 / 12:54 の各時点でアクセシビリティツリーを確認し、アラートが再度出ていないことを確認した (アプリ名・問いの本文・停止ボタンのいずれも無い)。バックアップアラームの発火枠 (`backupAlarmCount` 2 本 × `backupAlarmIntervalMinutes` 5 分 = 12:48 / 12:53) を通過済みで、unified log の mobiletimerd にも 12:43:35〜12:55:00 の間に発火のイベント (`Firing event` / `due to begin` / `alerting`) は出ていない
 
-手順: 開発者メニューで全回答を削除 → 「アラーム発火を今すぐ記録」→ ホームを表示した状態でアプリを background / foreground して朝の問いを**ホームの上に**提示させる (朝の問いを閉じた後にホームの onAppear が再発火しない、不具合の再現条件と同じ経路にするため) → テキストで回答して確定。
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/c9cecfd7-886f-4d6a-aaf5-6e8fae327ddb.png" width="320">
 
-6. 回答成立で全画面が閉じた直後のホーム。再起動なしで「答えた日数 1日」になり、「今朝のことば」(Watch the sunrise with my family) と粒ストリップの当日の点も同時に反映されている
+**停止操作と追撃ループの扱い**
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/ad37defe-2892-4ba8-803c-f7a8d281be07.png" width="320">
+今回の通しでは、停止ボタンのタップで `StopAlarmIntent.perform()` が実行されず、`openAppWhenRun` によるアプリの前面化も起きなかった。判定の根拠は次の 3 点:
 
-7. 逆方向の確認。開発者メニューで全回答を削除してホームへ戻ると「答えた日数 0日」に更新され、「今朝のことば」も消える
+- `perform()` の 1 行目で書き込む `stopIntentSpikeLog` キーが UserDefaults に作られていない
+- unified log の subsystem `com.bannzai.MementoMorning` に `StopIntentSpike` のエントリが無い
+- 停止直後 (12:43:31) の SpringBoard のログが `Application process state changed for com.bannzai.MementoMorning: taskState: Suspended; visibility: Background` のままで、前面化していない
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/2b1777c6-5336-4e21-9406-4167daa98460.png" width="320">
+手順 3 で朝の問いが表示されたのは停止操作の効果ではなく、手動で前面化した時に `Rescheduler` が「発火予定日時を過ぎた main アラームの記録」を検知して発火を記録する経路による (発火記録 `lastAlarmFiredDate` も停止時刻ではなく main の発火予定日時 12:43:00 で入っていた)。
 
-**最終実装 (25e17c2) での再確認: 2026-08-22** (同じ simulator。レビュー対応で確定した「全回答を `@Query` で保持して件数を導出する」実装のビルド)
-
-手順: 朝の問いにテキストで回答して確定 → ホームのフッターを確認 → 開発者メニューで全回答を削除 → ホームへ戻ってフッターを確認 → 「アラーム発火を今すぐ記録」で朝の問いを再提示させ、テキストで回答して確定 → ホームのフッターを確認。いずれもアプリの再起動を挟まない。
-
-8. 回答成立でホームへ戻った直後。再起動なしで「答えた日数 1日」になっている
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/3a285bbc-d3b7-4dca-a4b3-d983af811af6.png" width="320">
-
-9. 開発者メニューで全回答を削除してホームへ戻ると「答えた日数 0日」に即時更新され、「今朝のことば」も消える
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/ff8514cb-9cf9-40ee-9fa8-1caef17d652b.png" width="320">
-
-10. 0 件の状態から「アラーム発火を今すぐ記録」→ 朝の問いに回答すると、ホームのフッターが再起動なしで「答えた日数 1日」に戻る
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/f431d874-474b-4dc8-8652-7b9af4d8890b.png" width="320">
+これは `.claude/rules/ios-alarmkit-constraints.md` に記録済みのシミュレータ制約 (issue #3 / issue #97 で再現。`Could not find an intent with identifier StopAlarmIntent` で `perform()` が未実行になる) と一致する。したがって **停止操作を起点にした追撃アラームの再登録 (「答えるまで止まらない」の中核) はシミュレータでは確認できず、実機 QA (issue #2) に残る**。
 
 </details>
 

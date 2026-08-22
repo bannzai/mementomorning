@@ -1,7 +1,7 @@
 ---
 feature: NightReflection
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
+last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
 last_verified_at: 2026-08-22
 ---
 
@@ -84,9 +84,12 @@ last_verified_at: 2026-08-22
 
 - [x] **今朝の回答の表示**: 今朝の回答がある状態で開くと「守れてますか?」の見出しと回答本文 (night_reflection_answer_text) が表示される
   - 自動化: manual（表示内容の目視確認）
-- [x] **やれた / やれていない の記録**: 「やれた」(night_reflection_fulfilled_button) または「やれていない」(night_reflection_not_fulfilled_button) をタップすると記録されて画面が閉じ、ジャーナルの該当行の右端に結果が反映される
-  - 自動化: manual（記録と反映の確認）
-  - 確認範囲: 両ボタンともタップで画面が閉じ、開発者メニューの「今日の回答」表示が isFulfilled: true / false に変わることを確認した。**ジャーナルへの反映は当日行では確認できない** — AnswerLogPage.swift:137 の `if !isToday, let isFulfilled` により、結果の表示は過去の行だけで、当日行には出ない仕様。過去の行での表示確認は AnswerLog QA.md「夜の結果の表示」に記載のとおり日付跨ぎが必要
+- [x] **やれた / やれていない の記録**: 「やれた」(night_reflection_fulfilled_button) または「やれていない」(night_reflection_not_fulfilled_button) をタップすると MorningAnswer.isFulfilled に記録されて画面が閉じる
+  - 自動化: manual（記録と画面クローズの確認）
+  - 確認範囲: 両ボタンともタップで画面が閉じ、開発者メニューの「今日の回答」表示が isFulfilled: true / false に変わることを確認した
+- [ ] **記録した結果のジャーナル反映**: 記録した「やれた」(isFulfilled=true) / 「—」(false) が、翌日以降にジャーナルの該当する過去行の右端に表示される
+  - 自動化: manual（過去行の表示の目視確認）
+  - ⏭️ スキップ (2026-08-22): 結果の表示は過去の行だけ (AnswerLogPage.swift:137 の `if !isToday, let isFulfilled`) で、記録できるのは当日の回答だけのため、当日中には確認できない (日付跨ぎが必要)。AnswerLog QA.md「夜の結果の表示」と同一の確認で、翌日以降にまとめて実施する (元は「やれた / やれていない の記録」の一部だったが、未確認のまま項目全体を通過扱いにしないため分割)
 - [x] **記録済みの表示**: 記録済みの回答で再度開くと「記録済み: ...」が表示される
   - 自動化: manual（表示内容の目視確認）
 - [x] **回答がない日の表示**: 今朝の回答がない状態で開くと「今朝の回答はまだありません」と閉じるボタンが表示される
@@ -111,7 +114,7 @@ last_verified_at: 2026-08-22
 
 </details>
 
-### **やれた / やれていない の記録**: 「やれた」(night_reflection_fulfilled_button) または「やれていない」(night_reflection_not_fulfilled_button) をタップすると記録されて画面が閉じ、ジャーナルの該当行の右端に結果が反映される
+### **やれた / やれていない の記録**: 「やれた」(night_reflection_fulfilled_button) または「やれていない」(night_reflection_not_fulfilled_button) をタップすると MorningAnswer.isFulfilled に記録されて画面が閉じる
 
 <details><summary>動作確認スクショ</summary>
 
