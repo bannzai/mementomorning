@@ -16,7 +16,7 @@ appId: com.bannzai.MementoMorning
       id: "seven_mornings_title"
     timeout: 10000
 # 回答行をタップして共有カードを開く (最初の 7 件 = 古い順のため、3 日前の回答が一覧に見えている)
-- tapOn: "Write a letter to a friend"
+- tapOn: "Record my demo video in one take"
 - extendedWaitUntil:
     visible: "__pause__"
     timeout: 6000

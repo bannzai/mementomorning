@@ -298,8 +298,8 @@ struct DebugMenuPage: View {
         guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
-        // ja: 家族と海を見に行く
-        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: String(localized: "See the ocean with my family"))
+        // ja: 自分のアプリを世界に出す
+        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: String(localized: "Ship my app to the world"))
         modelContext.insert(answer)
         do {
             try modelContext.save()
