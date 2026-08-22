@@ -10,7 +10,7 @@
     "voice": "Puck",
     "style_prompt": "Speak in a bright, energetic, upbeat tone, with warmth and a smile in your voice:",
     "bgm": "assets/bgm-upbeat.m4a",
-    "bgm_gain": 0.22
+    "bgm_gain": 0.55
   },
   "title_card": {
     "text": "Memento Morning",
