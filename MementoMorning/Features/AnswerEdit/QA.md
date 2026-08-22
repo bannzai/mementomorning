@@ -1,8 +1,8 @@
 ---
 feature: AnswerEdit
 verification: mobile-mcp
-last_verified_commit: null
-last_verified_at: null
+last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_at: 2026-08-22
 ---
 
 # AnswerEdit QA
@@ -27,8 +27,9 @@ last_verified_at: null
   - 自動化: manual（表示値の目視確認）
 - [x] **編集して保存**: 本文を書き換えて「保存」(answer_edit_save_button) をタップすると sheet が閉じ、ホームの「今朝のことば」に編集後の本文が反映される
   - 自動化: manual（テキスト入力と反映の確認）
-- [ ] **空文字の保存禁止**: 本文を空 (空白・改行のみ含む) にすると保存ボタンが無効になる
-  - 自動化: manual（ボタンの活性状態の目視確認）
+- [x] **空文字の保存禁止**: 本文を空 (空白・改行のみ含む) にすると保存ボタンが無効になる
+  - 自動化: manual（ボタンの活性状態の確認。無効状態は見た目に出ないためアクセシビリティ経由で判定する）
+  - 判定手順: 保存ボタン (answer_edit_save_button) は無効でも見た目が有効時と同じ (白い塗りのまま dim しない) ため、スクリーンショットでは活性状態を判定できない。root QA.md「ボタンの無効状態は Maestro の enabled: false で判定する」と「テキストフィールドの全消去は Maestro の eraseText で行う」に従って本文を空にし、無効を判定する
 - [ ] **保存失敗時の挙動**: 保存に失敗した場合は画面が閉じず、エラー (answer_edit_save_error) が表示され再タップで再試行できる
   - 自動化: todo
 
@@ -71,7 +72,17 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+1. 本文を全消去した状態 (プレースホルダ「ここに書く」が出ている)。この状態で `assertVisible: {id: answer_edit_save_button, enabled: false}` が通り、保存ボタンをタップしても sheet は閉じなかった
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/14129238-1a6a-4dac-aeff-b7f243bbaa7f.png" width="320">
+
+2. 半角スペース 3 個 + 改行だけを入力した状態 (フィールドの値は `"   \n"`)。同じ assert が通り、保存ボタンは無効のままだった
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/b537532b-0b27-4724-ab0e-f9f9d48c6fc1.png" width="320">
+
+対照として、本文に「Go see the sea with my family and watch the sunrise」を入力した状態では同じ assert が exit 1 で失敗し、その後の保存タップで sheet が閉じてホームに反映された (無効判定が常に通るわけではないことの確認)。
 
 </details>
 

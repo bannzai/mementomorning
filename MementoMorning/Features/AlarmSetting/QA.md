@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 67e24f4
-last_verified_at: 2026-08-19
+last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_at: 2026-08-22
 ---
 
 # AlarmSetting QA
@@ -85,7 +85,7 @@ OFF:
 
 </details>
 
-### **情報セクション**: 画面末尾の「情報」セクションに利用規約・プライバシーポリシー・特定商取引法に基づく表記・問い合わせ・バージョンが表示され、https の 3 リンクは Safari で正しいページが開く
+### **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
 
 <details><summary>動作確認スクショ</summary>
 
@@ -113,14 +113,17 @@ OFF:
 
 ## 2. 保存と再スケジュール
 
-- [ ] **時刻の保存**: 時刻を変更して「保存」をタップすると画面が閉じ、ホームの NEXT MORNING の大時刻に反映される
+- [x] **時刻の保存**: 時刻を変更して「保存」をタップすると画面が閉じ、ホームの NEXT MORNING の大時刻に反映される
   - 自動化: manual（DatePicker 操作と画面遷移の確認）
+  - 実行ナレッジ: 時刻の DatePicker (compact) はタップするとホイールが popover で開く。popover が開いている間は WDA の要素ツリーに `PopoverDismissRegion` しか出ないため座標操作になる。**ホイールはスワイプだと慣性で大きく飛ぶ (100pt のスワイプで 11 行動いた) ので、目的の行を直接タップする**。選択行の 2 行下 / 2 行上をタップすると確実に ±2 動く (iPhone / iOS 26.5 の実測で 1 行 ≒ 32pt。選択行が y≒364、時 の列が x≒213、分 の列が x≒285)。設定後は popover の外 (例 (60, 700)) をタップして閉じてから「保存」を押す
 - [x] **スヌーズ回数の保存**: Picker で回数を選んで「保存」をタップし、画面を開き直すと選んだ回数が Picker に反映されている (AlarmSetting.snoozeLimit に永続化される)
   - 自動化: manual（Picker 操作と再表示の確認）
 - [ ] **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から保存すると、設定が作成されホームに時刻が表示される
   - 自動化: manual（未設定状態はアプリの削除 → 再インストールでしか再現できないため手動）
-- [ ] **アラーム発火**: 1〜2 分後の時刻で保存すると、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
+  - ⏭️ スキップ: ホームが --:-- になる状態 (オンボーディング完了済み + AlarmSetting が 0 件) に到達する手段が無い。OnboardingPage.save() は AlarmSetting を insert して保存できた時だけ hasCompletedOnboarding を true にするため、オンボーディングを抜けた時点で必ず設定が 1 件存在する。開発者メニューの「オンボーディングをリセット」は AlarmSetting を消さず、DebugMenuPage に AlarmSetting を削除する操作も無い (2026-08-22 時点)
+- [x] **アラーム発火**: 1〜2 分後の時刻で保存すると、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
   - 自動化: manual（発火待ちと画面表示の目視判定が必要）
+  - 実行ナレッジ: **AlarmKit のアラート内容はスクリーンショットでは黒い角丸としてしか写らない** (システム側の別レイヤーで描画されるため。`xcrun simctl io screenshot` でも同じ)。発火の判定は WDA のアクセシビリティツリーで行い、アプリ名・問いの本文・停止ボタン (`xmark`) が出ていることを確認する
 - [ ] **再スケジュール失敗の表示**: 再スケジュールに失敗した場合は画面が閉じず、エラーメッセージが表示される (ホームにも home_reschedule_error が出る)
   - 自動化: todo
 
@@ -132,7 +135,13 @@ OFF:
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+保存済みの 7:00 からホイールで 10:26 に変更した直後の設定画面 (「時刻 10:26」):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/c61f8aba-0f59-4ec5-910a-a8fe65932a0e.png" width="320">
+
+「保存」で画面が閉じ、ホームの大時刻が 10:26 になり「あと 0 時間 3 分」に更新されている (端末時刻 10:23):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/e7492a63-3345-4b1e-9a05-bd9f4dceb587.png" width="320">
 
 </details>
 
@@ -146,13 +155,16 @@ OFF:
 
 続けて、開発者メニューで「プレミアムを強制 (上書き)」を OFF にして設定を開くと表示は「2 回」(無料枠の実効値) になり、そのまま保存 → プレミアムを ON に戻して開き直すと「4 回」に戻る (Picker を変更していない保存では保存済みの希望値を上書きしない。PR #78 レビュー対応) ことを確認した
 
+**再確認日: 2026-08-22** (ローカル simulator。プレミアム強制 ON で 4 回を保存 → 開き直して 4 回のまま)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/13d01c14-6bb3-44ff-b5c6-a8829471a970.png" width="320">
+
 </details>
 
 ### **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から保存すると、設定が作成されホームに時刻が表示される
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**⏭️ スキップ (2026-08-22)**: --:-- のホームに到達する手段が無いため未実行 (理由はチェック項目の入れ子を参照)。新規インストール直後はオンボーディングが先に出て、そこでアラームが保存される
 
 </details>
 
@@ -160,7 +172,19 @@ OFF:
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+端末時刻 10:23 に 10:26 で保存し、アプリをバックグラウンドにして待機。10:26 に画面上部へアラームのアラートが出た (下のスクショの黒い角丸がアラート本体。AlarmKit のアラート内容はシステム側の別レイヤーで描画されるためスクリーンショットには写らず、右の ✕ = 停止ボタンだけが写る):
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/e28deaf1-5738-45bb-91d7-2347a7e82e10.png" width="320">
+
+同じ瞬間のアクセシビリティツリー (発火の判定根拠):
+
+```
+{"type":"StaticText","label":"MementoMorning"}
+{"type":"StaticText","label":"今日死ぬとしたら何をやりたいですか？"}
+{"type":"Button","label":"停止","identifier":"xmark"}
+```
 
 </details>
 

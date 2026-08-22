@@ -1,8 +1,8 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: null
-last_verified_at: null
+last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_at: 2026-08-22
 ---
 
 # Onboarding QA
@@ -26,8 +26,9 @@ last_verified_at: null
 - [x] **3 ステップの通し**: 「はじめる」(onboarding_begin) → 許可ステップ (アラーム・通知の許可ダイアログ) → アラーム設定ステップ、の順にフェードで進む
   - 自動化: manual（OS 許可ダイアログの操作が必要）
   - 許可ダイアログの説明文: 英語ロケールで Info.plist に書いた用途説明文が表示される (issue #50 でキー名表示を解消済み)
-- [ ] **許可拒否時の設定誘導**: アラームまたは通知の許可を拒否すると、設定アプリへの誘導が表示される。設定アプリで許可して戻ると表示が追従する
+- [x] **許可拒否時の設定誘導**: アラームまたは通知の許可を拒否すると、設定アプリへの誘導が表示される。設定アプリで許可して戻ると表示が追従する
   - 自動化: manual（画面上の導線の目視確認。誘導要否の判定ロジックは MementoMorningTests/OnboardingPermissionTests.swift がカバー済み）
+  - 設定アプリで**アラーム**の許可を変える手順: `UIApplication.openSettingsURLString` での遷移はシミュレータでは設定アプリのルートに着くため、「アプリ」→「MementoMorning」まで自分でたどる。その画面の「アラーム」トグルが AlarmKit の許可で、ON にしてステータスバー左上の「◀ MementoMorning」でアプリへ戻ると、OnboardingPage の scenePhase 監視が許可状態を再取得して表示が追従する
 - [x] **練習の録画にも上限とインジケーター**: 練習ステップの録画は朝の問いと同じ 10 秒の上限で自動停止し、録画中は同じ点 + タイマー「0:02 / 0:10」とリングで予告する (issue #71)。自動停止で練習完了「You're ready for the morning.」へ進む
   - 自動化: manual（開発者メニューの疑似録画モードで simulator から確認。共通 View は MementoMorning/Features/MorningQuestion/VideoAnswerRecordingControls.swift）
 
@@ -69,7 +70,19 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22** (ローカル simulator iPhone / iOS 26.5、日本語ロケール。`xcrun simctl uninstall` → `install` の新規インストール状態から実施)
+
+1. アラームの許可ダイアログで「許可しない」、通知は「許可」を選んだ直後。「許可は設定アプリから変更できます」と「設定を開く」が現れ、アラーム行だけ「許可済み」が付いていない
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/b1d336d9-8965-405b-81f7-1a296895d7de.png" width="320">
+
+2. 設定アプリ →「アプリ」→「MementoMorning」で「アラーム」トグルを ON にした状態
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/971263b0-2713-4318-9f39-0dfba07f4c2e.png" width="320">
+
+3. アプリへ戻った直後。アラーム行が「許可済み」になり、設定誘導の文言と「設定を開く」が消えている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/2898534f-b71e-4bd4-a1b4-251e35177aba.png" width="320">
 
 </details>
 
@@ -97,7 +110,7 @@ last_verified_at: null
 
 - [x] **完了でホームへ**: アラーム設定ステップ (初期値 7:00) で保存するとオンボーディングが完了し、ホームへフェードで切り替わり、設定した時刻が NEXT MORNING に表示される
   - 自動化: manual（画面遷移と表示の確認）
-- [ ] **完了後は再表示しない**: 完了後にアプリを再起動してもオンボーディングは表示されず、ホームから始まる
+- [x] **完了後は再表示しない**: 完了後にアプリを再起動してもオンボーディングは表示されず、ホームから始まる
   - 自動化: manual（アプリの再起動操作が必要）
 
 #### 動作確認
@@ -117,7 +130,11 @@ last_verified_at: null
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-22**
+
+新規インストールからオンボーディングを 7:00 で完了させたあと、`xcrun simctl terminate` → `launch` で再起動 (PID が 24291 → 64818 に変わっている) した直後の画面。オンボーディングを経ずにホーム (7:00 / 答えた日数 0 日) から始まっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/55be5784-1f1f-47a7-81df-4e8471f44f28.png" width="320">
 
 </details>
 

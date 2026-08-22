@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 8f079671f1747b887851cfb59ea46bbfc78e1d09
-last_verified_at: 2026-08-19
+last_verified_commit: b15c23b53893c3146fd207c21c48e2963f38f8c1
+last_verified_at: 2026-08-22
 ---
 
 # LifeCalendar QA
@@ -77,7 +77,7 @@ last_verified_at: 2026-08-19
 
 </details>
 
-### **答えた日数**: フッターに「答えた日数 N日」が全期間の回答数で表示される
+### **答えた日数**: フッターに「答えた日数 N日」(英語では N mornings answered) が全期間の回答数で表示される。英語では 1 件のときだけ単数形 (1 morning answered) になる
 
 <details><summary>動作確認スクショ</summary>
 
