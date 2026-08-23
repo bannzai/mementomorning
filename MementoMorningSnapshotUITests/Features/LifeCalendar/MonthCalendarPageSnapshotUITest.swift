@@ -1,9 +1,9 @@
 import XCTest
 
-/// LifeCalendarPage の Preview を全対象言語で撮影する SnapshotUITest。
+/// MonthCalendarPage の Preview を全対象言語で撮影する SnapshotUITest。
 /// XCTAttachment 名 ({file}---{function}---{language}---{index}) を
 /// scripts/snapshot_ui_tests/organize_screenshots.sh が解析して言語別に整理する
-final class LifeCalendarPageSnapshotUITest: XCTestCase {
+final class MonthCalendarPageSnapshotUITest: XCTestCase {
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         // runsForEachTargetApplicationUIConfiguration で実行すると Locale の取得がうまくいかず全部 en になる (取り込み元 Focus での実測)
         false
@@ -14,7 +14,7 @@ final class LifeCalendarPageSnapshotUITest: XCTestCase {
     }
 
     /// 撮影対象の PreviewProvider 名。SnapshotUITestPage のボタンラベルと一致させる
-    let previewType = "LifeCalendarPage_Previews"
+    let previewType = "MonthCalendarPage_Previews"
     /// PreviewProvider が持つ Preview の個数。_allPreviews を型から辿れないためハードコードする (取り込み元 Focus と同じ制約)
     let previewCount = 1
 

@@ -126,7 +126,7 @@ struct AppStoreScreenshot27Page_Previews: PreviewProvider {
     }
 }
 
-/// App Store スクリーンショット 28 枚目 - kohaku - 人生カレンダー (点の蓄積)
+/// App Store スクリーンショット 28 枚目 - kohaku - 点 (粒の蓄積)
 struct AppStoreScreenshot28Page: View {
     var body: some View {
         AppStoreScreenshotKohakuLayout(
@@ -134,10 +134,10 @@ struct AppStoreScreenshot28Page: View {
             //
             // 点として残る。
             title: Text("Answered mornings remain as dots."),
-            // ja: 1行が一週間。点は、いつかつながる。
-            subtitle: "Each row is a week. The dots will connect."
+            // ja: 点は、いつかつながる。
+            subtitle: "The dots will connect."
         ) {
-            MockLifeCalendarScreen()
+            MockDotsScreen()
         }
     }
 }

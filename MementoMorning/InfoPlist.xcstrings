@@ -664,6 +664,23 @@
         }
       }
     },
+    "NSMotionUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to tilt the device and let the piled dots of your answered mornings roll."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端末の傾きに合わせて、積もった答えた朝の粒を転がすために使用します。"
+          }
+        }
+      }
+    },
     "NSPhotoLibraryUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {
