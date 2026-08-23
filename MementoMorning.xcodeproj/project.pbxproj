@@ -41,6 +41,8 @@
 		02F294E6F6C210AD1CFC19E0 /* AppStoreScreenshot5PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FD4E3DA4EFBE615E7CC7B /* AppStoreScreenshot5PageSnapshotUITest.swift */; };
 		07108F5661BFA7443756CA95 /* AppStoreScreenshotDawnFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */; };
 		080C509808EF0C4BA09D9C2F /* MorningAnswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */; };
+		2A1B7C4E9D3F60518A2C4B71 /* NightReminderSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */; };
+		2A1B7C4E9D3F60518A2C4B72 /* NightReminderSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */; };
 		090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B013DF6BC3A730BC3313B28 /* AlarmSettingPage.swift */; };
 		0ECC3C0A25AA0B957B3CDF66 /* MorningQuestionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F651B9A8E21EAC6D41F1 /* MorningQuestionGate.swift */; };
 		0FC3999F518B1E269B2888B7 /* Languages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF94CCB0BC323D020B94C795 /* Languages.swift */; };
@@ -71,6 +73,8 @@
 		32050BF6D6FFFC03FAABD8F6 /* AppStoreScreenshot1PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCB9B1DB104DF914608DBD6 /* AppStoreScreenshot1PageSnapshotUITest.swift */; };
 		32FD195A892CD13E20576755 /* AlarmSettingPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C438DE2A7A3786C83D405AF9 /* AlarmSettingPageSnapshotUITest.swift */; };
 		334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */; };
+		A48CBB355B2145579EBA50CC /* SevenMorningsShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CC955F521E4794B652FEE8 /* SevenMorningsShareCardView.swift */; };
+		C9C82DCC28824965BB3D877A /* SevenMorningsShareCardRenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5CE3493CF6471C8FC956AD /* SevenMorningsShareCardRenderTests.swift */; };
 		36AD01AA3B3250F641B30D72 /* StopIntentSpike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC1569FF56F53101A3EDBE4 /* StopIntentSpike.swift */; };
 		37F5305F32C4517FD5A654AF /* AppStoreScreenshot2PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C53A3832C4BAA4537E8F /* AppStoreScreenshot2PageSnapshotUITest.swift */; };
 		38F7CC9BF45470CD0923A6BB /* HomeWidgetTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */; };
@@ -292,6 +296,7 @@
 		4913283C795D7449EFB9586E /* DebugVideoAnswerFixture_en.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = DebugVideoAnswerFixture_en.mov; sourceTree = "<group>"; };
 		49B6C81E23F07A6153886744 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
 		4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswer.swift; sourceTree = "<group>"; };
+		2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightReminderSetting.swift; sourceTree = "<group>"; };
 		4D65D3164755F057F64140B0 /* DebugMenuPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPage.swift; sourceTree = "<group>"; };
 		5011A376181D3A8D00B8B0C4 /* LegalLinksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalLinksTests.swift; sourceTree = "<group>"; };
 		519682F7B11E3808988FEB3B /* AppStoreScreenshot7PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot7PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -370,6 +375,8 @@
 		C418C3D5ECE4F458975D2C92 /* LifeCalendarPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCalendarPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C438DE2A7A3786C83D405AF9 /* AlarmSettingPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
+		68CC955F521E4794B652FEE8 /* SevenMorningsShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsShareCardView.swift; sourceTree = "<group>"; };
+		8C5CE3493CF6471C8FC956AD /* SevenMorningsShareCardRenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsShareCardRenderTests.swift; sourceTree = "<group>"; };
 		F55A0FDB03500FB342A11670 /* SharePrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePrompt.swift; sourceTree = "<group>"; };
 		C99B6C250E88D7C9FD6154DF /* VideoAnswerGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGateTests.swift; sourceTree = "<group>"; };
 		20EDE93E9F5822B0831C6102 /* VideoAnswerRecordingLimitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerRecordingLimitTests.swift; sourceTree = "<group>"; };
@@ -483,6 +490,7 @@
 			children = (
 				ABBD51FADB1634375B4F10C0 /* AlarmSetting.swift */,
 				4C7D1A42EE7A3B57FDDD5EAD /* MorningAnswer.swift */,
+				2A1B7C4E9D3F60518A2C4B70 /* NightReminderSetting.swift */,
 				9AC5D7CA28B4AA7D0B9D3321 /* Persistence.swift */,
 				FF9AB6B80D28B40CD01ED806 /* ScheduledAlarm.swift */,
 			);
@@ -876,6 +884,7 @@
 			children = (
 				C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */,
 				7BA9A999052376DBC90A0D88 /* SevenMorningsPage.swift */,
+				68CC955F521E4794B652FEE8 /* SevenMorningsShareCardView.swift */,
 			);
 			path = SevenMornings;
 			sourceTree = "<group>";
@@ -944,6 +953,7 @@
 				FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */,
 				8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */,
 				783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */,
+				8C5CE3493CF6471C8FC956AD /* SevenMorningsShareCardRenderTests.swift */,
 				6DB44EA332527EB9BA9C7D82 /* SharePromptTests.swift */,
 				368460825E5F8390F0948A64 /* SnoozeGateTests.swift */,
 				C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */,
@@ -1264,6 +1274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1B7C4E9D3F60518A2C4B72 /* NightReminderSetting.swift in Sources */,
 				7FA67F319DC050731C8ACD5A /* AlarmLiveActivityWidget.swift in Sources */,
 				C1D0D47578C5998A3050C0CE /* AlarmSetting.swift in Sources */,
 				A668B97B6D507E7495624D52 /* DesignSystem.swift in Sources */,
@@ -1335,6 +1346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A1B7C4E9D3F60518A2C4B71 /* NightReminderSetting.swift in Sources */,
 				8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */,
 				2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */,
 				E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */,
@@ -1374,6 +1386,7 @@
 				15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */,
 				A49FFCC78F204F74AA93AE42 /* SevenMorningsMilestone.swift in Sources */,
 				A6AE78F9CF0A620861452A5A /* SevenMorningsPage.swift in Sources */,
+				A48CBB355B2145579EBA50CC /* SevenMorningsShareCardView.swift in Sources */,
 				158C49493A0CD5199CCBC501 /* SharePrompt.swift in Sources */,
 				8AA325D7614FC522380C61C6 /* SnapshotUITestPage.swift in Sources */,
 				C38DCA5A434EE0A5B33CB7CB /* SnoozeGate.swift in Sources */,
@@ -1411,6 +1424,7 @@
 				CCA26A4ACD80B660A7F8870D /* PaywallSubscriptionPeriodTests.swift in Sources */,
 				2550886BD9FEB608B9138265 /* PremiumEntitlementTests.swift in Sources */,
 				C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */,
+				C9C82DCC28824965BB3D877A /* SevenMorningsShareCardRenderTests.swift in Sources */,
 				C80FDBD7308A0F34A5B14EAA /* SharePromptTests.swift in Sources */,
 				7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */,
 				D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */,

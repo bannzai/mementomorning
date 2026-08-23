@@ -1,0 +1,112 @@
+{
+  "profile": "demo-portrait",
+  "output_dir": "output",
+  "output_name": "memento-morning-demo-upbeat-ja.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
+  "narration_mix": {
+    "voice": "Puck",
+    "style_prompt": "Speak in Japanese, in a bright, energetic, upbeat tone, with warmth and a smile in your voice:",
+    "bgm": "assets/bgm-upbeat.m4a",
+    "bgm_gain": 0.4
+  },
+  "title_card": {
+    "text": "Memento Morning",
+    "subtext": "死を想え。それから、朝を始めよう。",
+    "duration": 2.5,
+    "background": "black"
+  },
+  "scenes": [
+    {
+      "id": "why-jobs-ja",
+      "flow": "flows/why-jobs-ja.yaml",
+      "narration": "スティーブ・ジョブズは毎朝、自分にひとつの質問をしていました。",
+      "target_duration": 5,
+      "trim_start": 0
+    },
+    {
+      "id": "why-jobs-legacy-ja",
+      "flow": "flows/why-jobs-legacy-ja.yaml",
+      "narration": "そのひとつの習慣が、毎日を意味あるものにしました。",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
+      "id": "alarm",
+      "flow": "flows/alarm.yaml",
+      "subtitle": "今度は、あなたのアラームが同じ質問をします。",
+      "target_duration": 5,
+      "trim_start": 2
+    },
+    {
+      "id": "morning-question",
+      "flow": "flows/morning-question.yaml",
+      "subtitle": "この質問に、スヌーズはできません。",
+      "narration": "今日死ぬとしたら、何をやりたいか。自分の顔に向かって答える。それだけが、アラームを止める唯一の方法です。",
+      "target_duration": 11.5,
+      "trim_start": 3.6
+    },
+    {
+      "id": "why-value-ja",
+      "flow": "flows/why-value-ja.yaml",
+      "narration": "今日が何のための一日か分かっていれば、二度寝ではなく、起きる理由があります。",
+      "target_duration": 7,
+      "trim_start": 0
+    },
+    {
+      "id": "journal",
+      "flow": "flows/journal.yaml",
+      "subtitle": "朝を重ねるほど、答えはあなたの人生の物語になります。",
+      "narration": "朝を重ねるほど、答えはあなたの人生の物語になります。",
+      "target_duration": 8.5,
+      "trim_start": 7.4
+    },
+    {
+      "id": "seven-mornings",
+      "flow": "flows/seven-mornings.yaml",
+      "subtitle": "7日目。自分が何度も立ち返るものが、見えてきます。",
+      "narration": "七日目。自分が何度も立ち返るものが、見えてきます。",
+      "target_duration": 5.3,
+      "trim_start": 7
+    },
+    {
+      "id": "share-card",
+      "flow": "flows/share-card.yaml",
+      "subtitle": "分かち合いたくなる朝が、あります。",
+      "target_duration": 5,
+      "trim_start": 10
+    },
+    {
+      "id": "night-banner",
+      "flow": "flows/night-banner.yaml",
+      "subtitle": "夜、あの質問が静かに戻ってきます。",
+      "target_duration": 5,
+      "trim_start": 47
+    },
+    {
+      "id": "night-reflection",
+      "flow": "flows/night-reflection.yaml",
+      "subtitle": "今朝の言葉を、守れましたか?",
+      "target_duration": 4,
+      "trim_start": 11
+    },
+    {
+      "id": "paywall",
+      "flow": "flows/paywall.yaml",
+      "subtitle": "プレミアムは、すべての朝を残します。",
+      "narration": "プレミアムは、答えるまで鳴り続けます。一度も朝を欠かさないように。そして、あなたが答えたすべての朝が、ずっと残ります。",
+      "target_duration": 10.5,
+      "trim_start": 4.6,
+      "speed": 0.85
+    },
+    {
+      "id": "life-calendar",
+      "flow": "flows/life-calendar.yaml",
+      "subtitle": "点と点は、つながります。",
+      "target_duration": 7.5,
+      "trim_start": 5.2
+    }
+  ]
+}

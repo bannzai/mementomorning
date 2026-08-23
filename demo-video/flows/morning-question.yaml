@@ -1,0 +1,36 @@
+# 朝の問い → 録画 → 停止 = 回答完了のシーン (デモ動画 issue #94)。
+# 前提: prep/morning-question.yaml で疑似録画モード ON・今日未回答・アラーム発火記録済みにしてある
+# (再起動すると朝の問いが全画面で出る)。写真ライブラリ・音声認識の許可も prep で済ませてあるためダイアログは出ない
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible:
+      id: "morning_question_record_button"
+    timeout: 20000
+# 問い「If today were your last day, what would you want to do?」を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 4000
+    optional: true
+    label: "問いを 4 秒見せる"
+- tapOn:
+    id: "morning_question_record_button"
+# 録画中 (タイマーと外リングの進捗) を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 6000
+    optional: true
+    label: "録画中を 6 秒見せる"
+- tapOn:
+    id: "morning_question_record_button"
+# 停止 = 回答完了。保存 → 画面が閉じてホームの「今朝のことば」に反映される
+- extendedWaitUntil:
+    visible: "This morning's words"
+    timeout: 30000
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 3000
+    optional: true
+    label: "回答が反映されたホームを 3 秒見せる"

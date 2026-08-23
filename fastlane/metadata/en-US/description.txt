@@ -17,6 +17,11 @@ There is only one question.
 - At night, we ask only one thing: "Did you keep today's answer?"
 - The days you did and the days you didn't both remain as they are
 
+■ Premium
+- Endless follow-up alarms: it keeps ringing until you answer, so you never skip a morning
+- Every morning you have answered stays, beyond the last 7 days
+- Night reminders at the times you choose, up to three a night
+
 ■ Privacy
 - Your answers are stored only on your device. Nothing is sent to a server
 

@@ -1,0 +1,19 @@
+# ペイウォールのシーン (デモ動画 issue #94)。短く価格と世界観だけ見せる (Design 賞はビジネスと切り離した craft を見るため)。
+# 前提: 未購入状態 (プレミアム強制 OFF)。Debug ビルドは RevenueCat Test Store の価格が出る
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn: "Journal"
+- tapOn:
+    id: "journal_paywall_link"
+# offering (Test Store) の取得を待つとストア価格のボタンが出る
+- extendedWaitUntil:
+    visible:
+      id: "paywall_yearly_button"
+    timeout: 20000
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 5000
+    optional: true
+    label: "ペイウォールを 5 秒見せる"

@@ -1,0 +1,23 @@
+# 七つの朝 (7 日の節目) のシーン (デモ動画 issue #94)。
+# 前提: prep/setup.yaml でサンプル回答 10 日分を投入済み。
+# 表示済みフラグを開発者メニューでリセットすると、その場で節目 sheet が全画面に被さる (ContentView の onChange)。
+# sheet が覆うまでの操作 (メニュー遷移・リセット) は config の trim_start で切り落とす。
+# 共有カードは 7 日の節目に限らない機能のため、このシーンでは開かない (共有は flows/share-card.yaml)
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- tapOn:
+    id: "debug_reset_seven_mornings_milestone"
+- extendedWaitUntil:
+    visible:
+      id: "seven_mornings_title"
+    timeout: 10000
+# 7 つの回答が 1 画面に並ぶ aha moment を見せる
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 7000
+    optional: true
+    label: "七つの朝を 7 秒見せる"

@@ -130,7 +130,10 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     if Calendar.current.isDateInToday(answeredDate) {
         // ロック画面の「今日の目標」(Live Activity) も仮テキスト「動画で答えました」のままのため、認識結果へ置き換える
         await refreshTodayAnswerLiveActivity(todayAnswerText: text)
-        await NightReminder.requestAuthorizationAndSchedule(todayAnswerText: text)
+        await NightReminder.requestAuthorizationAndSchedule(
+            times: scheduledNightReminderTimes(modelContext: modelContext),
+            todayAnswerText: text
+        )
     }
 }
 
