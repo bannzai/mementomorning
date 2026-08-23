@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 344d118650b45b518559c7c85f8d854e60b2f47d
-last_verified_at: 2026-08-23
+last_verified_commit: b63036d06ad93c5a87d019f0557d4ebd8cd14247
+last_verified_at: 2026-08-24
 ---
 
 # AlarmSetting QA
@@ -109,7 +109,7 @@ OFF:
 
 </details>
 
-### **開発者用のログの導線とログ画面**: スパイクログが設定画面に直接表示されず、情報セクション末尾の「Developer Log」から DeveloperLogPage が開く
+### **開発者用のログの導線とログ画面**: スパイクログが設定画面に直接表示されず、情報セクション末尾の「Developer Log」(alarm_setting_developer_log_link) から DeveloperLogPage が開く。ログがある時は本文 (developer_log_text) と「Copy Log」(developer_log_copy_button)・「Clear Log」(developer_log_clear_button) が表示され、Clear Log で「No logs」(developer_log_empty) の空状態になる。ログの作り込みは開発者メニューの「スパイクログにサンプルを設定」(debug_set_sample_spike_log) を使う (issue #103)
 
 <details><summary>動作確認スクショ</summary>
 
@@ -132,29 +132,44 @@ Clear Log タップ後の空状態 (「No logs」):
 
 ## 2. 保存と再スケジュール
 
-- [x] **時刻の保存**: 時刻を変更して「保存」をタップすると画面が閉じ、ホームの NEXT MORNING の大時刻に反映される
+- [x] **時刻の自動保存**: 設定画面に「保存」ボタンが無く、時刻を変更するとデバウンス (約 0.5 秒) 後に自動保存され、戻るとホームの NEXT MORNING の大時刻に反映される。設定を開き直しても変更後の時刻が復元される (issue #124)
   - 自動化: manual（DatePicker 操作と画面遷移の確認）
-  - 実行ナレッジ: 時刻の DatePicker (compact) はタップするとホイールが popover で開く。popover が開いている間は WDA の要素ツリーに `PopoverDismissRegion` しか出ないため座標操作になる。**ホイールはスワイプだと慣性で大きく飛ぶ (100pt のスワイプで 11 行動いた) ので、目的の行を直接タップする**。選択行の 2 行下 / 2 行上をタップすると確実に ±2 動く (iPhone / iOS 26.5 の実測で 1 行 ≒ 32pt。選択行が y≒364、時 の列が x≒213、分 の列が x≒285)。設定後は popover の外 (例 (60, 700)) をタップして閉じてから「保存」を押す
-- [x] **スヌーズ回数の保存**: Picker で回数を選んで「保存」をタップし、画面を開き直すと選んだ回数が Picker に反映されている (AlarmSetting.snoozeLimit に永続化される)
+  - 実行ナレッジ: 時刻の DatePicker (compact) はタップするとホイールが popover で開く。popover が開いている間は WDA の要素ツリーに `PopoverDismissRegion` しか出ないため座標操作になる。**ホイールはスワイプだと慣性で大きく飛ぶ (100pt のスワイプで 11 行動いた) ので、目的の行を直接タップする**。選択行の 2 行下 / 2 行上をタップすると確実に ±2 動く (iPhone / iOS 26.5 の実測で 1 行 ≒ 32pt。選択行が y≒364、時 の列が x≒213、分 の列が x≒285)。設定後は popover の外をタップして閉じる。**閉じるタップの位置は他の行に当たらない場所にする** (画面下部の余白 (60, 700) は About セクションのリンク行に当たり Safari が開いてしまう。ナビバー直下の余白が安全)
+- [x] **スヌーズ回数の自動保存**: Picker で回数を選ぶと自動保存され、画面を開き直すと選んだ回数が Picker に反映されている (AlarmSetting.snoozeLimit に永続化される)
   - 自動化: manual（Picker 操作と再表示の確認）
-- [ ] **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から保存すると、設定が作成されホームに時刻が表示される
+- [x] **夜リマインド時刻の自動保存**: リマインドの時刻を変更すると自動保存され、画面を開き直すと変更後の時刻が反映されている
+  - 自動化: manual（DatePicker 操作と再表示の確認）
+- [ ] **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から値を変更すると、設定が作成されホームに時刻が表示される
   - 自動化: manual（未設定状態はアプリの削除 → 再インストールでしか再現できないため手動）
   - ⏭️ スキップ: ホームが --:-- になる状態 (オンボーディング完了済み + AlarmSetting が 0 件) に到達する手段が無い。OnboardingPage.save() は AlarmSetting を insert して保存できた時だけ hasCompletedOnboarding を true にするため、オンボーディングを抜けた時点で必ず設定が 1 件存在する。開発者メニューの「オンボーディングをリセット」は AlarmSetting を消さず、DebugMenuPage に AlarmSetting を削除する操作も無い (2026-08-22 時点)
-- [x] **アラーム発火**: 1〜2 分後の時刻で保存すると、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
+- [x] **アラーム発火**: 1〜2 分後の時刻に変更する (自動保存される) と、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
   - 自動化: manual（発火待ちと画面表示の目視判定が必要）
   - 実行ナレッジ: **AlarmKit のアラート内容はスクリーンショットでは黒い角丸としてしか写らない** (システム側の別レイヤーで描画されるため。`xcrun simctl io screenshot` でも同じ)。発火の判定は WDA のアクセシビリティツリーで行い、アプリ名・問いの本文・停止ボタン (`xmark`) が出ていることを確認する
-- [ ] **再スケジュール失敗の表示**: 再スケジュールに失敗した場合は画面が閉じず、エラーメッセージが表示される (ホームにも home_reschedule_error が出る)
+- [ ] **再スケジュール失敗の表示**: 再スケジュールに失敗した場合はエラーメッセージのアラートが表示される (ホームにも home_reschedule_error が出る)
   - 自動化: todo
 
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **時刻の保存**: 時刻を変更して「保存」をタップすると画面が閉じ、ホームの NEXT MORNING の大時刻に反映される
+### **時刻の自動保存**: 設定画面に「保存」ボタンが無く、時刻を変更するとデバウンス (約 0.5 秒) 後に自動保存され、戻るとホームの NEXT MORNING の大時刻に反映される。設定を開き直しても変更後の時刻が復元される (issue #124)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+**確認日: 2026-08-24** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール。issue #124 の自動保存 UI)
+
+設定画面。ナビゲーションバーに「保存」ボタンが無い (Back とタイトルのみ。WDA 要素ツリーでも Save ボタン 0 件):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/6d05b40d-0c8f-420e-abc1-cff21d2ce056.jpg" width="320">
+
+ホイールで 7:00 AM → 8:00 AM に変更 (Time の表示が即 8:00 AM に更新):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/2750c305-7bc3-4c8f-880a-b2c270f0a5f8.jpg" width="320">
+
+保存操作なしで Back でホームへ戻ると、NEXT MORNING の大時刻が 8:00 になり「In 10 hr 51 min」に更新されている:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/dd28df3a-99ac-496c-8dc8-6d2098704133.jpg" width="320">
+
+設定を開き直すと Time は 8:00 AM のまま (WDA 要素ツリーで `"value":"8:00 AM"` を確認。SwiftData に永続化されている)
+
+**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール。保存ボタン時代の旧 UI)
 
 保存済みの 7:00 からホイールで 10:26 に変更した直後の設定画面 (「時刻 10:26」):
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/c61f8aba-0f59-4ec5-910a-a8fe65932a0e.png" width="320">
@@ -164,11 +179,16 @@ Clear Log タップ後の空状態 (「No logs」):
 
 </details>
 
-### **スヌーズ回数の保存**: Picker で回数を選んで「保存」をタップし、画面を開き直すと選んだ回数が Picker に反映されている (AlarmSetting.snoozeLimit に永続化される)
+### **スヌーズ回数の自動保存**: Picker で回数を選ぶと自動保存され、画面を開き直すと選んだ回数が Picker に反映されている (AlarmSetting.snoozeLimit に永続化される)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-19**
+**確認日: 2026-08-24** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール。issue #124 の自動保存 UI)
+
+無料状態で「2 times」→「1 time」を選択 (保存ボタンなし) → ホームへ戻る → 設定を開き直すと Snooze の表示が「1 time」のまま保持されている (WDA 要素ツリーの label「Snooze, 1 time」でも確認):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/bd4f6843-d9eb-44e8-93e5-06d85b337c4d.jpg" width="320">
+
+**確認日: 2026-08-19** (保存ボタン時代の旧 UI)
 
 プレミアム状態で「4 回」を選んで保存 → ホームへ戻る → 設定を開き直すと、Picker の表示が「4 回」(mobile-mcp のアクセシビリティツリーで `alarm_setting_snooze_picker` の label が「スヌーズ、4 回」) のまま保持されていることを確認した (スクショなし。要素ツリーで確認)
 
@@ -179,7 +199,18 @@ Clear Log タップ後の空状態 (「No logs」):
 
 </details>
 
-### **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から保存すると、設定が作成されホームに時刻が表示される
+### **夜リマインド時刻の自動保存**: リマインドの時刻を変更すると自動保存され、画面を開き直すと変更後の時刻が反映されている
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-24** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+Reminder 1 をホイールで 9:00 PM → 10:00 PM に変更 (保存ボタンなし) → ホームへ戻る → 設定を開き直すと 10:00 PM のまま保持されている (WDA 要素ツリーで `"value":"10:00 PM"` も確認):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/52e8e247-14a4-4a64-9a12-c1d4ac3ea4bd.jpg" width="320">
+
+</details>
+
+### **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から値を変更すると、設定が作成されホームに時刻が表示される
 
 <details><summary>動作確認スクショ</summary>
 
@@ -187,7 +218,7 @@ Clear Log タップ後の空状態 (「No logs」):
 
 </details>
 
-### **アラーム発火**: 1〜2 分後の時刻で保存すると、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
+### **アラーム発火**: 1〜2 分後の時刻に変更する (自動保存される) と、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
 
 <details><summary>動作確認スクショ</summary>
 
@@ -211,7 +242,7 @@ Clear Log タップ後の空状態 (「No logs」):
 
 </details>
 
-### **再スケジュール失敗の表示**: 再スケジュールに失敗した場合は画面が閉じず、エラーメッセージが表示される (ホームにも home_reschedule_error が出る)
+### **再スケジュール失敗の表示**: 再スケジュールに失敗した場合はエラーメッセージのアラートが表示される (ホームにも home_reschedule_error が出る)
 
 <details><summary>動作確認スクショ</summary>
 
@@ -225,7 +256,7 @@ Clear Log タップ後の空状態 (「No logs」):
 
 ## 3. ペイウォール導線
 
-- [x] **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く
+- [x] **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く。巻き戻った選択は自動保存されない (開き直しても元の回数のまま)
   - 自動化: manual（sheet 遷移の確認）
 - [x] **プレミアム行の恒常導線**: 無料状態では夜のリマインドセクションと情報セクションの間に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
   - 自動化: manual（sheet 遷移の確認）
@@ -236,11 +267,19 @@ Clear Log タップ後の空状態 (「No logs」):
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く
+### **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く。巻き戻った選択は自動保存されない (開き直しても元の回数のまま)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-19**
+**確認日: 2026-08-24** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール。issue #124 の自動保存 UI)
+
+無料状態 (Snooze 1 time) で「Unlimited」(錠前付き) を選択 → PaywallPage が sheet で開く:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/8174d458-41f2-44bd-b69b-cdc28f9cbffe.jpg" width="320">
+
+「Not now」で閉じると Picker は「1 time」に戻っている (WDA 要素ツリーの label「Snooze, 1 time」でも確認。巻き戻りは自動保存されず、開き直しても 1 time のまま):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/3c3a8e87-5774-4472-99e1-e8250b62ec33.jpg" width="320">
+
+**確認日: 2026-08-19** (保存ボタン時代の旧 UI)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/c7f53390-70c5-4a41-aeb8-088b49d9ad94.png" width="320">
 
 (「無制限」を選択 → PaywallPage が開く。「今はしない」で閉じると Picker は「2 回」に戻っている)
