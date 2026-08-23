@@ -91,7 +91,9 @@ struct MonthCalendarPage: View {
             .disabled(displayedMonth <= earliestMonth)
             // ja: 前の月
             .accessibilityLabel(String(localized: "Previous month"))
-            Text(verbatim: displayedMonth.formatted(.dateTime.year().month(.wide).locale(calendarDisplayLocale)))
+            // 見出しはグリッドと同じ暦 (Calendar.current。和暦・イスラム暦等の設定を含む) で整形し、
+            // 言語だけをアプリの表示言語に合わせる。暦を渡さないと既定のグレゴリオ暦で整形され、日付の並びと見出しがずれる
+            Text(verbatim: displayedMonth.formatted(Date.FormatStyle(locale: calendarDisplayLocale, calendar: calendar).year().month(.wide)))
                 .font(.system(size: 20, weight: .light))
                 .tracking(1.6)
                 .foregroundStyle(Color.warmWhite)

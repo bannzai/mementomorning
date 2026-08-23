@@ -47,6 +47,14 @@ private struct MorningDotsSpriteView: View {
 
     var body: some View {
         SpriteView(scene: scene, options: [.allowsTransparency])
+            // 別画面 (朝の問いの fullScreenCover や push 遷移先) に覆われている間は、
+            // 見えないシーンの物理とモーション取得を止めて電力消費を抑える
+            .onDisappear {
+                scene.pauseSimulation()
+            }
+            .onAppear {
+                scene.resumeSimulation()
+            }
     }
 }
 
@@ -86,14 +94,17 @@ final class MorningDotsScene: SKScene {
         return SKTexture(image: image)
     }()
 
+    /// 粒の初期配置の最上段の高さ。側壁の上端をこれより高くして、生成直後の粒が壁の外に出ないようにする
+    private var spawnTopY: CGFloat = 0
+
     override func didMove(to view: SKView) {
         // 粒がなければ物理もモーション取得も不要のため、シーンを止めて電力消費を抑える
         guard dotCount > 0 else {
             isPaused = true
             return
         }
-        physicsBody = boundaryBody()
         spawnDots()
+        physicsBody = boundaryBody()
         startMotionUpdatesIfAvailable()
     }
 
@@ -105,18 +116,33 @@ final class MorningDotsScene: SKScene {
 
     /// 左・下・右の 3 辺の壁。上辺は開けて、画面より高く積もった粒や上方に生成された粒が
     /// 境界の外に閉じ込められず重力で画面内へ落ちてこられるようにする。
-    /// 側壁は画面上端より 1000pt 高くまで伸ばし、傾けた時に粒が横からこぼれないようにする
+    /// 側壁の上端は「画面上端より 1000pt 上」と「粒の初期配置の最上段より 500pt 上」の高い方にし、
+    /// 粒数が多く初期配置が高くなっても、落下中に傾けた粒が側壁の外へ抜けないようにする
     private func boundaryBody() -> SKPhysicsBody {
+        let wallTop = max(size.height + 1000, spawnTopY + 500)
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: 0, y: size.height + 1000))
+        path.move(to: CGPoint(x: 0, y: wallTop))
         path.addLine(to: CGPoint(x: 0, y: 0))
         path.addLine(to: CGPoint(x: size.width, y: 0))
-        path.addLine(to: CGPoint(x: size.width, y: size.height + 1000))
+        path.addLine(to: CGPoint(x: size.width, y: wallTop))
         return SKPhysicsBody(edgeChainFrom: path)
     }
 
     override func willMove(from view: SKView) {
         motionManager.stopDeviceMotionUpdates()
+    }
+
+    /// 画面から見えなくなった時に呼ぶ。物理シミュレーションとモーション取得を止めて電力消費を抑える
+    func pauseSimulation() {
+        isPaused = true
+        motionManager.stopDeviceMotionUpdates()
+    }
+
+    /// 画面へ戻った時に呼ぶ。粒がある時だけ物理とモーション取得を再開する
+    func resumeSimulation() {
+        guard dotCount > 0 else { return }
+        isPaused = false
+        startMotionUpdatesIfAvailable()
     }
 
     /// 粒を山なりに事前配置する。下の行ほど広く、上へ行くほど狭める。
@@ -147,6 +173,7 @@ final class MorningDotsScene: SKScene {
                 addChild(node)
                 placed += 1
             }
+            spawnTopY = y + dotDiameter
             row += 1
         }
     }
