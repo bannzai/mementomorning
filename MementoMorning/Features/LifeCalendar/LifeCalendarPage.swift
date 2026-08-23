@@ -23,8 +23,6 @@ struct LifeCalendarPage: View {
     @Query(lifeCalendarAnswersDescriptor) private var answers: [MorningAnswer]
     /// 全期間の回答数 (答えた日数 N)。グリッド用クエリは 2 年分に制限しているため、件数は fetchCount で全期間から取得する
     @State private var answeredCount = 0
-    /// 7 日の節目「七つの朝」を見返すシートを表示中かどうか (issue #109)
-    @State private var isSevenMorningsPagePresented = false
 
     var body: some View {
         let calendar = Calendar.current
@@ -93,35 +91,15 @@ struct LifeCalendarPage: View {
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))
-                // 節目に達した後はいつでもカレンダーから振り返りカードを見返せるようにする (issue #109)。
-                // 30 日の節目「一ヶ月の手紙」の導線は実装後 (issue #96) にここへ追加する
-                if canRevisitSevenMorningsMilestone(answerCount: answeredCount) {
-                    Button {
-                        isSevenMorningsPagePresented = true
-                    } label: {
-                        // ja: 七つの朝
-                        Text("Seven Mornings")
-                            .underline()
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 14)
-                    }
-                    .font(.system(size: 13))
-                    .tracking(1.3)
-                    .foregroundStyle(Color.warmWhite.opacity(0.65))
-                    .accessibilityIdentifier("life_calendar_seven_mornings_link")
-                }
             }
             .padding(.bottom, 24)
-        }
-        .sheet(isPresented: $isSevenMorningsPagePresented) {
-            SevenMorningsPage()
         }
         .background(Color.ink.ignoresSafeArea())
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
         // この画面を開いたまま朝の問い (fullScreenCover) で回答が保存されても onAppear は再発火しないため、
-        // 保存通知で「答えた日数」と七つの朝リンクの表示条件を再計算する (HomeContent と同じパターン)
+        // 保存通知で「答えた日数」を再計算する (HomeContent と同じパターン)
         .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
