@@ -33,6 +33,8 @@ last_verified_at: 2026-08-23
   - 自動化: manual（課金状態の表示分岐は目視確認）
 - [x] **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
   - 自動化: manual（外部リンクの確認）
+- [x] **開発者用のログの導線とログ画面**: スパイクログが設定画面に直接表示されず、情報セクション末尾の「Developer Log」(alarm_setting_developer_log_link) から DeveloperLogPage が開く。ログがある時は本文 (developer_log_text) と「Copy Log」(developer_log_copy_button)・「Clear Log」(developer_log_clear_button) が表示され、Clear Log で「No logs」(developer_log_empty) の空状態になる。ログの作り込みは開発者メニューの「スパイクログにサンプルを設定」(debug_set_sample_spike_log) を使う (issue #103)
+  - 自動化: manual（画面遷移と表示の目視確認。コピー結果のペーストボード検証はリモート simulator では手段が無い）
 
 #### 動作確認
 <details>
@@ -104,6 +106,23 @@ OFF:
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/fe2490db-1bbd-4ac1-911c-1ad1def7586e.png" width="320" />
 
 (問い合わせ (mailto) はシミュレータにメール App が無くタップしても遷移しないため、URL の正しさは LegalLinksTests で担保)
+
+</details>
+
+### **開発者用のログの導線とログ画面**: スパイクログが設定画面に直接表示されず、情報セクション末尾の「Developer Log」から DeveloperLogPage が開く
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-22** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+設定画面。スパイクログの直表示セクションが無く、情報セクション末尾に「Developer Log」リンクが出ている:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/d41fa3c6-a618-4702-8a76-105360c9c4b9.jpg" width="320">
+
+開発者メニューの「スパイクログにサンプルを設定」でログを作ってから開いた DeveloperLogPage。ログ本文 (monospace)・Copy Log・Clear Log・問い合わせ時の案内 footer が表示されている。Copy Log をタップしてもクラッシュしない (ペーストボードの中身はリモート simulator では検証手段が無いため未検証):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/4736ac7f-4beb-482c-914e-ab27e1183cb2.jpg" width="320">
+
+Clear Log タップ後の空状態 (「No logs」):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/f89fae9a-3c76-4e81-a94e-ae3aa7472c64.jpg" width="320">
 
 </details>
 
