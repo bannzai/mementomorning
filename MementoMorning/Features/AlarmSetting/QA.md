@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
-last_verified_at: 2026-08-22
+last_verified_commit: 344d118650b45b518559c7c85f8d854e60b2f47d
+last_verified_at: 2026-08-23
 ---
 
 # AlarmSetting QA
@@ -208,6 +208,10 @@ OFF:
 
 - [x] **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く
   - 自動化: manual（sheet 遷移の確認）
+- [x] **プレミアム行の恒常導線**: 無料状態では夜のリマインドセクションと情報セクションの間に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
+  - 自動化: manual（sheet 遷移の確認）
+- [x] **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
+  - 自動化: manual（課金状態の表示分岐は目視確認）
 
 #### 動作確認
 <details>
@@ -221,6 +225,31 @@ OFF:
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/c7f53390-70c5-4a41-aeb8-088b49d9ad94.png" width="320">
 
 (「無制限」を選択 → PaywallPage が開く。「今はしない」で閉じると Picker は「2 回」に戻っている)
+
+</details>
+
+### **プレミアム行の恒常導線**: 無料状態では夜のリマインドセクションと情報セクションの間に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール。issue #94 の夜リマインド時刻編集とのマージ後 UI)
+
+無料状態の設定画面。夜のリマインドセクションの下に「プレミアム」行:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/a43b711a-b0f5-43ee-a695-5d88b9c52461.png" width="320">
+
+「プレミアム」行をタップ → PaywallPage が sheet で開く (価格は RevenueCat Test Store の USD 表示):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/eaf81abc-4cd9-4d5a-b2eb-cfa42a9c7692.png" width="320">
+
+</details>
+
+### **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+
+プレミアム強制 ON の設定画面。「プレミアム 有効」の状態表示 (夜のリマインドの追加ボタンの錠前も消えている = issue #94 側の分岐):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/ddc20822-f76f-4637-bb2b-2785d3778c65.png" width="320">
 
 </details>
 
