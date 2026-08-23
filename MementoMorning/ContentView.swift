@@ -71,8 +71,6 @@ private struct HomeContent: View {
     @Query private var alarmSettings: [AlarmSetting]
     /// 今日の回答 (あれば「今朝のことば」として表示する)
     @Query private var todayAnswers: [MorningAnswer]
-    /// 粒ストリップに表示する直近 14 日分の回答
-    @Query private var stripAnswers: [MorningAnswer]
     /// 全期間の回答数 (答えた日数 N)。件数だけ必要なため全 MorningAnswer を @Query で保持せず fetchCount で取得し、
     /// SwiftData の保存通知 (ModelContext.didSave) で再計算して過去分を含む回答の追加・削除に追随させる
     @State private var answeredCount = 0
@@ -97,7 +95,7 @@ private struct HomeContent: View {
     /// 提示中に共有を促すダイアログを出すと、その画面と一緒に閉じられたり提示に失敗したりするため、閉じた後に出す
     let isCoveredByOtherScreen: Bool
 
-    /// 今日・直近 14 日の predicate は初期化時にしか組めないため、明示的に init を定義する
+    /// 今日の predicate は初期化時にしか組めないため、明示的に init を定義する
     init(today: Date, isCoveredByOtherScreen: Bool) {
         self.today = today
         self.isCoveredByOtherScreen = isCoveredByOtherScreen
@@ -105,12 +103,6 @@ private struct HomeContent: View {
         // 1 日 1 件のため 1 件だけ取得する
         todayDescriptor.fetchLimit = 1
         _todayAnswers = Query(todayDescriptor)
-
-        // 粒ストリップは今日を含む直近 14 日分。1 日 1 件のためこの本数で全日をカバーできる
-        let stripStart = Calendar.current.date(byAdding: .day, value: -13, to: today)!
-        var stripDescriptor = FetchDescriptor<MorningAnswer>(predicate: #Predicate { $0.answeredDate >= stripStart })
-        stripDescriptor.fetchLimit = 14
-        _stripAnswers = Query(stripDescriptor)
     }
 
     var body: some View {
@@ -121,7 +113,22 @@ private struct HomeContent: View {
             footerSection
         }
         .frame(maxWidth: .infinity)
-        .background(Color.ink.ignoresSafeArea())
+        .background {
+            ZStack {
+                Color.ink
+                // 答えた朝の粒が背景として下から積もる (issue #117)。前面の操作 UI を妨げないよう当たり判定は持たせない。
+                // 粒は温白 9% (未回答の粒と同じ弱さ) で、大時刻や文字の可読性を保つ
+                MorningDotsPhysicsView(
+                    dotCount: answeredCount,
+                    dotDiameter: 12,
+                    dotColor: UIColor(Color.warmWhite.opacity(0.09)),
+                    newestDotRingColor: nil
+                )
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            }
+            .ignoresSafeArea()
+        }
         .toolbar {
             #if DEBUG
             ToolbarItem(placement: .topBarLeading) {
@@ -373,49 +380,39 @@ private struct HomeContent: View {
             .padding(.horizontal, 36)
     }
 
-    /// 直近 14 日の粒ストリップ + 答えた日数 N + テキストリンク行
+    /// 答えた日数 N + テキストリンク行。
+    /// 直近 14 日の粒ストリップは、背景に積もる粒 (issue #117) に役割を置き換えて廃止した
     private var footerSection: some View {
-        let calendar = Calendar.current
-        let answeredDays = Set(stripAnswers.map { calendar.startOfDay(for: $0.answeredDate) })
-        return VStack(spacing: 16) {
-            HStack(spacing: 8) {
-                // 今日を右端に、古い順で 14 日分並べる
-                ForEach((0..<14).reversed(), id: \.self) { offset in
-                    let day = calendar.date(byAdding: .day, value: -offset, to: today)!
-                    Circle()
-                        .fill(answeredDays.contains(day) ? Color.warmWhite : Color.warmWhite.opacity(0.09))
-                        .frame(width: 10, height: 10)
-                        .overlay {
-                            // 今日の粒だけに夜明け色のリングを添える (アクセントは各画面 1 箇所まで)
-                            if day == today {
-                                Circle()
-                                    .stroke(Color.dawn.opacity(0.35), lineWidth: 3)
-                                    .frame(width: 16, height: 16)
-                            }
-                        }
-                }
-            }
+        VStack(spacing: 16) {
             // ja: 答えた日数 %lld日
             Text("\(answeredCount) mornings answered")
                 .font(.system(size: 11))
                 .tracking(1.1)
-                .foregroundStyle(Color.warmWhite.opacity(0.4))
-            HStack(spacing: 8) {
+                .foregroundStyle(Color.warmWhite.opacity(0.55))
+            HStack(spacing: 4) {
                 NavigationLink {
                     AnswerLogPage()
                 } label: {
                     // ja: ジャーナル
                     Text("Journal")
                         .padding(.vertical, 12)
-                        .padding(.horizontal, 14)
+                        .padding(.horizontal, 12)
                 }
                 NavigationLink {
-                    LifeCalendarPage()
+                    DotsPage()
                 } label: {
-                    // ja: 人生カレンダー
-                    Text("Life Calendar")
+                    // ja: 点
+                    Text("Dots")
                         .padding(.vertical, 12)
-                        .padding(.horizontal, 14)
+                        .padding(.horizontal, 12)
+                }
+                NavigationLink {
+                    MonthCalendarPage()
+                } label: {
+                    // ja: カレンダー
+                    Text("Calendar")
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 12)
                 }
                 NavigationLink {
                     AlarmSettingPage()
@@ -423,13 +420,13 @@ private struct HomeContent: View {
                     // ja: 設定
                     Text("Settings")
                         .padding(.vertical, 12)
-                        .padding(.horizontal, 14)
+                        .padding(.horizontal, 12)
                 }
             }
             .font(.system(size: 13))
             .tracking(1.3)
-            .foregroundStyle(Color.warmWhite.opacity(0.65))
-            .padding(.top, 12)
+            .foregroundStyle(Color.warmWhite.opacity(0.75))
+            .padding(.top, 8)
         }
         .padding(.bottom, 24)
     }
