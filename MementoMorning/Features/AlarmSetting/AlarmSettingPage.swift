@@ -1,12 +1,11 @@
 import SwiftUI
 import SwiftData
 
-/// 毎朝のアラーム設定画面。設定できるのは時刻・ON/OFF・スヌーズ回数だけ (設定要素は最小限)
+/// 毎朝のアラーム設定画面。設定できるのは時刻・ON/OFF・スヌーズ回数だけ (設定要素は最小限)。
+/// 保存ボタンは置かず、値が変わったらすぐに保存する (issue #124)
 struct AlarmSettingPage: View {
     /// モデルコンテキスト
     @Environment(\.modelContext) private var modelContext
-    /// 画面の dismiss
-    @Environment(\.dismiss) private var dismiss
     /// 保存済みのアラーム設定。単一レコード運用のため先頭 1 件のみ使う
     @Query private var alarmSettings: [AlarmSetting]
     /// 保存済みの夜リマインド設定。画面上の並び順は登録順で、先頭が無料枠で有効になる 1 本目
@@ -25,10 +24,8 @@ struct AlarmSettingPage: View {
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
-    /// 保存処理 (再スケジュール完了待ち) の実行中かどうか。
-    /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
-    /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
-    @State private var isSaving: Bool = false
+    /// 自動保存のデバウンス用 Task。値が変わるたびに置き換え、連続変更を 1 回の保存にまとめる
+    @State private var autoSaveTask: Task<Void, Never>?
     /// ペイウォールを表示中かどうか。無料状態でプレミアム限定のスヌーズ回数 (無料枠超・無制限) を選んだ時に開く
     @State private var isPaywallPresented = false
 
@@ -62,10 +59,16 @@ struct AlarmSettingPage: View {
             }
             .accessibilityIdentifier("alarm_setting_snooze_picker")
             .onChange(of: snoozeLimit) { oldValue, newValue in
-                guard !isSnoozeLimitSelectable(snoozeLimit: newValue, isPremium: PremiumEntitlement.isPremium) else { return }
-                // 無料で選べない回数は選択を戻し、代わりにペイウォールを開く (戻した値は選択可能なため再帰しない)
-                snoozeLimit = oldValue
-                isPaywallPresented = true
+                guard isSnoozeLimitSelectable(snoozeLimit: newValue, isPremium: PremiumEntitlement.isPremium) else {
+                    // 無料で選べない回数は選択を戻し、代わりにペイウォールを開く (戻した値は選択可能なため再帰しない)
+                    snoozeLimit = oldValue
+                    isPaywallPresented = true
+                    return
+                }
+                // 選べない回数からの巻き戻し (oldValue が選択不可) は変更ではないため保存しない
+                // (保存すると、アラーム未設定のままペイウォール導線に触れただけでレコードが作られてしまう)
+                guard isSnoozeLimitSelectable(snoozeLimit: oldValue, isPremium: PremiumEntitlement.isPremium) else { return }
+                scheduleAutoSave()
             }
             // 夜リマインドの時刻 (issue #44 の可視化から issue #94 で編集可能にした)。
             // 1 本目の時刻変更は無料、2・3 本目の追加はプレミアム限定で、追加を試すとペイウォールへ誘導する (課金設計は documents/PROJECT.md)
@@ -193,14 +196,19 @@ struct AlarmSettingPage: View {
         }
         // ja: アラーム
         .navigationTitle(String(localized: "Alarm"))
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                // ja: 保存
-                Button(String(localized: "Save")) {
-                    save()
-                }
-                .disabled(isSaving)
-            }
+        // 保存ボタンは置かず、値が変わったらすぐに保存する (issue #124)。
+        // スヌーズ回数はペイウォール判定と合わせて Picker 側の onChange で保存する
+        .onChange(of: time) {
+            scheduleAutoSave()
+        }
+        .onChange(of: isEnabled) {
+            scheduleAutoSave()
+        }
+        .onChange(of: nightReminderTimes) { oldValue, _ in
+            // onAppear の復元 (空 → 保存済みの実効値) は変更ではないため保存しない。
+            // 画面上は 1 本目を消せないため、ユーザー操作で空から変わることはない
+            guard !oldValue.isEmpty else { return }
+            scheduleAutoSave()
         }
         // ja: 保存に失敗しました
         .alert(String(localized: "Failed to save"), isPresented: Binding(
@@ -229,6 +237,11 @@ struct AlarmSettingPage: View {
             }
             isEnabled = alarmSetting.isEnabled
             snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
+        }
+        .onDisappear {
+            // デバウンス待ちの変更を画面を離れる時に失わないよう、待たずにその場で保存する
+            autoSaveTask?.cancel()
+            autoSaveTask = Task { await save() }
         }
     }
 
@@ -288,13 +301,36 @@ struct AlarmSettingPage: View {
         return Calendar.autoupdatingCurrent.date(byAdding: .hour, value: 1, to: lastTime) ?? lastTime
     }
 
-    /// 入力内容を保存して再スケジュールする
-    private func save() {
-        guard !isSaving else { return }
-        isSaving = true
+    /// 値の変更をデバウンスして保存する。
+    /// DatePicker のホイール操作は 1 回の操作で onChange が連続発火するため、
+    /// 最後の変更から一呼吸待って 1 回の保存 (と再スケジュール) にまとめる。
+    /// 500ms は、ホイールを回している間は発火せず、手を止めてから保存までの遅れも体感されにくい値として選んだ
+    private func scheduleAutoSave() {
+        autoSaveTask?.cancel()
+        autoSaveTask = Task {
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !Task.isCancelled else { return }
+            await save()
+        }
+    }
+
+    /// 入力内容を保存して再スケジュールする。
+    /// onAppear の復元 (@State への代入) でも onChange は発火するため、
+    /// 保存済みの値からの実変更が無い時は何もしない (冪等)
+    private func save() async {
         let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: time)
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
+        guard hasAlarmSettingChanges(
+            hour: hour,
+            minute: minute,
+            isEnabled: isEnabled,
+            snoozeLimit: snoozeLimit,
+            nightReminderTimes: nightReminderTimes.map { nightReminderTime(date: $0) },
+            alarmSetting: alarmSettings.first,
+            storedNightReminderTimes: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
+            isPremium: PremiumEntitlement.isPremium
+        ) else { return }
         if let alarmSetting = alarmSettings.first {
             alarmSetting.setTime(hour: hour, minute: minute)
             alarmSetting.setIsEnabled(isEnabled: isEnabled)
@@ -314,22 +350,15 @@ struct AlarmSettingPage: View {
             // reschedule がその未保存の値を fetch してしまうため、変更を破棄してから中断する
             modelContext.rollback()
             saveError = "\(error)"
-            isSaving = false
             return
         }
-        Task {
-            await reschedule(modelContext: modelContext)
-            // 夜リマインドは scenePhase の変化 (バックグラウンド遷移・foreground 復帰) でしか登録し直されないため、
-            // この画面で変更した時刻がその場で反映されるようここでも登録し直す
-            await rescheduleNightReminder(modelContext: modelContext)
-            // dismiss 後は lastRescheduleError の表示先 (この画面) が無くなるため、
-            // 再スケジュールの完了を待ってから、失敗時は画面を閉じずにエラーを表示する
-            if let error = UserDefaults.standard.string(forKey: .lastRescheduleError) {
-                saveError = error
-                isSaving = false
-            } else {
-                dismiss()
-            }
+        await reschedule(modelContext: modelContext)
+        // 夜リマインドは scenePhase の変化 (バックグラウンド遷移・foreground 復帰) でしか登録し直されないため、
+        // この画面で変更した時刻がその場で反映されるようここでも登録し直す
+        await rescheduleNightReminder(modelContext: modelContext)
+        // 再スケジュールの完了を待って、失敗をこの画面のアラートで可視化する
+        if let error = UserDefaults.standard.string(forKey: .lastRescheduleError) {
+            saveError = error
         }
     }
 
@@ -360,6 +389,32 @@ struct AlarmSettingPage: View {
             modelContext.delete(setting)
         }
     }
+}
+
+/// 設定画面の入力値が保存済みの値から実際に変わったかを判定する。
+/// 自動保存 (issue #124) は onAppear の復元 (@State への代入) が起こす onChange でも呼ばれるため、
+/// 実変更の無い保存・再スケジュールをこの判定で抑止する。
+/// 比較は課金状態での実効値に対して行う (画面には実効値を表示しているため、プレミアム失効中に隠れている
+/// スヌーズの希望値・2 本目以降のリマインドは変更として扱わない)。
+/// 保存済みが無い (alarmSetting が nil) 時は常に変更ありとする (onAppear はアラーム系の @State を復元しないため、
+/// onChange の発火 = ユーザーの実操作になる)。
+/// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
+func hasAlarmSettingChanges(
+    hour: Int,
+    minute: Int,
+    isEnabled: Bool,
+    snoozeLimit: Int?,
+    nightReminderTimes: [DateComponents],
+    alarmSetting: AlarmSetting?,
+    storedNightReminderTimes: [DateComponents],
+    isPremium: Bool
+) -> Bool {
+    guard let alarmSetting else { return true }
+    return hour != alarmSetting.hour
+        || minute != alarmSetting.minute
+        || isEnabled != alarmSetting.isEnabled
+        || snoozeLimit != effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: isPremium)
+        || nightReminderTimes != effectiveNightReminderTimes(times: storedNightReminderTimes, isPremium: isPremium)
 }
 
 /// AlarmSettingPage の Preview
