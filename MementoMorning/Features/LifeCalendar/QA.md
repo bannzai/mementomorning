@@ -1,7 +1,7 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 082710fc026572a24bc8a96aa6164af087bb4aa7
+last_verified_commit: 1b58fd2273da16e7660287f485630f6d84b8764e
 last_verified_at: 2026-08-23
 ---
 
@@ -9,153 +9,82 @@ last_verified_at: 2026-08-23
 
 ## 関連リンク
 
-- 仕様: https://github.com/bannzai/mementomorning/issues/6 (受け入れ条件)
-- 関連: https://github.com/bannzai/mementomorning/issues/109 (七つの朝を後から見返す導線)
+- 仕様: https://github.com/bannzai/mementomorning/issues/118 (点画面) / https://github.com/bannzai/mementomorning/issues/119 (カレンダー画面)
+- デザイン: https://claude.ai/code/artifact/5888a7bf-dfb3-461e-8203-cec8ccbd6ec3
+- 関連: https://github.com/bannzai/mementomorning/issues/109 (七つの朝を後から見返す導線) / https://github.com/bannzai/mementomorning/issues/116 (七つの朝のコンセプト見直し)
 
 ## 仕様チェックリスト
 
 | ID | 期待挙動 | 対応項目 |
 |----|---------|---------|
-| S1 | 回答した日がグリッドに反映される | 回答済みの日の粒 |
-| S2 | 誕生日等の設定がなくても破綻しない (未設定時のデフォルト表示) | グリッドの表示範囲 |
+| S1 | 答えた朝の数だけ粒が積もる (週・日付・空白の概念なし) | 点画面: 粒の積み上げ |
+| S2 | カレンダー画面で「いつ答えたか」を月単位で確かめられる | カレンダー画面 |
 
-## 1. グリッド表示
+## 1. 点画面 (DotsPage)
 
-- [x] **回答済みの日の粒**: 回答した日 (開発者メニューの「Delete all answers」→「Seed sample answers」で投入) が白い粒、未回答の日が薄い粒で表示される
-  - 自動化: manual（粒の配色の目視確認）
-- [x] **今日の粒のリング**: 今日の粒にだけ夜明け色のリングが付く
+- [x] **粒の積み上げ**: 回答数ぶんのフル明度の粒 (開発者メニューの「サンプル回答を投入 (10 日分)」で投入) が画面下部に山として積もる。週・日付・空白マスの表現はない
+  - 自動化: manual（粒の表示の目視確認）
+- [x] **最新粒のリング**: 今日の回答がある時だけ、いちばん新しい粒に夜明け色のリングが付く
   - 自動化: manual（配色の目視確認）
-- [x] **グリッドの表示範囲**: 誕生日等の設定なしで、最古の回答の週から今日の週まで (回答歴が浅い場合は最低 13 週分) のグリッドが破綻なく表示される (週 = 1 行 × 7 マス。LifeCalendarDates.swift の仕様)
-  - 自動化: manual（画面表示の目視確認。日付列の導出ロジックは MementoMorningTests/LifeCalendarDatesTests.swift がカバー済み）
-- [ ] **初期スクロール位置**: 履歴が画面を超える件数でも、開いた時に今日の週 (末尾) が見えている
-  - ⏭️ スキップ: 開発者メニューで投入できる回答は 10 日分 (13 週の最低保証グリッドに収まる) で、履歴が画面を超える状態を作る手段が現状ない。長期履歴の投入手段ができたら確認する
-  - 自動化: manual（スクロール位置の目視確認）
-- [x] **答えた日数**: フッターに「答えた日数 N日」(英語では N mornings answered) が全期間の回答数で、キャプションより強い書体 (15pt medium) で表示される (issue #110)。英語では 1 件のときだけ単数形 (1 morning answered) になる
+- [x] **答えた朝の件数**: フッターに「答えた朝」ラベルと全期間の回答数が強調表示され、「点はいつかつながる」が添えられる
   - 自動化: manual（件数表示の目視確認）
-  - 確認範囲: 複数件 (10 mornings answered) を確認済み。1 件の単数形は issue #50 で対応し、ホームのフッター (同じ文言) で確認した
-- [x] **月ラベル**: 月初 (1 日) を含む週の行頭に月名 (Jun / Jul / Aug) が表示され、グリッド最上段の週と 1 月には年が併記される (May 2026)。基準日の導出ロジックは MementoMorningTests/LifeCalendarDatesTests.swift がカバー済み (issue #110)
-  - 自動化: manual（ラベル表示の目視確認）
-- [x] **曜日ヘッダー**: グリッドの列と同じ並び (firstWeekday 起点) で曜日記号 (英語 S M T W T F S) がグリッド直上に表示される (issue #110)
-  - 自動化: manual（ヘッダー表示の目視確認）
-  - 確認範囲: 履歴が浅くグリッドが中央寄せの状態でグリッド直上に付くことを確認済み。履歴が画面を超える時のスクロール上部固定 (pinned section header) は、長期履歴の投入手段が現状ないため未検証 (「初期スクロール位置」と同じ制約)
+- [ ] **傾きで粒が転がる**: 端末を傾けると粒が重力方向へ転がる (CoreMotion + SpriteKit 物理)
+  - ⏭️ スキップ: シミュレータでは CoreMotion の傾きを再現できないため実機待ち。シミュレータでは既定の下向き重力で静止していることを確認する
+  - 自動化: manual（実機での目視確認）
 
-#### 動作確認
-<details>
-<summary>動作確認エビデンス</summary>
+## 2. カレンダー画面 (MonthCalendarPage)
 
-### **回答済みの日の粒**: 回答した日 (開発者メニューの「Delete all answers」→「Seed sample answers」で投入) が白い粒、未回答の日が薄い粒で表示される
+- [x] **月グリッド**: 曜日ヘッダー付きの 7 列グリッドに今月の日付が並び、答えた日は温白の粒に墨の数字、未回答の過去日は薄い数字、未来日はさらに薄い数字で表示される
+  - 自動化: manual（画面表示の目視確認。マス列の導出ロジックは MementoMorningTests/MonthCalendarDatesTests.swift がカバー済み）
+- [x] **今日のリング**: 今日のマスにだけ夜明け色のリングが付く
+  - 自動化: manual（配色の目視確認）
+- [x] **月送り**: 前月・翌月ボタンで表示月を切り替えられる。範囲は最古の回答月〜今月で、範囲外方向のボタンは無効表示になる
+  - 自動化: manual（月送り操作の確認）
+- [x] **答えた朝の件数**: グリッドの下に全期間の回答数が表示される
+  - 自動化: manual（件数表示の目視確認）
 
-<details><summary>動作確認スクショ</summary>
+## 3. 七つの朝への導線 (issue #109)
 
-**確認日: 2026-08-19**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
-
-(投入した 10 日分が白い粒、未回答が暗い粒。グリッドはキャプションとフッターの間の中央に配置される)
-
-</details>
-
-### **今日の粒のリング**: 今日の粒にだけ夜明け色のリングが付く
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-19**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
-
-</details>
-
-### **グリッドの表示範囲**: 誕生日等の設定なしで、最古の回答の週から今日の週まで (回答歴が浅い場合は最低 13 週分) のグリッドが破綻なく表示される (週 = 1 行 × 7 マス。LifeCalendarDates.swift の仕様)
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-19**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/d7ea0919-b9a4-416d-952c-086ddc276c0b.jpg" width="320">
-
-(回答歴 10 日のため最低保証の 13 週分が表示され、破綻なし)
-
-</details>
-
-### **初期スクロール位置**: 履歴が画面を超える件数でも、開いた時に今日の週 (末尾) が見えている
-
-<details><summary>動作確認スクショ</summary>
-
-（未実行）
-
-</details>
-
-### **答えた日数**: フッターに「答えた日数 N日」(英語では N mornings answered) が全期間の回答数で表示される。英語では 1 件のときだけ単数形 (1 morning answered) になる
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-23**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/79d418e2-cba6-4944-be87-482e93132b35.jpg" width="320">
-
-(全期間 10 件で「10 mornings answered」が 15pt medium の強調書体で表示される。英語設定の simtunnel で確認)
-
-</details>
-
-### **月ラベル**: 月初 (1 日) を含む週の行頭に月名が表示され、グリッド最上段の週と 1 月には年が併記される
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-23**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/79d418e2-cba6-4944-be87-482e93132b35.jpg" width="320">
-
-(最上段に「May 2026」(年併記)、月初を含む週に「Jun」「Jul」「Aug」。simtunnel で確認)
-
-</details>
-
-### **曜日ヘッダー**: グリッドの列と同じ並びで曜日記号がグリッド直上に表示される
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-23**
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/79d418e2-cba6-4944-be87-482e93132b35.jpg" width="320">
-
-(S M T W T F S が粒の 7 列に整列してグリッド直上に表示される。スクロール時の上部固定は長期履歴の投入手段がないため未検証)
-
-</details>
-
-</details>
-
----
-
-## 2. 七つの朝への導線 (issue #109)
-
-- [x] **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+- [x] **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、点画面のフッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
   - 自動化: manual（表示可否の目視確認。判定ロジックは MementoMorningTests/SevenMorningsMilestoneTests.swift がカバー済み）
-- [x] **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
+- [x] **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、点画面のフッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く。sheet を閉じると点画面へ戻る
   - 自動化: manual（sheet 遷移の確認）
 
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+**確認日: 2026-08-23** (simtunnel リモート simulator、英語ロケール、開発者メニューでサンプル回答 10 日分を投入)
+
+### 点画面: 粒の積み上げ / 最新粒のリング / 答えた朝の件数
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-23** (simtunnel、英語ロケール、回答 0 件)
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/1091f20f-33cd-4503-8944-dfa44134c8fa.jpg" width="320">
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/ff50ded2-9408-4332-a608-d12ea9b21b4c.jpg" width="320" />
 
-(フッターは「0 mornings answered / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は無い)
+(投入した 10 日分のフル明度の粒が画面下部に積もり、いちばん新しい粒 (右端) に夜明けのリング。フッターに「Mornings answered 10」の強調表示と「The dots will connect.」。週・日付・空白マスの表現なし)
+
+- 0 件時も破綻しない (粒なし・「Mornings answered 0」・七つの朝リンク非表示) ことを全回答削除後に確認済み
+- 傾きで粒が転がる挙動はシミュレータでは CoreMotion を再現できないため未検証 (実機待ち)。既定の下向き重力で静止していることは上記スクショで確認
 
 </details>
 
-### **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
+### カレンダー画面: 月グリッド / 今日のリング / 月送り / 答えた朝の件数
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 件投入後)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/f40377b9-cd7a-46fe-a06b-656048b76ba4.jpg" width="320" />
 
-1. フッターに「Seven Mornings」リンクが表示される
+(August 2026 の月グリッド。答えた 14〜23 日は温白の粒に墨の数字、今日 23 日にだけ夜明けのリング、未来日は薄い数字。下部に「Mornings answered 10」)
 
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/effa31e2-2f20-47cf-bf8e-ac6421fd5643.jpg" width="320">
-
-2. タップすると SevenMorningsPage が sheet で開き、最初の 7 件 (Aug 13〜19) が日付昇順で並ぶ。下スワイプで閉じるとカレンダーへ戻り、リンクは残る
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/e0dd0aaa-7db5-4b92-82b2-ae8d44b5f77f.jpg" width="320">
+- 月送り: 回答が 8 月のみのため範囲 (最古の回答月〜今月) が今月だけになり、前月・翌月とも無効表示になることを確認。複数月にまたがる回答データの投入手段ができたら月送り操作自体を確認する
 
 </details>
+
+### 七つの朝への導線
+
+- 回答 0 件時: 点画面のフッターにリンクが出ない (アクセシビリティツリーに life_calendar_seven_mornings_link なし) ことを確認
+- 回答 10 件時: リンクが表示され、タップで SevenMorningsPage が sheet で開き (seven_mornings_title を検出)、下スワイプで閉じて点画面へ戻ることを確認
 
 </details>
 
