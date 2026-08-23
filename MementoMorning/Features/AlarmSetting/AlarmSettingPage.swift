@@ -25,8 +25,6 @@ struct AlarmSettingPage: View {
     @State private var saveError: String?
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
-    /// issue #2 スパイク検証の痕跡ログ。StopAlarmIntent.perform() が書き込む
-    @AppStorage(.stopIntentSpikeLog) private var stopIntentSpikeLog: String?
     /// 保存処理 (再スケジュール完了待ち) の実行中かどうか。
     /// true の間は保存ボタンを無効化し、連打による複数 Task の並行起動を防ぐ
     /// (先発の Task が dismiss した後に後発の Task が失敗しても、表示先の画面が残らないため)
@@ -172,6 +170,14 @@ struct AlarmSettingPage: View {
                     Text("Version")
                 }
                 .accessibilityIdentifier("alarm_setting_version_row")
+                // stopIntent スパイクログの表示先。設定画面へ直接出さず一段奥に隠し、問い合わせ時にコピーして添えられるようにする (issue #103)
+                NavigationLink {
+                    DeveloperLogPage()
+                } label: {
+                    // ja: 開発者用のログ
+                    Text("Developer Log")
+                }
+                .accessibilityIdentifier("alarm_setting_developer_log_link")
             } header: {
                 // ja: 情報
                 Text("About")
@@ -180,22 +186,6 @@ struct AlarmSettingPage: View {
                 // エラーメッセージはそのまま表示する (加工しない)
                 Text(lastRescheduleError)
                     .foregroundStyle(.red)
-            }
-            // stopIntent の実行痕跡を実機上で Mac なしに読むための一時セクション。
-            // 検証専用 UI のためローカライズ対象にしない (verbatim)。実機検証の完了後にセクションごと削除する
-            if let stopIntentSpikeLog, !stopIntentSpikeLog.isEmpty {
-                Section {
-                    Text(verbatim: stopIntentSpikeLog)
-                        .font(.caption.monospaced())
-                        .textSelection(.enabled)
-                    Button(role: .destructive) {
-                        self.stopIntentSpikeLog = nil
-                    } label: {
-                        Text(verbatim: "Clear Spike Log")
-                    }
-                } header: {
-                    Text(verbatim: "stopIntent Spike Log (issue #2)")
-                }
             }
         }
         .sheet(isPresented: $isPaywallPresented) {

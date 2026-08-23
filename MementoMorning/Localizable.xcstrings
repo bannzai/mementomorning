@@ -6097,6 +6097,16 @@
         }
       }
     },
+    "Clear Log" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログを消去"
+          }
+        }
+      }
+    },
     "Close" : {
       "localizations" : {
         "ar" : {
@@ -6739,6 +6749,16 @@
         }
       }
     },
+    "Copy Log" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログをコピー"
+          }
+        }
+      }
+    },
     "Couldn't load the video. Check your connection and try again." : {
       "localizations" : {
         "ar" : {
@@ -6969,6 +6989,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ひとつの質問をするアラームを設計する"
+          }
+        }
+      }
+    },
+    "Developer Log" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開発者用のログ"
           }
         }
       }
@@ -11758,6 +11788,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今天早上還沒有回答。"
+          }
+        }
+      }
+    },
+    "No logs" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ログはありません"
           }
         }
       }
@@ -25411,6 +25451,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "觀看影片"
+          }
+        }
+      }
+    },
+    "When contacting support, copy this log and attach it to your message." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問い合わせの際は、このログをコピーして添えてください。"
           }
         }
       }
