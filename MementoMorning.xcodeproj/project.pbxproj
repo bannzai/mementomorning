@@ -112,6 +112,7 @@
 		F0AB25A8CD579811FBB16CE1 /* VideoAnswerRecordingLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1E8CB0CA754F567CB52B26 /* VideoAnswerRecordingLimit.swift */; };
 		6367E57AD5DDC593143993A5 /* VideoAnswerRecordingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD678761283E9C83482C9742 /* VideoAnswerRecordingControls.swift */; };
 		761AE3021FFE67D48666BC4D /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
+		76C37B85CE05584EF3397317 /* AlarmSettingAutoSaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934E57B8CBDACD14F78B0D0C /* AlarmSettingAutoSaveTests.swift */; };
 		7A60D790D4596045CB3E5021 /* SnoozeGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368460825E5F8390F0948A64 /* SnoozeGateTests.swift */; };
 		7D513E0EFC28AB38EF46B78B /* AnswerShareCardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D62A1161E864CA8A81EAAA /* AnswerShareCardPage.swift */; };
 		7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784F14F17E87134C2E8E59A /* Rescheduler.swift */; };
@@ -290,6 +291,7 @@
 		2F2D7F5BA9B558C7143326E1 /* VideoAnswerCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerCamera.swift; sourceTree = "<group>"; };
 		301D1F5532F4A8A6AEC68818 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		368460825E5F8390F0948A64 /* SnoozeGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnoozeGateTests.swift; sourceTree = "<group>"; };
+		934E57B8CBDACD14F78B0D0C /* AlarmSettingAutoSaveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingAutoSaveTests.swift; sourceTree = "<group>"; };
 		36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewSnapshotUITest.swift; sourceTree = "<group>"; };
 		3A199CC8340D9967021378FA /* AppStoreScreenshotWashiFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotWashiFrame.swift; sourceTree = "<group>"; };
 		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
@@ -958,6 +960,7 @@
 			children = (
 				3F66B1B2474DEFD09BC78782 /* AnswerVideoPlayerTests.swift */,
 				8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */,
+				934E57B8CBDACD14F78B0D0C /* AlarmSettingAutoSaveTests.swift */,
 				73D325B90BFCC5302543DF5E /* AnswerLogVisibilityTests.swift */,
 				C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */,
 				5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */,
@@ -1431,6 +1434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */,
+				76C37B85CE05584EF3397317 /* AlarmSettingAutoSaveTests.swift in Sources */,
 				E811FB96E3BDAB82CA491D23 /* AnswerLogVisibilityTests.swift in Sources */,
 				56CE1B33E1A2BF2125A07143 /* AnswerVideoPlayerTests.swift in Sources */,
 				334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */,
