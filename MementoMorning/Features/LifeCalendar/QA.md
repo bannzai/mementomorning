@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 082710fc026572a24bc8a96aa6164af087bb4aa7
-last_verified_at: 2026-08-23
+last_verified_commit: 38c26408b7964ab166d1853bf2918484e1cc1bfd
+last_verified_at: 2026-08-24
 ---
 
 # LifeCalendar QA
@@ -10,7 +10,7 @@ last_verified_at: 2026-08-23
 ## 関連リンク
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/6 (受け入れ条件)
-- 関連: https://github.com/bannzai/mementomorning/issues/109 (七つの朝を後から見返す導線)
+- 関連: https://github.com/bannzai/mementomorning/issues/116 (七つの朝を後から見返す導線 issue #109 は、コンセプト見直しで撤去)
 
 ## 仕様チェックリスト
 
@@ -92,41 +92,25 @@ last_verified_at: 2026-08-23
 
 ---
 
-## 2. 七つの朝への導線 (issue #109)
+## 2. 七つの朝への導線の不在 (issue #116)
 
-- [x] **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
-  - 自動化: manual（表示可否の目視確認。判定ロジックは MementoMorningTests/SevenMorningsMilestoneTests.swift がカバー済み）
-- [x] **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
-  - 自動化: manual（sheet 遷移の確認）
+issue #109 で追加した「七つの朝」再訪リンクは、コンセプト見直し (issue #116) で撤去した。七つの朝は 7 件到達時に一度だけ自動表示される画面に戻っている。
+
+- [x] **リンクを出さない**: 回答件数に関わらず、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+  - 自動化: manual（表示可否とアクセシビリティツリーの確認）
 
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **節目到達前はリンクを出さない**: 回答が 7 件未満の間は、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+### **リンクを出さない**: 回答件数に関わらず、フッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-23** (simtunnel、英語ロケール、回答 0 件)
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/1091f20f-33cd-4503-8944-dfa44134c8fa.jpg" width="320">
+**確認日: 2026-08-24** (iPhone / iOS 26.2 ローカル simulator、英語ロケール、サンプル回答 10 件投入後)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/26188bc8-9cc3-4b87-aa93-597e97825f24.png" width="320">
 
-(フッターは「0 mornings answered / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は無い)
-
-</details>
-
-### **節目到達後はリンクから見返せる**: 回答が 7 件以上あると、フッターに「七つの朝」リンクが表示され、タップすると SevenMorningsPage が sheet で開く (自動表示済みかどうかは問わない)。sheet を閉じるとカレンダーへ戻る
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 件投入後)
-
-1. フッターに「Seven Mornings」リンクが表示される
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/effa31e2-2f20-47cf-bf8e-ac6421fd5643.jpg" width="320">
-
-2. タップすると SevenMorningsPage が sheet で開き、最初の 7 件 (Aug 13〜19) が日付昇順で並ぶ。下スワイプで閉じるとカレンダーへ戻り、リンクは残る
-
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/e0dd0aaa-7db5-4b92-82b2-ae8d44b5f77f.jpg" width="320">
+(節目到達済みの 10 件でもフッターは「10 mornings answered / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は 0 件)
 
 </details>
 
