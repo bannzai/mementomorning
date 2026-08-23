@@ -44,7 +44,7 @@ jobs:
         run: |
           # 未完了の status を直接絞り込む。completed 込みの recent 一覧では、長時間未完了の run が
           # 後続 dispatch に押し出されて一覧から消え、先行 run を見落として並行実行を許してしまう
-          earlier=$(for status in queued in_progress waiting; do
+          earlier=$(for status in requested pending queued in_progress waiting; do
               gh run list --repo "$GITHUB_REPOSITORY" --workflow 'ios-deploy.yml' \
                 --status "$status" --limit 100 --json databaseId
             done | jq -s --argjson me "$GITHUB_RUN_ID" 'add | map(select(.databaseId < $me)) | length')
