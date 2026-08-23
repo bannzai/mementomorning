@@ -80,7 +80,7 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
     // 深夜のアラームでは日付を跨ぐことがあり、跨いだ日時で記録すると「前日の朝」の発火を翌日の問いとして
     // 提示してしまう (バックアップが発火済みならその main も必ず発火予定日時を過ぎている)
     if let firedDate = existing.filter({ $0.origin == ScheduledAlarmOrigin.main }).map(\.fireDate).filter({ $0 <= now }).max() {
-        recordAlarmFired(date: firedDate)
+        recordAlarmFired(date: firedDate, now: now)
     }
 
     // 回答済みの日はアラームを鳴らさない。今日より先の日はまだ回答できないため今日の回答だけ調べれば足りる。
