@@ -28,8 +28,9 @@ public リポジトリのため macOS runner は無料で、Xcode Cloud の無�
   の provisioning profile を base64 で GitHub Secrets に置き、CI 上で復元する。
   `project.pbxproj` は **Release かつ実機 SDK (`[sdk=iphoneos*]`) に限り** Manual 署名にする
   (Debug・simulator のローカル開発・テストは Automatic のまま)
-- `ci_scripts/ci_post_clone.sh` (Secret `REVENUECAT_API_KEY` から `Config.local.xcconfig` を生成) は
-  **削除せず GitHub Actions からも再利用する**。workflow の Archive 前に同スクリプトを実行する
+- `ci_scripts/ci_post_clone.sh` (env `REVENUECAT_API_KEY` から `Config.local.xcconfig` を生成) は
+  **削除せず GitHub Actions からも再利用する**。workflow の Archive 前に同スクリプトを実行し、
+  GitHub Secret は正準名 `REVENUECAT_PUBLIC_API_KEY_IOS` を env 名 `REVENUECAT_API_KEY` にマップして渡す
 - ビルド番号は `github.run_number + BUILD_NUMBER_OFFSET`。Xcode Cloud が採番済みのビルド番号を
   超える offset から始める
 - Xcode Cloud のワークフロー (MementoMorning product の Release) は、GitHub Actions での配布が

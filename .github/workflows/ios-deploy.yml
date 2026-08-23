@@ -98,11 +98,12 @@ jobs:
       # RevenueCat の実キー (appl_) は gitignore された Config.local.xcconfig 運用のため checkout に存在しない。
       # Xcode Cloud 時代と同じ ci_scripts/ci_post_clone.sh が Secret から生成する ([config=Release] 限定で適用される)。
       # スクリプト自体は未設定でも正常終了するため、Archive まで進んで気づくのを避けるにはここで空チェックする
+      # Secret 名は正準名 REVENUECAT_PUBLIC_API_KEY_IOS (env-secret-registry)。ci_post_clone.sh の既存契約に合わせ env 名 REVENUECAT_API_KEY へマップする
       - name: Generate Config.local.xcconfig
         env:
-          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_API_KEY }}
+          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_PUBLIC_API_KEY_IOS }}
         run: |
-          [ -n "$REVENUECAT_API_KEY" ] || { echo "::error::Secret REVENUECAT_API_KEY が空です"; exit 1; }
+          [ -n "$REVENUECAT_API_KEY" ] || { echo "::error::Secret REVENUECAT_PUBLIC_API_KEY_IOS が空です"; exit 1; }
           bash ci_scripts/ci_post_clone.sh
 
       - name: Resolve build number

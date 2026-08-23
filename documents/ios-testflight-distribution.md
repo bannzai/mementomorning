@@ -28,7 +28,7 @@ workflow は castle の ios-deploy-actions skill (`~/.claude/skills/ios-deploy-a
    | `IOS_P12_PASSWORD` | p12 のパスワード |
    | `IOS_PROVISIONING_PROFILE_BASE64` | `MementoMorning.AppStore` profile の base64 |
    | `IOS_WIDGET_PROVISIONING_PROFILE_BASE64` | `MementoMorning.MementoMorningWidget.AppStore` profile の base64 |
-   | `REVENUECAT_API_KEY` | RevenueCat の App Store 用 public API key (`appl_` で始まる)。`ci_scripts/ci_post_clone.sh` が `Config.local.xcconfig` を生成するのに使う (Xcode Cloud 時代と同じ仕組み) |
+   | `REVENUECAT_PUBLIC_API_KEY_IOS` | RevenueCat の App Store 用 public API key (`appl_` で始まる)。workflow が env 名 `REVENUECAT_API_KEY` にマップし、`ci_scripts/ci_post_clone.sh` が `Config.local.xcconfig` を生成するのに使う (Xcode Cloud 時代と同じ仕組み) |
 
 秘密の実値はリポジトリに置かない。
 
@@ -61,7 +61,7 @@ bash ~/.claude/skills/ios-deploy-actions/scripts/asc-api.sh GET \
 ## うまくいかない時
 
 - 「Release の REVENUECAT_API_KEY が App Store 用の実キー (appl_...) ではありません」で Archive が失敗する:
-  Secret `REVENUECAT_API_KEY` が未登録か値が不正。登録し直して新しく dispatch する
+  Secret `REVENUECAT_PUBLIC_API_KEY_IOS` が未登録か値が不正。登録し直して新しく dispatch する
 - `No signing certificate` / `No profiles ... were found`: Secrets の .p12 / .mobileprovision と、
   `project.pbxproj` の `PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]` の profile 名一致を確認する
 - 証明書か profile の期限切れ (2027-06-10): ios-deploy-actions skill で再発行し Secrets を更新する
