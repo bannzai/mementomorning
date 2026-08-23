@@ -122,6 +122,34 @@ struct AlarmSettingPage: View {
                 // ja: 今朝の回答と答え合わせしましょう
                 Text("Check tonight against this morning's answer.")
             }
+            // ペイウォールへの恒常導線 (issue #104)。ロック要素を経由しなくても有料機能のページへ到達できるようにする。
+            // 購読中はアップセルを出さず、購読状態の表示に切り替える
+            Section {
+                if PremiumEntitlement.isPremium {
+                    LabeledContent {
+                        // ja: 有効
+                        Text("Active")
+                    } label: {
+                        // ja: プレミアム
+                        Text("Premium")
+                    }
+                    .accessibilityIdentifier("alarm_setting_premium_status_row")
+                } else {
+                    Button {
+                        isPaywallPresented = true
+                    } label: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            // ja: プレミアム
+                            Text("Premium")
+                            // ja: 無限追撃アラームと、すべての履歴
+                            Text("Endless follow-up alarms and all your mornings.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .accessibilityIdentifier("alarm_setting_premium_link")
+                }
+            }
             // 利用規約・プライバシーポリシー・特商法表記・問い合わせへの導線とバージョン表示 (issue #83)。
             // 課金アプリは審査で特商法表記の到達性を見られるため、設定画面から必ず辿れるようにする
             Section {
