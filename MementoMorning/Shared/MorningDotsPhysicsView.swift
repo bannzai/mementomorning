@@ -87,14 +87,32 @@ final class MorningDotsScene: SKScene {
     }()
 
     override func didMove(to view: SKView) {
-        physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: .zero, size: size))
+        // 粒がなければ物理もモーション取得も不要のため、シーンを止めて電力消費を抑える
+        guard dotCount > 0 else {
+            isPaused = true
+            return
+        }
+        physicsBody = boundaryBody()
         spawnDots()
         startMotionUpdatesIfAvailable()
     }
 
     override func didChangeSize(_ oldSize: CGSize) {
+        guard dotCount > 0 else { return }
         // 回転等でサイズが変わったら壁を作り直す (粒は物理で新しい床へ落ちる)
-        physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: .zero, size: size))
+        physicsBody = boundaryBody()
+    }
+
+    /// 左・下・右の 3 辺の壁。上辺は開けて、画面より高く積もった粒や上方に生成された粒が
+    /// 境界の外に閉じ込められず重力で画面内へ落ちてこられるようにする。
+    /// 側壁は画面上端より 1000pt 高くまで伸ばし、傾けた時に粒が横からこぼれないようにする
+    private func boundaryBody() -> SKPhysicsBody {
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 0, y: size.height + 1000))
+        path.addLine(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: size.width, y: 0))
+        path.addLine(to: CGPoint(x: size.width, y: size.height + 1000))
+        return SKPhysicsBody(edgeChainFrom: path)
     }
 
     override func willMove(from view: SKView) {

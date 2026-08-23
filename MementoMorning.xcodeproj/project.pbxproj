@@ -117,6 +117,7 @@
 		7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784F14F17E87134C2E8E59A /* Rescheduler.swift */; };
 		7FA67F319DC050731C8ACD5A /* AlarmLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875171AFCB2C608A4938FAEA /* AlarmLiveActivityWidget.swift */; };
 		819210AB97388C092A1650B7 /* DotsPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418C3D5ECE4F458975D2C92 /* DotsPageSnapshotUITest.swift */; };
+		FD3AAD3FE4E34FD6B8F437EB /* MonthCalendarPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */; };
 		81FB550E9AC3EEB8226E5579 /* DebugVideoAnswerFixtureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79A46A219417FA80D92634 /* DebugVideoAnswerFixtureTests.swift */; };
 		83C1A29EDF890B52CD844DD2 /* HomeWidgetTimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34724AB95CFDBAADCB0EEE /* HomeWidgetTimelineTests.swift */; };
 		83FEBC1ACE55DF32E2C9CA68 /* PaywallPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AC242E0454C8B64B929716 /* PaywallPageSnapshotUITest.swift */; };
@@ -377,6 +378,7 @@
 		C322778C1BA97DA75148B887 /* QuestionPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningAnswerTests.swift; sourceTree = "<group>"; };
 		C418C3D5ECE4F458975D2C92 /* DotsPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsPageSnapshotUITest.swift; sourceTree = "<group>"; };
+		F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C438DE2A7A3786C83D405AF9 /* AlarmSettingPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C8974113D7E7037088EEE1B2 /* SevenMorningsMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsMilestone.swift; sourceTree = "<group>"; };
 		68CC955F521E4794B652FEE8 /* SevenMorningsShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenMorningsShareCardView.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				C418C3D5ECE4F458975D2C92 /* DotsPageSnapshotUITest.swift */,
+				F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */,
 			);
 			path = LifeCalendar;
 			sourceTree = "<group>";
@@ -1453,6 +1456,7 @@
 				BD573C9988FFD160D9F402F7 /* ContentViewSnapshotUITest.swift in Sources */,
 				E082D66D425B8FE7638EEC2F /* Languages.swift in Sources */,
 				819210AB97388C092A1650B7 /* DotsPageSnapshotUITest.swift in Sources */,
+				FD3AAD3FE4E34FD6B8F437EB /* MonthCalendarPageSnapshotUITest.swift in Sources */,
 				47298F0ED7429FCF9CB1C4E3 /* MorningQuestionPageSnapshotUITest.swift in Sources */,
 				446D2AE9097234F876178904 /* NightReflectionPageSnapshotUITest.swift in Sources */,
 				2EA6EC7F3E62BCE52088973A /* OnboardingPageSnapshotUITest.swift in Sources */,
