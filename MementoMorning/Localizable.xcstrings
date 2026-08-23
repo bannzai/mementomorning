@@ -2205,6 +2205,26 @@
         }
       }
     },
+    "Active" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効"
+          }
+        }
+      }
+    },
+    "Add reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを追加"
+          }
+        }
+      }
+    },
     "Alarm" : {
       "localizations" : {
         "ar" : {
@@ -4127,6 +4147,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用文字回答"
+          }
+        }
+      }
+    },
+    "Answer my own alarm for the first time" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自作のアラームに初めて答える"
           }
         }
       }
@@ -6933,6 +6963,26 @@
         }
       }
     },
+    "Delete reminder" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインドを削除"
+          }
+        }
+      }
+    },
+    "Design an alarm that asks one question" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ひとつの質問をするアラームを設計する"
+          }
+        }
+      }
+    },
     "Developer Log" : {
       "localizations" : {
         "ja" : {
@@ -7371,6 +7421,16 @@
         }
       }
     },
+    "Eat my favorite meal at my usual place" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行きつけの店で好きなものを食べる"
+          }
+        }
+      }
+    },
     "Endless follow-up alarms" : {
       "comment" : "プレミアム機能名 (ペイウォールの見出し)。スヌーズ回数の上限なしで、ユーザーが答えるまで何度でも鳴り直すアラームのこと。「追跡」「フォローアップ」「追加の質問」ではない",
       "localizations" : {
@@ -7582,6 +7642,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無限重複鬧鐘"
+          }
+        }
+      }
+    },
+    "Endless follow-up alarms and all your mornings." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無限追撃アラームと、すべての履歴"
           }
         }
       }
@@ -8438,6 +8508,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "修改"
+          }
+        }
+      }
+    },
+    "Fix the bug that kept me up all night" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "徹夜の原因になったバグを直す"
+          }
+        }
+      }
+    },
+    "Have a long phone call with my mother" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "母に長い電話をかける"
           }
         }
       }
@@ -10150,6 +10240,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍後"
+          }
+        }
+      }
+    },
+    "Leave my own words behind" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分の言葉を書き残す"
           }
         }
       }
@@ -13802,6 +13902,26 @@
         }
       }
     },
+    "Play with my kids all day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子どもと一日中遊ぶ"
+          }
+        }
+      }
+    },
+    "Polish every screen until it feels right" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "納得がいくまで画面を磨く"
+          }
+        }
+      }
+    },
     "Practice your answer" : {
       "localizations" : {
         "ar" : {
@@ -15086,6 +15206,16 @@
         }
       }
     },
+    "Record my demo video in one take" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デモ動画を一発撮りする"
+          }
+        }
+      }
+    },
     "Recorded: %@" : {
       "localizations" : {
         "ar" : {
@@ -15938,6 +16068,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "記住死亡。\n然後開始你的早晨。"
+          }
+        }
+      }
+    },
+    "Reminder %lld" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインド %lld"
           }
         }
       }
@@ -16798,6 +16938,16 @@
         }
       }
     },
+    "Say the things I've never been able to say" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
     "See every morning" : {
       "localizations" : {
         "ar" : {
@@ -17008,6 +17158,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看每個早晨"
+          }
+        }
+      }
+    },
+    "See the ocean with my family" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族と海を見に行く"
           }
         }
       }
@@ -18082,6 +18242,16 @@
         }
       }
     },
+    "Share these seven mornings as one card" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "七つの朝を一枚にして共有"
+          }
+        }
+      }
+    },
     "Share this morning's words?" : {
       "localizations" : {
         "ar" : {
@@ -18292,6 +18462,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "要分享今天早上的話嗎？"
+          }
+        }
+      }
+    },
+    "Ship my app to the world" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分のアプリを世界に出す"
+          }
+        }
+      }
+    },
+    "Show my rough build to a friend" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作りかけのアプリを友人に見せる"
           }
         }
       }
@@ -18934,6 +19124,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "語音辨識"
+          }
+        }
+      }
+    },
+    "Start building the app I keep dreaming about" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夢に見続けたアプリを作り始める"
           }
         }
       }
@@ -20437,6 +20637,26 @@
         }
       }
     },
+    "Submit my app to the Shipaton" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shipaton にアプリを提出する"
+          }
+        }
+      }
+    },
+    "Tap an answer to share it on its own." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "それぞれの答えをタップすると、一枚ずつ共有できます"
+          }
+        }
+      }
+    },
     "Tap the time to set your alarm" : {
       "localizations" : {
         "ar" : {
@@ -20647,6 +20867,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點一下時間來設定你的鬧鐘"
+          }
+        }
+      }
+    },
+    "Tend the garden I've grown" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "育てた庭の手入れをする"
           }
         }
       }
@@ -24931,6 +25161,26 @@
         }
       }
     },
+    "Visit my old friends" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昔の仲間に会いに行く"
+          }
+        }
+      }
+    },
+    "Watch the sunrise to the very end" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝日を最後まで眺める"
+          }
+        }
+      }
+    },
     "Watch the video" : {
       "localizations" : {
         "ar" : {
@@ -25580,6 +25830,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "寫另一個答案"
+          }
+        }
+      }
+    },
+    "Write a letter to a friend" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "友人に手紙を書く"
+          }
+        }
+      }
+    },
+    "Write the first line of code" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最初の一行のコードを書く"
           }
         }
       }

@@ -1,0 +1,24 @@
+# 共有カードのシーン (デモ動画 issue #94)。
+# どの朝の回答からでも開ける静かな共有カードを見せる (7 日の節目の文脈には乗せない)。
+# 前提: prep/setup.yaml でサンプル回答 10 日分を投入済み。
+# 到達経路として七つの朝の一覧から回答をタップする (経路の操作は config の trim_start で切り落とし、
+# カードが表示されてからの区間だけを使う)
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn:
+    id: "debug_menu_link"
+- tapOn:
+    id: "debug_reset_seven_mornings_milestone"
+- extendedWaitUntil:
+    visible:
+      id: "seven_mornings_title"
+    timeout: 10000
+# 回答行をタップして共有カードを開く (最初の 7 件 = 古い順のため、3 日前の回答が一覧に見えている)
+- tapOn: "Record my demo video in one take"
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 6000
+    optional: true
+    label: "共有カードを 6 秒見せる"

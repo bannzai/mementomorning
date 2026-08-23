@@ -19,3 +19,6 @@ scripts/snapshot_ui_tests/screenshots/
 
 # bundler のローカルインストール先 (~/.bundle/config の path=vendor/bundle が作る)
 vendor/bundle/
+
+# デモ動画のクリップ・合成出力 (issue #94。動画バイナリはコミットしない。config と flow は追跡する)
+demo-video/output/

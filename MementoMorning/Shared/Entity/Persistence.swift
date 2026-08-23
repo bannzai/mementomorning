@@ -10,6 +10,7 @@ struct PersistenceController {
         MorningAnswer.self,
         AlarmSetting.self,
         ScheduledAlarm.self,
+        NightReminderSetting.self,
     ]
 
     /// 全モデルから構築したスキーマ

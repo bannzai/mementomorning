@@ -1,0 +1,59 @@
+# デモ収録の初期状態を作る (録画しない準備 flow)。
+# サンプル回答 10 日分・アラーム 7:00・七つの朝の節目リセットまで行う。
+# 前提: bash 側で hasCompletedOnboarding=true を defaults write 済み (オンボーディングをスキップするため)
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+    permissions:
+      notifications: allow
+# 今日の回答があると起動時に共有ダイアログが被さる (issue #74)。出ていたら閉じる
+# (閉じると 2 週間は再表示されないため、以降の収録 flow には出ない)
+- runFlow:
+    when:
+      visible: "Share this morning's words?"
+    commands:
+      - tapOn: "Not now"
+- tapOn:
+    id: "debug_menu_link"
+# サンプル投入は「回答が 1 件でもあれば何もしない」冪等仕様のため、
+# 再実行時に中途半端な回答が残っていても必ず 10 件の状態になるよう、先に全回答を削除して正規化する
+- tapOn:
+    id: "debug_delete_all_answers"
+- tapOn:
+    id: "debug_seed_sample_answers"
+# 回答が 7 件を超えると七つの朝の節目 sheet が即座に被さるため、出ていたら下スワイプで閉じる
+# (2 回目以降の実行では表示済みフラグにより出ない)
+- extendedWaitUntil:
+    visible:
+      id: "seven_mornings_title"
+    timeout: 5000
+    optional: true
+- runFlow:
+    when:
+      visible:
+        id: "seven_mornings_title"
+    commands:
+      - swipe:
+          start: 50%, 20%
+          end: 50%, 90%
+- scrollUntilVisible:
+    element:
+      id: "debug_set_alarm_seven_am"
+    direction: DOWN
+- tapOn:
+    id: "debug_set_alarm_seven_am"
+# AlarmKit の認可ダイアログ (初回のみ)
+- extendedWaitUntil:
+    visible: "Allow"
+    timeout: 5000
+    optional: true
+- tapOn:
+    text: "Allow"
+    optional: true
+- scrollUntilVisible:
+    element:
+      id: "debug_reset_seven_mornings_milestone"
+    direction: UP
+- tapOn:
+    id: "debug_reset_seven_mornings_milestone"

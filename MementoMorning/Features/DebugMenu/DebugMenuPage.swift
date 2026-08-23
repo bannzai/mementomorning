@@ -31,6 +31,9 @@ struct DebugMenuPage: View {
 
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
+    /// 検証用の夜リマインド (debug-night-reminder) が保留中かどうか。
+    /// 登録の非同期 Task の完了を E2E が画面表示で待てるようにする
+    @State private var isTestNightReminderScheduled = false
     /// 今日の回答。夜の振り返り (isFulfilled) の記録状態を画面上で確認できるように表示する
     @State private var answer: MorningAnswer?
     /// テストアラームの登録結果。登録の成否と発火予定日時を画面上で確認できるように表示する
@@ -104,12 +107,54 @@ struct DebugMenuPage: View {
                 Button {
                     Task {
                         await scheduleNightReminderForTest()
+                        await refreshTestNightReminderState()
                         refreshAnswerStates()
                     }
                 } label: {
                     Text(verbatim: "夜リマインドを 1 分後に登録")
                 }
                 .accessibilityIdentifier("debug_schedule_night_reminder_test")
+
+                // 登録は非同期 Task のため、E2E (Maestro) はこの表示が「登録済み」へ変わるのを待ってから
+                // アプリを再起動する (完了前に stopApp するとテスト通知が登録されないままになる)
+                Text(verbatim: "検証用夜リマインド: \(isTestNightReminderScheduled ? "登録済み" : "なし")")
+                    .accessibilityIdentifier("debug_night_reminder_test_state")
+
+                Button {
+                    // 通知タップと同じ経路 (NotificationRouter) で夜の振り返りを開く。
+                    // 通知バナーのタップは Maestro から安定して検出できないため、画面自体の確認・収録はここから行う
+                    NotificationRouter.shared.nightReflectionNotificationDate = .now
+                    NotificationRouter.shared.isNightReflectionPresented = true
+                } label: {
+                    Text(verbatim: "夜の振り返りを開く (通知タップ相当)")
+                }
+                .accessibilityIdentifier("debug_open_night_reflection")
+            }
+            Section {
+                Button {
+                    // ホームの「NEXT MORNING 7:00」表示をデモ収録・スクリーンショットで安定させるための定番時刻
+                    Task { await setAlarm(fireDate: Calendar.current.date(bySettingHour: 7, minute: 0, second: 0, of: .now)!) }
+                } label: {
+                    Text(verbatim: "アラームを 7:00 に設定")
+                }
+                .accessibilityIdentifier("debug_set_alarm_seven_am")
+
+                Button {
+                    // アラーム発火の確認は「1〜2 分後のアラーム」で行う運用 (CLAUDE.md 検証方法) に合わせ、
+                    // 分単位への切り捨て後も必ず 1 分以上先になる 120 秒後を発火時刻にする
+                    Task { await setAlarm(fireDate: .now.addingTimeInterval(120)) }
+                } label: {
+                    Text(verbatim: "アラームを 2 分後に設定")
+                }
+                .accessibilityIdentifier("debug_set_alarm_in_two_minutes")
+
+                // 回答済みの日は planAlarms が計画から除外するため、今日回答済みだと 2 分後に設定しても当日は鳴らない。
+                // ボタンの前提条件として明示する (発火確認は「全回答を削除」→ 本ボタンの順で行う)
+                Text(verbatim: "2 分後の発火確認は今日未回答が前提 (回答済みの日は鳴らない)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            } header: {
+                Text(verbatim: "アラーム設定 (issue #94)")
             }
             Section {
                 Text(verbatim: "アラーム発火記録: \(alarmFiredStateText)")
@@ -264,7 +309,15 @@ struct DebugMenuPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             refreshAnswerStates()
+            Task { await refreshTestNightReminderState() }
         }
+    }
+
+    /// 検証用の夜リマインドが保留中かを問い合わせて表示を最新化する
+    private func refreshTestNightReminderState() async {
+        isTestNightReminderScheduled = await UNUserNotificationCenter.current()
+            .pendingNotificationRequests()
+            .contains { $0.identifier == Self.testRequestIdentifier }
     }
 
     /// 今日の回答の有無と夜の振り返りの記録状態を表す表示用の文字列
@@ -428,7 +481,8 @@ struct DebugMenuPage: View {
         guard fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) == nil else {
             return
         }
-        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: "家族と海を見に行く")
+        // ja: 自分のアプリを世界に出す
+        let answer = MorningAnswer(answeredDate: Calendar.current.startOfDay(for: .now), text: String(localized: "Ship my app to the world"))
         modelContext.insert(answer)
         do {
             try modelContext.save()
@@ -454,7 +508,8 @@ struct DebugMenuPage: View {
             return
         }
         modelContext.insert(
-            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: yesterday), text: "母に長い電話をかける")
+            // ja: 母に長い電話をかける
+            MorningAnswer(answeredDate: Calendar.current.startOfDay(for: yesterday), text: String(localized: "Have a long phone call with my mother"))
         )
         do {
             try modelContext.save()
@@ -464,6 +519,27 @@ struct DebugMenuPage: View {
             modelContext.rollback()
             assertionFailure(error.localizedDescription)
         }
+    }
+
+    /// アラーム設定を fireDate の時・分へ更新して有効化し、再スケジュールする (単一レコード運用。無ければ作成する)。
+    /// 何度実行しても同じ時刻・有効状態に収束する冪等な操作
+    private func setAlarm(fireDate: Date) async {
+        let components = Calendar.current.dateComponents([.hour, .minute], from: fireDate)
+        do {
+            if let alarmSetting = try modelContext.fetch(FetchDescriptor<AlarmSetting>()).first {
+                alarmSetting.setTime(hour: components.hour!, minute: components.minute!)
+                alarmSetting.setIsEnabled(isEnabled: true)
+            } else {
+                modelContext.insert(AlarmSetting(hour: components.hour!, minute: components.minute!))
+            }
+            try modelContext.save()
+        } catch {
+            // 保存されていない設定で AlarmKit へ登録しない (表示と実データがずれる)。破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return
+        }
+        await reschedule(modelContext: modelContext)
     }
 
     /// 検証用の夜リマインドを 1 分後に登録する。今日の回答があれば本番と同じ引用つきの本文になるため、パーソナライズの表示をその場で確認できる。
