@@ -13,7 +13,7 @@ var sevenMorningsAnswersDescriptor: FetchDescriptor<MorningAnswer> {
 }
 
 /// 7 日の節目「七つの朝」。最初の 7 つの回答が初めて 1 画面に並ぶ aha moment の画面。
-/// 回答をタップすると共有カード (AnswerShareCardPage) を開く。
+/// 7 日分をまとめた共有カード (SevenMorningsShareCardView) を共有でき、回答をタップすると 1 件ずつの共有カード (AnswerShareCardPage) を開く。
 /// 7 日の節目は無料の線 (documents/PROJECT.md の課金設計) のため、
 /// 未回答日を挟んで 8 日以上前になった回答も AnswerLogVisibility の無料枠制限を適用せずに表示する
 struct SevenMorningsPage: View {
@@ -21,6 +21,9 @@ struct SevenMorningsPage: View {
 
     /// 共有カードを表示する対象の回答
     @State private var shareTargetAnswer: MorningAnswer?
+
+    /// 書き出し済みの 7 日分の共有カード画像。表示時にレンダリングし、本文が変わったら作り直す
+    @State private var sevenMorningsCardImage: UIImage?
 
     var body: some View {
         ScrollView {
@@ -57,6 +60,7 @@ struct SevenMorningsPage: View {
                     }
                 }
                 .accessibilityIdentifier("seven_mornings_answers")
+                shareSection
             }
             .padding(24)
         }
@@ -64,11 +68,43 @@ struct SevenMorningsPage: View {
             AnswerShareCardPage(answer: answer)
         }
         .onAppear {
+            sevenMorningsCardImage = renderSevenMorningsShareCardImage(answers: answers)
             // Preview では表示済みフラグを書き込まない (開発機 simulator での動作確認の状態を汚さないため)
             if isPreview { return }
             // 表示できた時点で表示済みを記録し、閉じる前にアプリが kill されても再表示しない (一度だけ表示する受け入れ条件)
             UserDefaults.standard.set(true, forKey: .isSevenMorningsMilestonePresented)
         }
+        // 動画回答の文字起こしは画面を開いた後にも完了し得るため、本文が置き換わったら共有画像も作り直す
+        // (開いた時点の本文で書き出した画像を共有し続けない)
+        .onChange(of: answers.map(\.text)) { _, _ in
+            sevenMorningsCardImage = renderSevenMorningsShareCardImage(answers: answers)
+        }
+    }
+
+    /// 7 日分をまとめた共有カードの共有ボタンと、1 件ずつの共有への案内。
+    /// 節目画面が「見るだけ」で終わらないよう、次にできること (共有) を明示する (issue #108)。
+    /// 動画回答の文字起こしが終わる前 (本文が仮テキスト videoAnswerPlaceholderText のまま) は、
+    /// 仮テキストのカードを共有させないため共有ボタンを出さない (ホームの共有導線と同じ扱い)
+    private var shareSection: some View {
+        VStack(spacing: 16) {
+            if let sevenMorningsCardImage, !answers.contains(where: { $0.text == videoAnswerPlaceholderText }) {
+                ShareLink(
+                    item: Image(uiImage: sevenMorningsCardImage),
+                    preview: SharePreview(Text(verbatim: "Memento Morning"), image: Image(uiImage: sevenMorningsCardImage))
+                ) {
+                    // ja: 七つの朝を一枚にして共有
+                    Label("Share these seven mornings as one card", systemImage: "square.and.arrow.up")
+                }
+                .accessibilityIdentifier("seven_mornings_share_link")
+            }
+            // ja: それぞれの答えをタップすると、一枚ずつ共有できます
+            Text("Tap an answer to share it on its own.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
     }
 }
 

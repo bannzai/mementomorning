@@ -1,8 +1,8 @@
 ---
 feature: SevenMornings
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
-last_verified_at: 2026-08-22
+last_verified_commit: 9beffa76af1298254d911083d77bf49eb5caca53
+last_verified_at: 2026-08-23
 ---
 
 # SevenMornings QA
@@ -11,6 +11,7 @@ last_verified_at: 2026-08-22
 
 - 仕様: https://github.com/bannzai/mementomorning/issues/10 (受け入れ条件)
 - 関連: https://github.com/bannzai/mementomorning/issues/7 (共有カード導線)
+- 関連: https://github.com/bannzai/mementomorning/issues/108 (7 日分まとめ共有)
 
 ## 仕様チェックリスト
 
@@ -94,6 +95,49 @@ last_verified_at: 2026-08-22
 
 **確認日: 2026-08-17**
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/84719a9c-5b33-45ca-8293-32feabd7b903.jpg" width="320">
+
+</details>
+
+</details>
+
+---
+
+## 3. 7 日分まとめ共有 (issue #108)
+
+- [x] **共有ボタンと案内の表示**: 回答一覧の下に「Share these seven mornings as one card」(seven_mornings_share_link) と「Tap an answer to share it on its own.」の案内が表示される
+  - 自動化: manual（画面上の表示の目視確認。カード画像の書き出しサイズは MementoMorningTests/SevenMorningsShareCardRenderTests.swift がカバー済み）
+- [x] **共有ボタンで share sheet**: 共有ボタンをタップすると、7 件の回答を 1 枚に並べた縦長カード (1080x1920px) を添えた share sheet が開く
+  - 自動化: manual（share sheet とカード画像の目視確認）
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **共有ボタンと案内の表示**: 回答一覧の下に「Share these seven mornings as one card」(seven_mornings_share_link) と「Tap an answer to share it on its own.」の案内が表示される
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+「サンプル回答を投入 (10 日分)」で 7 件に達した瞬間に sheet が表示され、回答一覧の下に共有ボタンと案内文言が出ている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/a27de22a-2e7a-4880-806c-d9aa597fdf4b.jpg" width="320">
+
+</details>
+
+### **共有ボタンで share sheet**: 共有ボタンをタップすると、7 件の回答を 1 枚に並べた縦長カード (1080x1920px) を添えた share sheet が開く
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-23** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+1. 共有ボタンのタップで share sheet が開き、カードのサムネイルとプレビュータイトル「Memento Morning」が表示される
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/f1a07945-3d05-4cab-aba0-0bf63fc322c4.jpg" width="320">
+
+2. share sheet の「Save Image」で写真に保存したカードの全体。問い・7 件の回答 (日付昇順)・「Seven Mornings / Memento Morning」のフッターが 9:16 の 1 枚に収まっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/57b62a87-b460-4190-b2f0-0d712a9c42af.jpg" width="320">
 
 </details>
 
