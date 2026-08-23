@@ -24,8 +24,9 @@ struct MorningDotsPhysicsView: View {
                 newestDotRingColor: newestDotRingColor
             )
         }
-        // 粒の数が変わったらシーンごと作り直す (差分更新はせず、常に同じ初期配置から積もらせて冪等にする)
-        .id(dotCount)
+        // 粒の数かリングの有無が変わったらシーンごと作り直す (差分更新はせず、常に同じ初期配置から積もらせて冪等にする)。
+        // 日付を跨いだ時など、粒の数が同じままリングだけが変わる場合もシーンへ反映させる
+        .id("\(dotCount)-\(newestDotRingColor != nil)")
     }
 }
 
@@ -114,18 +115,13 @@ final class MorningDotsScene: SKScene {
         physicsBody = boundaryBody()
     }
 
-    /// 左・下・右の 3 辺の壁。上辺は開けて、画面より高く積もった粒や上方に生成された粒が
-    /// 境界の外に閉じ込められず重力で画面内へ落ちてこられるようにする。
-    /// 側壁の上端は「画面上端より 1000pt 上」と「粒の初期配置の最上段より 500pt 上」の高い方にし、
-    /// 粒数が多く初期配置が高くなっても、落下中に傾けた粒が側壁の外へ抜けないようにする
+    /// 粒を閉じ込める矩形の壁。上辺も閉じて、端末を逆さに向けた時 (重力が上向きの時) に
+    /// 粒が側壁の上端を越えて左右へ抜け、戻ってこなくなるのを防ぐ。
+    /// 天井は「画面上端より 1000pt 上」と「粒の初期配置の最上段より 500pt 上」の高い方にし、
+    /// 粒数が多く初期配置が高くなっても、粒が天井の外側に生成されないようにする
     private func boundaryBody() -> SKPhysicsBody {
         let wallTop = max(size.height + 1000, spawnTopY + 500)
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: 0, y: wallTop))
-        path.addLine(to: CGPoint(x: 0, y: 0))
-        path.addLine(to: CGPoint(x: size.width, y: 0))
-        path.addLine(to: CGPoint(x: size.width, y: wallTop))
-        return SKPhysicsBody(edgeChainFrom: path)
+        return SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: size.width, height: wallTop))
     }
 
     override func willMove(from view: SKView) {

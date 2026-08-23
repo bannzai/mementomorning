@@ -165,8 +165,9 @@ struct MonthCalendarPage: View {
                 .foregroundStyle(isAnswered ? Color.ink : Color.warmWhite.opacity(day <= today ? 0.45 : 0.18))
         }
         .accessibilityLabel(
-            // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す
-            Text(verbatim: day.formatted(date: .complete, time: .omitted) + ", "
+            // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す。
+            // 日付は見出しと同じくアプリの表示言語とグリッドの暦で整形する (読み上げだけ端末言語・既定の暦にならないようにする)
+            Text(verbatim: day.formatted(Date.FormatStyle(date: .complete, time: .omitted, locale: calendarDisplayLocale, calendar: calendar)) + ", "
                 + (isAnswered
                     // ja: 回答済み
                     ? String(localized: "Answered")

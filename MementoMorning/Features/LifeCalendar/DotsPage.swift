@@ -7,6 +7,7 @@ import SwiftData
 /// streak 修復は作らない (documents/PROJECT.md の課金設計参照)
 struct DotsPage: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     /// 全期間の回答数 (= 積もる粒の数)。件数だけ必要なため fetchCount で取得する
     @State private var answeredCount = 0
     /// 今日の回答があるかどうか。いちばん新しい粒に夜明けのリングを付ける判定に使う
@@ -81,6 +82,13 @@ struct DotsPage: View {
         // 保存通知で粒の数と七つの朝リンクの表示条件を再計算する (HomeContent と同じパターン)
         .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
             recalculate()
+        }
+        // バックグラウンドで日付が変わった後の復帰では onAppear が発火しないため、
+        // アクティブに戻った時に今日の回答の有無 (= いちばん新しい粒のリング) を判定し直す
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                recalculate()
+            }
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
