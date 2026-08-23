@@ -6,6 +6,8 @@ import SwiftData
 struct AlarmSettingPage: View {
     /// モデルコンテキスト
     @Environment(\.modelContext) private var modelContext
+    /// アプリの scenePhase。バックグラウンド遷移でデバウンス待ちの保存を確定するために監視する
+    @Environment(\.scenePhase) private var scenePhase
     /// 保存済みのアラーム設定。単一レコード運用のため先頭 1 件のみ使う
     @Query private var alarmSettings: [AlarmSetting]
     /// 保存済みの夜リマインド設定。画面上の並び順は登録順で、先頭が無料枠で有効になる 1 本目
@@ -222,26 +224,59 @@ struct AlarmSettingPage: View {
             Text(saveError ?? "")
         }
         .onAppear {
-            // スヌーズ回数と同じく、表示するのは現在の課金状態での実効値 (無料なら 1 本目だけ)。
-            // 保存済みが 0 件の時は既定の 21:00 の 1 本になる
-            nightReminderTimes = effectiveNightReminderTimes(
-                times: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
-                isPremium: PremiumEntitlement.isPremium
-            ).map { nightReminderDate(time: $0) }
-            guard let alarmSetting = alarmSettings.first else { return }
-            var components = Calendar.autoupdatingCurrent.dateComponents([.year, .month, .day], from: .now)
-            components.hour = alarmSetting.hour
-            components.minute = alarmSetting.minute
-            if let date = Calendar.autoupdatingCurrent.date(from: components) {
-                time = date
-            }
-            isEnabled = alarmSetting.isEnabled
-            snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
+            restoreFromStored()
         }
+        // 課金状態が変わったら入力を新しい実効値へ復元する (理由は restoreFromStored の doc コメント)
+        .onChange(of: premiumEntitlementActive) {
+            restoreFromStored()
+        }
+        #if DEBUG
+        .onChange(of: debugPremiumOverride) {
+            restoreFromStored()
+        }
+        #endif
         .onDisappear {
-            // デバウンス待ちの変更を画面を離れる時に失わないよう、待たずにその場で保存する
-            autoSaveTask?.cancel()
-            autoSaveTask = Task { await save() }
+            flushAutoSave()
+        }
+        // バックグラウンド遷移・ロックでは onDisappear が呼ばれず、デバウンス中の Task は実行保証が無いため、
+        // 非 active 遷移でも待たずに保存を確定する
+        .onChange(of: scenePhase) { _, newValue in
+            guard newValue != .active else { return }
+            flushAutoSave()
+        }
+    }
+
+    /// 保存済みの設定を現在の課金状態での実効値として入力へ復元する。
+    /// onAppear と課金状態の変化時に呼ぶ (購入・復元の直後に無料向けの実効値が入力に残っていると、
+    /// その後の保存が差分と誤認し、保存済みの希望値や 2 本目以降のリマインドを消してしまう)
+    private func restoreFromStored() {
+        // スヌーズ回数と同じく、表示するのは現在の課金状態での実効値 (無料なら 1 本目だけ)。
+        // 保存済みが 0 件の時は既定の 21:00 の 1 本になる
+        nightReminderTimes = effectiveNightReminderTimes(
+            times: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
+            isPremium: PremiumEntitlement.isPremium
+        ).map { nightReminderDate(time: $0) }
+        guard let alarmSetting = alarmSettings.first else { return }
+        var components = Calendar.autoupdatingCurrent.dateComponents([.year, .month, .day], from: .now)
+        components.hour = alarmSetting.hour
+        components.minute = alarmSetting.minute
+        if let date = Calendar.autoupdatingCurrent.date(from: components) {
+            time = date
+        }
+        isEnabled = alarmSetting.isEnabled
+        snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
+    }
+
+    /// デバウンス待ちの自動保存があれば、待たずにその場で確定する。
+    /// ユーザーの編集で自動保存が予約された時 (autoSaveTask != nil) だけ保存する
+    /// (編集なしの離脱でも保存すると、アラーム未設定のまま画面を開いて閉じただけでレコードが作られてしまう)
+    private func flushAutoSave() {
+        guard let previousTask = autoSaveTask else { return }
+        previousTask.cancel()
+        autoSaveTask = Task {
+            // 実行中の保存があれば完了を待ち、保存処理を交錯させない
+            await previousTask.value
+            await save()
         }
     }
 
@@ -307,7 +342,12 @@ struct AlarmSettingPage: View {
     /// 500ms は、ホイールを回している間は発火せず、手を止めてから保存までの遅れも体感されにくい値として選んだ
     private func scheduleAutoSave() {
         autoSaveTask?.cancel()
+        let previousTask = autoSaveTask
         autoSaveTask = Task {
+            // 先行の保存が実行中なら完了を待ってから直列に実行する
+            // (AlarmKit の reschedule は内部で直列化されているが rescheduleNightReminder はされていないため、
+            // 保存処理全体を交錯させない)
+            await previousTask?.value
             try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
             await save()
@@ -321,6 +361,8 @@ struct AlarmSettingPage: View {
         let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: time)
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
+        // 再スケジュールの失敗が残っている時は、実変更が無くても保存し直して再試行する
+        // (保存ボタンが無いため、ここで再試行しないと同じ設定のまま再スケジュールし直す操作が無い)
         guard hasAlarmSettingChanges(
             hour: hour,
             minute: minute,
@@ -330,7 +372,7 @@ struct AlarmSettingPage: View {
             alarmSetting: alarmSettings.first,
             storedNightReminderTimes: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
             isPremium: PremiumEntitlement.isPremium
-        ) else { return }
+        ) || UserDefaults.standard.string(forKey: .lastRescheduleError) != nil else { return }
         if let alarmSetting = alarmSettings.first {
             alarmSetting.setTime(hour: hour, minute: minute)
             alarmSetting.setIsEnabled(isEnabled: isEnabled)
