@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: e6d4150862952ded73847e4c35f771ec5d0cefd1
-last_verified_at: 2026-08-22
+last_verified_commit: 344d118650b45b518559c7c85f8d854e60b2f47d
+last_verified_at: 2026-08-23
 ---
 
 # AlarmSetting QA
@@ -208,11 +208,9 @@ OFF:
 
 - [x] **プレミアム限定の回数を選ぶとペイウォール**: 無料状態でスヌーズ Picker の錠前付きの選択肢 (3 回以上・無制限) を選ぶと、選択は元の回数に戻り PaywallPage が sheet で開く
   - 自動化: manual（sheet 遷移の確認）
-- [x] **夜のリマインド行のロックとペイウォール**: 無料状態では夜のリマインド行 (accessibilityIdentifier: alarm_setting_night_reminder_row) に錠前アイコンが付き、タップすると PaywallPage が sheet で開く (時刻カスタマイズはプレミアム機能・未実装。issue #104)
+- [x] **プレミアム行の恒常導線**: 無料状態では夜のリマインドセクションと情報セクションの間に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
   - 自動化: manual（sheet 遷移の確認）
-- [x] **プレミアム行の恒常導線**: 無料状態ではスヌーズと夜のリマインドのセクションの下に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
-  - 自動化: manual（sheet 遷移の確認）
-- [x] **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、夜のリマインド行の錠前が消えて表示のみになり、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
+- [x] **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
   - 自動化: manual（課金状態の表示分岐は目視確認）
 
 #### 動作確認
@@ -230,38 +228,28 @@ OFF:
 
 </details>
 
-### **夜のリマインド行のロックとペイウォール**: 無料状態では夜のリマインド行 (accessibilityIdentifier: alarm_setting_night_reminder_row) に錠前アイコンが付き、タップすると PaywallPage が sheet で開く (時刻カスタマイズはプレミアム機能・未実装。issue #104)
+### **プレミアム行の恒常導線**: 無料状態では夜のリマインドセクションと情報セクションの間に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
+**確認日: 2026-08-23** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール。issue #94 の夜リマインド時刻編集とのマージ後 UI)
 
-無料状態の設定画面。夜のリマインド行に錠前、下に「プレミアム」行:
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/edd85e69-cf62-481d-94eb-98aa09df6b94.png" width="320">
+無料状態の設定画面。夜のリマインドセクションの下に「プレミアム」行:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/a43b711a-b0f5-43ee-a695-5d88b9c52461.png" width="320">
 
-夜のリマインド行をタップ → PaywallPage が sheet で開く (価格は RevenueCat Test Store の USD 表示):
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/c7833da9-cea4-4eff-864f-bcb91f58c5d9.png" width="320">
+「プレミアム」行をタップ → PaywallPage が sheet で開く (価格は RevenueCat Test Store の USD 表示):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/eaf81abc-4cd9-4d5a-b2eb-cfa42a9c7692.png" width="320">
 
 </details>
 
-### **プレミアム行の恒常導線**: 無料状態ではスヌーズと夜のリマインドのセクションの下に「プレミアム」行 (alarm_setting_premium_link。説明文「無限追撃アラームと、すべての履歴」付き) が表示され、タップすると PaywallPage が sheet で開く (issue #104)
+### **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-22** (表示は上の項目の 1 枚目のスクショを参照)
+**確認日: 2026-08-23** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
 
-「プレミアム」行のタップで PaywallPage が開くことは mobile-mcp のアクセシビリティツリーで確認した (タップ後に `paywall_yearly_button` / `paywall_monthly_button` / `paywall_lifetime_button` / `paywall_not_now_button` が出現。スクショは夜のリマインド行からの遷移と同一画面のため省略)
-
-</details>
-
-### **プレミアム状態の表示切り替え**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では、夜のリマインド行の錠前が消えて表示のみになり、プレミアム行は「プレミアム 有効」(alarm_setting_premium_status_row) の状態表示になってペイウォールを開かない (issue #104)
-
-<details><summary>動作確認スクショ</summary>
-
-**確認日: 2026-08-22** (iPhone / iOS 26.5 ローカル simulator、日本語ロケール)
-
-プレミアム強制 ON の設定画面。夜のリマインド行の錠前が消え、「プレミアム 有効」の状態表示:
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260822/8ec52670-4cd7-46ac-9960-f90f6b454ca5.png" width="320">
+プレミアム強制 ON の設定画面。「プレミアム 有効」の状態表示 (夜のリマインドの追加ボタンの錠前も消えている = issue #94 側の分岐):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/ddc20822-f76f-4637-bb2b-2785d3778c65.png" width="320">
 
 </details>
 
