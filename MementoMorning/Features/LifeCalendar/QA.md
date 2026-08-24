@@ -1,7 +1,7 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 401e4abf0b08248e767d8ac2ec02a5b769f58d37
+last_verified_commit: 7521ad74327c1048a0432f6585d8612d3926b4d8
 last_verified_at: 2026-08-24
 ---
 
@@ -42,6 +42,8 @@ last_verified_at: 2026-08-24
   - 自動化: manual（月送り操作の確認）
 - [x] **答えた朝の件数**: グリッドの下に全期間の回答数が表示される
   - 自動化: manual（件数表示の目視確認）
+- [x] **日付タップで回答を開く**: 答えた日のマスをタップすると、その日の回答の共有カードが sheet で開く (issue #130)。無料枠 (直近 7 日) より前の答えた日はペイウォールが開き、未回答日はタップしても何も起きない
+  - 自動化: manual（タップ後の画面遷移の目視確認。日付から回答を引くロジックは MementoMorningTests/MorningAnswerTests.swift の testAnswerOfDay 系がカバー済み）
 
 ## 3. 七つの朝への導線の不在 (issue #116)
 
@@ -89,6 +91,28 @@ issue #109 で点画面のフッターに追加した「七つの朝」再訪リ
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/264d6baf-19fb-45b9-8cc3-801a1a86924f.jpg" width="320" />
 
 (節目到達済みの 10 件でもフッターは「Mornings answered 10 / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は 0 件。7 件到達時の節目 sheet の自動表示は従来どおり動くことも同セッションで確認済み — 記録は SevenMornings/QA.md)
+
+</details>
+
+### **日付タップで回答を開く**: 答えた日は共有カード、無料枠より前はペイウォール、未回答日は何も起きない (issue #130)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-24** (simtunnel リモート simulator、英語ロケール・UTC。開発者メニューでサンプル回答 10 日分 = Aug 15〜24 を投入。UTC の今日は Aug 24 で、無料枠 7 日の可視範囲は Aug 18〜24)
+
+答えた日 Aug 20 (無料枠内) のマスをタップ → その日の回答「Fix the bug that kept me up all night」の共有カードが sheet で開く:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/1da2950f-21a5-4c93-87c8-8a29367b3132.jpg" width="320" />
+
+答えた日 Aug 15 (無料枠より前、9 日前) のマスをタップ → ペイウォールが開く (Test Store の価格表示):
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/10a4a76f-58f9-4d01-9baa-fe343fa8410e.jpg" width="320" />
+
+未回答日 Aug 10 のマスをタップ → 何も開かずカレンダーのまま:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/05099689-526b-452c-8df4-59ba5601bc9e.jpg" width="320" />
+
+- プレミアム状態 (答えた全日が共有カードで開ける) は未検証。判定は AnswerLogVisibility.isVisible の isPremium 分岐で、AnswerLogVisibilityTests がロジックをカバー済み
 
 </details>
 
