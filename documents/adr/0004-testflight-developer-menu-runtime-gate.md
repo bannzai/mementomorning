@@ -14,7 +14,7 @@ Shipaton 提出やベータテストでは TestFlight 配布 (Release 構成の�
 開発者メニューの導線と検証用フラグの効果を、StoreKit 2 の `AppTransaction.environment` によるアプリ内の実行時判定でゲートする (`DeveloperMenuGate.swift`)。
 
 - `isDeveloperMenuUnlocked` は DEBUG ビルドで常に `true`、リリースビルドでは起動時に `AppTransaction` を取得し、`environment == .sandbox` (TestFlight 配布) の時だけ `true` になる。App Store 配布 (`.production`) では `false` のまま
-- 判定結果は `developerMenuUnlocked` の UserDefaults キーへキャッシュし、`isDeveloperMenuUnlocked` は同期的に参照する (AppTransaction の取得は非同期のため)
+- 判定結果はプロセスローカルな状態に持ち、`isDeveloperMenuUnlocked` は同期的に参照する (AppTransaction の取得は非同期のため)。UserDefaults へは永続化しない。永続化すると、TestFlight で `true` を保存したまま App Store 版へ更新した直後の起動で、非同期の再判定が完了するまで解放が残ってしまうため、プロセスごとに必ず閉じた状態 (`false`) から始める (PR #129 レビュー指摘)
 - 設定画面 (`AlarmSettingPage`) のバージョン行の長押しに開発者メニューへの導線を追加し、`isDeveloperMenuUnlocked` が `false` なら反応しない
 - `PremiumEntitlement.isPremium` の検証用上書き (`debugPremiumOverride`) や、疑似録画モード (`debugSimulateVideoAnswer`) の判定にも同じゲートを通す
 
@@ -27,4 +27,4 @@ Shipaton 提出やベータテストでは TestFlight 配布 (Release 構成の�
 
 **悪い点 / 引き受けるリスク:**
 - `AppTransaction` の取得・検証に失敗した場合は解放しない側 (`false`) へ倒すため、ネットワーク不調時などに TestFlight でも一時的に開けないことがある
-- 判定はアプリ起動のたびに非同期でキャッシュを更新するため、起動直後の一瞬は前回起動時の判定結果 (UserDefaults の初期値は `false`) を参照する
+- 判定はアプリ起動のたびに非同期で行うため、TestFlight でも起動直後の判定完了までの一瞬は閉じた状態になる (安全側に倒した仕様)
