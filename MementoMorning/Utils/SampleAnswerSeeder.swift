@@ -1,7 +1,6 @@
 import Foundation
 import SwiftData
 
-#if DEBUG
 /// 動作確認用のサンプル回答を投入する。既に回答が 1 件でもあれば何もしない (冪等)
 @MainActor
 func seedSampleAnswersIfNeeded(modelContext: ModelContext) {
@@ -50,4 +49,3 @@ func seedSampleAnswersIfNeeded(modelContext: ModelContext) {
         assertionFailure(error.localizedDescription)
     }
 }
-#endif

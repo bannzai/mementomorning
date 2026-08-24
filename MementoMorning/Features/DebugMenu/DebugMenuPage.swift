@@ -2,9 +2,9 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 
-#if DEBUG
-/// 開発者メニュー。動作確認・E2E テストで到達困難な状態を作るための DEBUG 限定ページ
-/// (.claude/rules/debug-menu-for-verification.md 参照。リモート simulator からも操作できるようアプリ内 UI で提供する)
+/// 開発者メニュー。動作確認・E2E テストで到達困難な状態を作るためのページ
+/// (.claude/rules/debug-menu-for-verification.md 参照。リモート simulator からも操作できるようアプリ内 UI で提供する)。
+/// 導線は isDeveloperMenuUnlocked (DEBUG 常時 / リリースは TestFlight 配布のみ) でゲートし、App Store 配布では開けない (issue #128)
 struct DebugMenuPage: View {
     /// 検証用の夜リマインドの識別子。本番の夜リマインドは "night-reminder" 接頭辞に一致する保留中の通知を掃除してから登録し直すため、その接頭辞に一致しない別の名前空間にして巻き込まれないようにする
     private static let testRequestIdentifier = "debug-night-reminder"
@@ -571,4 +571,3 @@ struct DebugMenuPage_Previews: PreviewProvider {
         .modelContainer(PersistenceController.shared.container)
     }
 }
-#endif

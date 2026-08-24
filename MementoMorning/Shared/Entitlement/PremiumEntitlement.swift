@@ -9,10 +9,9 @@ extension String {
     /// 期限付き購読はアプリ停止中に失効し得るため、premiumEntitlementActive と対で保存して参照時に同期判定する。
     /// 買い切り (失効しない) の場合はキー自体を消す
     static let premiumEntitlementExpiration = "premiumEntitlementExpiration"
-    #if DEBUG
-    /// 検証用にプレミアム状態を強制する UserDefaults キー (DEBUG 限定。DebugMenuPage から切り替える)
+    /// 検証用にプレミアム状態を強制する UserDefaults キー (DebugMenuPage から切り替える)。
+    /// 効果は開発者メニューを解放したビルド (isDeveloperMenuUnlocked) に限る
     static let debugPremiumOverride = "debugPremiumOverride"
-    #endif
 }
 
 /// キャッシュした課金判定が now 時点でも有効か。
@@ -43,11 +42,11 @@ enum PremiumEntitlement {
     /// customerInfoStream が UserDefaults へ保存した最新の entitlement 判定を、失効日時と突き合わせて返す
     /// (View 外の StopAlarmIntent からも同期参照できるよう、SDK ではなくキャッシュ経由で判定する)
     static var isPremium: Bool {
-        #if DEBUG
-        if UserDefaults.standard.bool(forKey: .debugPremiumOverride) {
+        // 検証用の上書きは開発者メニューを解放したビルド (DEBUG / TestFlight 配布) でだけ効かせる (issue #128)。
+        // App Store 配布では UserDefaults を外部から書き換えられても本番の課金判定に影響しない
+        if isDeveloperMenuUnlocked, UserDefaults.standard.bool(forKey: .debugPremiumOverride) {
             return true
         }
-        #endif
         return cachedPremiumActive(
             active: UserDefaults.standard.bool(forKey: .premiumEntitlementActive),
             expirationDate: (UserDefaults.standard.object(forKey: .premiumEntitlementExpiration) as? Double).map(Date.init(timeIntervalSince1970:)),

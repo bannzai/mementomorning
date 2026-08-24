@@ -32,18 +32,15 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
     /// セッションの構成・起動・録画操作を直列に実行するキュー
     private nonisolated let sessionQueue = DispatchQueue(label: "com.bannzai.MementoMorning.video-answer-camera")
 
-    #if DEBUG
     /// 疑似録画モード (issue #52) で動作しているかどうか。
     /// start() の時点の設定値で固定し、録画中にトグルを切り替えても
     /// 開始と停止で実カメラと疑似録画が混ざらないようにする
     private var isSimulating = false
-    #endif
 
     /// インカメラ + マイクでセッションを構成して起動する。
     /// 構成済みなら再構成せず起動だけやり直すため何度呼んでも安全 (冪等)。
     /// カメラまたはマイクのデバイスを取得できない環境では onUnavailable を呼んで何も起動しない
     func start() {
-        #if DEBUG
         isSimulating = isDebugSimulateVideoAnswerEnabled
         if isSimulating {
             // 疑似録画モードではカメラを構成しない。プレビューは表示されないが (背景の墨色のまま)、
@@ -51,7 +48,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
             isSessionRunning = true
             return
         }
-        #endif
         sessionQueue.async { [self] in
             if session.inputs.isEmpty {
                 session.beginConfiguration()
@@ -101,7 +97,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
 
     /// セッションを停止する (画面を離れる時に呼ぶ)
     func stop() {
-        #if DEBUG
         if isSimulating {
             isSessionRunning = false
             // 疑似録画中に画面が閉じられた (回答完了以外の理由で onDisappear が来た) 場合、
@@ -111,7 +106,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
             recordingStartedAt = nil
             return
         }
-        #endif
         sessionQueue.async { [self] in
             session.stopRunning()
             Task { @MainActor in self.isSessionRunning = false }
@@ -121,7 +115,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
     /// 一時ディレクトリ内の一意なファイルへ録画を開始する。
     /// 出力ファイルは写真ライブラリへの保存が成功した後に呼び出し側が削除する
     func startRecording() {
-        #if DEBUG
         if isSimulating {
             guard !isRecording else { return }
             let startedAt = Date()
@@ -137,7 +130,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
             }
             return
         }
-        #endif
         sessionQueue.async { [self] in
             guard session.isRunning, !movieOutput.isRecording else { return }
             if let connection = movieOutput.connection(with: .video) {
@@ -158,7 +150,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
 
     /// 録画を停止する。停止後の出力ファイル確定はデリゲート経由で onFinished / onRecordingFailed に通知される
     func stopRecording() {
-        #if DEBUG
         if isSimulating {
             // 録画していない状態での停止 (テキスト入力への切り替え時にも呼ばれる) は
             // 実録画側が movieOutput.isRecording で弾くのと同じく何もしない
@@ -172,7 +163,6 @@ final class VideoAnswerCamera: NSObject, AVCaptureFileOutputRecordingDelegate {
             }
             return
         }
-        #endif
         sessionQueue.async { [self] in
             movieOutput.stopRecording()
         }

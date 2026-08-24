@@ -1,8 +1,7 @@
 import Foundation
 
-#if DEBUG
 extension String {
-    /// 無限アラーム検証用のテストアラームの UUID を保存する UserDefaults キー (DEBUG 限定。DebugMenuPage から登録する)。
+    /// 無限アラーム検証用のテストアラームの UUID を保存する UserDefaults キー (DebugMenuPage から登録する)。
     /// 再登録時に前回のテストアラームをキャンセルし、テストアラームを常に 1 本に保つ (冪等) ために使う
     static let debugChaseTestAlarmID = "debugChaseTestAlarmID"
 }
@@ -39,4 +38,3 @@ func debugInfiniteChaseBlockers(
     }
     return blockers
 }
-#endif
