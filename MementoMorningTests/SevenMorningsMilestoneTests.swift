@@ -22,16 +22,4 @@ final class SevenMorningsMilestoneTests: XCTestCase {
         XCTAssertFalse(shouldPresentSevenMorningsMilestone(answerCount: 7, isPresented: true))
         XCTAssertFalse(shouldPresentSevenMorningsMilestone(answerCount: 100, isPresented: true))
     }
-
-    /// 節目に達するまではカレンダーから見返せない (issue #109)
-    func testCannotRevisitUntilSevenAnswers() {
-        XCTAssertFalse(canRevisitSevenMorningsMilestone(answerCount: 0))
-        XCTAssertFalse(canRevisitSevenMorningsMilestone(answerCount: 6))
-    }
-
-    /// 節目に達した後は、自動表示済みかどうかに関わらずカレンダーから見返せる (issue #109)
-    func testCanRevisitAfterSevenAnswers() {
-        XCTAssertTrue(canRevisitSevenMorningsMilestone(answerCount: 7))
-        XCTAssertTrue(canRevisitSevenMorningsMilestone(answerCount: 100))
-    }
 }

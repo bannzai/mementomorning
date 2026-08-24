@@ -12,8 +12,6 @@ struct DotsPage: View {
     @State private var answeredCount = 0
     /// 今日の回答があるかどうか。いちばん新しい粒に夜明けのリングを付ける判定に使う
     @State private var hasTodayAnswer = false
-    /// 7 日の節目「七つの朝」を見返すシートを表示中かどうか (issue #109。リンクの存廃は issue #116 で判断する)
-    @State private var isSevenMorningsPagePresented = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -50,36 +48,16 @@ struct DotsPage: View {
                     .font(.system(size: 11))
                     .tracking(0.88)
                     .foregroundStyle(Color.warmWhite.opacity(0.32))
-                // 節目に達した後はいつでもこの画面から振り返りカードを見返せるようにする (issue #109)。
-                // 30 日の節目「一ヶ月の手紙」の導線は実装後 (issue #96) にここへ追加する
-                if canRevisitSevenMorningsMilestone(answerCount: answeredCount) {
-                    Button {
-                        isSevenMorningsPagePresented = true
-                    } label: {
-                        // ja: 七つの朝
-                        Text("Seven Mornings")
-                            .underline()
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 14)
-                    }
-                    .font(.system(size: 13))
-                    .tracking(1.3)
-                    .foregroundStyle(Color.warmWhite.opacity(0.65))
-                    .accessibilityIdentifier("life_calendar_seven_mornings_link")
-                }
             }
             .padding(.top, 10)
             .padding(.bottom, 24)
-        }
-        .sheet(isPresented: $isSevenMorningsPagePresented) {
-            SevenMorningsPage()
         }
         .background(Color.ink.ignoresSafeArea())
         .onAppear {
             recalculate()
         }
         // この画面を開いたまま朝の問い (fullScreenCover) で回答が保存されても onAppear は再発火しないため、
-        // 保存通知で粒の数と七つの朝リンクの表示条件を再計算する (HomeContent と同じパターン)
+        // 保存通知で粒の数を再計算する (HomeContent と同じパターン)
         .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
             recalculate()
         }

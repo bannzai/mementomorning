@@ -13,9 +13,3 @@ let sevenMorningsMilestoneAnswerCount = 7
 func shouldPresentSevenMorningsMilestone(answerCount: Int, isPresented: Bool) -> Bool {
     !isPresented && answerCount >= sevenMorningsMilestoneAnswerCount
 }
-
-/// 7 日の節目「七つの朝」を人生カレンダーから後から開けるかを判定する (issue #109)。
-/// 自動表示は一度きりだが、節目に達した後はいつでも見返せるようにするため、表示済みかどうかは問わない
-func canRevisitSevenMorningsMilestone(answerCount: Int) -> Bool {
-    answerCount >= sevenMorningsMilestoneAnswerCount
-}
