@@ -31,7 +31,8 @@ struct MonthCalendarPage: View {
     var body: some View {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
-        let answeredDays = Set(answers.map { calendar.startOfDay(for: $0.answeredDate) })
+        // 同じ日の回答は 1 件に保たれるが、暦の変わり目で重複しても最初の 1 件で安定させる
+        let answersByDay = Dictionary(answers.map { (calendar.startOfDay(for: $0.answeredDate), $0) }, uniquingKeysWith: { first, _ in first })
         // 月送りの範囲は最古の回答の月〜今月 (回答がなければ今月のみ)
         let earliestMonth = answers.last.map { startOfMonth(date: $0.answeredDate, calendar: calendar) } ?? startOfMonth(date: today, calendar: calendar)
         let currentMonth = startOfMonth(date: today, calendar: calendar)
@@ -40,7 +41,7 @@ struct MonthCalendarPage: View {
             monthPager(earliestMonth: earliestMonth, currentMonth: currentMonth, calendar: calendar)
             weekdayHeader(calendar: calendar)
                 .padding(.top, 30)
-            monthGrid(answeredDays: answeredDays, today: today, calendar: calendar)
+            monthGrid(answersByDay: answersByDay, today: today, calendar: calendar)
                 .padding(.top, 6)
             Rectangle()
                 .fill(Color.hairline)
@@ -138,15 +139,16 @@ struct MonthCalendarPage: View {
         .accessibilityHidden(true)
     }
 
-    /// 表示中の月の日付グリッド
-    private func monthGrid(answeredDays: Set<Date>, today: Date, calendar: Calendar) -> some View {
+    /// 表示中の月の日付グリッド。answersByDay は日付 (現在の暦での startOfDay) から回答を引く辞書で、
+    /// 回答済みマークの表示もタップで開く回答もこの同じ辞書から取る
+    private func monthGrid(answersByDay: [Date: MorningAnswer], today: Date, calendar: Calendar) -> some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 0) {
             let cells = monthCalendarCells(month: displayedMonth, calendar: calendar)
             // マスの並びは月が同じなら不変のため位置を id にする
             ForEach(Array(cells.enumerated()), id: \.offset) { _, day in
                 Group {
                     if let day {
-                        monthGridDayCell(day: day, isAnswered: answeredDays.contains(day), today: today, calendar: calendar)
+                        monthGridDayCell(day: day, answer: answersByDay[day], today: today, calendar: calendar)
                     } else {
                         Color.clear
                     }
@@ -157,11 +159,13 @@ struct MonthCalendarPage: View {
     }
 
     /// 日付 1 マスぶんの表示。答えた日は温白の粒に墨の数字、それ以外は数字のみ (未来は弱く)。
-    /// 答えた日はタップでその日の回答の共有カードを開き、無料枠で隠れている日 (7 日より前) はペイウォールを開く (issue #130)
-    private func monthGridDayCell(day: Date, isAnswered: Bool, today: Date, calendar: Calendar) -> some View {
-        Button {
-            // 未回答の日は disabled のためここには来ないが、回答の取得に失敗した場合も同じく開く対象がない
-            guard let answer = fetchMorningAnswer(answeredDate: day, modelContext: modelContext) else {
+    /// 答えた日はタップでその日の回答の共有カードを開き、無料枠で隠れている日 (7 日より前) はペイウォールを開く (issue #130)。
+    /// answer は monthGrid から渡されるその日の回答で、回答済みの表示もタップで開く回答も同じ値を基準にする
+    private func monthGridDayCell(day: Date, answer: MorningAnswer?, today: Date, calendar: Calendar) -> some View {
+        let isAnswered = answer != nil
+        return Button {
+            // 未回答の日は disabled のためここには来ない
+            guard let answer else {
                 return
             }
             if AnswerLogVisibility.isVisible(answeredDate: answer.answeredDate, isPremium: PremiumEntitlement.isPremium) {
@@ -186,7 +190,9 @@ struct MonthCalendarPage: View {
                     .font(.system(size: 11, weight: isAnswered ? .medium : .light))
                     .foregroundStyle(isAnswered ? Color.ink : Color.warmWhite.opacity(day <= today ? 0.45 : 0.18))
             }
-            // plain スタイルの Button はラベルの描画領域しかタップに反応しないため、マス全体もヒット対象にする
+            // plain スタイルの Button は円と数字の描画領域しかタップに反応しないため、
+            // ラベルをマスの大きさ (高さは monthGrid のマスと同じ 48) まで広げてからヒット領域にする
+            .frame(maxWidth: .infinity, minHeight: 48)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
