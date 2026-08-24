@@ -1,6 +1,7 @@
 # iOS の TestFlight 配布手順
 
-`.github/workflows/ios-deploy.yml` を手動起動すると、MementoMorning (bundle `com.bannzai.MementoMorning`、
+`.github/workflows/ios-deploy.yml` は main へのマージ (push) で自動起動し (配布し直す時は workflow_dispatch で
+手動起動する)、MementoMorning (bundle `com.bannzai.MementoMorning`、
 Widget `com.bannzai.MementoMorning.MementoMorningWidget`) の Release ビルドが arm64 実機向けにアーカイブされ、
 TestFlight (App Store Connect、appId 6801673264) へアップロードされる。署名は手動署名 (Secrets の証明書 + profile を
 CI で復元)。方式の決定理由は [ADR 0003](adr/0003-ios-testflight-distribution-github-actions.md) (Xcode Cloud からの移行)。
@@ -34,16 +35,22 @@ workflow は castle の ios-deploy-actions skill (`~/.claude/skills/ios-deploy-a
 
 ## 配布する
 
+main へのマージで自動起動する。起動した run の確認と、配布し直す時の手動起動:
+
 ```sh
-gh workflow run ios-deploy.yml --ref main
 gh run list --workflow ios-deploy.yml --limit 3
-gh run watch <今起動した run の ID>
+RUN_ID="$(gh run list --workflow ios-deploy.yml --limit 1 --json databaseId --jq '.[0].databaseId')"
+gh run watch "$RUN_ID"
+# 配布し直す場合の手動起動
+gh workflow run ios-deploy.yml --ref main
 ```
 
 - ビルド番号は `github.run_number + BUILD_NUMBER_OFFSET`。**現在の offset は 15** (Xcode Cloud がビルド 14 まで採番済みのため)。
   run_number が巻き戻る事態では offset を既存の最大ビルド番号を超える値に上げる
 - 配布は同時に 1 本だけ。先行 run が未完了だと最初の step (Reject concurrent dispatch) で失敗する
-- 失敗した run は Re-run せず新しく dispatch する (同じビルド番号の再アップロードは拒否されるため)
+- Upload to TestFlight まで進んで失敗した run は Re-run せず新しく dispatch する (Re-run ではビルド番号が
+  変わらず、アップロード済みと同じ番号の再送は拒否されるため)。Upload より前の step で失敗した run は、
+  その番号がまだアップロードされていないため Re-run で復旧してよい
 - public リポジトリのため macOS runner は無料
 - Archive は Release 構成のため `Config.local.xcconfig` の appl_ キーが必須 (preBuild 検査が Secret の設定漏れを検出する)
 
