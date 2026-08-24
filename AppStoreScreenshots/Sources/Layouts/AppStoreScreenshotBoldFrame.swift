@@ -136,7 +136,7 @@ struct AppStoreScreenshot33Page_Previews: PreviewProvider {
     }
 }
 
-/// App Store スクリーンショット 34 枚目 - bold - 人生カレンダー (点の蓄積)
+/// App Store スクリーンショット 34 枚目 - bold - 点 (粒の蓄積)
 struct AppStoreScreenshot34Page: View {
     var body: some View {
         AppStoreScreenshotBoldLayout(
@@ -144,10 +144,10 @@ struct AppStoreScreenshot34Page: View {
             //
             // 点として残る。
             title: Text("Answered mornings remain as dots."),
-            // ja: 1行が一週間。点は、いつかつながる。
-            subtitle: "Each row is a week. The dots will connect."
+            // ja: 点は、いつかつながる。
+            subtitle: "The dots will connect."
         ) {
-            MockLifeCalendarScreen()
+            MockDotsScreen()
         }
     }
 }

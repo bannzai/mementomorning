@@ -82,7 +82,7 @@ last_verified_at: 2026-08-22
 
 ## 1. 起動と基本導線
 
-- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・粒ストリップ・Journal / Life Calendar / Settings リンク) が表示される
+- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Dots / Calendar / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え)
   - 自動化: manual（起動直後の画面の目視確認）
 - [x] **開発者メニューへの到達**: DEBUG ビルドでホーム左上のハンマーアイコン (debug_menu_link) から開発者メニューが開く
   - 自動化: manual（DEBUG 限定 UI の確認）
@@ -95,11 +95,16 @@ last_verified_at: 2026-08-22
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・粒ストリップ・Journal / Life Calendar / Settings リンク) が表示される
+### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Dots / Calendar / Settings リンク) が表示される
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17**
+**確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。issue #117 の再設計後の確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/3ceb8f70-bd04-4819-9935-124a4ff9bd02.jpg" width="320" />
+
+(画面下端に温白 9% の粒が 10 個積もり、大時刻・今朝のことば・「10 mornings answered」・Journal / Dots / Calendar / Settings リンクはすべて可読)
+
+**確認日: 2026-08-17** (旧レイアウト: 粒ストリップ + Journal / Life Calendar / Settings)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/7f66d9aa-375b-456c-b7a2-bdade68758f7.jpg" width="320">
 
 </details>

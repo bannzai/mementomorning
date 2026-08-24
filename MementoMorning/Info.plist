@@ -17,6 +17,8 @@
 	<string>Used to record your video answer to the morning question with the front camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used to record the audio of your video answer.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Used to tilt the device and let the piled dots of your answered mornings roll.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to save your recorded video answers to the 'Memento Morning' album in Photos.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

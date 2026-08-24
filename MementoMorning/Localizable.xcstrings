@@ -5445,6 +5445,16 @@
         }
       }
     },
+    "Calendar" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダー"
+          }
+        }
+      }
+    },
     "Camera & microphone" : {
       "localizations" : {
         "ar" : {
@@ -6989,6 +6999,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開発者用のログ"
+          }
+        }
+      }
+    },
+    "Dots" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点"
           }
         }
       }
@@ -11110,6 +11130,16 @@
         }
       }
     },
+    "Mornings answered" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えた朝"
+          }
+        }
+      }
+    },
     "NEXT MORNING" : {
       "localizations" : {
         "ar" : {
@@ -11320,6 +11350,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "明早"
+          }
+        }
+      }
+    },
+    "Next month" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翌月"
           }
         }
       }
@@ -13474,6 +13514,16 @@
         }
       }
     },
+    "One dot, one answered morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ひと粒が、答えたひとつの朝"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "localizations" : {
         "ar" : {
@@ -14560,6 +14610,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在準備相機"
+          }
+        }
+      }
+    },
+    "Previous month" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前の月"
           }
         }
       }
