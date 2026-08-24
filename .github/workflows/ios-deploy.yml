@@ -1,12 +1,14 @@
 # managed-by: ios-deploy-actions (bannzai/castle)
 name: ios-deploy
 
-# 手動起動の iOS 配布ワークフロー。
+# main へのマージ (push) で自動起動し、workflow_dispatch でも手動起動できる iOS 配布ワークフロー。
 # MementoMorning を Release / arm64 実機向けにアーカイブし、IPA を書き出して TestFlight (App Store Connect) へアップロードする。
 # 署名は手動署名: Secrets の P12 証明書と App Store 用 provisioning profile を CI 上に復元して署名する。
 # cloud signing (自動署名) は API Key に Admin ロールが必須なため採用しない。
 # 方式の設計判断は ios-deploy-actions skill (bannzai/castle) の references/signing-design.md を参照。
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 env:
