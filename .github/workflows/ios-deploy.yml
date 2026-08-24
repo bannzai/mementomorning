@@ -90,10 +90,13 @@ jobs:
         run: |
           [ -n "$IOS_PROVISIONING_PROFILE_BASE64" ] || { echo "::error::Secret IOS_PROVISIONING_PROFILE_BASE64 が空です"; exit 1; }
           [ -n "$IOS_WIDGET_PROVISIONING_PROFILE_BASE64" ] || { echo "::error::Secret IOS_WIDGET_PROVISIONING_PROFILE_BASE64 が空です"; exit 1; }
+          # 従来の MobileDevice 配下に加え、Xcode 16 以降の走査先 (Developer/Xcode/UserData) にも置く
           PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
-          mkdir -p "$PROFILE_DIR"
+          XCODE_PROFILE_DIR="$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"
+          mkdir -p "$PROFILE_DIR" "$XCODE_PROFILE_DIR"
           echo -n "$IOS_PROVISIONING_PROFILE_BASE64" | base64 --decode > "$PROFILE_DIR/MementoMorning_AppStore.mobileprovision"
           echo -n "$IOS_WIDGET_PROVISIONING_PROFILE_BASE64" | base64 --decode > "$PROFILE_DIR/MementoMorning_MementoMorningWidget_AppStore.mobileprovision"
+          cp "$PROFILE_DIR/MementoMorning_AppStore.mobileprovision" "$PROFILE_DIR/MementoMorning_MementoMorningWidget_AppStore.mobileprovision" "$XCODE_PROFILE_DIR/"
 
       # RevenueCat の実キー (appl_) は gitignore された Config.local.xcconfig 運用のため checkout に存在しない。
       # Xcode Cloud 時代と同じ ci_scripts/ci_post_clone.sh が Secret から生成する ([config=Release] 限定で適用される)。
@@ -191,3 +194,5 @@ jobs:
           rm -f ~/.appstoreconnect/private_keys/AuthKey_*.p8 || true
           rm -f ~/Library/MobileDevice/Provisioning\ Profiles/MementoMorning_AppStore.mobileprovision || true
           rm -f ~/Library/MobileDevice/Provisioning\ Profiles/MementoMorning_MementoMorningWidget_AppStore.mobileprovision || true
+          rm -f ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/MementoMorning_AppStore.mobileprovision || true
+          rm -f ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/MementoMorning_MementoMorningWidget_AppStore.mobileprovision || true
