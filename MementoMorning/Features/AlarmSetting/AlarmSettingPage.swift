@@ -33,10 +33,10 @@ struct AlarmSettingPage: View {
 
     /// RevenueCat の entitlement キャッシュ。値の変化で再描画を起こすために監視する (判定は PremiumEntitlement.isPremium が SSOT)
     @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
-    #if DEBUG
     /// 検証用のプレミアム強制フラグ。値の変化で再描画を起こすために監視する
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
-    #endif
+    /// 開発者メニューを表示中かどうか。バージョン行の長押し (issue #128) で開く
+    @State private var isDebugMenuPresented = false
 
     var body: some View {
         Form {
@@ -175,6 +175,14 @@ struct AlarmSettingPage: View {
                     Text("Version")
                 }
                 .accessibilityIdentifier("alarm_setting_version_row")
+                // 開発者メニューへの隠し導線 (issue #128)。TestFlight 配布 (リリースビルド) でも検証状態を
+                // 作れるようバージョン行の長押しで開く。App Store 配布では isDeveloperMenuUnlocked が
+                // false のままのため反応しない
+                .contentShape(Rectangle())
+                .onLongPressGesture {
+                    guard isDeveloperMenuUnlocked else { return }
+                    isDebugMenuPresented = true
+                }
                 // stopIntent スパイクログの表示先。設定画面へ直接出さず一段奥に隠し、問い合わせ時にコピーして添えられるようにする (issue #103)
                 NavigationLink {
                     DeveloperLogPage()
@@ -195,6 +203,10 @@ struct AlarmSettingPage: View {
         }
         .sheet(isPresented: $isPaywallPresented) {
             PaywallPage()
+        }
+        // バージョン行の長押し (issue #128) から開発者メニューを開く
+        .navigationDestination(isPresented: $isDebugMenuPresented) {
+            DebugMenuPage()
         }
         // ja: アラーム
         .navigationTitle(String(localized: "Alarm"))
@@ -230,11 +242,9 @@ struct AlarmSettingPage: View {
         .onChange(of: premiumEntitlementActive) {
             restoreFromStored()
         }
-        #if DEBUG
         .onChange(of: debugPremiumOverride) {
             restoreFromStored()
         }
-        #endif
         .onDisappear {
             flushAutoSave()
         }
