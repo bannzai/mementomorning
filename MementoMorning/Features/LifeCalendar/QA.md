@@ -1,7 +1,7 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 7521ad74327c1048a0432f6585d8612d3926b4d8
+last_verified_commit: ca26175e19c1c8db2b1758b64efadb0d95c31763
 last_verified_at: 2026-08-24
 ---
 
@@ -113,6 +113,15 @@ issue #109 で点画面のフッターに追加した「七つの朝」再訪リ
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/05099689-526b-452c-8df4-59ba5601bc9e.jpg" width="320" />
 
 - プレミアム状態 (答えた全日が共有カードで開ける) は未検証。判定は AnswerLogVisibility.isVisible の isPremium 分岐で、AnswerLogVisibilityTests がロジックをカバー済み
+
+**再確認日: 2026-08-24** (PR #131 のレビュー対応 ca26175 後、simtunnel リモート simulator で回帰確認)
+
+レビュー対応でタップのヒット領域をマス全体 (48pt 高) に広げ、回答の取得を表示と同じ辞書基準に統一した。答えた日 Aug 20 のマスの隅 (粒の円の外) をタップ → 共有カードが開く:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/34455af9-b364-49d9-9cec-17d152c7c6d8.jpg" width="320" />
+
+- Aug 15 (無料枠より前) のタップ → ペイウォール、Aug 10 (未回答) のタップ → 無反応、カレンダーのレイアウトに変化なし、も同セッションで確認済み
+- タイムゾーン変更をまたぐ実挙動 (保存後に端末 TZ を変えてタップ) は simulator では未検証。表示と取得が同一辞書になったことはコードとユニットテストで担保
 
 </details>
 
