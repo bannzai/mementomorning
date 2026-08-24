@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 1b58fd2273da16e7660287f485630f6d84b8764e
-last_verified_at: 2026-08-23
+last_verified_commit: 401e4abf0b08248e767d8ac2ec02a5b769f58d37
+last_verified_at: 2026-08-24
 ---
 
 # LifeCalendar QA
@@ -47,7 +47,7 @@ last_verified_at: 2026-08-23
 
 issue #109 で点画面のフッターに追加した「七つの朝」再訪リンクは、コンセプト見直し (issue #116) で撤去した。七つの朝は 7 件到達時に一度だけ自動表示される画面に戻っている。
 
-- [ ] **リンクを出さない**: 回答件数に関わらず、点画面のフッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
+- [x] **リンクを出さない**: 回答件数に関わらず、点画面のフッターに「七つの朝」リンク (life_calendar_seven_mornings_link) が表示されない
   - 自動化: manual（表示可否とアクセシビリティツリーの確認）
 
 #### 動作確認
@@ -85,7 +85,10 @@ issue #109 で点画面のフッターに追加した「七つの朝」再訪リ
 
 <details><summary>動作確認スクショ</summary>
 
-（未実行）
+**確認日: 2026-08-24** (simtunnel リモート simulator、英語ロケール、開発者メニューでサンプル回答 10 日分を投入)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/264d6baf-19fb-45b9-8cc3-801a1a86924f.jpg" width="320" />
+
+(節目到達済みの 10 件でもフッターは「Mornings answered 10 / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は 0 件。7 件到達時の節目 sheet の自動表示は従来どおり動くことも同セッションで確認済み — 記録は SevenMornings/QA.md)
 
 </details>
 

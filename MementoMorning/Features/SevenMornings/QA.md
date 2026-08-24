@@ -1,7 +1,7 @@
 ---
 feature: SevenMornings
 verification: mobile-mcp
-last_verified_commit: 38c26408b7964ab166d1853bf2918484e1cc1bfd
+last_verified_commit: 401e4abf0b08248e767d8ac2ec02a5b769f58d37
 last_verified_at: 2026-08-24
 ---
 
@@ -47,6 +47,11 @@ last_verified_at: 2026-08-24
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/24c3d4a6-23a1-4029-a31a-9398c2ddf740.png" width="320">
 
 (「七つの朝の節目をリセット」で従来どおり sheet が自動表示され、最初の 7 件 (Aug 15〜21) とまとめ共有ボタンが表示される)
+
+**確認日: 2026-08-24** (simtunnel リモート simulator、英語ロケール。origin/main の点画面リデザイン取り込み後の回帰確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/8bbb23fa-8c88-45c0-bb0a-0308ab52758a.jpg" width="320" />
+
+(サンプル回答 10 日分の投入で 7 件に到達した瞬間に sheet が自動表示され、最初の 7 件 (Aug 15〜21) とまとめ共有ボタンが表示される)
 
 </details>
 
