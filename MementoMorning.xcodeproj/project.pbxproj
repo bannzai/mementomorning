@@ -1679,6 +1679,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MementoMorning/MementoMorning.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				"CODE_SIGN_STYLE[sdk=iphoneos*]" = Manual;
 				EXCLUDED_SOURCE_FILE_NAMES = "DebugVideoAnswerFixture_*.mov";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MementoMorning/Info.plist;
@@ -1691,6 +1693,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bannzai.MementoMorning;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = MementoMorning.AppStore;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1876,6 +1879,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MementoMorningWidget/MementoMorningWidget.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				"CODE_SIGN_STYLE[sdk=iphoneos*]" = Manual;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MementoMorningWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Memento Morning";
@@ -1885,6 +1890,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bannzai.MementoMorning.MementoMorningWidget;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = MementoMorning.MementoMorningWidget.AppStore;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

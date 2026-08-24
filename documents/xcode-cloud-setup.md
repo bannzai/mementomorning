@@ -1,6 +1,13 @@
-# Xcode Cloud セットアップ手順
+# Xcode Cloud セットアップ手順 (廃止)
 
-TestFlight / App Store への binary アップロード経路は Xcode Cloud で行う (issue #86)。
+> **この経路は廃止した。** TestFlight への binary アップロードは GitHub Actions (`.github/workflows/ios-deploy.yml`) で行う。
+> 現行の手順は [ios-testflight-distribution.md](ios-testflight-distribution.md)、移行の決定は
+> [ADR 0003](adr/0003-ios-testflight-distribution-github-actions.md) を参照。
+> 以下は Xcode Cloud 運用時 (issue #86) の記録として残す**履歴であり、実行・再有効化しないこと**
+> (workflow の作成・設定・動作確認手順を含むすべて)。`ci_scripts/ci_post_clone.sh` は
+> GitHub Actions からも同じ用途で再利用している。
+
+TestFlight / App Store への binary アップロード経路は Xcode Cloud で行っていた (issue #86。現在は廃止)。
 このドキュメントは、リポジトリ側で整備済みの内容と、ユーザーが Xcode / App Store Connect の UI で行う設定手順を記録する。
 メタデータ・スクリーンショットの入稿は従来どおり fastlane の `metadata_upload` lane (`fastlane/Fastfile`) が担い、Xcode Cloud は binary のみを扱う。
 
