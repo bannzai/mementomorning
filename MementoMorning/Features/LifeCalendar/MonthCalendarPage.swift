@@ -23,6 +23,10 @@ struct MonthCalendarPage: View {
     @State private var displayedMonth = startOfMonth(date: .now, calendar: .current)
     /// 全期間の回答数。クエリは 2 年分に制限しているため、件数は fetchCount で全期間から取得する
     @State private var answeredCount = 0
+    /// 共有カードを表示する対象の回答。日付のマスをタップして選んだその日の回答
+    @State private var shareTargetAnswer: MorningAnswer?
+    /// ペイウォールの表示状態。無料枠で隠れている日 (7 日より前) のマスから開く
+    @State private var isPaywallPresented = false
 
     var body: some View {
         let calendar = Calendar.current
@@ -75,6 +79,12 @@ struct MonthCalendarPage: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $shareTargetAnswer) { answer in
+            AnswerShareCardPage(answer: answer)
+        }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallPage()
+        }
     }
 
     /// 月送り (前月・翌月) と表示中の月名
@@ -146,24 +156,42 @@ struct MonthCalendarPage: View {
         }
     }
 
-    /// 日付 1 マスぶんの表示。答えた日は温白の粒に墨の数字、それ以外は数字のみ (未来は弱く)
+    /// 日付 1 マスぶんの表示。答えた日は温白の粒に墨の数字、それ以外は数字のみ (未来は弱く)。
+    /// 答えた日はタップでその日の回答の共有カードを開き、無料枠で隠れている日 (7 日より前) はペイウォールを開く (issue #130)
     private func monthGridDayCell(day: Date, isAnswered: Bool, today: Date, calendar: Calendar) -> some View {
-        ZStack {
-            if isAnswered {
-                Circle()
-                    .fill(Color.warmWhite)
-                    .frame(width: 32, height: 32)
+        Button {
+            // 未回答の日は disabled のためここには来ないが、回答の取得に失敗した場合も同じく開く対象がない
+            guard let answer = fetchMorningAnswer(answeredDate: day, modelContext: modelContext) else {
+                return
             }
-            // 今日にだけ夜明け色のリングを添える (アクセントは各画面 1 箇所まで)
-            if day == today {
-                Circle()
-                    .stroke(Color.dawn.opacity(0.35), lineWidth: 3)
-                    .frame(width: 38, height: 38)
+            if AnswerLogVisibility.isVisible(answeredDate: answer.answeredDate, isPremium: PremiumEntitlement.isPremium) {
+                shareTargetAnswer = answer
+            } else {
+                isPaywallPresented = true
             }
-            Text(verbatim: "\(calendar.component(.day, from: day))")
-                .font(.system(size: 11, weight: isAnswered ? .medium : .light))
-                .foregroundStyle(isAnswered ? Color.ink : Color.warmWhite.opacity(day <= today ? 0.45 : 0.18))
+        } label: {
+            ZStack {
+                if isAnswered {
+                    Circle()
+                        .fill(Color.warmWhite)
+                        .frame(width: 32, height: 32)
+                }
+                // 今日にだけ夜明け色のリングを添える (アクセントは各画面 1 箇所まで)
+                if day == today {
+                    Circle()
+                        .stroke(Color.dawn.opacity(0.35), lineWidth: 3)
+                        .frame(width: 38, height: 38)
+                }
+                Text(verbatim: "\(calendar.component(.day, from: day))")
+                    .font(.system(size: 11, weight: isAnswered ? .medium : .light))
+                    .foregroundStyle(isAnswered ? Color.ink : Color.warmWhite.opacity(day <= today ? 0.45 : 0.18))
+            }
+            // plain スタイルの Button はラベルの描画領域しかタップに反応しないため、マス全体もヒット対象にする
+            .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
+        // 開く回答があるのは答えた日だけ
+        .disabled(!isAnswered)
         .accessibilityLabel(
             // Text の + 連結は iOS 26.0 で deprecated のため String を組み立ててから渡す。
             // 日付は見出しと同じくアプリの表示言語とグリッドの暦で整形する (読み上げだけ端末言語・既定の暦にならないようにする)
