@@ -181,6 +181,12 @@ private struct RootView: View {
             // オンボーディング中も購読を切らさないよう、ContentView ではなく親で開始する
             await PremiumEntitlement.observeCustomerInfo()
         }
+        .task {
+            // 開発者メニューの解放判定 (TestFlight 配布か) を起動のたびに更新する (issue #128)。
+            // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に AppTransaction の取得 (ネットワークに触れ得る) が走らないよう打ち切る
+            if isUnitTest { return }
+            await refreshDeveloperMenuUnlocked()
+        }
         // initial: true でコールドローンチ直後 (openAppWhenRun による前面化を含む) も判定する
         .onChange(of: scenePhase, initial: true) { _, newValue in
             guard newValue == .active else { return }

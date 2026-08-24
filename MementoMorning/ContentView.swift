@@ -43,7 +43,7 @@ struct ContentView: View {
         .onChange(of: sevenMorningsAnswers.count, initial: true) { _, _ in
             presentSevenMorningsIfNeeded()
         }
-        // 表示済みフラグのリセット (DEBUG の開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
+        // 表示済みフラグのリセット (開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
         .onChange(of: isSevenMorningsMilestonePresented) { _, _ in
             presentSevenMorningsIfNeeded()
         }
@@ -185,7 +185,7 @@ private struct HomeContent: View {
         .onChange(of: isCoveredByOtherScreen) { _, _ in
             presentSharePromptIfNeeded()
         }
-        // 表示記録のリセット (DEBUG の開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
+        // 表示記録のリセット (開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
         .onChange(of: lastSharePromptDate) { _, _ in
             presentSharePromptIfNeeded()
         }

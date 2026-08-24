@@ -24,7 +24,6 @@ func isVideoAnswerPermitted(
 /// addOnly ではなく readWrite でリクエストする (addOnly ではアルバムの作成・検索ができない。
 /// ref: https://developer.apple.com/forums/thread/661196 )
 func requestVideoAnswerPermissions() async -> Bool {
-    #if DEBUG
     // 疑似録画モード (issue #52) では実撮影をしないため、カメラ・マイクの権限は要求も判定もしない。
     // 録画結果の保存先である写真ライブラリだけが必要
     if isDebugSimulateVideoAnswerEnabled {
@@ -32,7 +31,6 @@ func requestVideoAnswerPermissions() async -> Bool {
         let photoLibraryStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         return photoLibraryStatus == .authorized || photoLibraryStatus == .limited
     }
-    #endif
     guard await AVCaptureDevice.requestAccess(for: .video) else { return false }
     guard await AVCaptureDevice.requestAccess(for: .audio) else { return false }
     _ = await PHPhotoLibrary.requestAuthorization(for: .readWrite)

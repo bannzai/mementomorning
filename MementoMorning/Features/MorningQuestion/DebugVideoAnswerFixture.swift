@@ -1,18 +1,18 @@
 import Foundation
 
-#if DEBUG
 extension String {
     /// 疑似録画モード (カメラの実撮影だけをフィクスチャ動画に差し替える) の有効/無効を保存する UserDefaults キー
-    /// (DEBUG 限定。DebugMenuPage から切り替える)
+    /// (DebugMenuPage から切り替える)
     static let debugSimulateVideoAnswer = "debugSimulateVideoAnswer"
 }
 
 /// 疑似録画モードが有効かどうか。
 /// シミュレータにはカメラが無く動画回答のパイプラインを検証できないため、
 /// 有効な間は VideoAnswerCamera が AVCapture を使わず、録画停止でフィクスチャ動画を「録画結果」として返す
-/// (以降の写真ライブラリ保存・文字起こし・回答成立は本物のコードを通す。issue #52)
+/// (以降の写真ライブラリ保存・文字起こし・回答成立は本物のコードを通す。issue #52)。
+/// 効果は開発者メニューを解放したビルド (isDeveloperMenuUnlocked) に限る (issue #128)
 var isDebugSimulateVideoAnswerEnabled: Bool {
-    UserDefaults.standard.bool(forKey: .debugSimulateVideoAnswer)
+    isDeveloperMenuUnlocked && UserDefaults.standard.bool(forKey: .debugSimulateVideoAnswer)
 }
 
 /// フィクスチャ動画の言語ごとの発話と、動画のリソース名 (拡張子なし)。
@@ -77,4 +77,3 @@ func copyDebugVideoAnswerFixtureToTemporaryDirectory() throws -> URL {
     try FileManager.default.copyItem(at: debugVideoAnswerFixtureURL, to: destinationURL)
     return destinationURL
 }
-#endif
