@@ -13,8 +13,9 @@ private nonisolated(unsafe) var developerMenuUnlockedInProcess = false
 /// 同時呼び出し (RootView の task と StopAlarmIntent の停止経路) がそれぞれ AppTransaction を取得して
 /// 逆順で書き戻すと、検証成功の true を一時的な取得失敗の false が後から上書きするレースがあるため、
 /// 1 つのタスクを共有して判定と書き込みを 1 系統にする (PR #136 レビュー指摘)。
-/// 判定失敗 (nil) はキャッシュせず、次の呼び出しで再判定する (配布環境はプロセス内で変わらないため成功はキャッシュしてよい)
-@MainActor private var developerMenuUnlockTask: Task<Bool?, Never>?
+/// 判定失敗 (nil) はキャッシュせず、次の呼び出しで再判定する (配布環境はプロセス内で変わらないため成功はキャッシュしてよい)。
+/// id は失敗時の破棄で自分のタスクだけを消すための識別子 (Task は struct で同一性比較ができない)
+@MainActor private var developerMenuUnlockTask: (id: UUID, task: Task<Bool?, Never>)?
 
 /// 開発者メニュー (DebugMenuPage) の導線と検証用フラグ (プレミアム強制・疑似録画) を使えるかどうか。
 /// DEBUG ビルドでは常に true。リリースビルドはプロセス開始時点では常に false で、
@@ -45,19 +46,23 @@ func shouldUnlockDeveloperMenu(environment: AppStore.Environment) -> Bool {
 /// 成功後に別系統の失敗が false を書き戻すレースを塞ぐ (PR #136 レビュー指摘)
 @MainActor
 func refreshDeveloperMenuUnlocked() async {
-    let task = developerMenuUnlockTask ?? Task {
+    let entry = developerMenuUnlockTask ?? (id: UUID(), task: Task {
         switch try? await AppTransaction.shared {
         case .verified(let appTransaction):
             return shouldUnlockDeveloperMenu(environment: appTransaction.environment)
         case .unverified, nil:
             return nil
         }
-    }
-    developerMenuUnlockTask = task
-    guard let unlocked = await task.value else {
+    })
+    developerMenuUnlockTask = entry
+    guard let unlocked = await entry.task.value else {
         // 失敗したタスクを共有し続けると以後ずっと再判定されないため破棄する。
-        // 判定成功前しか失敗は起きない (成功済みタスクは再利用される) ので、ここで false が true を上書きすることはない
-        developerMenuUnlockTask = nil
+        // await 中の reentrancy で別の呼び出しが新しいタスクを入れ直していることがあるため、
+        // id を比べて自分の失敗タスクが残っている時だけ消す (新タスクを巻き添えにしない。PR #136 レビュー指摘)。
+        // 判定成功前しか失敗は起きない (成功済みタスクは再利用される) ので、ここで false が true を上書きすることもない
+        if developerMenuUnlockTask?.id == entry.id {
+            developerMenuUnlockTask = nil
+        }
         return
     }
     developerMenuUnlockedInProcess = unlocked
