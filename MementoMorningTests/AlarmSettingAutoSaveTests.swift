@@ -11,7 +11,7 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
             hour: 7,
             minute: 0,
             isEnabled: true,
-            snoozeLimit: freeTierSnoozeLimit,
+            snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             // 保存済みが 0 件の時、画面には既定の 1 本 (21:00) が復元される
             alarmSound: .systemDefault,
             nightReminderTimes: [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)],
@@ -27,19 +27,19 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
         // 復元後の入力値 (実効値) をベースに 1 項目ずつ変える
         let restoredNightReminderTimes = [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)]
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 8, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 8, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 30, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 30, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: false, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: false, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
@@ -53,26 +53,26 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
         let restoredNightReminderTimes = [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)]
         // 復元された実効値 (無料枠 2 回) のままは変更なし = 希望値 10 を上書きしない
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: 1,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: 1, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         // プレミアムなら希望値 10 がそのまま実効値になり、無制限 (nil) への変更は変更あり
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: 10,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: 10, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: true
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: true
@@ -86,29 +86,56 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
         let storedNightReminderTimes = [DateComponents(hour: 21, minute: 0), DateComponents(hour: 22, minute: 0)]
         // 無料の復元値は 1 本目だけ。2 本目が保存されていても変更なし = 隠れた 2 本目を消さない
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: [DateComponents(hour: 21, minute: 0)],
             alarmSetting: alarmSetting, storedNightReminderTimes: storedNightReminderTimes, isPremium: false
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: [DateComponents(hour: 21, minute: 15)],
             alarmSetting: alarmSetting, storedNightReminderTimes: storedNightReminderTimes, isPremium: false
         ))
         // プレミアムは全本数を比較する (スヌーズの入力は保存済み nil のプレミアム実効値 = 無制限に合わせる)
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: storedNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: storedNightReminderTimes, isPremium: true
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: nil, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: [DateComponents(hour: 21, minute: 0)],
             alarmSetting: alarmSetting, storedNightReminderTimes: storedNightReminderTimes, isPremium: true
+        ))
+    }
+
+    /// スヌーズ間隔は実効値 (未設定 nil = 既定の 2 分) と比較する。
+    /// 未設定のまま既定値を表示している間は変更なし、別の分数を選んだ時だけ変更ありにする
+    func testSnoozeIntervalChanges() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        let restoredNightReminderTimes = [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)]
+        XCTAssertFalse(hasAlarmSettingChanges(
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
+            alarmSound: .systemDefault,
+            nightReminderTimes: restoredNightReminderTimes,
+            alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
+        ))
+        XCTAssertTrue(hasAlarmSettingChanges(
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: 5,
+            alarmSound: .systemDefault,
+            nightReminderTimes: restoredNightReminderTimes,
+            alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
+        ))
+        // 保存済みの分数と同じ選択は変更なし
+        XCTAssertFalse(hasAlarmSettingChanges(
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: 5,
+            alarmSound: .systemDefault,
+            nightReminderTimes: restoredNightReminderTimes,
+            alarmSetting: AlarmSetting(hour: 7, minute: 0, snoozeIntervalMinutes: 5),
+            storedNightReminderTimes: [], isPremium: false
         ))
     }
 
@@ -118,20 +145,20 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
         let alarmSetting = AlarmSetting(hour: 7, minute: 0)
         let restoredNightReminderTimes = [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)]
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .gentleChime,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: alarmSetting, storedNightReminderTimes: [], isPremium: false
         ))
         // 保存済みの音と同じ選択は変更なし
         XCTAssertFalse(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .morningBell,
             nightReminderTimes: restoredNightReminderTimes,
             alarmSetting: AlarmSetting(hour: 7, minute: 0, soundName: AlarmSound.morningBell.rawValue),
@@ -142,7 +169,7 @@ final class AlarmSettingAutoSaveTests: XCTestCase {
     /// 保存済みが無い時は常に変更ありと判定する (onChange の発火 = ユーザーの実操作のため)
     func testNoStoredSettingAlwaysHasChanges() {
         XCTAssertTrue(hasAlarmSettingChanges(
-            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit,
+            hour: 7, minute: 0, isEnabled: true, snoozeLimit: freeTierSnoozeLimit, snoozeIntervalMinutes: defaultSnoozeIntervalMinutes,
             alarmSound: .systemDefault,
             nightReminderTimes: [DateComponents(hour: defaultNightReminderHour, minute: defaultNightReminderMinute)],
             alarmSetting: nil, storedNightReminderTimes: [], isPremium: false

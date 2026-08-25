@@ -9,8 +9,8 @@ extension String {
 }
 
 /// 停止操作の時点で「当日分」のバックアップとみなす時間窓 (秒)。
-/// バックアップの最終発火はメインの backupAlarmCount × backupAlarmIntervalMinutes = 10 分後で、
-/// 追撃 (stopIntentChaseInterval × 有限のスヌーズ上限 snoozeLimitChoices の最大 10 回 = 20 分) を挟んでも停止操作は発火から 30 分程度に収まる。
+/// バックアップの最終発火はメインの backupAlarmCount × backupAlarmIntervalMinutes = 10 分後のため、
+/// 当日分のバックアップは停止操作の時点で常にこの窓内 (発火済みか 10 分以内) にある。
 /// 翌日分の先行登録 (約 24 時間後) を誤って含まないよう、十分な余裕を持つ 1 時間にする
 let todaysBackupCancelWindow: TimeInterval = 3600
 

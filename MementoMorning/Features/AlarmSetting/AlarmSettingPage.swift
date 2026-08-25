@@ -20,6 +20,8 @@ struct AlarmSettingPage: View {
     /// スヌーズ (追撃アラーム) の上限回数の選択値。nil は無制限。
     /// 初期値は無料枠 freeTierSnoozeLimit で、保存済み設定があれば onAppear で effectiveSnoozeLimit に置き換える
     @State private var snoozeLimit: Int? = freeTierSnoozeLimit
+    /// スヌーズ (追撃) の間隔の分数。初期値は既定の 2 分で、保存済み設定があれば onAppear で実効値に置き換える
+    @State private var snoozeIntervalMinutes: Int = defaultSnoozeIntervalMinutes
     /// アラーム音の選択値。初期値はシステム標準音で、保存済み設定があれば onAppear で置き換える (issue #133)
     @State private var alarmSound: AlarmSound = .systemDefault
     /// アラーム音の試聴用プレイヤー。再生中に解放されないよう保持する
@@ -77,13 +79,21 @@ struct AlarmSettingPage: View {
                 guard isSnoozeLimitSelectable(snoozeLimit: oldValue, isPremium: PremiumEntitlement.isPremium) else { return }
                 scheduleAutoSave()
             }
-            // スヌーズの間隔 (追撃アラームの再登録間隔 stopIntentChaseInterval) は固定で画面から変えられないため、
-            // 何分後に鳴り直すのかをここで明示する (issue #135 の実機テスト指摘)
-            // ja: スヌーズは%lld分間隔で鳴り直します
-            Text("Snooze rings again every \(Int(stopIntentChaseInterval / 60)) minutes")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .accessibilityIdentifier("alarm_setting_snooze_interval_note")
+            // スヌーズの間隔 (追撃アラームの再登録間隔)。回数と違い課金線は無く全員が選べる (issue #135 の実機テスト指摘)
+            Picker(selection: $snoozeIntervalMinutes) {
+                ForEach(Array(snoozeIntervalChoices), id: \.self) { minutes in
+                    // ja: %lld分
+                    Text("\(minutes) min")
+                        .tag(minutes)
+                }
+            } label: {
+                // ja: スヌーズ間隔
+                Text("Snooze interval")
+            }
+            .accessibilityIdentifier("alarm_setting_snooze_interval_picker")
+            .onChange(of: snoozeIntervalMinutes) { _, _ in
+                scheduleAutoSave()
+            }
             // アラーム音の選択 (issue #133)。選択肢はシステム標準音 + 同梱音源 + 無音 (AlarmSound 参照)
             Picker(selection: $alarmSound) {
                 ForEach(AlarmSound.allCases, id: \.self) { sound in
@@ -311,6 +321,7 @@ struct AlarmSettingPage: View {
         isEnabled = alarmSetting.isEnabled
         snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
         alarmSound = resolveAlarmSound(soundName: alarmSetting.soundName)
+        snoozeIntervalMinutes = effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: alarmSetting.snoozeIntervalMinutes)
     }
 
     /// デバウンス待ちの自動保存があれば、待たずにその場で確定する。
@@ -458,6 +469,7 @@ struct AlarmSettingPage: View {
             minute: minute,
             isEnabled: isEnabled,
             snoozeLimit: snoozeLimit,
+            snoozeIntervalMinutes: snoozeIntervalMinutes,
             alarmSound: alarmSound,
             nightReminderTimes: nightReminderTimes.map { nightReminderTime(date: $0) },
             alarmSetting: alarmSettings.first,
@@ -475,8 +487,11 @@ struct AlarmSettingPage: View {
             if alarmSound != resolveAlarmSound(soundName: alarmSetting.soundName) {
                 alarmSetting.setSoundName(soundName: alarmSound.rawValue)
             }
+            if snoozeIntervalMinutes != effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: alarmSetting.snoozeIntervalMinutes) {
+                alarmSetting.setSnoozeIntervalMinutes(snoozeIntervalMinutes: snoozeIntervalMinutes)
+            }
         } else {
-            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit, soundName: alarmSound.rawValue))
+            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit, soundName: alarmSound.rawValue, snoozeIntervalMinutes: snoozeIntervalMinutes))
         }
         saveNightReminderSettings()
         do {
@@ -540,6 +555,7 @@ func hasAlarmSettingChanges(
     minute: Int,
     isEnabled: Bool,
     snoozeLimit: Int?,
+    snoozeIntervalMinutes: Int,
     alarmSound: AlarmSound,
     nightReminderTimes: [DateComponents],
     alarmSetting: AlarmSetting?,
@@ -551,6 +567,7 @@ func hasAlarmSettingChanges(
         || minute != alarmSetting.minute
         || isEnabled != alarmSetting.isEnabled
         || snoozeLimit != effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: isPremium)
+        || snoozeIntervalMinutes != effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: alarmSetting.snoozeIntervalMinutes)
         || alarmSound != resolveAlarmSound(soundName: alarmSetting.soundName)
         || nightReminderTimes != effectiveNightReminderTimes(times: storedNightReminderTimes, isPremium: isPremium)
 }

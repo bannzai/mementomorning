@@ -283,7 +283,7 @@ struct DebugMenuPage: View {
             } header: {
                 Text(verbatim: "無限アラーム (issue #97)")
             } footer: {
-                Text(verbatim: "手順: プレミアムを強制 ON → アラーム設定を ON + スヌーズ無制限 → テストアラームを登録し、アプリを離れてロック画面で発火を待つ。停止するたびに \(Int(stopIntentChaseInterval / 60)) 分後の追撃が再登録され続け、回答すると全て止まる")
+                Text(verbatim: "手順: プレミアムを強制 ON → アラーム設定を ON + スヌーズ無制限 → テストアラームを登録し、アプリを離れてロック画面で発火を待つ。停止するたびに \(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: alarmSettings.first?.snoozeIntervalMinutes)) 分後 (アラーム設定のスヌーズ間隔) の追撃が再登録され続け、回答すると全て止まる")
             }
             Section {
                 Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")

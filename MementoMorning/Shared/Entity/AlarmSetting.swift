@@ -27,18 +27,24 @@ final class AlarmSetting {
     /// Optional のプリミティブ型で持つのは軽量マイグレーションのため (swiftdata-guidelines.md)。
     /// nil (未設定。既存レコードを含む) と未知の値の解決は resolveAlarmSound が行う (システム標準音へ倒す)
     private(set) var soundName: String?
+    /// スヌーズ (追撃アラーム) の間隔の分数 (issue #135)。
+    /// Optional のプリミティブ型で持つのは軽量マイグレーションのため (swiftdata-guidelines.md)。
+    /// nil (未設定。既存レコードを含む) と範囲外の解決は effectiveSnoozeIntervalMinutes が行う (既定の 2 分へ倒す)
+    private(set) var snoozeIntervalMinutes: Int?
 
     /// @Model は memberwise init を自動生成しないため明示的に定義する。
     /// snoozeLimit の既定 nil は軽量マイグレーションで既存レコードに入る値と同じ「未選択」であり、
     /// 実効値は effectiveSnoozeLimit が課金状態から決める (無料は freeTierSnoozeLimit、プレミアムは無制限)。
-    /// soundName の既定 nil も同じ「未選択」で、resolveAlarmSound がシステム標準音として解決する
-    init(id: UUID = .init(), hour: Int, minute: Int, isEnabled: Bool = true, snoozeLimit: Int? = nil, soundName: String? = nil) {
+    /// soundName の既定 nil も同じ「未選択」で、resolveAlarmSound がシステム標準音として解決する。
+    /// snoozeIntervalMinutes の既定 nil も同じ「未選択」で、effectiveSnoozeIntervalMinutes が既定の 2 分として解決する
+    init(id: UUID = .init(), hour: Int, minute: Int, isEnabled: Bool = true, snoozeLimit: Int? = nil, soundName: String? = nil, snoozeIntervalMinutes: Int? = nil) {
         self.id = id
         self.hour = hour
         self.minute = minute
         self.isEnabled = isEnabled
         self.snoozeLimit = snoozeLimit
         self.soundName = soundName
+        self.snoozeIntervalMinutes = snoozeIntervalMinutes
     }
 
     /// 発火時刻を更新する
@@ -63,6 +69,12 @@ final class AlarmSetting {
     /// アラーム音を更新する (AlarmSound.rawValue を保存する)
     func setSoundName(soundName: String?) {
         self.soundName = soundName
+        self.updatedDateTime = .now
+    }
+
+    /// スヌーズの間隔の分数を更新する
+    func setSnoozeIntervalMinutes(snoozeIntervalMinutes: Int?) {
+        self.snoozeIntervalMinutes = snoozeIntervalMinutes
         self.updatedDateTime = .now
     }
 }

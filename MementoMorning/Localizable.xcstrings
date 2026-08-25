@@ -1071,6 +1071,16 @@
         }
       }
     },
+    "%lld min" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld分"
+          }
+        }
+      }
+    },
     "%lld mornings answered" : {
       "localizations" : {
         "ar" : {
@@ -18800,12 +18810,12 @@
         }
       }
     },
-    "Snooze rings again every %lld minutes" : {
+    "Snooze interval" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スヌーズは%lld分間隔で鳴り直します"
+            "value" : "スヌーズ間隔"
           }
         }
       }
