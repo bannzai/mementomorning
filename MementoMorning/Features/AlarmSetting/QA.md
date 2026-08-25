@@ -1,7 +1,7 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 202d849c80ff9bfa2f5f9dc64fa70b7cc8411cf8
+last_verified_commit: 06e5fb5bf4f90a3f98625da9c8c278e3aeb34f0b
 last_verified_at: 2026-08-25
 ---
 
@@ -31,6 +31,8 @@ last_verified_at: 2026-08-25
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **プレミアム状態のスヌーズ Picker**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では錠前が消え、「無制限」に ∞ アイコンが付く。未設定 (保存済み値なし) の初期選択は「無制限」
   - 自動化: manual（課金状態の表示分岐は目視確認）
+- [x] **スヌーズ間隔の注記**: スヌーズ行の直下に注記 (accessibilityIdentifier: alarm_setting_snooze_interval_note) が表示され、鳴り直しの間隔 (stopIntentChaseInterval = 2 分) を明示する。文言は「Snooze rings again every 2 minutes」(ja: スヌーズは2分間隔で鳴り直します) (issue #135)
+  - 自動化: manual（footnote の表示は目視確認）
 - [x] **サウンド Picker**: スヌーズ行の下にサウンド行 (accessibilityIdentifier: alarm_setting_sound_picker) が Picker で表示され、選択肢は Default / Gentle Chime / Morning Bell / Soft Pulse / Silent (ja: デフォルト / やわらかなチャイム / 朝の鐘 / しずかなパルス / 無音)。未設定時の初期選択は Default (issue #133)
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
@@ -86,6 +88,17 @@ OFF:
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260819/a723c50b-0b83-4ab0-bda8-311990fcdf2a.png" width="320">
 
 (錠前なし。「∞ 無制限」にチェック)
+
+</details>
+
+### **スヌーズ間隔の注記**: スヌーズ行の直下に注記 (accessibilityIdentifier: alarm_setting_snooze_interval_note) が表示され、鳴り直しの間隔 (stopIntentChaseInterval = 2 分) を明示する。文言は「Snooze rings again every 2 minutes」(ja: スヌーズは2分間隔で鳴り直します) (issue #135)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-25** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+Snooze 行の直下に「Snooze rings again every 2 minutes」が secondary の footnote で表示されている (WDA 要素ツリーの name「alarm_setting_snooze_interval_note」でも確認):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/330fe5e0-ca36-4057-86b0-1df657b02f22.jpg" width="320" />
 
 </details>
 
