@@ -493,7 +493,16 @@ struct DebugMenuPage: View {
     /// 実機テストで「回答済みの今日」を「未回答の今日」へ戻し、蓄積した過去の回答を消さずに
     /// アラーム発火・追撃の再検証をやり直せるようにする (issue #135)
     private func deleteTodayMorningAnswer() {
-        guard let answer = fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) else {
+        let todayAnswer: MorningAnswer?
+        do {
+            // 取得の失敗を「今日の回答なし」と誤認すると、実際は回答が残ったまま表示だけ「なし」になり
+            // 追撃の再検証を誤らせるため、throwing 版で失敗と未回答を区別する (PR #136 レビュー指摘)
+            todayAnswer = try MorningAnswer.answer(day: .now, calendar: .current, modelContext: modelContext)
+        } catch {
+            assertionFailure(error.localizedDescription)
+            return
+        }
+        guard let answer = todayAnswer else {
             return
         }
         modelContext.delete(answer)

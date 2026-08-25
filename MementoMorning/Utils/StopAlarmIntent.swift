@@ -99,9 +99,10 @@ public struct StopAlarmIntent: LiveActivityIntent {
         // 完了するまで解放されない。停止操作によるコールドローンチではその完了前にここへ到達し得て、
         // 強制プレミアム + スヌーズ無制限でも無料枠 (freeTierSnoozeLimit) に丸められ、追撃が 2 回で止まる (issue #135)。
         // 追撃の可否を決める前に判定の完了を待ってレースを塞ぐ。
-        // 待つのは検証用の強制フラグが立っている時だけにし、実ユーザーの停止経路には
+        // 待つのは「検証用の強制フラグが立っていて、かつ判定が未解放」の時だけにし、
+        // 実ユーザーの停止経路 (フラグ OFF) と判定済みの環境 (DEBUG は常時解放・TestFlight は判定成功後) には
         // AppTransaction 取得 (ネットワークに触れ得る) の待ちを挟まない (PR #136 レビュー指摘)
-        if UserDefaults.standard.bool(forKey: .debugPremiumOverride) {
+        if UserDefaults.standard.bool(forKey: .debugPremiumOverride), !isDeveloperMenuUnlocked {
             await refreshDeveloperMenuUnlocked()
         }
 
