@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: b63036d06ad93c5a87d019f0557d4ebd8cd14247
-last_verified_at: 2026-08-24
+last_verified_commit: 202d849c80ff9bfa2f5f9dc64fa70b7cc8411cf8
+last_verified_at: 2026-08-25
 ---
 
 # AlarmSetting QA
@@ -31,6 +31,8 @@ last_verified_at: 2026-08-24
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **プレミアム状態のスヌーズ Picker**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では錠前が消え、「無制限」に ∞ アイコンが付く。未設定 (保存済み値なし) の初期選択は「無制限」
   - 自動化: manual（課金状態の表示分岐は目視確認）
+- [x] **サウンド Picker**: スヌーズ行の下にサウンド行 (accessibilityIdentifier: alarm_setting_sound_picker) が Picker で表示され、選択肢は Default / Gentle Chime / Morning Bell / Soft Pulse / Silent (ja: デフォルト / やわらかなチャイム / 朝の鐘 / しずかなパルス / 無音)。未設定時の初期選択は Default (issue #133)
+  - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
   - 自動化: manual（外部リンクの確認）
 - [x] **開発者用のログの導線とログ画面**: スパイクログが設定画面に直接表示されず、情報セクション末尾の「Developer Log」(alarm_setting_developer_log_link) から DeveloperLogPage が開く。ログがある時は本文 (developer_log_text) と「Copy Log」(developer_log_copy_button)・「Clear Log」(developer_log_clear_button) が表示され、Clear Log で「No logs」(developer_log_empty) の空状態になる。ログの作り込みは開発者メニューの「スパイクログにサンプルを設定」(debug_set_sample_spike_log) を使う (issue #103)
@@ -87,6 +89,20 @@ OFF:
 
 </details>
 
+### **サウンド Picker**: スヌーズ行の下にサウンド行 (accessibilityIdentifier: alarm_setting_sound_picker) が Picker で表示され、選択肢は Default / Gentle Chime / Morning Bell / Soft Pulse / Silent (ja: デフォルト / やわらかなチャイム / 朝の鐘 / しずかなパルス / 無音)。未設定時の初期選択は Default (issue #133)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-25** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+Snooze の下に Sound 行 (初期選択 Default):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/46505dc3-2b42-4a8e-92b4-9d133d800741.jpg" width="320" />
+
+Picker を開くと Default / Gentle Chime / Morning Bell / Soft Pulse / Silent の 5 択で、Default にチェック:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/1eba0968-b1ee-416f-8ac4-ca11b6c98de3.jpg" width="320" />
+
+</details>
+
 ### **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
 
 <details><summary>動作確認スクショ</summary>
@@ -139,6 +155,8 @@ Clear Log タップ後の空状態 (「No logs」):
   - 自動化: manual（Picker 操作と再表示の確認）
 - [x] **夜リマインド時刻の自動保存**: リマインドの時刻を変更すると自動保存され、画面を開き直すと変更後の時刻が反映されている
   - 自動化: manual（DatePicker 操作と再表示の確認）
+- [x] **サウンドの自動保存**: サウンド Picker で別の音を選ぶと自動保存され (AlarmSetting.soundName に永続化)、画面を開き直しても選択が保持されている (issue #133)
+  - 自動化: manual（Picker 操作と再表示の確認）
 - [ ] **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から値を変更すると、設定が作成されホームに時刻が表示される
   - 自動化: manual（未設定状態はアプリの削除 → 再インストールでしか再現できないため手動）
   - ⏭️ スキップ: ホームが --:-- になる状態 (オンボーディング完了済み + AlarmSetting が 0 件) に到達する手段が無い。OnboardingPage.save() は AlarmSetting を insert して保存できた時だけ hasCompletedOnboarding を true にするため、オンボーディングを抜けた時点で必ず設定が 1 件存在する。開発者メニューの「オンボーディングをリセット」は AlarmSetting を消さず、DebugMenuPage に AlarmSetting を削除する操作も無い (2026-08-22 時点)
@@ -207,6 +225,20 @@ Clear Log タップ後の空状態 (「No logs」):
 
 Reminder 1 をホイールで 9:00 PM → 10:00 PM に変更 (保存ボタンなし) → ホームへ戻る → 設定を開き直すと 10:00 PM のまま保持されている (WDA 要素ツリーで `"value":"10:00 PM"` も確認):
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/52e8e247-14a4-4a64-9a12-c1d4ac3ea4bd.jpg" width="320">
+
+</details>
+
+### **サウンドの自動保存**: サウンド Picker で別の音を選ぶと自動保存され (AlarmSetting.soundName に永続化)、画面を開き直しても選択が保持されている (issue #133)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-25** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+Gentle Chime を選択 (保存ボタンなし) → ホームへ戻る → 設定を開き直すと Sound の表示が Gentle Chime のまま保持されている (WDA 要素ツリーの label「Sound, Gentle Chime」でも確認):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/260d81ad-2e6e-4378-8037-d2371cb23506.jpg" width="320" />
+
+Gentle Chime (同梱音源 = AlertSound.named) を選んだ状態で開発者メニューの「テストアラームを 1 分後に登録」を実行すると、登録が成功し (`テストアラーム: 登録済み (発火予定: 2026-08-25T02:06:02Z)`)、1 分後にホーム画面上部へアラームのアラート (黒い角丸 + ✕ 停止ボタン) が発火した。WDA 要素ツリーの発火の判定根拠: `{"type":"Other","label":"MementoMorning, If today were your last day, what would you want to do?, Stop","name":"regular.view"}`。音の聴感はリモート simulator では検証できないため未検証:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/e0683dc1-bb92-47f5-ad2e-0eae70ddbd0c.jpg" width="320" />
 
 </details>
 

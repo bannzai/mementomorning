@@ -1,3 +1,4 @@
+import ActivityKit
 import AlarmKit
 import SwiftUI
 
@@ -27,7 +28,7 @@ enum AlarmKitManager {
     }
 
     /// 固定日時のアラームをスケジュールする
-    static func schedule(id: UUID, fireDate: Date, title: LocalizedStringResource) async throws {
+    static func schedule(id: UUID, fireDate: Date, title: LocalizedStringResource, sound: AlarmSound) async throws {
         let attributes = AlarmAttributes<MementoMorningAlarmMetadata>(
             presentation: AlarmPresentation(alert: alert(title: title)),
             metadata: MementoMorningAlarmMetadata(title: String(localized: title)),
@@ -39,9 +40,17 @@ enum AlarmKitManager {
             configuration: .alarm(
                 schedule: .fixed(fireDate),
                 attributes: attributes,
-                stopIntent: StopAlarmIntent(alarmID: id)
+                stopIntent: StopAlarmIntent(alarmID: id),
+                sound: alertSound(sound: sound)
             )
         )
+    }
+
+    /// AlarmSound を AlarmKit へ渡す AlertSound へ変換する。
+    /// .named はバンドル内の音源ファイル名 (拡張子込み) を指す
+    private static func alertSound(sound: AlarmSound) -> AlertConfiguration.AlertSound {
+        guard let soundFileName = sound.soundFileName else { return .default }
+        return .named(soundFileName)
     }
 
     /// 発火画面の alert を作成する。

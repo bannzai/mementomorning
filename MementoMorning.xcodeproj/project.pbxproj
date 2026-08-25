@@ -68,6 +68,12 @@
 		273B98D87973EAB87A902727 /* AppStoreScreenshot15PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B9DA449EE6DD24CA4D907D /* AppStoreScreenshot15PageSnapshotUITest.swift */; };
 		2CAA913F42124BC920C503E3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D4BC2CBA791838AC91A98EA0 /* Localizable.xcstrings */; };
 		2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */; };
+		AA13300000000000000000B1 /* AlarmSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A1 /* AlarmSound.swift */; };
+		AA13300000000000000000B2 /* AlarmSoundGentleChime.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A2 /* AlarmSoundGentleChime.caf */; };
+		AA13300000000000000000B3 /* AlarmSoundMorningBell.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A3 /* AlarmSoundMorningBell.caf */; };
+		AA13300000000000000000B4 /* AlarmSoundSoftPulse.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A4 /* AlarmSoundSoftPulse.caf */; };
+		AA13300000000000000000B5 /* AlarmSoundSilent.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A5 /* AlarmSoundSilent.caf */; };
+		AA13300000000000000000B6 /* AlarmSoundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA13300000000000000000A6 /* AlarmSoundTests.swift */; };
 		2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5543EB5072C0D975B60E175 /* MementoMorningAlarmMetadata.swift */; };
 		2EA6EC7F3E62BCE52088973A /* OnboardingPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4014C038419472A776F31320 /* OnboardingPageSnapshotUITest.swift */; };
 		2EC54A2224B8ECEF8CACA8E9 /* QuestionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A743CD146712761B27B24D /* QuestionPage.swift */; };
@@ -298,6 +304,12 @@
 		36E69BAD7BB6BF36008C8B1D /* ContentViewSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewSnapshotUITest.swift; sourceTree = "<group>"; };
 		3A199CC8340D9967021378FA /* AppStoreScreenshotWashiFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotWashiFrame.swift; sourceTree = "<group>"; };
 		3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPlanEngine.swift; sourceTree = "<group>"; };
+		AA13300000000000000000A1 /* AlarmSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSound.swift; sourceTree = "<group>"; };
+		AA13300000000000000000A2 /* AlarmSoundGentleChime.caf */ = {isa = PBXFileReference; path = AlarmSoundGentleChime.caf; sourceTree = "<group>"; };
+		AA13300000000000000000A3 /* AlarmSoundMorningBell.caf */ = {isa = PBXFileReference; path = AlarmSoundMorningBell.caf; sourceTree = "<group>"; };
+		AA13300000000000000000A4 /* AlarmSoundSoftPulse.caf */ = {isa = PBXFileReference; path = AlarmSoundSoftPulse.caf; sourceTree = "<group>"; };
+		AA13300000000000000000A5 /* AlarmSoundSilent.caf */ = {isa = PBXFileReference; path = AlarmSoundSilent.caf; sourceTree = "<group>"; };
+		AA13300000000000000000A6 /* AlarmSoundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundTests.swift; sourceTree = "<group>"; };
 		4014C038419472A776F31320 /* OnboardingPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		45A743CD146712761B27B24D /* QuestionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionPage.swift; sourceTree = "<group>"; };
 		4612E42CE75E263BB27D28BD /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
@@ -613,10 +625,23 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
+		AA13300000000000000000C1 /* AlarmSounds */ = {
+			isa = PBXGroup;
+			children = (
+				AA13300000000000000000A2 /* AlarmSoundGentleChime.caf */,
+				AA13300000000000000000A3 /* AlarmSoundMorningBell.caf */,
+				AA13300000000000000000A4 /* AlarmSoundSoftPulse.caf */,
+				AA13300000000000000000A5 /* AlarmSoundSilent.caf */,
+			);
+			path = AlarmSounds;
+			sourceTree = "<group>";
+		};
 		3295A11A6D2B5CEF3370B616 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				3C1DD527B28E14294F043830 /* AlarmPlanEngine.swift */,
+				AA13300000000000000000A1 /* AlarmSound.swift */,
+				AA13300000000000000000C1 /* AlarmSounds */,
 				C08057675DADEB50AC2EB29B /* ChaseAlarm.swift */,
 				697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */,
 				A461CCF9C87841AAA656590C /* LegalLinks.swift */,
@@ -966,6 +991,7 @@
 				3F66B1B2474DEFD09BC78782 /* AnswerVideoPlayerTests.swift */,
 				8720F386457E263014A7CEBB /* AlarmPlanEngineTests.swift */,
 				934E57B8CBDACD14F78B0D0C /* AlarmSettingAutoSaveTests.swift */,
+				AA13300000000000000000A6 /* AlarmSoundTests.swift */,
 				73D325B90BFCC5302543DF5E /* AnswerLogVisibilityTests.swift */,
 				C2057F933CB3BF76F5752D5B /* AnswerShareCardRenderTests.swift */,
 				5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */,
@@ -1258,6 +1284,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */,
+				AA13300000000000000000B2 /* AlarmSoundGentleChime.caf in Resources */,
+				AA13300000000000000000B3 /* AlarmSoundMorningBell.caf in Resources */,
+				AA13300000000000000000B4 /* AlarmSoundSoftPulse.caf in Resources */,
+				AA13300000000000000000B5 /* AlarmSoundSilent.caf in Resources */,
 				15632F3923D669BAC033C176 /* DebugVideoAnswerFixture_en.mov in Resources */,
 				6B48E90D61A815896E3BF5A2 /* DebugVideoAnswerFixture_ja.mov in Resources */,
 				605C0F19958962FECC5CF766 /* InfoPlist.xcstrings in Resources */,
@@ -1378,6 +1408,7 @@
 				2A1B7C4E9D3F60518A2C4B71 /* NightReminderSetting.swift in Sources */,
 				8E399887A880DF462B3A4CAB /* AlarmKitManager.swift in Sources */,
 				2D0BE77A6E47A0BE388BE851 /* AlarmPlanEngine.swift in Sources */,
+				AA13300000000000000000B1 /* AlarmSound.swift in Sources */,
 				E161FB9F7F6F8E61E71FC13D /* AlarmSetting.swift in Sources */,
 				090CB3C50C1AD44989F51A2B /* AlarmSettingPage.swift in Sources */,
 				856A557689C927EE5A06886B /* AnswerEditPage.swift in Sources */,
@@ -1442,6 +1473,7 @@
 			files = (
 				158129B37F1C9E5AAD7F7E6C /* AlarmPlanEngineTests.swift in Sources */,
 				76C37B85CE05584EF3397317 /* AlarmSettingAutoSaveTests.swift in Sources */,
+				AA13300000000000000000B6 /* AlarmSoundTests.swift in Sources */,
 				E811FB96E3BDAB82CA491D23 /* AnswerLogVisibilityTests.swift in Sources */,
 				56CE1B33E1A2BF2125A07143 /* AnswerVideoPlayerTests.swift in Sources */,
 				334736863CBC92C7927BF41F /* AnswerShareCardRenderTests.swift in Sources */,

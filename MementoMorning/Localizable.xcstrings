@@ -6973,6 +6973,16 @@
         }
       }
     },
+    "Default" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルト"
+          }
+        }
+      }
+    },
     "Delete reminder" : {
       "localizations" : {
         "ja" : {
@@ -8538,6 +8548,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "徹夜の原因になったバグを直す"
+          }
+        }
+      }
+    },
+    "Gentle Chime" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "やわらかなチャイム"
           }
         }
       }
@@ -11126,6 +11146,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設為今天的答案"
+          }
+        }
+      }
+    },
+    "Morning Bell" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝の鐘"
           }
         }
       }
@@ -18546,6 +18576,16 @@
         }
       }
     },
+    "Silent" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無音"
+          }
+        }
+      }
+    },
     "Snooze" : {
       "localizations" : {
         "ar" : {
@@ -18756,6 +18796,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍後提醒"
+          }
+        }
+      }
+    },
+    "Soft Pulse" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "しずかなパルス"
+          }
+        }
+      }
+    },
+    "Sound" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サウンド"
           }
         }
       }
