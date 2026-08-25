@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 06e5fb5bf4f90a3f98625da9c8c278e3aeb34f0b
-last_verified_at: 2026-08-25
+last_verified_commit: 963fbe2de95584f29327a1694c0ff8dfd025d100
+last_verified_at: 2026-08-26
 ---
 
 # AlarmSetting QA
@@ -31,8 +31,8 @@ last_verified_at: 2026-08-25
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **プレミアム状態のスヌーズ Picker**: プレミアム状態 (開発者メニューの「プレミアムを強制 (上書き)」ON) では錠前が消え、「無制限」に ∞ アイコンが付く。未設定 (保存済み値なし) の初期選択は「無制限」
   - 自動化: manual（課金状態の表示分岐は目視確認）
-- [x] **スヌーズ間隔の注記**: スヌーズ行の直下に注記 (accessibilityIdentifier: alarm_setting_snooze_interval_note) が表示され、鳴り直しの間隔 (stopIntentChaseInterval = 2 分) を明示する。文言は「Snooze rings again every 2 minutes」(ja: スヌーズは2分間隔で鳴り直します) (issue #135)
-  - 自動化: manual（footnote の表示は目視確認）
+- [x] **スヌーズ間隔 Picker**: スヌーズ行の直下にスヌーズ間隔行 (accessibilityIdentifier: alarm_setting_snooze_interval_picker) が Picker で表示され、選択肢は 1〜10 分の 1 分刻み (課金線なし・全員が選べる)。未設定時の初期選択は 2 分 (issue #135)
+  - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **サウンド Picker**: スヌーズ行の下にサウンド行 (accessibilityIdentifier: alarm_setting_sound_picker) が Picker で表示され、選択肢は Default / Gentle Chime / Morning Bell / Soft Pulse / Silent (ja: デフォルト / やわらかなチャイム / 朝の鐘 / しずかなパルス / 無音)。未設定時の初期選択は Default (issue #133)
   - 自動化: manual（Picker のメニュー表示は目視確認）
 - [x] **情報セクション**: 画面末尾の「情報」セクションに利用規約 (alarm_setting_terms_link)・プライバシーポリシー (alarm_setting_privacy_policy_link)・特定商取引法に基づく表記 (alarm_setting_specified_commercial_transaction_act_link)・問い合わせ (alarm_setting_contact_link)・バージョン (alarm_setting_version_row。CFBundleShortVersionString + build) が表示され、https の 3 リンクは Safari で正しいページが開く。問い合わせは mailto (URL の正しさは MementoMorningTests/LegalLinksTests.swift で固定。シミュレータはメール App が無くタップしても遷移しない)
@@ -91,14 +91,17 @@ OFF:
 
 </details>
 
-### **スヌーズ間隔の注記**: スヌーズ行の直下に注記 (accessibilityIdentifier: alarm_setting_snooze_interval_note) が表示され、鳴り直しの間隔 (stopIntentChaseInterval = 2 分) を明示する。文言は「Snooze rings again every 2 minutes」(ja: スヌーズは2分間隔で鳴り直します) (issue #135)
+### **スヌーズ間隔 Picker**: スヌーズ行の直下にスヌーズ間隔行 (accessibilityIdentifier: alarm_setting_snooze_interval_picker) が Picker で表示され、選択肢は 1〜10 分の 1 分刻み (課金線なし・全員が選べる)。未設定時の初期選択は 2 分 (issue #135)
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-25** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+**確認日: 2026-08-26** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
 
-Snooze 行の直下に「Snooze rings again every 2 minutes」が secondary の footnote で表示されている (WDA 要素ツリーの name「alarm_setting_snooze_interval_note」でも確認):
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/330fe5e0-ca36-4057-86b0-1df657b02f22.jpg" width="320" />
+Snooze の下に Snooze interval 行 (初期選択 2 min):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/2848b2ff-c9f4-4767-b136-2549cddb43c1.jpg" width="320" />
+
+Picker を開くと 1 min〜10 min の 10 択で、2 min にチェック (錠前なし = 全選択肢が無料で選べる):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/89125dba-2249-4333-a487-35d5524105e9.jpg" width="320" />
 
 </details>
 
@@ -169,6 +172,8 @@ Clear Log タップ後の空状態 (「No logs」):
 - [x] **夜リマインド時刻の自動保存**: リマインドの時刻を変更すると自動保存され、画面を開き直すと変更後の時刻が反映されている
   - 自動化: manual（DatePicker 操作と再表示の確認）
 - [x] **サウンドの自動保存**: サウンド Picker で別の音を選ぶと自動保存され (AlarmSetting.soundName に永続化)、画面を開き直しても選択が保持されている (issue #133)
+  - 自動化: manual（Picker 操作と再表示の確認）
+- [x] **スヌーズ間隔の自動保存**: スヌーズ間隔 Picker で別の分数を選ぶと自動保存され (AlarmSetting.snoozeIntervalMinutes に永続化)、画面を開き直しても選択が保持されている (issue #135)
   - 自動化: manual（Picker 操作と再表示の確認）
 - [ ] **新規保存**: アラーム未設定 (ホームが --:-- 表示) の状態から値を変更すると、設定が作成されホームに時刻が表示される
   - 自動化: manual（未設定状態はアプリの削除 → 再インストールでしか再現できないため手動）
@@ -252,6 +257,17 @@ Gentle Chime を選択 (保存ボタンなし) → ホームへ戻る → 設定
 
 Gentle Chime (同梱音源 = AlertSound.named) を選んだ状態で開発者メニューの「テストアラームを 1 分後に登録」を実行すると、登録が成功し (`テストアラーム: 登録済み (発火予定: 2026-08-25T02:06:02Z)`)、1 分後にホーム画面上部へアラームのアラート (黒い角丸 + ✕ 停止ボタン) が発火した。WDA 要素ツリーの発火の判定根拠: `{"type":"Other","label":"MementoMorning, If today were your last day, what would you want to do?, Stop","name":"regular.view"}`。音の聴感はリモート simulator では検証できないため未検証:
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/e0683dc1-bb92-47f5-ad2e-0eae70ddbd0c.jpg" width="320" />
+
+</details>
+
+### **スヌーズ間隔の自動保存**: スヌーズ間隔 Picker で別の分数を選ぶと自動保存され (AlarmSetting.snoozeIntervalMinutes に永続化)、画面を開き直しても選択が保持されている (issue #135)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-26** (simtunnel リモート simulator iPhone 17 / iOS 26.5、英語ロケール)
+
+5 min を選択 (保存ボタンなし) → ホームへ戻る → 設定を開き直すと Snooze interval の表示が 5 min のまま保持されている (WDA 要素ツリーの label「Snooze interval, 5 min」でも確認):
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/a0abb7d1-6dce-4028-99e7-2276b5d788ef.jpg" width="320" />
 
 </details>
 
