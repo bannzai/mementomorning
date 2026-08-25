@@ -65,8 +65,11 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_delete_all_answers")
 
                 Button(role: .destructive) {
-                    deleteTodayMorningAnswer()
-                    refreshAnswerStates()
+                    // 削除に失敗した時に表示を更新すると、回答が残ったまま「今日の回答: なし」に見えて
+                    // 検証を誤らせるため、成功した時だけ最新化する (PR #136 レビュー指摘)
+                    if deleteTodayMorningAnswer() {
+                        refreshAnswerStates()
+                    }
                 } label: {
                     Text(verbatim: "今日の回答を削除")
                 }
@@ -491,8 +494,10 @@ struct DebugMenuPage: View {
 
     /// 今日の回答だけを削除する (過去分は残す。無ければ何もせず冪等)。
     /// 実機テストで「回答済みの今日」を「未回答の今日」へ戻し、蓄積した過去の回答を消さずに
-    /// アラーム発火・追撃の再検証をやり直せるようにする (issue #135)
-    private func deleteTodayMorningAnswer() {
+    /// アラーム発火・追撃の再検証をやり直せるようにする (issue #135)。
+    /// 戻り値は削除処理として成立したか (今日の回答が無い no-op も true)。取得・保存の失敗だけ false を返し、
+    /// 呼び出し側が失敗時の表示更新 (回答が残ったまま「なし」に見える) を避けられるようにする
+    private func deleteTodayMorningAnswer() -> Bool {
         let todayAnswer: MorningAnswer?
         do {
             // 取得の失敗を「今日の回答なし」と誤認すると、実際は回答が残ったまま表示だけ「なし」になり
@@ -500,10 +505,10 @@ struct DebugMenuPage: View {
             todayAnswer = try MorningAnswer.answer(day: .now, calendar: .current, modelContext: modelContext)
         } catch {
             assertionFailure(error.localizedDescription)
-            return
+            return false
         }
         guard let answer = todayAnswer else {
-            return
+            return true
         }
         modelContext.delete(answer)
         do {
@@ -514,10 +519,11 @@ struct DebugMenuPage: View {
             // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
             modelContext.rollback()
             assertionFailure(error.localizedDescription)
-            return
+            return false
         }
         // ロック画面の「今日の目標」(Live Activity) も畳む
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
+        return true
     }
 
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない。
