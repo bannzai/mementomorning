@@ -157,7 +157,7 @@ private func performReschedule(now: Date, modelContext: ModelContext) async {
         do {
             // ja: 今日死ぬとしたら何をやりたいですか？
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
-            try await AlarmKitManager.schedule(id: alarmID, fireDate: plan.fireDate, title: title)
+            try await AlarmKitManager.schedule(id: alarmID, fireDate: plan.fireDate, title: title, sound: resolveAlarmSound(soundName: alarmSetting?.soundName))
         } catch {
             // 一部のアラームだけ登録に失敗するケース (件数上限等) も沈黙させず記録する
             scheduleErrors.append("\(error)")

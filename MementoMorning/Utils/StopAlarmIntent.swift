@@ -97,13 +97,18 @@ public struct StopAlarmIntent: LiveActivityIntent {
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
         // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)。
         // 設定の読み取り失敗は「設定値が nil (無制限)」と区別し、無料枠 freeTierSnoozeLimit を上限にする
-        // (プレミアムで有限回数を設定していても、一時的な読み取りエラーで設定回数を超えて追撃し続けないため。PR #78 レビュー指摘)
+        // (プレミアムで有限回数を設定していても、一時的な読み取りエラーで設定回数を超えて追撃し続けないため。PR #78 レビュー指摘)。
+        // アラーム音も同じ設定から読む。読み取り失敗時は nil = システム標準音へ倒れる (鳴らないよりは標準音で鳴らす)
         let snoozeLimit: Int?
+        let soundName: String?
         do {
-            snoozeLimit = try PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>()).first.flatMap(\.snoozeLimit)
+            let alarmSetting = try PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>()).first
+            snoozeLimit = alarmSetting.flatMap(\.snoozeLimit)
+            soundName = alarmSetting?.soundName
         } catch {
             appendStopIntentSpikeLog(message: "alarm setting fetch failed, fallback to free tier snooze limit error=\(error)")
             snoozeLimit = freeTierSnoozeLimit
+            soundName = nil
         }
         guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: snooze limit reached (\(chaseCount))")
@@ -126,7 +131,7 @@ public struct StopAlarmIntent: LiveActivityIntent {
         do {
             // ja: 今日死ぬとしたら何をやりたいですか？
             let title = LocalizedStringResource("If today were your last day, what would you want to do?")
-            try await AlarmKitManager.schedule(id: chaseAlarmID, fireDate: chaseFireDate, title: title)
+            try await AlarmKitManager.schedule(id: chaseAlarmID, fireDate: chaseFireDate, title: title, sound: resolveAlarmSound(soundName: soundName))
             // 登録に失敗した試行で無料枠を消費しないよう、カウントは schedule() の成功後に更新する (PR #30 レビュー指摘)
             UserDefaults.standard.set(chaseCount + 1, forKey: .stopIntentChaseCount)
             // schedule() が throw しなくても実登録に失敗している可能性を潰すため、OS 側の一覧で確認する

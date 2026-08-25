@@ -430,7 +430,13 @@ struct DebugMenuPage: View {
             do {
                 // ja: 今日死ぬとしたら何をやりたいですか？
                 let title = LocalizedStringResource("If today were your last day, what would you want to do?")
-                try await AlarmKitManager.schedule(id: alarmID, fireDate: fireDate, title: title)
+                // テストアラームでも設定中のアラーム音を鳴らし、選んだ音の発火確認に使えるようにする (issue #133)
+                try await AlarmKitManager.schedule(
+                    id: alarmID,
+                    fireDate: fireDate,
+                    title: title,
+                    sound: resolveAlarmSound(soundName: (try? modelContext.fetch(FetchDescriptor<AlarmSetting>()))?.first?.soundName)
+                )
                 modelContext.insert(ScheduledAlarm(id: alarmID, fireDate: fireDate, origin: ScheduledAlarmOrigin.main))
                 try modelContext.save()
                 UserDefaults.standard.set(alarmID.uuidString, forKey: .debugChaseTestAlarmID)

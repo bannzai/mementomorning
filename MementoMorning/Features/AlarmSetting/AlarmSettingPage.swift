@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 import SwiftData
 
@@ -19,6 +20,10 @@ struct AlarmSettingPage: View {
     /// スヌーズ (追撃アラーム) の上限回数の選択値。nil は無制限。
     /// 初期値は無料枠 freeTierSnoozeLimit で、保存済み設定があれば onAppear で effectiveSnoozeLimit に置き換える
     @State private var snoozeLimit: Int? = freeTierSnoozeLimit
+    /// アラーム音の選択値。初期値はシステム標準音で、保存済み設定があれば onAppear で置き換える (issue #133)
+    @State private var alarmSound: AlarmSound = .systemDefault
+    /// アラーム音の試聴用プレイヤー。再生中に解放されないよう保持する
+    @State private var soundPreviewPlayer: AVAudioPlayer?
     /// 夜リマインドの時刻の DatePicker 入力用。保存時に hour/minute へ分解する。
     /// 初期値は空で、onAppear で保存済み設定の実効値 (未設定なら既定の 21:00 の 1 本) に置き換える
     @State private var nightReminderTimes: [Date] = []
@@ -70,6 +75,25 @@ struct AlarmSettingPage: View {
                 // 選べない回数からの巻き戻し (oldValue が選択不可) は変更ではないため保存しない
                 // (保存すると、アラーム未設定のままペイウォール導線に触れただけでレコードが作られてしまう)
                 guard isSnoozeLimitSelectable(snoozeLimit: oldValue, isPremium: PremiumEntitlement.isPremium) else { return }
+                scheduleAutoSave()
+            }
+            // アラーム音の選択 (issue #133)。選択肢はシステム標準音 + 同梱音源 + 無音 (AlarmSound 参照)
+            Picker(selection: $alarmSound) {
+                ForEach(AlarmSound.allCases, id: \.self) { sound in
+                    alarmSoundText(alarmSound: sound)
+                        .tag(sound)
+                }
+            } label: {
+                // ja: サウンド
+                Text("Sound")
+            }
+            .accessibilityIdentifier("alarm_setting_sound_picker")
+            .onChange(of: alarmSound) { _, newValue in
+                // 保存済みの値への復元 (onAppear・課金状態の変化) では試聴しない。
+                // 復元は必ず保存済みの値と一致するため、一致しない変更 = ユーザーの実操作だけ試聴する
+                if newValue != resolveAlarmSound(soundName: alarmSettings.first?.soundName) {
+                    playSoundPreview(alarmSound: newValue)
+                }
                 scheduleAutoSave()
             }
             // 夜リマインドの時刻 (issue #44 の可視化から issue #94 で編集可能にした)。
@@ -275,6 +299,7 @@ struct AlarmSettingPage: View {
         }
         isEnabled = alarmSetting.isEnabled
         snoozeLimit = effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium)
+        alarmSound = resolveAlarmSound(soundName: alarmSetting.soundName)
     }
 
     /// デバウンス待ちの自動保存があれば、待たずにその場で確定する。
@@ -288,6 +313,37 @@ struct AlarmSettingPage: View {
             await previousTask.value
             await save()
         }
+    }
+
+    /// アラーム音の選択肢の文言
+    private func alarmSoundText(alarmSound: AlarmSound) -> Text {
+        switch alarmSound {
+        case .systemDefault:
+            // ja: デフォルト
+            return Text("Default")
+        case .gentleChime:
+            // ja: やわらかなチャイム
+            return Text("Gentle Chime")
+        case .morningBell:
+            // ja: 朝の鐘
+            return Text("Morning Bell")
+        case .softPulse:
+            // ja: しずかなパルス
+            return Text("Soft Pulse")
+        case .silent:
+            // ja: 無音
+            return Text("Silent")
+        }
+    }
+
+    /// 選んだアラーム音を試聴する。
+    /// システム標準音はバンドル内にファイルが無く、無音は聴くものが無いため何もしない
+    private func playSoundPreview(alarmSound: AlarmSound) {
+        guard alarmSound != .silent,
+              let soundFileName = alarmSound.soundFileName,
+              let url = Bundle.main.url(forResource: soundFileName, withExtension: "caf") else { return }
+        soundPreviewPlayer = try? AVAudioPlayer(contentsOf: url)
+        soundPreviewPlayer?.play()
     }
 
     /// スヌーズ回数の選択肢の文言。無制限は nil
@@ -378,6 +434,7 @@ struct AlarmSettingPage: View {
             minute: minute,
             isEnabled: isEnabled,
             snoozeLimit: snoozeLimit,
+            alarmSound: alarmSound,
             nightReminderTimes: nightReminderTimes.map { nightReminderTime(date: $0) },
             alarmSetting: alarmSettings.first,
             storedNightReminderTimes: nightReminderSettings.map { DateComponents(hour: $0.hour, minute: $0.minute) },
@@ -391,8 +448,11 @@ struct AlarmSettingPage: View {
             if snoozeLimit != effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: PremiumEntitlement.isPremium) {
                 alarmSetting.setSnoozeLimit(snoozeLimit: snoozeLimit)
             }
+            if alarmSound != resolveAlarmSound(soundName: alarmSetting.soundName) {
+                alarmSetting.setSoundName(soundName: alarmSound.rawValue)
+            }
         } else {
-            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit))
+            modelContext.insert(AlarmSetting(hour: hour, minute: minute, isEnabled: isEnabled, snoozeLimit: snoozeLimit, soundName: alarmSound.rawValue))
         }
         saveNightReminderSettings()
         do {
@@ -456,6 +516,7 @@ func hasAlarmSettingChanges(
     minute: Int,
     isEnabled: Bool,
     snoozeLimit: Int?,
+    alarmSound: AlarmSound,
     nightReminderTimes: [DateComponents],
     alarmSetting: AlarmSetting?,
     storedNightReminderTimes: [DateComponents],
@@ -466,6 +527,7 @@ func hasAlarmSettingChanges(
         || minute != alarmSetting.minute
         || isEnabled != alarmSetting.isEnabled
         || snoozeLimit != effectiveSnoozeLimit(snoozeLimit: alarmSetting.snoozeLimit, isPremium: isPremium)
+        || alarmSound != resolveAlarmSound(soundName: alarmSetting.soundName)
         || nightReminderTimes != effectiveNightReminderTimes(times: storedNightReminderTimes, isPremium: isPremium)
 }
 
