@@ -23,8 +23,12 @@ struct MonthCalendarPage: View {
     @State private var displayedMonth = startOfMonth(date: .now, calendar: .current)
     /// 全期間の回答数。クエリは 2 年分に制限しているため、件数は fetchCount で全期間から取得する
     @State private var answeredCount = 0
-    /// 共有カードを表示する対象の回答。日付のマスをタップして選んだその日の回答
+    /// 日付のマスのタップで選択され、グリッドの下に行表示する回答
+    @State private var selectedAnswer: MorningAnswer?
+    /// 共有カードを表示する対象の回答。グリッドの下に出た行をタップして選んだ回答
     @State private var shareTargetAnswer: MorningAnswer?
+    /// 動画の再生画面 (AnswerVideoPlayerPage) を開く対象の動画 (issue #80)
+    @State private var replayTargetVideo: VideoAnswerReplayTarget?
     /// ペイウォールの表示状態。無料枠で隠れている日 (7 日より前) のマスから開く
     @State private var isPaywallPresented = false
 
@@ -43,6 +47,15 @@ struct MonthCalendarPage: View {
                 .padding(.top, 30)
             monthGrid(answersByDay: answersByDay, today: today, calendar: calendar)
                 .padding(.top, 6)
+            if let selectedAnswer {
+                AnswerLogRow(
+                    answer: selectedAnswer,
+                    shareAction: { shareTargetAnswer = selectedAnswer },
+                    replayVideoAction: { replayTargetVideo = VideoAnswerReplayTarget(videoAssetIdentifier: $0) }
+                )
+                // AnswerLogRow が本文の上に 19 の余白を持つため、グリッドとの間はヘアラインと同じリズム (34) になるよう 15 を足す
+                .padding(.top, 15)
+            }
             Rectangle()
                 .fill(Color.hairline)
                 .frame(height: 1)
@@ -63,6 +76,10 @@ struct MonthCalendarPage: View {
         }
         .padding(.horizontal, 34)
         .background(Color.ink.ignoresSafeArea())
+        // 別の月に切り替えたら、前の月の日付で選んだ行を残さない
+        .onChange(of: displayedMonth) { _, _ in
+            selectedAnswer = nil
+        }
         .onAppear {
             answeredCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         }
@@ -82,6 +99,9 @@ struct MonthCalendarPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $shareTargetAnswer) { answer in
             AnswerShareCardPage(answer: answer)
+        }
+        .sheet(item: $replayTargetVideo) { target in
+            AnswerVideoPlayerPage(videoAssetIdentifier: target.videoAssetIdentifier)
         }
         .sheet(isPresented: $isPaywallPresented) {
             PaywallPage()
@@ -140,7 +160,7 @@ struct MonthCalendarPage: View {
     }
 
     /// 表示中の月の日付グリッド。answersByDay は日付 (現在の暦での startOfDay) から回答を引く辞書で、
-    /// 回答済みマークの表示もタップで開く回答もこの同じ辞書から取る
+    /// 回答済みマークの表示もタップでグリッドの下に出す回答もこの同じ辞書から取る
     private func monthGrid(answersByDay: [Date: MorningAnswer], today: Date, calendar: Calendar) -> some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 0) {
             let cells = monthCalendarCells(month: displayedMonth, calendar: calendar)
@@ -159,8 +179,8 @@ struct MonthCalendarPage: View {
     }
 
     /// 日付 1 マスぶんの表示。答えた日は温白の粒に墨の数字、それ以外は数字のみ (未来は弱く)。
-    /// 答えた日はタップでその日の回答の共有カードを開き、無料枠で隠れている日 (7 日より前) はペイウォールを開く (issue #130)。
-    /// answer は monthGrid から渡されるその日の回答で、回答済みの表示もタップで開く回答も同じ値を基準にする
+    /// 答えた日はタップでその日の回答をグリッドの下にジャーナルと同じ行で表示し、無料枠で隠れている日 (7 日より前) はペイウォールを開く (issue #130)。
+    /// answer は monthGrid から渡されるその日の回答で、回答済みの表示もタップで選ぶ回答も同じ値を基準にする
     private func monthGridDayCell(day: Date, answer: MorningAnswer?, today: Date, calendar: Calendar) -> some View {
         let isAnswered = answer != nil
         return Button {
@@ -169,7 +189,7 @@ struct MonthCalendarPage: View {
                 return
             }
             if AnswerLogVisibility.isVisible(answeredDate: answer.answeredDate, isPremium: PremiumEntitlement.isPremium) {
-                shareTargetAnswer = answer
+                selectedAnswer = answer
             } else {
                 isPaywallPresented = true
             }
