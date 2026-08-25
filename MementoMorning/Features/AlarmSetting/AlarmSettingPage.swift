@@ -89,6 +89,9 @@ struct AlarmSettingPage: View {
             }
             .accessibilityIdentifier("alarm_setting_sound_picker")
             .onChange(of: alarmSound) { _, newValue in
+                // 新しい音を鳴らすかどうかに関わらず、先に進行中の試聴を止める
+                // (無音・標準音へ切り替えたのに直前の音が鳴り続けないように。PR #134 レビュー指摘)
+                stopSoundPreview()
                 // 保存済みの値への復元 (onAppear・課金状態の変化) では試聴しない。
                 // 復元は必ず保存済みの値と一致するため、一致しない変更 = ユーザーの実操作だけ試聴する
                 if newValue != resolveAlarmSound(soundName: alarmSettings.first?.soundName) {
@@ -270,6 +273,7 @@ struct AlarmSettingPage: View {
             restoreFromStored()
         }
         .onDisappear {
+            stopSoundPreview()
             flushAutoSave()
         }
         // バックグラウンド遷移・ロックでは onDisappear が呼ばれず、デバウンス中の Task は実行保証が無いため、
@@ -337,13 +341,26 @@ struct AlarmSettingPage: View {
     }
 
     /// 選んだアラーム音を試聴する。
-    /// システム標準音はバンドル内にファイルが無く、無音は聴くものが無いため何もしない
+    /// システム標準音はバンドル内にファイルが無く、無音は聴くものが無いため何もしない。
+    /// アラーム音の選択はサイレントスイッチ ON でも聴けるべきなため、セッションを .playback にして再生する (PR #134 レビュー指摘)
     private func playSoundPreview(alarmSound: AlarmSound) {
         guard alarmSound != .silent,
               let soundFileName = alarmSound.soundFileName,
-              let url = Bundle.main.url(forResource: soundFileName, withExtension: "caf") else { return }
+              // soundFileName は拡張子込みのため withExtension は nil で解決する
+              let url = Bundle.main.url(forResource: soundFileName, withExtension: nil) else { return }
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
         soundPreviewPlayer = try? AVAudioPlayer(contentsOf: url)
         soundPreviewPlayer?.play()
+    }
+
+    /// 進行中の試聴を止め、オーディオセッションを明け渡す (他アプリの再生を再開させる)。
+    /// 選択の切り替え時と画面を離れる時に呼ぶ
+    private func stopSoundPreview() {
+        guard soundPreviewPlayer != nil else { return }
+        soundPreviewPlayer?.stop()
+        soundPreviewPlayer = nil
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 
     /// スヌーズ回数の選択肢の文言。無制限は nil

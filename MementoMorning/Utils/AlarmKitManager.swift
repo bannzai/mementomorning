@@ -47,7 +47,7 @@ enum AlarmKitManager {
     }
 
     /// AlarmSound を AlarmKit へ渡す AlertSound へ変換する。
-    /// .named はバンドル内の音源ファイル名 (拡張子なし) を指す
+    /// .named はバンドル内の音源ファイル名 (拡張子込み) を指す
     private static func alertSound(sound: AlarmSound) -> AlertConfiguration.AlertSound {
         guard let soundFileName = sound.soundFileName else { return .default }
         return .named(soundFileName)

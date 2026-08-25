@@ -18,19 +18,21 @@ enum AlarmSound: String, CaseIterable {
     /// 無音の音源ファイルを鳴らすことで代替する)
     case silent
 
-    /// バンドル内の音源ファイル名 (拡張子なし)。システム標準音の systemDefault はファイルを持たないため nil
+    /// バンドル内の音源ファイル名 (拡張子込み)。システム標準音の systemDefault はファイルを持たないため nil。
+    /// AlertSound.named は拡張子込みの実ファイル名で解決するため拡張子を含める (PR #134 レビュー指摘。
+    /// 実例: https://developer.apple.com/forums/thread/788836 の .named("Glass Drum.caf"))
     var soundFileName: String? {
         switch self {
         case .systemDefault:
             return nil
         case .gentleChime:
-            return "AlarmSoundGentleChime"
+            return "AlarmSoundGentleChime.caf"
         case .morningBell:
-            return "AlarmSoundMorningBell"
+            return "AlarmSoundMorningBell.caf"
         case .softPulse:
-            return "AlarmSoundSoftPulse"
+            return "AlarmSoundSoftPulse.caf"
         case .silent:
-            return "AlarmSoundSilent"
+            return "AlarmSoundSilent.caf"
         }
     }
 }

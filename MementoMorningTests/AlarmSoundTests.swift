@@ -16,15 +16,15 @@ final class AlarmSoundTests: XCTestCase {
         }
     }
 
-    /// 音源ファイルを持つ選択肢の caf ファイルがアプリバンドルに存在する。
-    /// AlertSound.named はバンドル内のファイル名を指すため、ファイルの欠落は「選んだのに鳴らない」事故になる
-    /// (テストはホストアプリ上で動くため Bundle.main = アプリバンドル)
+    /// 音源ファイルを持つ選択肢のファイル (拡張子込みの soundFileName) がアプリバンドルに存在する。
+    /// AlertSound.named は拡張子込みの実ファイル名で解決するため、ファイルの欠落・名前のずれは
+    /// 「選んだのに鳴らない」事故になる (テストはホストアプリ上で動くため Bundle.main = アプリバンドル)
     func testBundledSoundFilesExist() {
         for sound in AlarmSound.allCases {
             guard let soundFileName = sound.soundFileName else { continue }
             XCTAssertNotNil(
-                Bundle.main.url(forResource: soundFileName, withExtension: "caf"),
-                "missing sound file: \(soundFileName).caf for \(sound)"
+                Bundle.main.url(forResource: soundFileName, withExtension: nil),
+                "missing sound file: \(soundFileName) for \(sound)"
             )
         }
     }
