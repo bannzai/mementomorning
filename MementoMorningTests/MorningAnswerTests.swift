@@ -1,4 +1,5 @@
 import XCTest
+import SwiftData
 @testable import MementoMorning
 
 /// MorningAnswer のドメインメソッドのテスト
@@ -60,5 +61,55 @@ final class MorningAnswerTests: XCTestCase {
 
         XCTAssertEqual(answer.isFulfilled, false)
         XCTAssertGreaterThanOrEqual(answer.updatedDateTime, updatedDateTimeBeforeSet)
+    }
+
+    /// 指定日の回答の取得 (カレンダーの日付タップから使う) を in-memory DB で確認する
+    @MainActor
+    func testAnswerOfDay() throws {
+        let modelContext = ModelContext(
+            try ModelContainer(
+                for: PersistenceController.schema,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
+        )
+        let calendar = Calendar.current
+        // 日付変更の境界で .now が assertion ごとにずれるとテストが不安定になるため、基準の日を固定して全 assertion に渡す
+        let today = calendar.startOfDay(for: .now)
+
+        // 未回答の日は nil
+        XCTAssertNil(try MorningAnswer.answer(day: today, calendar: calendar, modelContext: modelContext))
+
+        modelContext.insert(MorningAnswer(answeredDate: today, text: "家族と海を見に行く"))
+        try modelContext.save()
+
+        XCTAssertEqual(try MorningAnswer.answer(day: today, calendar: calendar, modelContext: modelContext)?.text, "家族と海を見に行く")
+        // 回答のない別の日を指定しても取り違えない
+        XCTAssertNil(try MorningAnswer.answer(day: calendar.date(byAdding: .day, value: -1, to: today)!, calendar: calendar, modelContext: modelContext))
+    }
+
+    /// 日中の時刻を渡しても、その日の 0 時に正規化されて同じ回答が取得できる
+    @MainActor
+    func testAnswerOfDayNormalizesTimeToStartOfDay() throws {
+        let modelContext = ModelContext(
+            try ModelContainer(
+                for: PersistenceController.schema,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
+        )
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+
+        modelContext.insert(MorningAnswer(answeredDate: today, text: "友人に手紙を書く"))
+        try modelContext.save()
+
+        // 0 時ちょうどではない時刻 (正午) を渡す
+        XCTAssertEqual(
+            try MorningAnswer.answer(
+                day: calendar.date(byAdding: .hour, value: 12, to: today)!,
+                calendar: calendar,
+                modelContext: modelContext
+            )?.text,
+            "友人に手紙を書く"
+        )
     }
 }

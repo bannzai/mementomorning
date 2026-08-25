@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 401e4abf0b08248e767d8ac2ec02a5b769f58d37
-last_verified_at: 2026-08-24
+last_verified_commit: 5b3041dfbc6f1dac0777d0f190110b38cd5844c0
+last_verified_at: 2026-08-25
 ---
 
 # LifeCalendar QA
@@ -42,6 +42,8 @@ last_verified_at: 2026-08-24
   - 自動化: manual（月送り操作の確認）
 - [x] **答えた朝の件数**: グリッドの下に全期間の回答数が表示される
   - 自動化: manual（件数表示の目視確認）
+- [x] **日付タップで回答を開く**: 答えた日のマスをタップすると、その日の回答がジャーナルと同じ行 (AnswerLogRow) でグリッドの下に表示される (issue #130)。行のタップで共有カードが sheet で開き、別の日のタップで行が切り替わり、月送りで行は消える。無料枠 (直近 7 日) より前の答えた日はペイウォールが開き、未回答日はタップしても何も起きない
+  - 自動化: manual（タップ後の表示の目視確認。日付から回答を引くロジックは MementoMorningTests/MorningAnswerTests.swift の testAnswerOfDay 系がカバー済み）
 
 ## 3. 七つの朝への導線の不在 (issue #116)
 
@@ -89,6 +91,55 @@ issue #109 で点画面のフッターに追加した「七つの朝」再訪リ
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/264d6baf-19fb-45b9-8cc3-801a1a86924f.jpg" width="320" />
 
 (節目到達済みの 10 件でもフッターは「Mornings answered 10 / The dots will connect.」のみ。アクセシビリティツリーにも life_calendar_seven_mornings_link は 0 件。7 件到達時の節目 sheet の自動表示は従来どおり動くことも同セッションで確認済み — 記録は SevenMornings/QA.md)
+
+</details>
+
+### **日付タップで回答を開く**: 答えた日は共有カード、無料枠より前はペイウォール、未回答日は何も起きない (issue #130)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-24** (simtunnel リモート simulator、英語ロケール・UTC。開発者メニューでサンプル回答 10 日分 = Aug 15〜24 を投入。UTC の今日は Aug 24 で、無料枠 7 日の可視範囲は Aug 18〜24)
+
+答えた日 Aug 20 (無料枠内) のマスをタップ → その日の回答「Fix the bug that kept me up all night」の共有カードが sheet で開く:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/1da2950f-21a5-4c93-87c8-8a29367b3132.jpg" width="320" />
+
+答えた日 Aug 15 (無料枠より前、9 日前) のマスをタップ → ペイウォールが開く (Test Store の価格表示):
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/10a4a76f-58f9-4d01-9baa-fe343fa8410e.jpg" width="320" />
+
+未回答日 Aug 10 のマスをタップ → 何も開かずカレンダーのまま:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/05099689-526b-452c-8df4-59ba5601bc9e.jpg" width="320" />
+
+- プレミアム状態 (答えた全日が共有カードで開ける) は未検証。判定は AnswerLogVisibility.isVisible の isPremium 分岐で、AnswerLogVisibilityTests がロジックをカバー済み
+
+**再確認日: 2026-08-24** (PR #131 のレビュー対応 ca26175 後、simtunnel リモート simulator で回帰確認)
+
+レビュー対応でタップのヒット領域をマス全体 (48pt 高) に広げ、回答の取得を表示と同じ辞書基準に統一した。答えた日 Aug 20 のマスの隅 (粒の円の外) をタップ → 共有カードが開く:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260824/34455af9-b364-49d9-9cec-17d152c7c6d8.jpg" width="320" />
+
+- Aug 15 (無料枠より前) のタップ → ペイウォール、Aug 10 (未回答) のタップ → 無反応、カレンダーのレイアウトに変化なし、も同セッションで確認済み
+- タイムゾーン変更をまたぐ実挙動 (保存後に端末 TZ を変えてタップ) は simulator では未検証。表示と取得が同一辞書になったことはコードとユニットテストで担保
+
+**再確認日: 2026-08-25** (共有カード直開きから行表示への変更 5b3041d 後、simtunnel リモート simulator で確認。UTC の今日は Aug 25、サンプル回答は Aug 16〜25)
+
+答えた日 Aug 20 のマスをタップ → ジャーナルと同じ行がグリッドの下に表示される:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/e021cafd-06f5-4834-920a-275708da16c4.jpg" width="320" />
+
+その行をタップ → 共有カードが sheet で開く:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/f147fe50-acdd-445e-abad-48b1dfcd14d2.jpg" width="320" />
+
+別の答えた日 Aug 24 をタップ → 行がその日の回答に切り替わる:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260825/43729bce-8019-4f76-9a7e-625f7e0d52ae.jpg" width="320" />
+
+- Aug 16 (無料枠より前) のタップでペイウォールが開くことも同セッションで確認済み
+- ジャーナル画面の行は AnswerLogRow への抽出のみで見た目・挙動は不変 (共有カード・動画導線とも既存実装の移設)
+- 動画回答の行の「動画を見返す」導線はカレンダー側では未検証 (サンプル回答に動画がないため)。実装はジャーナルと同じ AnswerLogRow + AnswerVideoPlayerPage の既存パターン
 
 </details>
 
