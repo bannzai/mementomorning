@@ -77,6 +77,13 @@ struct AlarmSettingPage: View {
                 guard isSnoozeLimitSelectable(snoozeLimit: oldValue, isPremium: PremiumEntitlement.isPremium) else { return }
                 scheduleAutoSave()
             }
+            // スヌーズの間隔 (追撃アラームの再登録間隔 stopIntentChaseInterval) は固定で画面から変えられないため、
+            // 何分後に鳴り直すのかをここで明示する (issue #135 の実機テスト指摘)
+            // ja: スヌーズは%lld分間隔で鳴り直します
+            Text("Snooze rings again every \(Int(stopIntentChaseInterval / 60)) minutes")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .accessibilityIdentifier("alarm_setting_snooze_interval_note")
             // アラーム音の選択 (issue #133)。選択肢はシステム標準音 + 同梱音源 + 無音 (AlarmSound 参照)
             Picker(selection: $alarmSound) {
                 ForEach(AlarmSound.allCases, id: \.self) { sound in

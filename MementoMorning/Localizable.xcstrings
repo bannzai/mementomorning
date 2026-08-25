@@ -18800,6 +18800,16 @@
         }
       }
     },
+    "Snooze rings again every %lld minutes" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズは%lld分間隔で鳴り直します"
+          }
+        }
+      }
+    },
     "Soft Pulse" : {
       "localizations" : {
         "ja" : {

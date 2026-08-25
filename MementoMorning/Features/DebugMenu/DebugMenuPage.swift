@@ -64,6 +64,14 @@ struct DebugMenuPage: View {
                 }
                 .accessibilityIdentifier("debug_delete_all_answers")
 
+                Button(role: .destructive) {
+                    deleteTodayMorningAnswer()
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "今日の回答を削除")
+                }
+                .accessibilityIdentifier("debug_delete_today_answer")
+
                 Button {
                     // 削除は未設定でも成功する (冪等)。リセットすると回答 7 件以上なら ContentView が節目画面を再表示する
                     UserDefaults.standard.removeObject(forKey: .isSevenMorningsMilestonePresented)
@@ -478,6 +486,28 @@ struct DebugMenuPage: View {
             return
         }
         // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
+    }
+
+    /// 今日の回答だけを削除する (過去分は残す。無ければ何もせず冪等)。
+    /// 実機テストで「回答済みの今日」を「未回答の今日」へ戻し、蓄積した過去の回答を消さずに
+    /// アラーム発火・追撃の再検証をやり直せるようにする (issue #135)
+    private func deleteTodayMorningAnswer() {
+        guard let answer = fetchMorningAnswer(answeredDate: .now, modelContext: modelContext) else {
+            return
+        }
+        modelContext.delete(answer)
+        do {
+            try modelContext.save()
+            // 今日の回答が消えたので、ホーム画面ウィジェットを未回答表示へ戻す (issue #46)
+            reloadHomeWidgetTimelines()
+        } catch {
+            // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return
+        }
+        // ロック画面の「今日の目標」(Live Activity) も畳む
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
     }
 

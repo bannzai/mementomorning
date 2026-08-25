@@ -94,6 +94,13 @@ public struct StopAlarmIntent: LiveActivityIntent {
             return
         }
 
+        // 検証用のプレミアム強制 (debugPremiumOverride) は TestFlight 配布判定 (isDeveloperMenuUnlocked) を通るが、
+        // リリースビルドの判定はプロセスローカルに false から始まり、RootView の task の refreshDeveloperMenuUnlocked() が
+        // 完了するまで解放されない。停止操作によるコールドローンチではその完了前にここへ到達し得て、
+        // 強制プレミアム + スヌーズ無制限でも無料枠 (freeTierSnoozeLimit) に丸められ、追撃が 2 回で止まる (issue #135)。
+        // 追撃の可否を決める前に判定の完了を待ってレースを塞ぐ (判定済みプロセスでは AppTransaction のキャッシュを読むだけで軽い)
+        await refreshDeveloperMenuUnlocked()
+
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
         // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)。
         // 設定の読み取り失敗は「設定値が nil (無制限)」と区別し、無料枠 freeTierSnoozeLimit を上限にする
@@ -110,7 +117,10 @@ public struct StopAlarmIntent: LiveActivityIntent {
             snoozeLimit = freeTierSnoozeLimit
             soundName = nil
         }
-        guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) else {
+        // 「無限のはずが途中で止まった」を実機ログ (DeveloperLogPage) だけで切り分けられるよう、判定材料を記録する (issue #135)
+        let isPremium = PremiumEntitlement.isPremium
+        appendStopIntentSpikeLog(message: "chase decision chaseCount=\(chaseCount) snoozeLimit=\(snoozeLimit.map(String.init) ?? "unlimited") isPremium=\(isPremium) effectiveLimit=\(effectiveSnoozeLimit(snoozeLimit: snoozeLimit, isPremium: isPremium).map(String.init) ?? "unlimited")")
+        guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: snooze limit reached (\(chaseCount))")
             // 先行登録済みのバックアップを放置するとスヌーズ上限を超えて発火するため、
             // 上限到達時に当日分の残りをキャンセルする (PR #30 レビュー指摘)
