@@ -58,6 +58,24 @@ final class SnoozeGateTests: XCTestCase {
         XCTAssertTrue(snoozeLimitChoices.contains(freeTierSnoozeLimit))
     }
 
+    /// スヌーズ間隔は未設定 (nil) と選択肢の範囲外を既定の 2 分に倒し、範囲内の設定値をそのまま使う
+    func testEffectiveSnoozeIntervalMinutes() {
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: nil), defaultSnoozeIntervalMinutes)
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: 1), 1)
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: 5), 5)
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: snoozeIntervalChoices.upperBound), snoozeIntervalChoices.upperBound)
+        // 改ざん・将来の選択肢変更で残った範囲外の値は既定値に倒す
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: 0), defaultSnoozeIntervalMinutes)
+        XCTAssertEqual(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: snoozeIntervalChoices.upperBound + 1), defaultSnoozeIntervalMinutes)
+    }
+
+    /// スヌーズ間隔の選択肢と既定値を固定する (issue #135。既定は設定導入前の固定値 2 分を踏襲)
+    func testSnoozeIntervalChoicesAndDefault() {
+        XCTAssertEqual(snoozeIntervalChoices, 1...10)
+        XCTAssertEqual(defaultSnoozeIntervalMinutes, 2)
+        XCTAssertTrue(snoozeIntervalChoices.contains(defaultSnoozeIntervalMinutes))
+    }
+
     /// 追撃カウントのリセット条件 (今日の回答の有無) の判定を in-memory DB で確認する
     @MainActor
     func testHasTodayAnswer() throws {

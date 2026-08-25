@@ -1071,6 +1071,16 @@
         }
       }
     },
+    "%lld min" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld分"
+          }
+        }
+      }
+    },
     "%lld mornings answered" : {
       "localizations" : {
         "ar" : {
@@ -18796,6 +18806,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍後提醒"
+          }
+        }
+      }
+    },
+    "Snooze interval" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スヌーズ間隔"
           }
         }
       }

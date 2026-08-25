@@ -64,6 +64,17 @@ struct DebugMenuPage: View {
                 }
                 .accessibilityIdentifier("debug_delete_all_answers")
 
+                Button(role: .destructive) {
+                    // 削除に失敗した時に表示を更新すると、回答が残ったまま「今日の回答: なし」に見えて
+                    // 検証を誤らせるため、成功した時だけ最新化する (PR #136 レビュー指摘)
+                    if deleteTodayMorningAnswer() {
+                        refreshAnswerStates()
+                    }
+                } label: {
+                    Text(verbatim: "今日の回答を削除")
+                }
+                .accessibilityIdentifier("debug_delete_today_answer")
+
                 Button {
                     // 削除は未設定でも成功する (冪等)。リセットすると回答 7 件以上なら ContentView が節目画面を再表示する
                     UserDefaults.standard.removeObject(forKey: .isSevenMorningsMilestonePresented)
@@ -275,7 +286,7 @@ struct DebugMenuPage: View {
             } header: {
                 Text(verbatim: "無限アラーム (issue #97)")
             } footer: {
-                Text(verbatim: "手順: プレミアムを強制 ON → アラーム設定を ON + スヌーズ無制限 → テストアラームを登録し、アプリを離れてロック画面で発火を待つ。停止するたびに \(Int(stopIntentChaseInterval / 60)) 分後の追撃が再登録され続け、回答すると全て止まる")
+                Text(verbatim: "手順: プレミアムを強制 ON → アラーム設定を ON + スヌーズ無制限 → テストアラームを登録し、アプリを離れてロック画面で発火を待つ。停止するたびに \(effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: alarmSettings.first?.snoozeIntervalMinutes)) 分後 (アラーム設定のスヌーズ間隔) の追撃が再登録され続け、回答すると全て止まる")
             }
             Section {
                 Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")
@@ -479,6 +490,40 @@ struct DebugMenuPage: View {
         }
         // 今日の回答が消えたので、ロック画面の「今日の目標」(Live Activity) も畳む
         Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
+    }
+
+    /// 今日の回答だけを削除する (過去分は残す。無ければ何もせず冪等)。
+    /// 実機テストで「回答済みの今日」を「未回答の今日」へ戻し、蓄積した過去の回答を消さずに
+    /// アラーム発火・追撃の再検証をやり直せるようにする (issue #135)。
+    /// 戻り値は削除処理として成立したか (今日の回答が無い no-op も true)。取得・保存の失敗だけ false を返し、
+    /// 呼び出し側が失敗時の表示更新 (回答が残ったまま「なし」に見える) を避けられるようにする
+    private func deleteTodayMorningAnswer() -> Bool {
+        let todayAnswer: MorningAnswer?
+        do {
+            // 取得の失敗を「今日の回答なし」と誤認すると、実際は回答が残ったまま表示だけ「なし」になり
+            // 追撃の再検証を誤らせるため、throwing 版で失敗と未回答を区別する (PR #136 レビュー指摘)
+            todayAnswer = try MorningAnswer.answer(day: .now, calendar: .current, modelContext: modelContext)
+        } catch {
+            assertionFailure(error.localizedDescription)
+            return false
+        }
+        guard let answer = todayAnswer else {
+            return true
+        }
+        modelContext.delete(answer)
+        do {
+            try modelContext.save()
+            // 今日の回答が消えたので、ホーム画面ウィジェットを未回答表示へ戻す (issue #46)
+            reloadHomeWidgetTimelines()
+        } catch {
+            // 削除が永続化されていないのに Live Activity だけ畳むと表示と実データがずれるため、破棄して中断する
+            modelContext.rollback()
+            assertionFailure(error.localizedDescription)
+            return false
+        }
+        // ロック画面の「今日の目標」(Live Activity) も畳む
+        Task { await refreshTodayAnswerLiveActivity(todayAnswerText: nil) }
+        return true
     }
 
     /// 検証用に今日の回答を作る。既に今日の回答があれば何もしない。
