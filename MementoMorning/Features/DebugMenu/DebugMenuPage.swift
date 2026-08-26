@@ -291,9 +291,13 @@ struct DebugMenuPage: View {
             Section {
                 Text(verbatim: "オンボーディング完了 (hasCompletedOnboarding): \(hasCompletedOnboarding)")
                     .accessibilityIdentifier("debug_onboarding_state")
-                // 新規インストール直後のオンボーディングを再現する (フラグを戻すだけで、回答・アラーム設定は消さない。既に false なら何もせず冪等)
+                // 新規インストール直後のオンボーディングを再現する
+                // (完了フラグとオンボーディング内の回答だけを戻し、朝の回答・アラーム設定は消さない。何度押しても同じ状態に収束する)
                 Button {
                     hasCompletedOnboarding = false
+                    UserDefaults.standard.removeObject(forKey: .onboardingBirthYear)
+                    UserDefaults.standard.removeObject(forKey: .onboardingSnoozeAnswer)
+                    UserDefaults.standard.removeObject(forKey: .onboardingMemoryAnswer)
                 } label: {
                     Text(verbatim: "オンボーディングをリセット")
                 }

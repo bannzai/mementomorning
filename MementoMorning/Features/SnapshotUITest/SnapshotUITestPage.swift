@@ -20,7 +20,7 @@ struct SnapshotUITestPage: View {
                     SnapshotUITest<NightReflectionPage_Previews>()
                     SnapshotUITest<SevenMorningsPage_Previews>()
                     SnapshotUITest<AlarmSettingPage_Previews>()
-                    SnapshotUITest<OnboardingPage_Previews>()
+                    SnapshotUITest<OnboardingPage_Previews>(previewCount: 7)
                     SnapshotUITest<PaywallPage_Previews>()
                 }
             }

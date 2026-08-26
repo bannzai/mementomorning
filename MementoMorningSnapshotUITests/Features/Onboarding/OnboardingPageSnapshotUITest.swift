@@ -16,7 +16,7 @@ final class OnboardingPageSnapshotUITest: XCTestCase {
     /// 撮影対象の PreviewProvider 名。SnapshotUITestPage のボタンラベルと一致させる
     let previewType = "OnboardingPage_Previews"
     /// PreviewProvider が持つ Preview の個数。_allPreviews を型から辿れないためハードコードする (取り込み元 Focus と同じ制約)
-    let previewCount = 1
+    let previewCount = 7
 
     func testSnapshot() throws {
         // アプリはダークモード前提の唯一のテーマのため、ステータスバー等の描画も dark に固定する
@@ -27,13 +27,15 @@ final class OnboardingPageSnapshotUITest: XCTestCase {
         filteredLanguages().forEach { (language, languageWithRegion) in
             debugPrint("Start: ", #file, #function, language)
 
-            let app = XCUIApplication.instantiate()
-            app.launchArguments += ["-AppleLanguages", "(\(language))"]
-            // 日付等のロケール依存表示を対象地域の形式で撮影するため、リージョン付きタグも渡す
-            app.launchArguments += ["-AppleLocale", languageWithRegion]
-            app.launch()
-
             for index in (0..<previewCount) {
+                // Preview は戻る導線を持たない (SnapshotUITestLazyPreview が navigationBarBackButtonHidden) ため、
+                // 複数 Preview を撮る時は 1 枚ごとにアプリを起動し直して一覧から入り直す
+                let app = XCUIApplication.instantiate()
+                app.launchArguments += ["-AppleLanguages", "(\(language))"]
+                // 日付等のロケール依存表示を対象地域の形式で撮影するため、リージョン付きタグも渡す
+                app.launchArguments += ["-AppleLocale", languageWithRegion]
+                app.launch()
+
                 let button = app.buttons["\(previewType)_\(index)"].firstMatch
                 // 一覧の下部にあるボタンは初期表示領域外になり得るため、hittable になるまでスクロールしてからタップする
                 var swipeCount = 0
@@ -54,6 +56,8 @@ final class OnboardingPageSnapshotUITest: XCTestCase {
                 attachment.name = "\(fileName)---\(functionName)---\(language)---\(index)"
                 attachment.lifetime = .keepAlways
                 add(attachment)
+
+                app.terminate()
             }
         }
     }
