@@ -126,7 +126,7 @@ struct AppStoreScreenshot27Page_Previews: PreviewProvider {
     }
 }
 
-/// App Store スクリーンショット 28 枚目 - kohaku - 点 (粒の蓄積)
+/// App Store スクリーンショット 28 枚目 - kohaku - カレンダー (答えた朝の蓄積)
 struct AppStoreScreenshot28Page: View {
     var body: some View {
         AppStoreScreenshotKohakuLayout(
@@ -137,7 +137,7 @@ struct AppStoreScreenshot28Page: View {
             // ja: 点は、いつかつながる。
             subtitle: "The dots will connect."
         ) {
-            MockDotsScreen()
+            MockCalendarScreen()
         }
     }
 }

@@ -129,7 +129,7 @@ struct AppStoreScreenshot21Page_Previews: PreviewProvider {
     }
 }
 
-/// App Store スクリーンショット 22 枚目 - kumo - 点 (粒の蓄積)
+/// App Store スクリーンショット 22 枚目 - kumo - カレンダー (答えた朝の蓄積)
 struct AppStoreScreenshot22Page: View {
     var body: some View {
         AppStoreScreenshotKumoLayout(
@@ -140,7 +140,7 @@ struct AppStoreScreenshot22Page: View {
             // ja: 点は、いつかつながる。
             subtitle: "The dots will connect."
         ) {
-            MockDotsScreen()
+            MockCalendarScreen()
         }
     }
 }

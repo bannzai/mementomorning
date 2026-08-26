@@ -87,7 +87,7 @@
 		38F7CC9BF45470CD0923A6BB /* HomeWidgetTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697DE28B70FD2C433F876D9D /* HomeWidgetTimeline.swift */; };
 		3CB22D715EBC65A634BF4441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AFFC6A063A59543493172A5 /* Assets.xcassets */; };
 		3D9EE11995B8B3BAF2AD2304 /* StoreKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAE41FD55D918D7F97669B7 /* StoreKitTest.framework */; };
-		3DA562E68DB7BEB42EE2E045 /* MockDotsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF7772591D5B5491D85CAAB /* MockDotsScreen.swift */; };
+		3DA562E68DB7BEB42EE2E045 /* MockCalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF7772591D5B5491D85CAAB /* MockCalendarScreen.swift */; };
 		3EA4343A913B1E57883C9C28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715457F9DCAEABC482EBEB8B /* ContentView.swift */; };
 		42D4F1AAFA7AAB5B56FA3568 /* SevenMorningsPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28234EF42768C8AB6A5ADDBB /* SevenMorningsPageSnapshotUITest.swift */; };
 		4434011D63F98998993CD105 /* AppStoreScreenshot17PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F079F2436A8C211173F5F7E4 /* AppStoreScreenshot17PageSnapshotUITest.swift */; };
@@ -330,7 +330,7 @@
 		5EC2B40D1C2DD9A2E7D2B29E /* MementoMorning.storekit */ = {isa = PBXFileReference; path = MementoMorning.storekit; sourceTree = "<group>"; };
 		5F1252DD72DD60CF9F7BB654 /* ChaseAlarmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaseAlarmTests.swift; sourceTree = "<group>"; };
 		5F8120F3F82F4D2EF01655B9 /* AppStoreScreenshotsRootPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotsRootPage.swift; sourceTree = "<group>"; };
-		5FF7772591D5B5491D85CAAB /* MockDotsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDotsScreen.swift; sourceTree = "<group>"; };
+		5FF7772591D5B5491D85CAAB /* MockCalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCalendarScreen.swift; sourceTree = "<group>"; };
 		6237F8978CB622DFB599DEC2 /* AppStoreScreenshotDawnFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotDawnFrame.swift; sourceTree = "<group>"; };
 		62FDE7F566D70389E41720E5 /* VideoAnswerGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerGate.swift; sourceTree = "<group>"; };
 		5E1E8CB0CA754F567CB52B26 /* VideoAnswerRecordingLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnswerRecordingLimit.swift; sourceTree = "<group>"; };
@@ -813,7 +813,7 @@
 				22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */,
 				D69B1B73C832A569BF7DBDA9 /* MockHomeScreen.swift */,
 				E17E85BA3B68068B127904EF /* MockJournalScreen.swift */,
-				5FF7772591D5B5491D85CAAB /* MockDotsScreen.swift */,
+				5FF7772591D5B5491D85CAAB /* MockCalendarScreen.swift */,
 				B45E91DF187BB4034C3DFBC1 /* MockMorningQuestionScreen.swift */,
 				054CC03E7E81C4216EA5B4D9 /* MockNightReflectionScreen.swift */,
 				90F7F249342F2DE41528F483 /* MockSevenMorningsScreen.swift */,
@@ -1537,7 +1537,7 @@
 				C498A1CAA7FD5A33623085AA /* DesignTokens.swift in Sources */,
 				66C000CA2C8CF8A8CE31569C /* MockHomeScreen.swift in Sources */,
 				96863AB1DF718AA374C01180 /* MockJournalScreen.swift in Sources */,
-				3DA562E68DB7BEB42EE2E045 /* MockDotsScreen.swift in Sources */,
+				3DA562E68DB7BEB42EE2E045 /* MockCalendarScreen.swift in Sources */,
 				A832CA436D78FCDBB97FB463 /* MockMorningQuestionScreen.swift in Sources */,
 				0289297ADD51D25498C880F5 /* MockNightReflectionScreen.swift in Sources */,
 				86DAF26A21A1620580E7E9D8 /* MockSevenMorningsScreen.swift in Sources */,

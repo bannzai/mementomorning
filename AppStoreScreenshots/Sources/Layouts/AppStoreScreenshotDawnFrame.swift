@@ -152,7 +152,7 @@ struct AppStoreScreenshot15Page_Previews: PreviewProvider {
     }
 }
 
-/// App Store スクリーンショット 16 枚目 - dawn - 点 (粒の蓄積)
+/// App Store スクリーンショット 16 枚目 - dawn - カレンダー (答えた朝の蓄積)
 struct AppStoreScreenshot16Page: View {
     var body: some View {
         AppStoreScreenshotDawnLayout(
@@ -163,7 +163,7 @@ struct AppStoreScreenshot16Page: View {
             // ja: 点は、いつかつながる。
             subtitle: "The dots will connect."
         ) {
-            MockDotsScreen()
+            MockCalendarScreen()
         }
     }
 }

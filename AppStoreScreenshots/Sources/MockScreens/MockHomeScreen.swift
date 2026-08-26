@@ -95,8 +95,6 @@ struct MockHomeScreen: View {
             HStack(spacing: 24) {
                 // ja: ジャーナル
                 Text("Journal")
-                // ja: 点
-                Text("Dots")
                 // ja: カレンダー
                 Text("Calendar")
                 // ja: 設定

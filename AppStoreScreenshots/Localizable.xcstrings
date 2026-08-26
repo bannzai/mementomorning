@@ -101,6 +101,16 @@
         }
       }
     },
+    "August 2026": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2026年8月"
+          }
+        }
+      }
+    },
     "Calendar": {
       "localizations": {
         "ja": {
@@ -127,16 +137,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "夜明けは、問いとともに。"
-          }
-        }
-      }
-    },
-    "Dots": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "点"
           }
         }
       }
@@ -291,6 +291,16 @@
         }
       }
     },
+    "Mornings answered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答えた朝"
+          }
+        }
+      }
+    },
     "Not yet": {
       "localizations": {
         "ja": {
@@ -327,16 +337,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "7日目の朝に"
-          }
-        }
-      }
-    },
-    "One dot, one answered morning.": {
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ひと粒が、答えたひとつの朝"
           }
         }
       }
