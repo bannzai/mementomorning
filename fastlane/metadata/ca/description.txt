@@ -10,7 +10,7 @@ Només hi ha una pregunta.
 
 ■ Un diari de la teva vida
 - Una resposta al dia, que s'acumula en silenci
-- El teu calendari de vida es va omplint, un matí rere l'altre
+- Cada matí respost es diposita com un punt silenciós a la pantalla d'inici
 - El setè matí, les teves set respostes es reuneixen per primera vegada en una sola pàgina
 
 ■ Una revisió nocturna

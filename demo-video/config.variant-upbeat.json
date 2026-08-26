@@ -100,13 +100,6 @@
       "target_duration": 10.5,
       "trim_start": 4.6,
       "speed": 0.85
-    },
-    {
-      "id": "life-calendar",
-      "flow": "flows/life-calendar.yaml",
-      "subtitle": "The dots will connect.",
-      "target_duration": 7.5,
-      "trim_start": 5.2
     }
   ]
 }

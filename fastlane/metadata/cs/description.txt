@@ -10,7 +10,7 @@ Existuje jen jedna otázka.
 
 ■ Deník tvého života
 - Jedna odpověď denně, tiše se vrší
-- Tvůj kalendář života se plní, ráno po ránu
+- Každé zodpovězené ráno se usadí jako tichá tečka na úvodní obrazovce
 - Sedmé ráno se tvých sedm odpovědí poprvé sejde na jedné stránce
 
 ■ Večerní ohlédnutí

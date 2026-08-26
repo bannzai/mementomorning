@@ -10,7 +10,7 @@ Kysymyksiä on vain yksi.
 
 ■ Elämäsi päiväkirja
 - Yksi vastaus päivässä, hiljalleen kertyen
-- Elämänkalenterisi täyttyy aamu kerrallaan
+- Jokainen vastattu aamu laskeutuu hiljaisena pisteenä aloitusnäytölle
 - Seitsemäntenä aamuna seitsemän vastaustasi kokoontuvat ensimmäistä kertaa yhdelle sivulle
 
 ■ Iltatarkistus

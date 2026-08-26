@@ -10,7 +10,7 @@ Yalnızca tek bir soru var.
 
 ■ Hayatınızın günlüğü
 - Günde bir cevap, sessizce birikir
-- Hayat takviminiz her sabah bir nokta daha dolar
+- Yanıtladığınız her sabah ana ekrana sessiz bir nokta olarak yerleşir
 - Yedinci sabah, yedi cevabınız ilk kez tek bir sayfada bir araya gelir
 
 ■ Akşam kontrolü
