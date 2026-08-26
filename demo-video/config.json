@@ -70,7 +70,7 @@
       "flow": "flows/night-banner.yaml",
       "subtitle": "A quiet reminder, at the times you choose.",
       "target_duration": 6,
-      "trim_start": 47
+      "trim_start": 41
     },
     {
       "id": "night-reflection",

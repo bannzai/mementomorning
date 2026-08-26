@@ -16,7 +16,8 @@ appId: com.bannzai.MementoMorning
     centerElement: true
 # OFF のときだけスイッチを ON にする (再実行しても OFF には戻さない冪等な操作)。
 # SwiftUI の Toggle は行中央 (ラベル) のタップでは切り替わらないため、行の右端にあるスイッチ部の座標を叩く。
-# x=360 は行の右端 (幅 402pt の List 行の switch 位置)、y=437 は centerElement で画面中央に寄せた行の高さ (実測)
+# x=360 は行の右端 (幅 402pt の List 行の switch 位置)、y=452 は centerElement 後の行の中心
+# (hierarchy の実測 bounds [16,426][386,478]。旧値 437 は行の上端ぎりぎりでスイッチを外していた)
 - runFlow:
     when:
       visible:
@@ -24,7 +25,7 @@ appId: com.bannzai.MementoMorning
         checked: false
     commands:
       - tapOn:
-          point: "360, 437"
+          point: "360, 452"
 - assertVisible:
     id: "debug_simulate_video_answer"
     checked: true

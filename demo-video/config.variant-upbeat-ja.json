@@ -83,7 +83,7 @@
       "flow": "flows/night-banner.yaml",
       "subtitle": "夜、あの質問が静かに戻ってきます。",
       "target_duration": 5,
-      "trim_start": 47
+      "trim_start": 41
     },
     {
       "id": "night-reflection",
