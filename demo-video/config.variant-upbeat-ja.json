@@ -45,7 +45,7 @@
       "flow": "flows/morning-question.yaml",
       "subtitle": "この質問に、スヌーズはできません。",
       "narration": "今日死ぬとしたら、何をやりたいか。自分の顔に向かって答える。それだけが、アラームを止める唯一の方法です。",
-      "target_duration": 11.5,
+      "target_duration": 14.0,
       "trim_start": 3.6
     },
     {

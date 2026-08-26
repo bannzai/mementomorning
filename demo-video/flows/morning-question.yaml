@@ -17,18 +17,12 @@ appId: com.bannzai.MementoMorning
     label: "問いを 4 秒見せる"
 - tapOn:
     id: "morning_question_record_button"
-# 録画中 (タイマーと外リングの進捗) を見せる。
-# アプリは videoAnswerMaxRecordingDuration = 10 秒で自動停止して停止ボタンが消えるため、
-# Maestro の実時間 overhead (実測 2.7〜4 秒) を足しても 10 秒に届かない 3 秒に抑える
-# (6000 だと実時間が 10 秒を超え、次の停止タップが Element not found で失敗した実測あり)
-- extendedWaitUntil:
-    visible: "__pause__"
-    timeout: 3000
-    optional: true
-    label: "録画中を 3 秒見せる"
-- tapOn:
-    id: "morning_question_record_button"
-# 停止 = 回答完了。保存 → 画面が閉じてホームの「今朝のことば」に反映される
+# 録画はアプリの上限 videoAnswerMaxRecordingDuration = 10 秒の自動停止に任せ、停止タップはしない。
+# 停止タップ方式は extendedWaitUntil の実時間 overhead 次第で「自動停止後 (ボタン消滅で
+# Element not found)」にも「録画途中 (尺が不定になる)」にもなり得た実測があり、
+# 自動停止待ちなら毎回 10 秒録画で決定的になる (2026-08-26 の収録実測。停止の画は
+# 自動停止と見分けがつかないため演出上の差もない)
+# 保存 → 画面が閉じてホームの「今朝のことば」に反映されるまで待つ
 - extendedWaitUntil:
     visible: "This morning's words"
     timeout: 30000

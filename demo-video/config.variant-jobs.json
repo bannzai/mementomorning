@@ -32,7 +32,7 @@
       "flow": "flows/morning-question.yaml",
       "subtitle": "Recording your answer is the only way to stop it.",
       "narration": "If today were your last day, what would you want to do? Recording your answer is the only way to stop the alarm.",
-      "target_duration": 12.3,
+      "target_duration": 14.8,
       "trim_start": 3.6
     },
     {
