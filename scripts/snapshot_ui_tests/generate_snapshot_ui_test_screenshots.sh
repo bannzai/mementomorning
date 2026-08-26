@@ -158,6 +158,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# 撮影 (ビルド・UITest 実行) には iOS 26 系ランタイムが必須。env 側は撮影しない経路からも
+# source され得るため必須にせず、撮影の入口で検査する。
+# --help はランタイム不在の環境でも表示できるよう、オプション解析より後に置く
+if [ -z "$SNAPSHOT_OS_VERSION" ]; then
+  echo "Error: 利用可能な iOS 26 系の simulator ランタイムが見つかりません (xcrun simctl list runtimes available で確認してください)" >&2
+  exit 1
+fi
+
 # 進行ログを見やすく
 sep() { printf '\n==== %s ====\n' "$*"; }
 

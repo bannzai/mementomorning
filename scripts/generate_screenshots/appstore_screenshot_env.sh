@@ -11,6 +11,18 @@ export SCHEME="AppStoreScreenshotsUITests"
 export DERIVED_DATA_PATH=artifacts/appstore_screenshots/derived_data
 export VARIANT_OUTPUT_BASE_DIR="scripts/generate_screenshots/artifacts"
 
+# シミュレータの存在確認・自動作成 (ensure_simulator_exists) とランタイムバージョン解決
+# (resolve_ios_runtime_version) の共通関数。DESTINATION の組み立てで使うため先頭で読み込む
+source "$(dirname "${BASH_SOURCE[0]}")/../simulator_common.sh"
+
+# 撮影に使う iOS ランタイムの実バージョン (deployment target と同じ iOS 26 系)。
+# Xcode 更新で 26.0 → 26.0.1 のように進み、固定値では xcodebuild の destination に
+# 一致しなくなるため実行時に解決する (選定基準は resolve_ios_runtime_version を参照)。
+# 空 (ランタイム無し) はここでは許容する。本ファイルは apply_variant.sh など撮影しない
+# スクリプトからも source されるため、必須チェックは撮影を行うスクリプト側で行う
+SCREENSHOT_OS_VERSION="${SCREENSHOT_OS_VERSION:-$(resolve_ios_runtime_version 26)}"
+export SCREENSHOT_OS_VERSION
+
 # 撮影デバイス (App Store Connect の表示サイズ区分)。
 #   69: 6.9 インチ (iPhone 17 Pro Max, 1320×2868)。ASC で必須の表示サイズ
 #   65: 6.5 インチ (iPhone 13 Pro Max, 1284×2778)。任意 (未提供なら 6.9 インチの縮小が使われる)
@@ -54,7 +66,7 @@ configure_screenshot_device() {
   export SCREENSHOT_DEVICE_TYPE
   # simulator_common.sh の自動作成が使うデバイスタイプ (専用名のシミュレータでも正しい機種で作る)
   export DESTINATION_SIM_DEVICE_TYPE="$SCREENSHOT_DEVICE_TYPE"
-  export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-$SCREENSHOT_DEVICE_TYPE},OS=26.0"
+  export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-$SCREENSHOT_DEVICE_TYPE},OS=${SCREENSHOT_OS_VERSION}"
 }
 
 # 既定は 6.9 インチ。generate がデバイスごとに configure_screenshot_device を呼び直し、
@@ -110,6 +122,3 @@ get_variant_index() {
   local num=$1
   echo $(( (num - 1) % 6 ))
 }
-
-# シミュレータの存在確認・自動作成 (ensure_simulator_exists) は共通関数を使う
-source "$(dirname "${BASH_SOURCE[0]}")/../simulator_common.sh"

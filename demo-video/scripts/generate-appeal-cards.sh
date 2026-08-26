@@ -114,14 +114,14 @@ while IFS='|' read -r id line1 line2 with_portrait; do
     if [[ "$with_portrait" == "portrait" ]]; then
         # colorlevels は肖像画像の背景 (実測 RGB 約 21/255 ≒ 0.08) をカードの純黒に潰し、
         # 画像の矩形の縁が見えないようにするため
-        ffmpeg -y -v error \
+        ffmpeg -nostdin -y -v error \
             -f lavfi -i "color=c=black:s=${WIDTH}x${HEIGHT}:d=${DURATION}:r=${FPS}" \
             -i "$PORTRAIT" \
             -filter_complex "[1:v]scale=640:-1,colorlevels=rimin=0.12:gimin=0.12:bimin=0.12[p];[0:v][p]overlay=x=(W-w)/2:y=330[bg];[bg]$draw" \
             -c:v libx264 -pix_fmt yuv420p -an \
             "$CLIP_DIR/$id.mp4"
     else
-        ffmpeg -y -v error \
+        ffmpeg -nostdin -y -v error \
             -f lavfi -i "color=c=black:s=${WIDTH}x${HEIGHT}:d=${DURATION}:r=${FPS}" \
             -vf "$draw" \
             -c:v libx264 -pix_fmt yuv420p -an \

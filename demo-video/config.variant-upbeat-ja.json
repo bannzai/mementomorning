@@ -45,7 +45,7 @@
       "flow": "flows/morning-question.yaml",
       "subtitle": "この質問に、スヌーズはできません。",
       "narration": "今日死ぬとしたら、何をやりたいか。自分の顔に向かって答える。それだけが、アラームを止める唯一の方法です。",
-      "target_duration": 11.5,
+      "target_duration": 14.0,
       "trim_start": 3.6
     },
     {
@@ -69,7 +69,7 @@
       "subtitle": "7日目。自分が何度も立ち返るものが、見えてきます。",
       "narration": "七日目。自分が何度も立ち返るものが、見えてきます。",
       "target_duration": 5.3,
-      "trim_start": 7
+      "trim_start": 9.2
     },
     {
       "id": "share-card",
@@ -83,14 +83,14 @@
       "flow": "flows/night-banner.yaml",
       "subtitle": "夜、あの質問が静かに戻ってきます。",
       "target_duration": 5,
-      "trim_start": 47
+      "trim_start": 41
     },
     {
       "id": "night-reflection",
       "flow": "flows/night-reflection.yaml",
       "subtitle": "今朝の言葉を、守れましたか?",
       "target_duration": 4,
-      "trim_start": 11
+      "trim_start": 16.2
     },
     {
       "id": "paywall",
@@ -98,8 +98,15 @@
       "subtitle": "プレミアムは、すべての朝を残します。",
       "narration": "プレミアムは、答えるまで鳴り続けます。一度も朝を欠かさないように。そして、あなたが答えたすべての朝が、ずっと残ります。",
       "target_duration": 10.5,
-      "trim_start": 4.6,
+      "trim_start": 6.0,
       "speed": 0.85
+    },
+    {
+      "id": "calendar",
+      "flow": "flows/calendar.yaml",
+      "subtitle": "点と点は、つながります。",
+      "target_duration": 7.5,
+      "trim_start": 5.2
     }
   ]
 }
