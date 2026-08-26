@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 5b3041dfbc6f1dac0777d0f190110b38cd5844c0
-last_verified_at: 2026-08-25
+last_verified_commit: 75b0bf87eb1e52b1737ef435c61b32f36467f8b9
+last_verified_at: 2026-08-26
 ---
 
 # LifeCalendar QA
@@ -35,6 +35,12 @@ last_verified_at: 2026-08-25
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
+
+**確認日: 2026-08-26** (simtunnel リモート simulator、英語ロケール、開発者メニューでサンプル回答 10 日分を投入。issue #137 の点画面削除 + カレンダー復活 (75b0bf8) 後の回帰確認)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/98751671-7e75-435e-8002-7a1b5993b00f.jpg" width="320" />
+
+(ホームの Calendar リンクから遷移。August 2026 の月グリッドに答えた Aug 17〜26 が温白の粒 + 墨の数字で並び、今日 26 日にだけ夜明けのリング。下部に「Mornings answered 10」。回答が 8 月のみのため前月・翌月とも無効表示)
 
 **確認日: 2026-08-23** (simtunnel リモート simulator、英語ロケール、開発者メニューでサンプル回答 10 日分を投入)
 

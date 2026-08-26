@@ -1,7 +1,7 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: 9a0cff69436346083f210e50ae7afa35170dddaa
+last_verified_commit: 75b0bf87eb1e52b1737ef435c61b32f36467f8b9
 last_verified_at: 2026-08-26
 ---
 
@@ -99,7 +99,12 @@ last_verified_at: 2026-08-26
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-26** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。issue #137 で Dots / Calendar リンクと両画面を削除した後の確認)
+**確認日: 2026-08-26 (2 回目)** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。カレンダー復活 (75b0bf8) 後の確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/cdbae8a6-fba2-47a9-97d8-1a0528e76286.jpg" width="320" />
+
+(フッターのリンクが Journal / Calendar / Settings の 3 つ。画面下端に温白 9% の粒が 10 個積もり、大時刻・今朝のことば・「10 mornings answered」はすべて可読。Calendar リンクからカレンダー画面が開くことも同時に確認 — 記録は LifeCalendar/QA.md)
+
+**確認日: 2026-08-26 (1 回目)** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。Dots / Calendar リンクと両画面を削除した時点の確認。その後カレンダーは復活)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/13099096-5756-402d-8aff-e297e379c5fc.jpg" width="320" />
 
 (フッターのリンクが Journal / Settings の 2 つになり、画面下端に温白 9% の粒が 10 個積もっている。大時刻・今朝のことば・「10 mornings answered」はすべて可読。Journal リンクからジャーナルが開くことも同時に確認)
