@@ -21,6 +21,10 @@ set -euo pipefail
 # ミックスの出力先は config によらず 1 箇所 (output/narration/bgm-mix.m4a) のため、
 # バリアントを複数作る時は「本スクリプト → compose-video.sh」を config ごとに続けて実行する
 #
+# 声はシーン単位で上書きできる: scenes[].narration_voice / scenes[].narration_style_prompt
+# (未指定のシーンは narration_mix のグローバル値へフォールバック。登場人物ごとに別の声で
+# 話させる people バリアント用。issue #141)
+#
 # 必要環境: GEMINI_API_KEY (未設定なら say フォールバック)、ffmpeg、jq、curl
 #
 # 冪等性: 実行のたびに全ナレーションを再生成して同じ構成のミックスを作り直す。
@@ -55,10 +59,10 @@ mkdir -p "$OUT_DIR"
 # Gemini は一時エラー (レート制限等) があるため 3 回まで再試行する。1 行だけ say に落ちると
 # 声が混ざって不自然になるので、フォールバックは再試行が尽きた時の最終手段
 tts_line() {
-    local text="$1" wav="$2"
+    local text="$1" wav="$2" voice="$3" style_prompt="$4"
     if [[ -n "${GEMINI_API_KEY:-}" ]]; then
         local req="$OUT_DIR/req.json" res="$OUT_DIR/res.json"
-        jq -n --arg t "$STYLE_PROMPT $text" --arg v "$VOICE" '{
+        jq -n --arg t "$style_prompt $text" --arg v "$voice" '{
             contents: [{parts: [{text: $t}]}],
             generationConfig: {
                 responseModalities: ["AUDIO"],
@@ -92,10 +96,14 @@ TITLE_DURATION=$(jq -r '.title_card.duration // 0' "$CONFIG")
 LINES_TEXT=()
 LINES_START=()
 LINES_BUDGET=()
+LINES_VOICE=()
+LINES_STYLE=()
 if [[ "$TITLE_DURATION" != "0" ]]; then
     LINES_TEXT+=("$(jq -r '.title_card.text' "$CONFIG").")
     LINES_START+=(0)
     LINES_BUDGET+=("$TITLE_DURATION")
+    LINES_VOICE+=("$VOICE")
+    LINES_STYLE+=("$STYLE_PROMPT")
 fi
 
 OFFSET="$TITLE_DURATION"
@@ -105,9 +113,13 @@ for i in $(seq 0 $((SCENE_COUNT - 1))); do
     TARGET=$(jq -r ".scenes[$i].target_duration // \"\"" "$CONFIG")
     [[ -n "$TARGET" ]] || { echo "ERROR: scenes[$i] に target_duration がありません (ナレーション配置に必要)" >&2; exit 1; }
     if [[ -n "$NARRATION" ]]; then
+        SCENE_VOICE=$(jq -r ".scenes[$i].narration_voice // \"\"" "$CONFIG")
+        SCENE_STYLE=$(jq -r ".scenes[$i].narration_style_prompt // \"\"" "$CONFIG")
         LINES_TEXT+=("$NARRATION")
         LINES_START+=("$OFFSET")
         LINES_BUDGET+=("$TARGET")
+        LINES_VOICE+=("${SCENE_VOICE:-$VOICE}")
+        LINES_STYLE+=("${SCENE_STYLE:-$STYLE_PROMPT}")
     fi
     OFFSET=$(awk -v a="$OFFSET" -v b="$TARGET" 'BEGIN { print a + b }')
 done
@@ -126,7 +138,7 @@ for idx in "${!LINES_TEXT[@]}"; do
     BEST_DUR=""
     for attempt in $(seq 1 "$TTS_MAX_ATTEMPTS"); do
         TAKE="$OUT_DIR/line-$idx-take.wav"
-        tts_line "${LINES_TEXT[$idx]}" "$TAKE"
+        tts_line "${LINES_TEXT[$idx]}" "$TAKE" "${LINES_VOICE[$idx]}" "${LINES_STYLE[$idx]}"
         TAKE_DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$TAKE")
         if [[ -z "$BEST_DUR" ]] || awk -v a="$TAKE_DUR" -v b="$BEST_DUR" 'BEGIN { exit !(a < b) }'; then
             mv "$TAKE" "$WAV"
