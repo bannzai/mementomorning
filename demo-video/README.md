@@ -53,7 +53,6 @@ bash $SKILL/record-scene.sh demo-video/config.json journal
 bash $SKILL/record-scene.sh demo-video/config.json seven-mornings
 bash $SKILL/record-scene.sh demo-video/config.json share-card
 bash $SKILL/record-scene.sh demo-video/config.json paywall
-bash $SKILL/record-scene.sh demo-video/config.json life-calendar
 
 maestro --device $DEVICE_UDID test demo-video/flows/prep/night.yaml
 bash $SKILL/record-scene.sh demo-video/config.json night-banner   # バナー到着 (登録の約 60 秒後) まで映し続ける

@@ -94,23 +94,43 @@ public struct StopAlarmIntent: LiveActivityIntent {
             return
         }
 
+        // 検証用のプレミアム強制 (debugPremiumOverride) は TestFlight 配布判定 (isDeveloperMenuUnlocked) を通るが、
+        // リリースビルドの判定はプロセスローカルに false から始まり、RootView の task の refreshDeveloperMenuUnlocked() が
+        // 完了するまで解放されない。停止操作によるコールドローンチではその完了前にここへ到達し得て、
+        // 強制プレミアム + スヌーズ無制限でも無料枠 (freeTierSnoozeLimit) に丸められ、追撃が 2 回で止まる (issue #135)。
+        // 追撃の可否を決める前に判定の完了を待ってレースを塞ぐ。
+        // 待つのは「検証用の強制フラグが立っていて、かつ判定が未解放」の時だけにし、
+        // 実ユーザーの停止経路 (フラグ OFF) と判定済みの環境 (DEBUG は常時解放・TestFlight は判定成功後) には
+        // AppTransaction 取得 (ネットワークに触れ得る) の待ちを挟まない (PR #136 レビュー指摘)
+        if UserDefaults.standard.bool(forKey: .debugPremiumOverride), !isDeveloperMenuUnlocked {
+            await refreshDeveloperMenuUnlocked()
+        }
+
         let chaseCount = UserDefaults.standard.integer(forKey: .stopIntentChaseCount)
         // スヌーズ上限はユーザー設定 (AlarmSetting.snoozeLimit) と課金状態から決める (issue #73)。
         // 設定の読み取り失敗は「設定値が nil (無制限)」と区別し、無料枠 freeTierSnoozeLimit を上限にする
         // (プレミアムで有限回数を設定していても、一時的な読み取りエラーで設定回数を超えて追撃し続けないため。PR #78 レビュー指摘)。
-        // アラーム音も同じ設定から読む。読み取り失敗時は nil = システム標準音へ倒れる (鳴らないよりは標準音で鳴らす)
+        // アラーム音・スヌーズ間隔も同じ設定から読む。読み取り失敗時は nil = システム標準音・既定間隔へ倒れる
+        // (鳴らないよりは標準音・既定の間隔で鳴らす)
         let snoozeLimit: Int?
         let soundName: String?
+        let snoozeIntervalMinutes: Int?
         do {
             let alarmSetting = try PersistenceController.shared.container.mainContext.fetch(FetchDescriptor<AlarmSetting>()).first
             snoozeLimit = alarmSetting.flatMap(\.snoozeLimit)
             soundName = alarmSetting?.soundName
+            snoozeIntervalMinutes = alarmSetting.flatMap(\.snoozeIntervalMinutes)
         } catch {
             appendStopIntentSpikeLog(message: "alarm setting fetch failed, fallback to free tier snooze limit error=\(error)")
             snoozeLimit = freeTierSnoozeLimit
             soundName = nil
+            snoozeIntervalMinutes = nil
         }
-        guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: PremiumEntitlement.isPremium) else {
+        // 「無限のはずが途中で止まった」を実機ログ (DeveloperLogPage) だけで切り分けられるよう、判定材料を記録する (issue #135)
+        let isPremium = PremiumEntitlement.isPremium
+        let intervalMinutes = effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: snoozeIntervalMinutes)
+        appendStopIntentSpikeLog(message: "chase decision chaseCount=\(chaseCount) snoozeLimit=\(snoozeLimit.map(String.init) ?? "unlimited") isPremium=\(isPremium) effectiveLimit=\(effectiveSnoozeLimit(snoozeLimit: snoozeLimit, isPremium: isPremium).map(String.init) ?? "unlimited") intervalMinutes=\(intervalMinutes)")
+        guard shouldChase(chaseCount: chaseCount, snoozeLimit: snoozeLimit, isPremium: isPremium) else {
             appendStopIntentSpikeLog(message: "chase skipped: snooze limit reached (\(chaseCount))")
             // 先行登録済みのバックアップを放置するとスヌーズ上限を超えて発火するため、
             // 上限到達時に当日分の残りをキャンセルする (PR #30 レビュー指摘)
@@ -122,7 +142,7 @@ public struct StopAlarmIntent: LiveActivityIntent {
         // 未発火の間は reschedule の全キャンセルから UserDefaults の記録 (stopIntentChaseAlarmID) で保護され、
         // 発火後は次回 foreground の reschedule が OS 側から列挙して消すため残留しない
         let chaseAlarmID = UUID()
-        let chaseFireDate = Date.now.addingTimeInterval(stopIntentChaseInterval)
+        let chaseFireDate = Date.now.addingTimeInterval(TimeInterval(intervalMinutes * 60))
         appendStopIntentSpikeLog(message: "schedule() attempting chase id=\(chaseAlarmID) fireDate=\(chaseFireDate.formatted(.iso8601))")
         // 追撃の保護記録は schedule() の前に書く。完了後に書くと「OS 登録済み・記録前」の隙間が残るため
         // (直列化に加えた保険。未登録 ID の保護は cancelAll が読み飛ばすだけで無害。PR #30 レビュー指摘)

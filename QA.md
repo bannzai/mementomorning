@@ -1,8 +1,8 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
-last_verified_at: 2026-08-22
+last_verified_commit: 75b0bf87eb1e52b1737ef435c61b32f36467f8b9
+last_verified_at: 2026-08-26
 ---
 
 # QA 全体ガイド
@@ -82,7 +82,7 @@ last_verified_at: 2026-08-22
 
 ## 1. 起動と基本導線
 
-- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Dots / Calendar / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え)
+- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え。issue #137 で Dots リンクと点画面を削除)
   - 自動化: manual（起動直後の画面の目視確認）
 - [x] **開発者メニューへの到達**: DEBUG ビルドでホーム左上のハンマーアイコン (debug_menu_link) から開発者メニューが開く
   - 自動化: manual（DEBUG 限定 UI の確認）
@@ -95,9 +95,20 @@ last_verified_at: 2026-08-22
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Dots / Calendar / Settings リンク) が表示される
+### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される
 
 <details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-26 (2 回目)** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。カレンダー復活 (75b0bf8) 後の確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/cdbae8a6-fba2-47a9-97d8-1a0528e76286.jpg" width="320" />
+
+(フッターのリンクが Journal / Calendar / Settings の 3 つ。画面下端に温白 9% の粒が 10 個積もり、大時刻・今朝のことば・「10 mornings answered」はすべて可読。Calendar リンクからカレンダー画面が開くことも同時に確認 — 記録は LifeCalendar/QA.md)
+
+**確認日: 2026-08-26 (1 回目)** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。Dots / Calendar リンクと両画面を削除した時点の確認。その後カレンダーは復活)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/13099096-5756-402d-8aff-e297e379c5fc.jpg" width="320" />
+
+(フッターのリンクが Journal / Settings の 2 つになり、画面下端に温白 9% の粒が 10 個積もっている。大時刻・今朝のことば・「10 mornings answered」はすべて可読。Journal リンクからジャーナルが開くことも同時に確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/6a58ab21-4306-4664-a979-477058b46f5b.jpg" width="320" />
 
 **確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。issue #117 の再設計後の確認)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/3ceb8f70-bd04-4819-9935-124a4ff9bd02.jpg" width="320" />
@@ -173,7 +184,7 @@ last_verified_at: 2026-08-22
 - [Paywall](MementoMorning/Features/Paywall/QA.md) — 課金 (購入・復元)
 - [NightReflection](MementoMorning/Features/NightReflection/QA.md) — 夜リマインドと振り返り
 - [AnswerEdit](MementoMorning/Features/AnswerEdit/QA.md) — 回答の編集
-- [LifeCalendar](MementoMorning/Features/LifeCalendar/QA.md) — 人生カレンダー
+- [LifeCalendar](MementoMorning/Features/LifeCalendar/QA.md) — カレンダー
 - [SevenMornings](MementoMorning/Features/SevenMornings/QA.md) — 7 日の節目
 - [ShareCard](MementoMorning/Features/ShareCard/QA.md) — 共有カード
 

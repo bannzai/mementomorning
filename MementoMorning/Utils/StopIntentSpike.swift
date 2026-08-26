@@ -15,10 +15,6 @@ extension String {
     static let stopIntentChaseCount = "stopIntentChaseCount"
 }
 
-/// 追撃アラームの発火間隔 (秒)。
-/// 検証を短時間で回すため、CLAUDE.md の「アラーム発火の確認は 1〜2 分後のアラームで行う」に合わせて 2 分にする
-let stopIntentChaseInterval: TimeInterval = 120
-
 /// スパイク検証ログの unified log 出力先。
 /// UserDefaults の痕跡と二重化し、アプリが途中で kill されても Console / log collect で回収できるようにする
 private let stopIntentSpikeLogger = Logger(subsystem: "com.bannzai.MementoMorning", category: "StopIntentSpike")

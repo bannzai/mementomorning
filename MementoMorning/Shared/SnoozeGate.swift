@@ -9,6 +9,24 @@ let freeTierSnoozeLimit = 2
 /// 無料は freeTierSnoozeLimit までしか選べず、それ以上と無制限はプレミアム
 let snoozeLimitChoices = 1...10
 
+/// スヌーズ (追撃) の間隔として選べる分数 (issue #135)。課金線は回数側 (snoozeLimit) にあり、間隔は無料で選べる
+let snoozeIntervalChoices = 1...10
+
+/// スヌーズ間隔の既定の分数。
+/// 根拠: 設定導入前の固定値 (2 分。二度寝に落ち切る前に追撃しつつ、アラーム発火の確認を 1〜2 分後で回す
+/// 検証運用にも合う値) を踏襲し、既存ユーザーの挙動を変えない
+let defaultSnoozeIntervalMinutes = 2
+
+/// 設定値 (AlarmSetting.snoozeIntervalMinutes) から実効のスヌーズ間隔 (分) を返す。
+/// nil (未設定・設定導入前の既存レコード) と選択肢の範囲外は既定値に倒す。
+/// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)
+func effectiveSnoozeIntervalMinutes(snoozeIntervalMinutes: Int?) -> Int {
+    guard let snoozeIntervalMinutes, snoozeIntervalChoices.contains(snoozeIntervalMinutes) else {
+        return defaultSnoozeIntervalMinutes
+    }
+    return snoozeIntervalMinutes
+}
+
 /// 設定値 (AlarmSetting.snoozeLimit) が現在の課金状態で選択可能か。
 /// 無料は freeTierSnoozeLimit 以下の回数だけ選べ、それを超える回数と無制限 (nil) はプレミアムでのみ選べる。
 /// 純粋関数であり、同じ入力に対して常に同じ出力を返す (冪等)

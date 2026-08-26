@@ -86,13 +86,6 @@
       "narration": "Premium keeps ringing until you answer — so you never miss a morning. And it keeps every morning you have ever answered.",
       "target_duration": 11,
       "trim_start": 6.5
-    },
-    {
-      "id": "life-calendar",
-      "flow": "flows/life-calendar.yaml",
-      "subtitle": "The dots will connect.",
-      "target_duration": 7.5,
-      "trim_start": 5.2
     }
   ]
 }
