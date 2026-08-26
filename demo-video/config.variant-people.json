@@ -1,0 +1,108 @@
+{
+  "profile": "demo-portrait",
+  "output_dir": "output",
+  "output_name": "memento-morning-demo-people.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
+  "narration_mix": {
+    "voice": "Charon",
+    "style_prompt": "Speak in Japanese, in a calm, quiet, contemplative tone:"
+  },
+  "scenes": [
+    {
+      "id": "why-someday-ja",
+      "flow": "flows/why-someday-ja.yaml",
+      "narration": "「いつかやる」と言い続けて、何年たちましたか。",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
+      "id": "alarm",
+      "flow": "flows/alarm.yaml",
+      "subtitle": "このアラームの止め方は、ひとつしかありません。",
+      "narration": "このアラームの止め方は、ひとつしかありません。",
+      "target_duration": 4.5,
+      "trim_start": 3.0
+    },
+    {
+      "id": "why-question-ja",
+      "flow": "flows/why-question-ja.yaml",
+      "narration": "今日死ぬとしたら、何をやりたいか。",
+      "target_duration": 4.0,
+      "trim_start": 0
+    },
+    {
+      "id": "person-worker",
+      "flow": "flows/person-worker.yaml",
+      "subtitle": "今日は定時で帰って、妻とちゃんと話す。",
+      "narration": "今日は定時で帰って、妻とちゃんと話す。",
+      "narration_voice": "Orus",
+      "narration_style_prompt": "Speak in Japanese, quietly but with quiet determination, like a just-woken man in his thirties talking to his phone camera:",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
+      "id": "person-student",
+      "flow": "flows/person-student.yaml",
+      "subtitle": "ずっと避けてた友達に、謝る。",
+      "narration": "ずっと避けてた友達に、謝る。",
+      "narration_voice": "Leda",
+      "narration_style_prompt": "Speak in Japanese, quietly but with quiet determination, like a just-woken young woman talking to her phone camera:",
+      "target_duration": 4,
+      "trim_start": 0
+    },
+    {
+      "id": "person-parent",
+      "flow": "flows/person-parent.yaml",
+      "subtitle": "今日、息子の自転車の練習に付き合う。",
+      "narration": "今日、息子の自転車の練習に付き合う。",
+      "narration_voice": "Achird",
+      "narration_style_prompt": "Speak in Japanese, quietly but with warm quiet determination, like a just-woken father talking to his phone camera:",
+      "target_duration": 4,
+      "trim_start": 0
+    },
+    {
+      "id": "person-creator",
+      "flow": "flows/person-creator.yaml",
+      "subtitle": "作りかけの曲を、今日こそ完成させる。",
+      "narration": "作りかけの曲を、今日こそ完成させる。",
+      "narration_voice": "Zephyr",
+      "narration_style_prompt": "Speak in Japanese, quietly but with quiet determination, like a just-woken young woman talking to her phone camera:",
+      "target_duration": 4,
+      "trim_start": 0
+    },
+    {
+      "id": "journal",
+      "flow": "flows/journal.yaml",
+      "subtitle": "毎朝の答えが、あなたの人生の記録になります。",
+      "narration": "毎朝の答えが、あなたの人生の記録になります。",
+      "target_duration": 5,
+      "trim_start": 7.2
+    },
+    {
+      "id": "paywall",
+      "flow": "flows/paywall.yaml",
+      "subtitle": "プレミアムは、答えるまで鳴り続けます。",
+      "narration": "プレミアムは、答えるまで鳴り続けます。",
+      "target_duration": 6,
+      "trim_start": 8.4,
+      "speed": 0.85
+    },
+    {
+      "id": "calendar",
+      "flow": "flows/calendar.yaml",
+      "subtitle": "点と点は、つながります。",
+      "target_duration": 7,
+      "trim_start": 5.6
+    },
+    {
+      "id": "brand-ja",
+      "flow": "flows/brand-ja.yaml",
+      "narration": "Memento Morning.",
+      "target_duration": 3,
+      "trim_start": 0
+    }
+  ]
+}

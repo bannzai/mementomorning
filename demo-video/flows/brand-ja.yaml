@@ -1,0 +1,4 @@
+# 訴求カット (黒背景テキストカード) のプレースホルダ flow (デモ動画 issue #141)。
+# このシーンのクリップは Maestro 収録ではなく demo-video/scripts/generate-appeal-cards.sh が
+# ffmpeg で直接生成する。本ファイルは validate-config.sh のシーン検証 (flow の存在チェック) を
+# 通すためだけに存在し、record-scene.sh で実行しない
