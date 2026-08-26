@@ -69,7 +69,7 @@
       "subtitle": "7日目。自分が何度も立ち返るものが、見えてきます。",
       "narration": "七日目。自分が何度も立ち返るものが、見えてきます。",
       "target_duration": 5.3,
-      "trim_start": 7
+      "trim_start": 9.2
     },
     {
       "id": "share-card",
@@ -90,7 +90,7 @@
       "flow": "flows/night-reflection.yaml",
       "subtitle": "今朝の言葉を、守れましたか?",
       "target_duration": 4,
-      "trim_start": 11
+      "trim_start": 16.2
     },
     {
       "id": "paywall",
@@ -98,7 +98,7 @@
       "subtitle": "プレミアムは、すべての朝を残します。",
       "narration": "プレミアムは、答えるまで鳴り続けます。一度も朝を欠かさないように。そして、あなたが答えたすべての朝が、ずっと残ります。",
       "target_duration": 10.5,
-      "trim_start": 4.6,
+      "trim_start": 6.0,
       "speed": 0.85
     },
     {
