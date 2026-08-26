@@ -15,7 +15,10 @@
 # Usage: resolve_ios_runtime_version <メジャーバージョン (例: 26)>
 resolve_ios_runtime_version() {
   # ランタイム一覧の行形式: "iOS 26.0 (26.0.1 - 23A8464) - com.apple.CoreSimulator.SimRuntime.iOS-26-0"
-  xcrun simctl list runtimes | sed -nE "s/^iOS $1(\.[0-9.]+)? \(([0-9.]+) - .*/\2/p" | sort -V | head -1
+  # 利用不可 ((unavailable, ...) 付き) の古いランタイムを拾わないよう available で絞る。
+  # xcrun 自体が無い環境 (Xcode 未導入で source された場合) でも呼び出し元の set -e を
+  # 壊さないよう、失敗は空文字として返し、必須チェックは撮影を行うスクリプト側で行う
+  { xcrun simctl list runtimes available 2>/dev/null || true; } | sed -nE "s/^iOS $1(\.[0-9.]+)? \(([0-9.]+) - .*/\2/p" | sort -V | head -1
 }
 
 # DESTINATIONで指定されたシミュレータが存在しない場合に自動作成する関数
@@ -31,8 +34,10 @@ ensure_simulator_exists() {
   # 齟齬があるため、ランタイム一覧の行を先に特定してマーケティング名とランタイムIDの両方をそこから取る。
   # 実バージョン・マーケティング名のどちらを渡されても行を特定できるようにする (バージョン一致は
   # 行頭のマーケティング名か括弧内の実バージョンのどちらかに一致すればよい)
+  # 利用不可ランタイムに一致させない (available で絞る)。呼び出し元の set -e / pipefail で
+  # grep の不一致 (exit 1) が即時終了にならないよう、不一致は空文字に落とす
   local runtime_line
-  runtime_line=$(xcrun simctl list runtimes | grep -E "^iOS ${os_version} \(|\(${os_version} - " | head -1)
+  runtime_line=$(xcrun simctl list runtimes available | { grep -E "^iOS ${os_version} \(|\(${os_version} - " || true; } | head -1)
 
   if [ -z "$runtime_line" ]; then
     echo "エラー: iOS ${os_version} ランタイムが見つかりません。" >&2

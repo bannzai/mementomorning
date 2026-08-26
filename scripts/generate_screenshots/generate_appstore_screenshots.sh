@@ -45,6 +45,13 @@ cd "$PROJECT_ROOT_DIR"
 
 source scripts/generate_screenshots/appstore_screenshot_env.sh
 
+# 撮影 (ビルド・UITest 実行) には iOS 26 系ランタイムが必須。env 側は apply_variant.sh など
+# 撮影しない経路からも source されるため必須にせず、撮影の入口であるここで検査する
+if [ -z "$SCREENSHOT_OS_VERSION" ]; then
+  echo "Error: 利用可能な iOS 26 系の simulator ランタイムが見つかりません (xcrun simctl list runtimes available で確認してください)" >&2
+  exit 1
+fi
+
 # 一時ファイル・ディレクトリのクリーンアップ共通関数
 cleanup_temp_files() {
   rm -rf "$TEMP_SCREENSHOTS_DIR"

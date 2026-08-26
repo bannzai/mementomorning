@@ -17,13 +17,11 @@ source "$(dirname "${BASH_SOURCE[0]}")/../simulator_common.sh"
 
 # 撮影に使う iOS ランタイムの実バージョン (deployment target と同じ iOS 26 系)。
 # Xcode 更新で 26.0 → 26.0.1 のように進み、固定値では xcodebuild の destination に
-# 一致しなくなるため実行時に解決する (選定基準は resolve_ios_runtime_version を参照)
+# 一致しなくなるため実行時に解決する (選定基準は resolve_ios_runtime_version を参照)。
+# 空 (ランタイム無し) はここでは許容する。本ファイルは apply_variant.sh など撮影しない
+# スクリプトからも source されるため、必須チェックは撮影を行うスクリプト側で行う
 SCREENSHOT_OS_VERSION="${SCREENSHOT_OS_VERSION:-$(resolve_ios_runtime_version 26)}"
 export SCREENSHOT_OS_VERSION
-if [ -z "$SCREENSHOT_OS_VERSION" ]; then
-  echo "Error: iOS 26 系の simulator ランタイムが見つかりません (xcrun simctl list runtimes で確認してください)" >&2
-  return 1
-fi
 
 # 撮影デバイス (App Store Connect の表示サイズ区分)。
 #   69: 6.9 インチ (iPhone 17 Pro Max, 1320×2868)。ASC で必須の表示サイズ
