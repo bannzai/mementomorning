@@ -2,7 +2,7 @@ import SwiftUI
 
 /// 回答 1 行 (日付 + 夜の結果 + 回答本文、ヘアライン区切り)。タップで共有カードを開く。
 /// 動画で答えた行は本文の下に「動画を見返す」導線を添え、再生画面を開く (issue #80)。
-/// ジャーナル (AnswerLogPage) の一覧と、カレンダー (MonthCalendarPage) で選んだ日の表示で同じ見た目を共有する
+/// ジャーナル (AnswerLogPage) の一覧で使う
 struct AnswerLogRow: View {
     /// 表示する回答
     let answer: MorningAnswer
