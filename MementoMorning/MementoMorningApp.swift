@@ -196,6 +196,12 @@ private struct RootView: View {
         .onChange(of: lastAlarmFiredDate) { _, _ in
             updateMorningQuestionPresentation()
         }
+        // オンボーディング中の発火は updateMorningQuestionPresentation が hasCompletedOnboarding で打ち切るため、
+        // 完了した時点で判定をやり直す (儀式のサマリー・ペイウォールの表示中にアラームが発火・停止されても、
+        // ホームへ移った直後に問いが提示されるようにする。issue #140 で完了がペイウォール閉時に移ったことへの対応)
+        .onChange(of: hasCompletedOnboarding) { _, _ in
+            updateMorningQuestionPresentation()
+        }
         // 前面に表示したまま日付が変わったら判定をやり直す (問いは発火した日の朝のもの。跨いだら閉じる)
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             if isUnitTest { return }

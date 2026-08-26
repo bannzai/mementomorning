@@ -74,10 +74,10 @@ struct OnboardingPage: View {
 
     /// 現在のステップ
     @State private var step: Step = .concept
-    /// 生まれ年ステップのホイールで選択中の年。
+    /// 生まれ年ステップのホイールで選択中の年 (西暦)。
     /// 初期値の 39 年前は US の年齢中央値 (約 39 歳。US Census Bureau ACS 2023) に合わせたもので、
     /// 主戦場の US ユーザーがホイールをほとんど回さずに決定できる位置から始める
-    @State private var birthYear: Int = Calendar.autoupdatingCurrent.component(.year, from: .now) - 39
+    @State private var birthYear: Int = gregorianYear(date: .now) - 39
     /// ペイウォールを表示中かどうか。閉じた時点でオンボーディングを完了する
     @State private var isPaywallPresented: Bool = false
     /// AlarmKit の認可状態
@@ -147,7 +147,7 @@ struct OnboardingPage: View {
 
     /// 現在の年 (西暦)。生まれ年ホイールの上限と、残りの朝の回数の計算に使う
     private var currentYear: Int {
-        Calendar.autoupdatingCurrent.component(.year, from: .now)
+        gregorianYear(date: .now)
     }
 
     /// ペイウォールのタイトル上に出す残りの朝の回数。生まれ年から数えられない場合は文脈行を出さない (nil)

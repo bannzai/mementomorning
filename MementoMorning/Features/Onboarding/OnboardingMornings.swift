@@ -41,6 +41,14 @@ enum MorningsResultVariant: Equatable {
 /// 画面では「約」として丸めて見せるため、端数や誕生日単位の精密さは要らない
 let averageLifeExpectancyYears = 78
 
+/// 指定した日付の西暦年を返す。
+/// 端末のカレンダー設定 (和暦・仏暦等) に依存せず西暦で数えるため、autoupdatingCurrent ではなくグレゴリオ暦から取る
+/// (和暦の端末では component(.year:) が 8 のような元号内の年を返し、生まれ年ホイールの範囲 1900...現在年 が
+/// 不正な ClosedRange になってクラッシュする)
+func gregorianYear(date: Date) -> Int {
+    Calendar(identifier: .gregorian).component(.year, from: date)
+}
+
 /// 生まれ年から、これまでに迎えた朝と残りの朝の回数を求める。
 /// 生まれ年が未回答 (0)・未来の年・平均寿命に達している場合は、回数を出さず .unknown を返す
 /// (残りが 0 以下になる人に「残り 0 回」と突きつけないため)
