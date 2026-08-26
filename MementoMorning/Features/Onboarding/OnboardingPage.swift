@@ -893,6 +893,12 @@ struct OnboardingPage: View {
         guard !isSaving else { return }
         isSaving = true
         saveError = nil
+        // @AppStorage の既定値 false は UserDefaults へ書き込まれないため、AlarmSetting を保存する前に
+        // 未完了であることを明示的に書き込み、「AlarmSetting はあるが完了キーが無い」状態を作らない。
+        // キーが無いと、RootView.init() の旧バージョンからの移行判定 (キーなし + アラーム設定あり = 完了扱い) が
+        // 新規インストールの kill 復帰にも誤発動し、儀式のサマリーとペイウォールを飛ばしてホームへ進んでしまう
+        // (PR #142 Codex 指摘)
+        UserDefaults.standard.set(false, forKey: .hasCompletedOnboarding)
         let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: time)
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
