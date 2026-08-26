@@ -1,0 +1,15 @@
+# 月めくりカレンダーのシーン (デモ動画 issue #122)。答えた朝が点として埋まったカレンダーで締める
+appId: com.bannzai.MementoMorning
+---
+- launchApp:
+    stopApp: true
+- tapOn: "Calendar"
+- extendedWaitUntil:
+    visible: "Mornings answered"
+    timeout: 10000
+# 点の埋まった月グリッドを見せる (「The dots will connect.」の一文は画面ではなく字幕で重ねる)
+- extendedWaitUntil:
+    visible: "__pause__"
+    timeout: 6000
+    optional: true
+    label: "カレンダーを 6 秒見せる"
