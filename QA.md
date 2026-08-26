@@ -1,8 +1,8 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
-last_verified_at: 2026-08-22
+last_verified_commit: 9a0cff69436346083f210e50ae7afa35170dddaa
+last_verified_at: 2026-08-26
 ---
 
 # QA 全体ガイド
@@ -98,6 +98,12 @@ last_verified_at: 2026-08-22
 ### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Settings リンク) が表示される
 
 <details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-26** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。issue #137 で Dots / Calendar リンクと両画面を削除した後の確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/13099096-5756-402d-8aff-e297e379c5fc.jpg" width="320" />
+
+(フッターのリンクが Journal / Settings の 2 つになり、画面下端に温白 9% の粒が 10 個積もっている。大時刻・今朝のことば・「10 mornings answered」はすべて可読。Journal リンクからジャーナルが開くことも同時に確認)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260826/6a58ab21-4306-4664-a979-477058b46f5b.jpg" width="320" />
 
 **確認日: 2026-08-23** (simtunnel、英語ロケール、サンプル回答 10 日分投入後。issue #117 の再設計後の確認)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260823/3ceb8f70-bd04-4819-9935-124a4ff9bd02.jpg" width="320" />
