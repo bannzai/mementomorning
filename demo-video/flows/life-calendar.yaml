@@ -1,23 +1,22 @@
-# 人生カレンダーのシーン (デモ動画 issue #94)。答えた朝が点として埋まる表現で締める
+# 「点」画面のシーン (デモ動画 issue #94、issue #122 で人生カレンダーから置き換え)。答えた朝が点として積もる表現で締める
 appId: com.bannzai.MementoMorning
 ---
 - launchApp:
     stopApp: true
-- tapOn: "Life Calendar"
+- tapOn: "Dots"
 - extendedWaitUntil:
-    visible: "Each row is a week. Answered mornings remain as dots."
+    visible: "One dot, one answered morning."
     timeout: 10000
-# 点の埋まったグリッドを見せる
+# 物理で粒が落ちて積もりきるまで映し続ける
 - extendedWaitUntil:
     visible: "__pause__"
-    timeout: 4000
+    timeout: 6000
     optional: true
-    label: "人生カレンダーを 4 秒見せる"
-- scrollUntilVisible:
-    element:
-      text: "The dots will connect."
-    direction: DOWN
-    speed: 15
+    label: "粒が積もる様子を 6 秒見せる"
+# ja: 点はいつかつながる
+- extendedWaitUntil:
+    visible: "The dots will connect."
+    timeout: 10000
 - extendedWaitUntil:
     visible: "__pause__"
     timeout: 4000

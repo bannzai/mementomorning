@@ -6,7 +6,10 @@
 ## 前提
 
 - ローカルの iOS Simulator (Maestro / `xcrun simctl` が必要なため simtunnel ではなくローカル。CLAUDE.md「検証方法」)
-- `brew install ffmpeg maestro jq`
+- `brew install ffmpeg jq`
+- Maestro CLI: `brew install mobile-dev-inc/tap/maestro` (素の `brew install maestro` は同名の別製品
+  (Electron 製 GUI アプリ) の cask を掴むため、必ず tap 付きの formula 名で入れる。
+  ref: https://docs.maestro.dev/maestro-cli/how-to-install-maestro-cli )
 - Debug ビルド (RevenueCat は Test Store キーが既定。Config.xcconfig)
 
 ## 収録環境の初期化
