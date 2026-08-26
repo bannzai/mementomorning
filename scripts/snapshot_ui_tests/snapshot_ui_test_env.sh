@@ -1,8 +1,21 @@
 #!/bin/bash
 
 export SCHEME="MementoMorningSnapshotUITests"
+
+# シミュレータの存在確認・自動作成 (ensure_simulator_exists) とランタイムバージョン解決
+# (resolve_ios_runtime_version) の共通関数。DESTINATION の組み立てで使うため先頭で読み込む
+source "$(dirname "${BASH_SOURCE[0]}")/../simulator_common.sh"
+
+# 撮影に使う iOS ランタイムの実バージョン。Xcode 更新で 26.0 → 26.0.1 のように進み、
+# 固定値では xcodebuild の destination に一致しなくなるため実行時に解決する
+# (選定基準は resolve_ios_runtime_version を参照)
+SNAPSHOT_OS_VERSION="${SNAPSHOT_OS_VERSION:-$(resolve_ios_runtime_version 26)}"
+if [ -z "$SNAPSHOT_OS_VERSION" ]; then
+  echo "Error: iOS 26 系の simulator ランタイムが見つかりません (xcrun simctl list runtimes で確認してください)" >&2
+  return 1
+fi
 # App Store スクショ生成 (generate_screenshots) と同じデバイスを使い、シミュレータを増やさない
-export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-iPhone 13 Pro Max},OS=26.0"
+export DESTINATION="platform=iOS Simulator,name=${DESTINATION_SIM_NAME:-iPhone 13 Pro Max},OS=${SNAPSHOT_OS_VERSION}"
 export DERIVED_DATA_PATH=artifacts/snapshot_ui_test/derived_data
 
 # テストファイルパスからテスト実行パスとartifactパスを取得する共通関数
@@ -22,6 +35,3 @@ get_test_info() {
 
   echo "$test_path $artifact_path"
 }
-
-# シミュレータの存在確認・自動作成 (ensure_simulator_exists) は共通関数を使う
-source "$(dirname "${BASH_SOURCE[0]}")/../simulator_common.sh"
