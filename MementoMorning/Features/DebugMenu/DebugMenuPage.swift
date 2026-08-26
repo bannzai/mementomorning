@@ -298,6 +298,9 @@ struct DebugMenuPage: View {
                     UserDefaults.standard.removeObject(forKey: .onboardingBirthYear)
                     UserDefaults.standard.removeObject(forKey: .onboardingSnoozeAnswer)
                     UserDefaults.standard.removeObject(forKey: .onboardingMemoryAnswer)
+                    UserDefaults.standard.removeObject(forKey: .onboardingFirstMinutesAnswer)
+                    UserDefaults.standard.removeObject(forKey: .onboardingDayBeginAnswer)
+                    UserDefaults.standard.removeObject(forKey: .onboardingUndoneGoalAnswer)
                 } label: {
                     Text(verbatim: "オンボーディングをリセット")
                 }

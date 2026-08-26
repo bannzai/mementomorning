@@ -2021,6 +2021,16 @@
         }
       }
     },
+    "A few things" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いくつかある"
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "ar" : {
@@ -5087,6 +5097,16 @@
         }
       }
     },
+    "Around noon" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昼ごろ"
+          }
+        }
+      }
+    },
     "At night, you check the day against your answer" : {
       "localizations" : {
         "ja" : {
@@ -5317,6 +5337,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "生まれ年"
+          }
+        }
+      }
+    },
+    "By evening, finally" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夕方になってようやく"
           }
         }
       }
@@ -8438,6 +8468,16 @@
         }
       }
     },
+    "From tomorrow, your day begins in the morning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日から、あなたの一日は朝に始まります。"
+          }
+        }
+      }
+    },
     "From tomorrow, your mornings will be kept." : {
       "localizations" : {
         "ja" : {
@@ -8474,6 +8514,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "先月の朝を、いくつ覚えていますか？"
+          }
+        }
+      }
+    },
+    "How many of them will you leave for 'someday'?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そのうち何回を、「いつか」のままにしますか？"
           }
         }
       }
@@ -8688,6 +8738,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "我做到了"
+          }
+        }
+      }
+    },
+    "I have a morning ritual" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝の習慣がある"
           }
         }
       }
@@ -9334,6 +9394,16 @@
         }
       }
     },
+    "In the morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝から"
+          }
+        }
+      }
+    },
     "In the morning, stopping the recording stops the alarm." : {
       "localizations" : {
         "ar" : {
@@ -9544,6 +9614,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "早上，停止錄製即可關閉鬧鐘。"
+          }
+        }
+      }
+    },
+    "Is there something you keep telling yourself you'll do?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「いつかやる」と言い続けていることはありますか？"
           }
         }
       }
@@ -12426,6 +12506,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暫不"
+          }
+        }
+      }
+    },
+    "Not really" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特にない"
           }
         }
       }
@@ -16576,6 +16666,16 @@
         }
       }
     },
+    "Rushing to start the day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あわただしく一日が始まる"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "ar" : {
@@ -17010,6 +17110,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
+    "Scrolling my phone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スマホを眺めている"
           }
         }
       }
@@ -23575,12 +23685,32 @@
         }
       }
     },
+    "Tomorrow morning, answer that 'someday.'" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の朝、その「いつか」に答えてください。"
+          }
+        }
+      }
+    },
     "Tomorrow morning, you'll practice it with one question." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日の朝、ひとつの問いから始めましょう。"
+          }
+        }
+      }
+    },
+    "Tomorrow, your first minutes go to the question, not the phone." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の最初の数分は、スマホではなく問いのために。"
           }
         }
       }
@@ -25327,12 +25457,32 @@
         }
       }
     },
+    "What do your first minutes of the day look like?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目覚めてすぐの時間を、どう過ごしていますか？"
+          }
+        }
+      }
+    },
     "When contacting support, copy this log and attach it to your message." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "問い合わせの際は、このログをコピーして添えてください。"
+          }
+        }
+      }
+    },
+    "When does your day really begin?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの一日は、いつ本当に始まりますか？"
           }
         }
       }
@@ -25792,6 +25942,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最初の一行のコードを書く"
+          }
+        }
+      }
+    },
+    "Yes, and it stays undone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ある。手つかずのまま"
           }
         }
       }

@@ -12,6 +12,15 @@ extension String {
     /// 記憶のペイン認識質問への回答を保存する UserDefaults キー。
     /// 値は OnboardingMemoryAnswer の rawValue。未回答は空文字
     static let onboardingMemoryAnswer = "onboardingMemoryAnswer"
+    /// 目覚めてすぐの過ごし方の質問への回答を保存する UserDefaults キー。
+    /// 値は OnboardingFirstMinutesAnswer の rawValue。未回答は空文字
+    static let onboardingFirstMinutesAnswer = "onboardingFirstMinutesAnswer"
+    /// 一日が本当に始まる時間帯の質問への回答を保存する UserDefaults キー。
+    /// 値は OnboardingDayBeginAnswer の rawValue。未回答は空文字
+    static let onboardingDayBeginAnswer = "onboardingDayBeginAnswer"
+    /// 「いつかやる」と言い続けていることの質問への回答を保存する UserDefaults キー。
+    /// 値は OnboardingUndoneGoalAnswer の rawValue。未回答は空文字
+    static let onboardingUndoneGoalAnswer = "onboardingUndoneGoalAnswer"
 }
 
 /// 「朝はスヌーズボタンから始まりますか」への回答
@@ -26,6 +35,71 @@ enum OnboardingMemoryAnswer: String {
     case almostNone
     case aFew
     case most
+}
+
+/// 「目覚めてすぐの時間をどう過ごしていますか」への回答
+enum OnboardingFirstMinutesAnswer: String {
+    case scrolling
+    case rushing
+    case ritual
+}
+
+/// 「あなたの一日はいつ本当に始まりますか」への回答
+enum OnboardingDayBeginAnswer: String {
+    case morning
+    case noon
+    case evening
+}
+
+/// 「『いつかやる』と言い続けていることはありますか」への回答
+enum OnboardingUndoneGoalAnswer: String {
+    case undone
+    case aFew
+    case notReally
+}
+
+/// 儀式のサマリーに出すパーソナライズの一文
+enum RitualSummaryNote {
+    /// 手つかずの「いつか」に明日の朝答えるよう促す
+    case answerSomeday
+    /// スヌーズが要らなくなることを伝える
+    case noMoreSnoozing
+    /// 朝が記録として残るようになることを伝える
+    case morningsKept
+    /// 一日が朝から始まるようになることを伝える
+    case dayBeginsMorning
+    /// 最初の数分がスマホではなく問いに向かうことを伝える
+    case firstMinutesToQuestion
+    /// 特定のペインに紐づかない場合の既定の一文
+    case startsTomorrow
+}
+
+/// ペイン認識質問の回答から、儀式のサマリーに出す一文を 1 つ選ぶ。
+/// 優先順は「目的 (手つかずの『いつか』) > アラームのメカニクス (スヌーズ) > 記憶 > 一日の始まる時間帯 > スマホ習慣」。
+/// 本アプリが解こうとしている課題に近いものほど強い動機づけになるため、この順で最初に該当したものだけを返す
+func ritualSummaryNote(
+    undoneGoal: OnboardingUndoneGoalAnswer?,
+    snooze: OnboardingSnoozeAnswer?,
+    memory: OnboardingMemoryAnswer?,
+    dayBegin: OnboardingDayBeginAnswer?,
+    firstMinutes: OnboardingFirstMinutesAnswer?
+) -> RitualSummaryNote {
+    if undoneGoal == .undone {
+        return .answerSomeday
+    }
+    if snooze == .almostEvery {
+        return .noMoreSnoozing
+    }
+    if memory == .almostNone {
+        return .morningsKept
+    }
+    if dayBegin == .evening {
+        return .dayBeginsMorning
+    }
+    if firstMinutes == .scrolling {
+        return .firstMinutesToQuestion
+    }
+    return .startsTomorrow
 }
 
 /// 残りの朝の回数の提示パターン

@@ -16,7 +16,7 @@ final class OnboardingPageSnapshotUITest: XCTestCase {
     /// 撮影対象の PreviewProvider 名。SnapshotUITestPage のボタンラベルと一致させる
     let previewType = "OnboardingPage_Previews"
     /// PreviewProvider が持つ Preview の個数。_allPreviews を型から辿れないためハードコードする (取り込み元 Focus と同じ制約)
-    let previewCount = 7
+    let previewCount = 10
 
     func testSnapshot() throws {
         // アプリはダークモード前提の唯一のテーマのため、ステータスバー等の描画も dark に固定する

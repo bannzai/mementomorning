@@ -121,6 +121,9 @@ struct OnboardingBirthYearStepView: View {
 struct OnboardingMorningsResultStepView: View {
     /// 提示するパターン
     let variant: MorningsResultVariant
+    /// 手つかずの「いつか」への追い打ちの一文を出すかどうか。
+    /// 回数を数えられた時 (counted) だけ意味を持つ (回数が出ていない画面で「そのうち何回を」と問えないため)
+    let showsUndoneGoalLine: Bool
     /// 次のステップへ進む時に呼ばれる
     let onContinue: () -> Void
 
@@ -145,6 +148,14 @@ struct OnboardingMorningsResultStepView: View {
                     .lineSpacing(9)
                     .foregroundStyle(Color.warmWhite.opacity(0.45))
                     .padding(.top, 24)
+                if showsUndoneGoalLine {
+                    // ja: そのうち何回を、「いつか」のままにしますか？
+                    Text("How many of them will you leave for 'someday'?")
+                        .font(.system(size: 12))
+                        .lineSpacing(9)
+                        .foregroundStyle(Color.warmWhite.opacity(0.45))
+                        .padding(.top, 14)
+                }
             case .unknown:
                 // ja: 朝があと何回あるかは、誰にもわかりません。
                 Text("No one knows how many mornings remain.")
@@ -219,10 +230,8 @@ struct OnboardingMementoMoriStepView: View {
 struct OnboardingRitualSummaryStepView: View {
     /// 設定したアラームの時刻。サマリーの 1 行目に短い時刻表記で埋め込む
     let alarmTime: Date
-    /// スヌーズのペイン認識質問への回答。未回答は nil
-    let snoozeAnswer: OnboardingSnoozeAnswer?
-    /// 記憶のペイン認識質問への回答。未回答は nil
-    let memoryAnswer: OnboardingMemoryAnswer?
+    /// ペイン認識質問の回答から選ばれたパーソナライズの一文 (選択ロジックは ritualSummaryNote)
+    let note: RitualSummaryNote
     /// ペイウォールへ進む時に呼ばれる
     let onBegin: () -> Void
 
@@ -244,7 +253,7 @@ struct OnboardingRitualSummaryStepView: View {
                 summaryRow(text: Text("At night, you check the day against your answer"))
             }
             .padding(.top, 28)
-            personalizedNote
+            noteText
                 .font(.system(size: 12))
                 .lineSpacing(9)
                 .foregroundStyle(Color.warmWhite.opacity(0.45))
@@ -266,18 +275,28 @@ struct OnboardingRitualSummaryStepView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// ペイン認識質問の回答に合わせた一文。優先順に最初に該当したものを 1 つだけ出す
-    private var personalizedNote: Text {
-        if snoozeAnswer == .almostEvery {
+    /// パーソナライズの一文の表示文言
+    private var noteText: Text {
+        switch note {
+        case .answerSomeday:
+            // ja: 明日の朝、その「いつか」に答えてください。
+            return Text("Tomorrow morning, answer that 'someday.'")
+        case .noMoreSnoozing:
             // ja: もうスヌーズはいりません。アラームを止めるのは、あなたの答えだけ。
             return Text("No more snoozing. Only your answer stops the alarm.")
-        }
-        if memoryAnswer == .almostNone {
+        case .morningsKept:
             // ja: 明日からの朝は、残っていきます。
             return Text("From tomorrow, your mornings will be kept.")
+        case .dayBeginsMorning:
+            // ja: 明日から、あなたの一日は朝に始まります。
+            return Text("From tomorrow, your day begins in the morning.")
+        case .firstMinutesToQuestion:
+            // ja: 明日の最初の数分は、スマホではなく問いのために。
+            return Text("Tomorrow, your first minutes go to the question, not the phone.")
+        case .startsTomorrow:
+            // ja: 明日の朝から、始まります。
+            return Text("It starts tomorrow morning.")
         }
-        // ja: 明日の朝から、始まります。
-        return Text("It starts tomorrow morning.")
     }
 
     /// サマリー 1 行。許可ステップの permissionRow と同じヘアライン区切りの行様式に合わせる
