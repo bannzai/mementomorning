@@ -399,14 +399,6 @@ private struct HomeContent: View {
                         .padding(.horizontal, 12)
                 }
                 NavigationLink {
-                    DotsPage()
-                } label: {
-                    // ja: 点
-                    Text("Dots")
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 12)
-                }
-                NavigationLink {
                     MonthCalendarPage()
                 } label: {
                     // ja: カレンダー
