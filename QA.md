@@ -82,7 +82,7 @@ last_verified_at: 2026-08-26
 
 ## 1. 起動と基本導線
 
-- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え。issue #137 で Dots / Calendar リンクと両画面を削除)
+- [x] **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え。issue #137 で Dots リンクと点画面を削除)
   - 自動化: manual（起動直後の画面の目視確認）
 - [x] **開発者メニューへの到達**: DEBUG ビルドでホーム左上のハンマーアイコン (debug_menu_link) から開発者メニューが開く
   - 自動化: manual（DEBUG 限定 UI の確認）
@@ -95,7 +95,7 @@ last_verified_at: 2026-08-26
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Settings リンク) が表示される
+### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される
 
 <details><summary>動作確認スクショ</summary>
 
@@ -179,6 +179,7 @@ last_verified_at: 2026-08-26
 - [Paywall](MementoMorning/Features/Paywall/QA.md) — 課金 (購入・復元)
 - [NightReflection](MementoMorning/Features/NightReflection/QA.md) — 夜リマインドと振り返り
 - [AnswerEdit](MementoMorning/Features/AnswerEdit/QA.md) — 回答の編集
+- [LifeCalendar](MementoMorning/Features/LifeCalendar/QA.md) — カレンダー
 - [SevenMornings](MementoMorning/Features/SevenMornings/QA.md) — 7 日の節目
 - [ShareCard](MementoMorning/Features/ShareCard/QA.md) — 共有カード
 

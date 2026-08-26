@@ -399,6 +399,14 @@ private struct HomeContent: View {
                         .padding(.horizontal, 12)
                 }
                 NavigationLink {
+                    MonthCalendarPage()
+                } label: {
+                    // ja: カレンダー
+                    Text("Calendar")
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 12)
+                }
+                NavigationLink {
                     AlarmSettingPage()
                 } label: {
                     // ja: 設定

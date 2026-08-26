@@ -16,6 +16,7 @@ struct SnapshotUITestPage: View {
                     SnapshotUITest<MorningQuestionPage_Previews>()
                     SnapshotUITest<QuestionPage_Previews>()
                     SnapshotUITest<AnswerLogPage_Previews>()
+                    SnapshotUITest<MonthCalendarPage_Previews>()
                     SnapshotUITest<NightReflectionPage_Previews>()
                     SnapshotUITest<SevenMorningsPage_Previews>()
                     SnapshotUITest<AlarmSettingPage_Previews>()

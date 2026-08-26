@@ -10,7 +10,7 @@ Det finnes bare ett spørsmål.
 
 ■ En dagbok over livet ditt
 - Ett svar om dagen, som stille samler seg
-- Hver besvarte morgen legger seg som en stille prikk på startskjermen
+- Livskalenderen din fylles ut, én morgen om gangen
 - Den sjuende morgenen samles de sju svarene dine for første gang på én side
 
 ■ En kveldssjekk

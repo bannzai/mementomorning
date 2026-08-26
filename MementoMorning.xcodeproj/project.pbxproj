@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		011D9FDA0CBBAB4AA172468C /* AppStoreScreenshotHeroFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83DB620F218845230C9CC30 /* AppStoreScreenshotHeroFrame.swift */; };
+		119038B1AD3D46665F51A32E /* MonthCalendarDatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1990C15BE0DB2EB8AAF7097 /* MonthCalendarDatesTests.swift */; };
+		1B4349AA97691B2ED56DE13D /* MonthCalendarDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CD6A65CFC00F1CA1486F8 /* MonthCalendarDates.swift */; };
 		5010793154E1451EC97ABB6E /* MockAlarmRingingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */; };
 		977C9D0122921CFF368E78DF /* AppStoreScreenshot37PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3EBBBBD9600DAFD63B0600A /* AppStoreScreenshot37PageSnapshotUITest.swift */; };
 		75DFCCE94B72205C9C45B636 /* AppStoreScreenshot38PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A01C99B36D1EACFA62BFBA /* AppStoreScreenshot38PageSnapshotUITest.swift */; };
@@ -192,9 +194,11 @@
 		F188879D108162E22038E42D /* XCUIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81902DA91853DF013ABF9CF8 /* XCUIApplication+.swift */; };
 		F328E0FA68BE491644057169 /* StopAlarmIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AAFD27A7F0CB620CBDB0A9 /* StopAlarmIntent.swift */; };
 		F7CD76D98B12477BBFEEEEA3 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6C81E23F07A6153886744 /* Environments.swift */; };
+		F94803F0535B45DB818E3869 /* MonthCalendarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5F3F7FAE114D4AA10FC98E /* MonthCalendarPage.swift */; };
 		FB16E0808F35889A98F848AD /* TodayAnswerLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD438F069BAAC3D7E6F5FFD /* TodayAnswerLiveActivityWidget.swift */; };
 		EF4B968F4285A1EDA7A34C99 /* AnswerVideoPlayerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A5C9BB64B826770768492 /* AnswerVideoPlayerPage.swift */; };
 		56CE1B33E1A2BF2125A07143 /* AnswerVideoPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66B1B2474DEFD09BC78782 /* AnswerVideoPlayerTests.swift */; };
+		FD3AAD3FE4E34FD6B8F437EB /* MonthCalendarPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,10 +247,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6F4CD6A65CFC00F1CA1486F8 /* MonthCalendarDates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarDates.swift; sourceTree = "<group>"; };
+		C1990C15BE0DB2EB8AAF7097 /* MonthCalendarDatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarDatesTests.swift; sourceTree = "<group>"; };
+		CF5F3F7FAE114D4AA10FC98E /* MonthCalendarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarPage.swift; sourceTree = "<group>"; };
 		D83DB620F218845230C9CC30 /* AppStoreScreenshotHeroFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotHeroFrame.swift; sourceTree = "<group>"; };
 		22B9A0A7DE363AAF8102BE98 /* MockAlarmRingingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAlarmRingingScreen.swift; sourceTree = "<group>"; };
 		D3EBBBBD9600DAFD63B0600A /* AppStoreScreenshot37PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot37PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		C6A01C99B36D1EACFA62BFBA /* AppStoreScreenshot38PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot38PageSnapshotUITest.swift; sourceTree = "<group>"; };
+		F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarPageSnapshotUITest.swift; sourceTree = "<group>"; };
 		F8552A8748CDC52130090A8F /* AppStoreScreenshot39PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot39PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		CD649B1B15E3CE7DA723DC2A /* AppStoreScreenshot40PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot40PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		90C868777AE9F028AAC93C48 /* AppStoreScreenshot41PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot41PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -540,6 +548,14 @@
 			path = MorningQuestion;
 			sourceTree = "<group>";
 		};
+		248AF7FFA2AE4BC270D52AC5 /* LifeCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */,
+			);
+			path = LifeCalendar;
+			sourceTree = "<group>";
+		};
 		261CA245021353F8F1D32C5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,6 +575,7 @@
 				13AB3B987C433E24ED5E1173 /* AlarmSetting */,
 				F44FB7883F33BE5D953BF417 /* AnswerLog */,
 				E06E388742264E0BE81389F6 /* ContentView */,
+				248AF7FFA2AE4BC270D52AC5 /* LifeCalendar */,
 				23FF74EDE0DEFFB6E87EBC8D /* MorningQuestion */,
 				3D391C6E13C2FC24CB8A808F /* NightReflection */,
 				37A710F47E6F5928FD6FB1A0 /* Onboarding */,
@@ -592,6 +609,7 @@
 				F8F83B2A857AF48DFAD33E53 /* AnswerVideo */,
 				6E885FD3AF6855E33EBCF9A0 /* DebugMenu */,
 				A9C02174C5D65C53C4C17F10 /* DeveloperLog */,
+				7D562EF7D3FEFFF2D7675537 /* LifeCalendar */,
 				AB32792BA96D4B30966EE086 /* MorningQuestion */,
 				9FC18C321010A448E4106E9C /* NightReflection */,
 				AFE2DBF2BECA6EF4A030247C /* Onboarding */,
@@ -602,6 +620,15 @@
 				AAC098A5B89315EE9105EA74 /* SnapshotUITest */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		7D562EF7D3FEFFF2D7675537 /* LifeCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				6F4CD6A65CFC00F1CA1486F8 /* MonthCalendarDates.swift */,
+				CF5F3F7FAE114D4AA10FC98E /* MonthCalendarPage.swift */,
+			);
+			path = LifeCalendar;
 			sourceTree = "<group>";
 		};
 		AA13300000000000000000C1 /* AlarmSounds */ = {
@@ -970,6 +997,7 @@
 				5B8E92F1C3D4A56789B0C1D2 /* DeveloperMenuGateTests.swift */,
 				BE34724AB95CFDBAADCB0EEE /* HomeWidgetTimelineTests.swift */,
 				5011A376181D3A8D00B8B0C4 /* LegalLinksTests.swift */,
+				C1990C15BE0DB2EB8AAF7097 /* MonthCalendarDatesTests.swift */,
 				C33E78722B3893C1FB6ABC3C /* MorningAnswerTests.swift */,
 				D2A0C411CC1B26043C8D8357 /* MorningQuestionGateTests.swift */,
 				16CA221981AFA9477D31763C /* NightReminderTests.swift */,
@@ -1399,6 +1427,8 @@
 				38F7CC9BF45470CD0923A6BB /* HomeWidgetTimeline.swift in Sources */,
 				E846144607070BD9E21563D4 /* LegalLinks.swift in Sources */,
 				1AC0D1DD47DF4A908433FA52 /* MorningDotsPhysicsView.swift in Sources */,
+				1B4349AA97691B2ED56DE13D /* MonthCalendarDates.swift in Sources */,
+				F94803F0535B45DB818E3869 /* MonthCalendarPage.swift in Sources */,
 				2DB56E9CE69A3557600228EA /* MementoMorningAlarmMetadata.swift in Sources */,
 				C505D2B1FC676BD60B0CCFBB /* MementoMorningApp.swift in Sources */,
 				5F8579478D974C0CE6C489F7 /* MorningAnswer.swift in Sources */,
@@ -1451,6 +1481,7 @@
 				83C1A29EDF890B52CD844DD2 /* HomeWidgetTimelineTests.swift in Sources */,
 				4887B9ACF3A2F22877FC5D1B /* LegalLinksTests.swift in Sources */,
 				B1EE25DBFA8AD07C2286CD43 /* MorningAnswerTests.swift in Sources */,
+				119038B1AD3D46665F51A32E /* MonthCalendarDatesTests.swift in Sources */,
 				A66354678A45B89032312EC3 /* MorningQuestionGateTests.swift in Sources */,
 				DB6AC38B5A4436AAE96F5830 /* NightReminderTests.swift in Sources */,
 				531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */,
@@ -1478,6 +1509,7 @@
 				BD573C9988FFD160D9F402F7 /* ContentViewSnapshotUITest.swift in Sources */,
 				E082D66D425B8FE7638EEC2F /* Languages.swift in Sources */,
 				47298F0ED7429FCF9CB1C4E3 /* MorningQuestionPageSnapshotUITest.swift in Sources */,
+				FD3AAD3FE4E34FD6B8F437EB /* MonthCalendarPageSnapshotUITest.swift in Sources */,
 				446D2AE9097234F876178904 /* NightReflectionPageSnapshotUITest.swift in Sources */,
 				2EA6EC7F3E62BCE52088973A /* OnboardingPageSnapshotUITest.swift in Sources */,
 				83FEBC1ACE55DF32E2C9CA68 /* PaywallPageSnapshotUITest.swift in Sources */,

@@ -10,7 +10,7 @@ Csak egyetlen kérdés van.
 
 ■ Az életed naplója
 - Napi egy válasz, csendben gyűlik
-- Minden megválaszolt reggel csendes pontként ülepszik le a kezdőképernyőn
+- Az életnaptárad reggelről reggelre telik meg
 - A hetedik reggelen a hét válaszod először kerül együtt egyetlen oldalra
 
 ■ Esti visszatekintés
