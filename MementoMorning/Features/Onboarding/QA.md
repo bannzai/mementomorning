@@ -1,7 +1,7 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: 2577aab7ea76747163cc5b77627e95dfa53067fd
+last_verified_commit: f52f6e511d086df8397360ce0002ae3a5b2b4539
 last_verified_at: 2026-08-27
 ---
 
@@ -317,7 +317,17 @@ last_verified_at: 2026-08-27
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/e864f247-3109-4119-b2ba-6f5d14585f17.png" width="320">
 
-復元で閉じる経路は通していないが、`PaywallPage` の `restore()` の成功分岐は `purchase(package:)` と同じく `PremiumEntitlement.cacheEntitlement(customerInfo:)` → `dismiss()` を呼ぶだけで、閉じた後の完了処理 (fullScreenCover の onDismiss) は「今はしない」も購入も復元も共通のため、この項目は「今はしない」と購入の 2 経路の確認でチェックを付けている
+**確認日: 2026-08-27** 復元で閉じた場合 (上の購入を済ませたシミュレータで、オンボーディングをリセットしてから実施)
+
+ペイウォールの「購入を復元」(paywall_restore) をタップした場合
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/f9189c0f-88fb-49ac-8692-b82af2e4f056.png" width="320">
+
+「復元できる購入が見つかりませんでした」等のアラートは出ず、ペイウォールが閉じて (paywall_not_now_button が無いことを assertNotVisible で確認) オンボーディングが完了し、ホームへ切り替わって設定した 7:00 が出ている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/6922add9-9471-43ae-9138-b2ec24a09e0c.png" width="320">
+
+これで「今はしない」・購入・復元の 3 経路とも実測した。`restore()` は entitlement のキャッシュではなく `Purchases.shared.restorePurchases()` の戻り値で判定するため、この復元はキャッシュ済みの状態に引きずられたものではなく Test Store の復元結果によるもの
 
 </details>
 
