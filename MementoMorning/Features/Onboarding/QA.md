@@ -1,7 +1,7 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: 468ad1776e16e4f6ca527d03f302aebb5e871897
+last_verified_commit: 3f084a914670e8a8cc24a987012ffd1a72e8e6bf
 last_verified_at: 2026-08-27
 ---
 
@@ -326,6 +326,8 @@ last_verified_at: 2026-08-27
   - 自動化: manual（アプリの再起動操作が必要）
 - [x] **オンボーディングのリセットが冪等**: 開発者メニューの「オンボーディングをリセット」で完了フラグとオンボーディング内の回答 (生まれ年・ペイン認識 5 問) が消え、再走すると生まれ年ホイールが初期値に戻る。何度押しても同じ状態になる
   - 自動化: manual（開発者メニュー操作と再走の確認）
+- [x] **サマリー・ペイウォール表示中の kill で再走する**: アラーム保存後、儀式のサマリーやペイウォールの表示中にアプリを終了して再起動すると、完了扱いでホームへ飛ばず、オンボーディングがコンセプトから再走する。アラーム設定ステップには保存済みの時刻が復元される
+  - 自動化: manual（アプリの強制終了と再起動が必要）
 
 #### 動作確認
 <details>
@@ -467,6 +469,32 @@ last_verified_at: 2026-08-27
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/64d51909-156c-4eef-83ae-256dea337174.png" width="320">
 
 増えた 3 問を含めてペイン認識 5 問の回答も残っていない。同じシミュレータで続けて 5 回リセットして別々の回答で通したところ、儀式サマリーの一文はその回の回答どおりに「明日の朝、その「いつか」に答えてください。」→「明日から、あなたの一日は朝に始まります。」→「明日の最初の数分は、スマホではなく問いのために。」→「明日の朝から、始まります。」と変わっており、前の回の回答が残っていない (スクショは上の「ペイン認識質問の回答が儀式サマリーに効く」を参照)
+
+</details>
+
+### **サマリー・ペイウォール表示中の kill で再走する**: アラーム保存後、儀式のサマリーやペイウォールの表示中にアプリを終了して再起動すると、完了扱いでホームへ飛ばず、オンボーディングがコンセプトから再走する。アラーム設定ステップには保存済みの時刻が復元される
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-27** (ローカル simulator mementomorning-sktest-iOS26.2 / iOS 26.2、日本語ロケール、commit `3f084a9`。`xcrun simctl uninstall` → `install` の新規インストール状態から実施)
+
+復元されたことが既定値 7:00 と区別できるよう、アラーム設定ステップでホイールを 9:00 に変えて保存した。儀式のサマリーの 1 行目が「9:00 — アラームが鳴る」になっている。この表示のままアプリを kill する
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/f8563088-97d2-4257-9cf9-2831e5982d23.png" width="320">
+
+`xcrun simctl terminate` で終了させたあとの再起動直後。ホーム (「答えた日数」) ではなくコンセプト「死を想ってから、朝を始める。」から再走している (ホームが出ていないことは maestro の assertNotVisible でも確認)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/0ed60795-2fcf-42cc-b3c7-f511dd958aa9.png" width="320">
+
+そのまま再走してアラーム設定ステップまで進めたところ。ホイールは既定値の 7:00 ではなく、kill 前に保存した 9:00 が復元されている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/48411757-2d23-41de-9834-0a7959c535e3.png" width="320">
+
+比較用に、同じ新規インストールの 1 周目でアラーム設定ステップに初めて来た時のホイール (既定値 7:00)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/865e7fd9-83f9-43da-bad3-b88c8190866a.png" width="320">
+
+修正前は、`@AppStorage` の既定値 false が UserDefaults へ書き込まれないため「完了キーなし + AlarmSetting あり」になり、RootView の旧バージョン移行判定が誤発動してホームへ飛んでいた。commit `3f084a9` で AlarmSetting の保存前に完了キーへ false を明示的に書き込むようにしている
 
 </details>
 
