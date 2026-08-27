@@ -21,9 +21,9 @@ set -euo pipefail
 # 安全版 (config.variant-upbeat-founder.json が参照。実名・肖像を使わない Shipaton 提出用の保険。
 # 肖像も外すのは、パブリシティ権が氏名だけでなく肖像にも及び、線画でも人物が特定できるため):
 #   why-founder-safe / why-founder-legacy
-# people バリアント (config.variant-people.json が参照。issue #141。「やりたいことを先送りする人」への
+# people バリアント (config.variant-people.json が参照。issue #141。英語。「やりたいことを先送りする人」への
 # 冒頭訴求 + 問いの提示 + 締めのブランドカード):
-#   why-someday-ja / why-question-ja / brand-ja
+#   why-someday-en / why-question-en / brand-en
 #
 # 使い方 (compose-video.sh の前に実行する):
 #   bash demo-video/scripts/generate-appeal-cards.sh
@@ -67,9 +67,9 @@ why-jobs-legacy-ja|そのひとつの習慣が、|毎日を意味あるものに
 why-value-ja|目標とともに、目覚める。|二度寝ではなく、起きる理由を。|
 why-founder-safe|A famous founder asked himself|one question, every morning.|
 why-founder-legacy|That one habit|made every day count.|
-why-someday-ja|「いつかやる」と言い続けて|何年たちましたか|
-why-question-ja|今日死ぬとしたら|何をやりたいか|
-brand-ja|Memento Morning|死を想え。それから、朝を始めよう。|brand'
+why-someday-en|"Someday," you keep saying.|How many years has it been?|
+why-question-en|If today were your last day,|what would you want to do?|
+brand-en|Memento Morning|Remember death. Then begin your morning.|brand'
 
 # 行の推定描画幅が画面幅 92% に収まるように基準 fontsize を縮小して返す
 # (compose-video.sh の glyph_ratio と同じ近似。マルチバイト判定は bytes > chars で、
