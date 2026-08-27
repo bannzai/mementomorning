@@ -1,7 +1,7 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: 0832538b42d9ae5d98bf0f899efbd9624549fde4
+last_verified_commit: d40bf8d
 last_verified_at: 2026-08-27
 ---
 
@@ -317,6 +317,10 @@ last_verified_at: 2026-08-27
 **確認日: 2026-08-27** (文言改定後の再確認。ローカル simulator mementomorning-sktest-iOS26.2 / iOS 26.2、日本語ロケール、commit `0832538`。maestro フロー tmp/copyqa-flowA1/A2.yaml で新規状態から通し、実行ログは ./tmp/qa2/)
 
 起床の質問 → 満足の質問 → 起きてすぐの過ごし方 → 一日が始まる時間帯 → 手つかずの「いつか」→ 生まれ年 → 残りの朝 → メメント・モリ → 許可、の順にフェードで進み、各画面が改定後の文言 (読点なし) で表示されている。許可以降 → 練習スキップ → アラーム設定 → 儀式のサマリー → ペイウォールも同じ通しで確認 (スクショは下の「ペイン認識質問の回答が儀式サマリーに効く」「ペイウォールの文脈行」を参照)
+
+**確認日: 2026-08-27** (追記: 儀式サマリー 3 行目を「夜は朝の回答と一日の答え合わせ」へ変更した commit `d40bf8d` で、同じ maestro フロー 4 本 (ログ ./tmp/qa3/) を再走して全パス。変更行が新文言で表示されている)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/098e2618-526d-4fe9-82c2-d18d7cbb8db0.png" width="300" />
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/1140f598-4108-4552-92db-c143362a8062.png" width="300" />
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/43f11eca-0415-494a-b6d5-8ea09e5ff6e4.png" width="300" />
