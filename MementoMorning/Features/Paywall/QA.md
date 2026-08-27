@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
-last_verified_at: 2026-08-22
+last_verified_commit: 7be4ec0d3e614c6572ed3c8d1846e7636caf8893
+last_verified_at: 2026-08-28
 ---
 
 # Paywall QA
@@ -61,6 +61,11 @@ last_verified_at: 2026-08-22
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/e2509ff3-f355-4ae1-84d8-f7e9bfdb8fb8.png" width="320" />
 
 (年 $38.00 + ひと月 $3.17 換算・月 $5.00・一生 $61.50。Test Store の USD ストア価格で、見本価格 (¥6,000 / ¥800 / ¥9,800) と異なるため offering 取得後の表示であることを画面から判別できる)
+
+**確認日: 2026-08-28 (Test Store。isPremium アサーション修正後のフロー再実行、全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/e46f84ff-5148-4afc-9d54-9431efa770d8.png" width="320" />
+
+(3 プランとも Test Store の USD ストア価格で表示。フロー破損 (開発者メニュー日本語化での文言変更にアサーションが未追随) の修復後の再確認)
 
 </details>
 
@@ -135,6 +140,11 @@ Paywall 下部のリンク行 (購入を復元・利用規約・プライバシ�
 
 (左: paywall_yearly_button タップで Test Store Purchase モーダルが出て Test valid purchase を選択。右: アプリ再起動後の開発者メニューで isPremium: true。「プレミアムを強制 (上書き)」は OFF なので購入由来の entitlement)
 
+**確認日: 2026-08-28 (Test Store。フロー再実行、全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/b0df10bb-494f-4262-9888-87b3e362b5be.png" width="320" />
+
+(年額購入 → アプリ再起動後の開発者メニューで「プレミアム判定 (isPremium): true」。強制上書きトグルは OFF)
+
 </details>
 
 ### **復元**: 「購入を復元」(paywall_restore) で購入済みのプレミアムが復元される
@@ -145,6 +155,11 @@ Paywall 下部のリンク行 (購入を復元・利用規約・プライバシ�
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/4f8a0388-8df3-4a51-9514-b435edfcd697.png" width="320" />
 
 (paywall_restore タップで有効な entitlement が返り、paywall が dismiss されて開発者メニューへ戻った直後の画面)
+
+**確認日: 2026-08-28 (Test Store。フロー再実行、全ステップ COMPLETED)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/8eb385d5-3237-445b-8a2f-98d276db6223.png" width="320" />
+
+(復元後に paywall が dismiss され開発者メニューへ戻った直後の画面)
 
 </details>
 
