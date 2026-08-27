@@ -97,7 +97,7 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 | `config.variant-upbeat.json` | 元気トーン (jobs フック + Puck ボイス + Maple Leaf Rag + 各シーン短縮)。フィードバック第 6 弾の文言エモ化とワンクッションカット (why-jobs-legacy) を先行適用 | `memento-morning-demo-upbeat.mp4` |
 | `config.variant-upbeat-ja.json` | upbeat の日本語版 (字幕・ナレーション・訴求カードを日本語化。クリップは英語 UI のまま共用) | `memento-morning-demo-upbeat-ja.mp4` |
 | `config.variant-upbeat-founder.json` | upbeat の安全版 (フックを実名 → A famous founder に置き換え、肖像イラストも外す。Devpost の第三者素材ルール・パブリシティ権対策) | `memento-morning-demo-upbeat-founder.mp4` |
-| `config.variant-people.json` | 登場人物 4 人 (会社員・学生・親・クリエイター) が録画 UI で各自の目標を声に出す構成 (issue #141。冒頭は「やりたいことを先送りする人」への訴求カード。日本語・人物別 TTS ボイス・しっとりトーン) | `memento-morning-demo-people.mp4` |
+| `config.variant-people.json` | 登場人物 4 人 (会社員・学生・親・クリエイター) が録画 UI で各自の目標を声に出す構成 (issue #141。Shipaton 提出用の英語版。冒頭は「やりたいことを先送りする人」への訴求カード → アラームの説明 → 問いカード → 人物カット 4 連 (字幕なし・声だけ) → 夜リマインド → journal → calendar → paywall → ブランドカード。人物別 TTS ボイス・Sulafat ナレーター・Vivaldi マンドリン) | `memento-morning-demo-people.mp4` |
 
 声・話し方・BGM は config の `narration_mix` (voice / style_prompt / bgm / bgm_gain) で
 上書きできる (省略時はしっとり版の既定値。generate-narration.sh のヘッダーコメント参照)。
@@ -124,6 +124,9 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 - `assets/bgm-upbeat.m4a`: Scott Joplin - Maple Leaf Rag (Joplin 本人の 1916 年ピアノロール演奏、
   パブリックドメイン、帰属表記不要)。upbeat バリアントの BGM。
   出典: https://commons.wikimedia.org/wiki/File:Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg
+- `assets/bgm-mandolin.m4a`: Antonio Vivaldi - マンドリン協奏曲 ハ長調 RV 425 (The Milan Baroque Soloists 演奏、
+  Musopen 提供、Creative Commons Public Domain Mark 1.0、帰属表記不要)。people バリアントの BGM。
+  出典: https://commons.wikimedia.org/wiki/File:Antonio_Vivaldi,_Mandolin_Concerto_in_C_major,_RV_425.ogg
 
 ## 注意 (シミュレータで撮れないもの)
 
