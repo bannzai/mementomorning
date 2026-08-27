@@ -18,8 +18,11 @@ appId: com.bannzai.MementoMorning
     element:
       id: "debug_premium_state"
     direction: DOWN
+# Maestro の text は正規表現の全文一致で、実ラベルは「プレミアム判定 (isPremium): false」
+# (開発者メニュー日本語化 8f3eb99 で変更)。旧アサーション "isPremium: false" は
+# 「isPremium)」の閉じ括弧を挟むため部分文字列としても存在せず、実ラベルに合わせて追随する
 - assertVisible:
-    text: "isPremium: false"
+    text: '.*\(isPremium\): false'
 - takeScreenshot: tmp/maestro-shots/01-debug-menu-before
 - tapOn:
     id: "debug_open_paywall"
@@ -52,7 +55,7 @@ appId: com.bannzai.MementoMorning
       id: "debug_premium_state"
     direction: DOWN
 - assertVisible:
-    text: "isPremium: true"
+    text: '.*\(isPremium\): true'
 - takeScreenshot: tmp/maestro-shots/04-premium-unlocked
 # 復元: ペイウォールを開き直して「購入を復元」→ 有効な entitlement が返り dismiss される
 - tapOn:
