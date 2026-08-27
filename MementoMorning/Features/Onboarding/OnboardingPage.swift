@@ -21,7 +21,9 @@ func needsPermissionSettingsGuidance(
 }
 
 /// 初回起動時のオンボーディング。
-/// コンセプト提示 → アラーム・通知の許可 → 回答の練習 → 最初のアラーム設定、の 4 ステップを 1 画面内のフェードで進める
+/// コンセプト提示 → ペイン認識の 5 問 → 生まれ年 → 残りの朝 → メメント・モリ → アラーム・通知の許可 →
+/// 回答の練習 → 最初のアラーム設定 → 儀式のサマリー、の 13 ステップを 1 画面内のフェードで進め、
+/// 最後にペイウォールを fullScreenCover で表示して完了する (課金転換型ファネルへの再設計。issue #140)
 /// (デザイン: design_handoff_memento_morning の 1m「夜明けの一枚目」。画面遷移はフェードのみ)。
 /// 練習ステップは、朝の初回がぶっつけ本番の録画にならないよう事前に一度録画を試すチュートリアル (issue #44)。
 /// カメラ・マイク・写真ライブラリ・音声認識の権限も、使い道の説明を見せてからここでまとめてリクエストする
@@ -29,9 +31,18 @@ struct OnboardingPage: View {
     /// オンボーディングの進行ステップ
     private enum Step {
         case concept
+        case painWake
+        case painSatisfaction
+        case firstMinutes
+        case dayBegin
+        case undoneGoal
+        case birthYear
+        case morningsResult
+        case mementoMori
         case permission
         case practice
         case alarmSetting
+        case ritualSummary
     }
 
     /// 練習ステップ内の進行状態
@@ -57,9 +68,27 @@ struct OnboardingPage: View {
     @Query private var alarmSettings: [AlarmSetting]
     /// オンボーディング完了フラグ。true にすると RootView がホームへ切り替える
     @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
+    /// 入力された生まれ年 (0 = 未回答)。残りの朝の回数の計算に使う
+    @AppStorage(.onboardingBirthYear) private var onboardingBirthYear: Int = 0
+    /// 起床のペイン認識質問への回答 (OnboardingWakeAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingWakeAnswer) private var onboardingWakeAnswer: String = ""
+    /// 朝の迎え方への満足度の質問への回答 (OnboardingMorningSatisfactionAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingMorningSatisfactionAnswer) private var onboardingMorningSatisfactionAnswer: String = ""
+    /// 目覚めてすぐの過ごし方の質問への回答 (OnboardingFirstMinutesAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingFirstMinutesAnswer) private var onboardingFirstMinutesAnswer: String = ""
+    /// 一日が本当に始まる時間帯の質問への回答 (OnboardingDayBeginAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingDayBeginAnswer) private var onboardingDayBeginAnswer: String = ""
+    /// 「いつかやる」と言い続けていることの質問への回答 (OnboardingUndoneGoalAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingUndoneGoalAnswer) private var onboardingUndoneGoalAnswer: String = ""
 
     /// 現在のステップ
     @State private var step: Step = .concept
+    /// 生まれ年ステップのホイールで選択中の年 (西暦)。
+    /// 初期値の 39 年前は US の年齢中央値 (約 39 歳。US Census Bureau ACS 2023) に合わせたもので、
+    /// 主戦場の US ユーザーがホイールをほとんど回さずに決定できる位置から始める
+    @State private var birthYear: Int = gregorianYear(date: .now) - 39
+    /// ペイウォールを表示中かどうか。閉じた時点でオンボーディングを完了する
+    @State private var isPaywallPresented: Bool = false
     /// AlarmKit の認可状態
     @State private var alarmAuthorizationState: AlarmManager.AuthorizationState = .notDetermined
     /// 通知の認可状態
@@ -90,19 +119,100 @@ struct OnboardingPage: View {
             switch step {
             case .concept:
                 conceptStep.transition(.opacity)
+            case .painWake:
+                painWakeStep.transition(.opacity)
+            case .painSatisfaction:
+                painSatisfactionStep.transition(.opacity)
+            case .firstMinutes:
+                firstMinutesStep.transition(.opacity)
+            case .dayBegin:
+                dayBeginStep.transition(.opacity)
+            case .undoneGoal:
+                undoneGoalStep.transition(.opacity)
+            case .birthYear:
+                birthYearStep.transition(.opacity)
+            case .morningsResult:
+                morningsResultStep.transition(.opacity)
+            case .mementoMori:
+                mementoMoriStep.transition(.opacity)
             case .permission:
                 permissionStep.transition(.opacity)
             case .practice:
                 practiceStep.transition(.opacity)
             case .alarmSetting:
                 alarmSettingStep.transition(.opacity)
+            case .ritualSummary:
+                ritualSummaryStep.transition(.opacity)
             }
+            funnelProgressLine
         }
         // ダークテーマの指定は RootView が両画面の親でまとめて当てる
+        .fullScreenCover(isPresented: $isPaywallPresented, onDismiss: {
+            // 購入・復元・「今はしない」のいずれで閉じてもオンボーディングを完了する (無料層があるため非購入でも進める)
+            hasCompletedOnboarding = true
+        }) {
+            PaywallPage(remainingMorningsCount: remainingMorningsCount)
+        }
         .onChange(of: scenePhase) { _, newValue in
             // 設定アプリで許可を変更して戻ってきた場合に表示へ反映する
             guard newValue == .active else { return }
             Task { await refreshPermissionStates() }
+        }
+    }
+
+    /// 現在の年 (西暦)。生まれ年ホイールの上限と、残りの朝の回数の計算に使う
+    private var currentYear: Int {
+        gregorianYear(date: .now)
+    }
+
+    /// ペイウォールのタイトル上に出す残りの朝の回数。生まれ年から数えられない場合は文脈行を出さない (nil)
+    private var remainingMorningsCount: Int? {
+        switch morningsResultVariant(birthYear: onboardingBirthYear, currentYear: currentYear) {
+        case .counted(_, let remaining):
+            return remaining
+        case .unknown:
+            return nil
+        }
+    }
+
+    /// 質問セクション (ペイン認識 5 問 → 生まれ年 → 残りの朝 → メメント・モリ) の進捗 (0〜1)。
+    /// セクション外のステップでは nil にしてプログレス表示を出さない
+    private var funnelProgressRatio: CGFloat? {
+        switch step {
+        case .painWake:
+            return 1.0 / 8.0
+        case .painSatisfaction:
+            return 2.0 / 8.0
+        case .firstMinutes:
+            return 3.0 / 8.0
+        case .dayBegin:
+            return 4.0 / 8.0
+        case .undoneGoal:
+            return 5.0 / 8.0
+        case .birthYear:
+            return 6.0 / 8.0
+        case .morningsResult:
+            return 7.0 / 8.0
+        case .mementoMori:
+            return 8.0 / 8.0
+        case .concept, .permission, .practice, .alarmSetting, .ritualSummary:
+            return nil
+        }
+    }
+
+    /// 質問セクションの進捗を示す、セーフエリア直下の 1pt のライン
+    @ViewBuilder
+    private var funnelProgressLine: some View {
+        if let ratio = funnelProgressRatio {
+            VStack(spacing: 0) {
+                GeometryReader { proxy in
+                    Rectangle()
+                        .fill(Color.dawn.opacity(0.55))
+                        .frame(width: proxy.size.width * ratio)
+                }
+                .frame(height: 1)
+                Spacer()
+            }
         }
     }
 
@@ -153,20 +263,14 @@ struct OnboardingPage: View {
                 .foregroundStyle(Color.warmWhite.opacity(0.45))
                 .padding(.top, 14)
             Spacer()
-            VStack(spacing: 14) {
-                Button {
-                    withAnimation(.easeInOut(duration: 0.6)) { step = .permission }
-                } label: {
-                    // ja: はじめる
-                    Text("Begin")
-                }
-                .buttonStyle(PrimaryPillButtonStyle())
-                .accessibilityIdentifier("onboarding_begin")
-                // ja: 次の画面でアラームと通知の許可をお願いします
-                Text("Alarm & notification permissions are requested next")
-                    .font(.system(size: 10))
-                    .foregroundStyle(Color.warmWhite.opacity(0.32))
+            Button {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .painWake }
+            } label: {
+                // ja: はじめる
+                Text("Begin")
             }
+            .buttonStyle(PrimaryPillButtonStyle())
+            .accessibilityIdentifier("onboarding_begin")
         }
         .foregroundStyle(Color.warmWhite)
         .padding(.top, 130)
@@ -175,7 +279,161 @@ struct OnboardingPage: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// ステップ 2: アラーム・通知の許可リクエスト
+    /// ステップ 2: ペイン認識質問 1 (起床)。回答は儀式サマリーの一文の出し分けに使う
+    private var painWakeStep: some View {
+        OnboardingPainQuestionStepView<OnboardingWakeAnswer>(
+            // ja: 朝は一度のアラームで起きられますか？
+            question: Text("Can you wake up with a single alarm?"),
+            choices: [
+                // ja: ほとんど起きられない
+                .init(id: "onboarding_pain_wake_almost_never", label: Text("Almost never"), answer: .almostNever),
+                // ja: ときどき
+                .init(id: "onboarding_pain_wake_sometimes", label: Text("Sometimes"), answer: .sometimes),
+                // ja: だいたい起きられる
+                .init(id: "onboarding_pain_wake_almost_always", label: Text("Almost always"), answer: .almostAlways),
+            ],
+            onSelect: { answer in
+                onboardingWakeAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .painSatisfaction }
+            }
+        )
+    }
+
+    /// ステップ 3: ペイン認識質問 2 (朝の迎え方への満足)。回答は儀式サマリーの一文の出し分けに使う
+    private var painSatisfactionStep: some View {
+        OnboardingPainQuestionStepView<OnboardingMorningSatisfactionAnswer>(
+            // ja: いまの朝の迎え方に満足していますか？
+            question: Text("Are you happy with how your mornings begin?"),
+            choices: [
+                // ja: 満足していない
+                .init(id: "onboarding_pain_satisfaction_not_really", label: Text("No, not really"), answer: .notReally),
+                // ja: どちらとも言えない
+                .init(id: "onboarding_pain_satisfaction_somewhat", label: Text("Somewhat"), answer: .somewhat),
+                // ja: おおむね満足している
+                .init(id: "onboarding_pain_satisfaction_mostly", label: Text("Mostly"), answer: .mostly),
+            ],
+            onSelect: { answer in
+                onboardingMorningSatisfactionAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .firstMinutes }
+            }
+        )
+    }
+
+    /// ステップ 4: ペイン認識質問 3 (目覚めてすぐの過ごし方)。回答は儀式サマリーの一文の出し分けに使う
+    private var firstMinutesStep: some View {
+        OnboardingPainQuestionStepView<OnboardingFirstMinutesAnswer>(
+            // ja: 起きてすぐの時間をどう過ごしていますか？
+            question: Text("What do your first minutes of the day look like?"),
+            choices: [
+                // ja: スマホを眺めている
+                .init(id: "onboarding_first_minutes_scrolling", label: Text("Scrolling my phone"), answer: .scrolling),
+                // ja: あわただしく一日が始まる
+                .init(id: "onboarding_first_minutes_rushing", label: Text("Rushing to start the day"), answer: .rushing),
+                // ja: 朝の習慣がある
+                .init(id: "onboarding_first_minutes_ritual", label: Text("I have a morning ritual"), answer: .ritual),
+            ],
+            onSelect: { answer in
+                onboardingFirstMinutesAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .dayBegin }
+            }
+        )
+    }
+
+    /// ステップ 5: ペイン認識質問 4 (一日が本当に始まる時間帯)。回答は儀式サマリーの一文の出し分けに使う
+    private var dayBeginStep: some View {
+        OnboardingPainQuestionStepView<OnboardingDayBeginAnswer>(
+            // ja: あなたの一日が本当に始まるのはいつですか？
+            question: Text("When does your day really begin?"),
+            choices: [
+                // ja: 朝から
+                .init(id: "onboarding_day_begin_morning", label: Text("In the morning"), answer: .morning),
+                // ja: 昼ごろ
+                .init(id: "onboarding_day_begin_noon", label: Text("Around noon"), answer: .noon),
+                // ja: 夕方になってようやく
+                .init(id: "onboarding_day_begin_evening", label: Text("By evening, finally"), answer: .evening),
+            ],
+            onSelect: { answer in
+                onboardingDayBeginAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .undoneGoal }
+            }
+        )
+    }
+
+    /// ステップ 6: ペイン認識質問 5 (手つかずの「いつか」)。回答は儀式サマリーの一文の出し分けに使う
+    private var undoneGoalStep: some View {
+        OnboardingPainQuestionStepView<OnboardingUndoneGoalAnswer>(
+            // ja: 「いつかやる」と言い続けていることはありますか？
+            question: Text("Is there something you keep telling yourself you'll do?"),
+            choices: [
+                // ja: あるが手つかずのまま
+                .init(id: "onboarding_undone_goal_yes", label: Text("Yes, and it stays undone"), answer: .undone),
+                // ja: いくつかある
+                .init(id: "onboarding_undone_goal_a_few", label: Text("A few things"), answer: .aFew),
+                // ja: 特にない
+                .init(id: "onboarding_undone_goal_none", label: Text("Not really"), answer: .notReally),
+            ],
+            onSelect: { answer in
+                onboardingUndoneGoalAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .birthYear }
+            }
+        )
+    }
+
+    /// ステップ 7: 生まれ年の入力 (スキップ可)。保存先は端末内のみ (ADR 0001)
+    private var birthYearStep: some View {
+        OnboardingBirthYearStepView(
+            year: $birthYear,
+            // 下限の 1900 年は、存命のユーザーの生まれ年として十分に古く、ホイールの候補を無用に増やさない値
+            yearRange: 1900...currentYear,
+            onContinue: {
+                onboardingBirthYear = birthYear
+                withAnimation(.easeInOut(duration: 0.6)) { step = .morningsResult }
+            },
+            onSkip: {
+                // オンボーディングを再走した時に前回の回答が残らないよう、未回答を表す 0 へ明示的に戻す
+                onboardingBirthYear = 0
+                withAnimation(.easeInOut(duration: 0.6)) { step = .morningsResult }
+            }
+        )
+    }
+
+    /// ステップ 8: 残りの朝の回数の提示
+    private var morningsResultStep: some View {
+        OnboardingMorningsResultStepView(
+            variant: morningsResultVariant(birthYear: onboardingBirthYear, currentYear: currentYear),
+            onContinue: {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .mementoMori }
+            }
+        )
+    }
+
+    /// ステップ 9: メメント・モリの普遍性の提示
+    private var mementoMoriStep: some View {
+        OnboardingMementoMoriStepView(
+            onContinue: {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .permission }
+            }
+        )
+    }
+
+    /// ステップ 13: 儀式のサマリー。「はじめる」でペイウォールへ進む
+    private var ritualSummaryStep: some View {
+        OnboardingRitualSummaryStepView(
+            alarmTime: time,
+            note: ritualSummaryNote(
+                undoneGoal: OnboardingUndoneGoalAnswer(rawValue: onboardingUndoneGoalAnswer),
+                wake: OnboardingWakeAnswer(rawValue: onboardingWakeAnswer),
+                satisfaction: OnboardingMorningSatisfactionAnswer(rawValue: onboardingMorningSatisfactionAnswer),
+                dayBegin: OnboardingDayBeginAnswer(rawValue: onboardingDayBeginAnswer),
+                firstMinutes: OnboardingFirstMinutesAnswer(rawValue: onboardingFirstMinutesAnswer)
+            ),
+            onBegin: {
+                isPaywallPresented = true
+            }
+        )
+    }
+
+    /// ステップ 10: アラーム・通知の許可リクエスト
     private var permissionStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             // ja: アラームと通知の許可
@@ -257,7 +515,7 @@ struct OnboardingPage: View {
         }
     }
 
-    /// ステップ 3: 回答の練習 (インカメラ録画のチュートリアル)。
+    /// ステップ 11: 回答の練習 (インカメラ録画のチュートリアル)。
     /// 権限の使い道を説明してから「一度やってみる」のタップでまとめてリクエストし、揃ったら録画を一度試す。
     /// 練習の録画は回答ではないため保存しない。権限拒否・カメラ非搭載環境では朝はテキスト入力になることを案内して先へ進める
     @ViewBuilder
@@ -503,7 +761,7 @@ struct OnboardingPage: View {
         practiceCamera.start()
     }
 
-    /// ステップ 4: 最初のアラーム設定
+    /// ステップ 12: 最初のアラーム設定
     private var alarmSettingStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             // ja: 最初のアラーム
@@ -624,12 +882,21 @@ struct OnboardingPage: View {
         notificationAuthorizationStatus = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
     }
 
-    /// 入力内容を保存して再スケジュールし、成功したらオンボーディングを完了する
-    /// (AlarmSettingPage.save と同じ update-or-insert / rollback / 再スケジュール完了待ちの流れ)
+    /// 入力内容を保存して再スケジュールし、成功したら儀式のサマリーへ進む
+    /// (AlarmSettingPage.save と同じ update-or-insert / rollback / 再スケジュール完了待ちの流れ)。
+    /// オンボーディングの完了はサマリーに続くペイウォールを閉じた時に行うため、ここでは完了フラグを立てない。
+    /// ペイウォール表示中にアプリを kill されるとオンボーディングが再走するが、アラーム設定は永続化済みで、
+    /// alarmSettingStep の onAppear が設定時刻を復元するため許容する (issue #140)
     private func save() {
         guard !isSaving else { return }
         isSaving = true
         saveError = nil
+        // @AppStorage の既定値 false は UserDefaults へ書き込まれないため、AlarmSetting を保存する前に
+        // 未完了であることを明示的に書き込み、「AlarmSetting はあるが完了キーが無い」状態を作らない。
+        // キーが無いと、RootView.init() の旧バージョンからの移行判定 (キーなし + アラーム設定あり = 完了扱い) が
+        // 新規インストールの kill 復帰にも誤発動し、儀式のサマリーとペイウォールを飛ばしてホームへ進んでしまう
+        // (PR #142 Codex 指摘)
+        UserDefaults.standard.set(false, forKey: .hasCompletedOnboarding)
         let components = Calendar.autoupdatingCurrent.dateComponents([.hour, .minute], from: time)
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
@@ -658,16 +925,110 @@ struct OnboardingPage: View {
                 await refreshPermissionStates()
                 isSaving = false
             } else {
-                hasCompletedOnboarding = true
+                isSaving = false
+                withAnimation(.easeInOut(duration: 0.6)) { step = .ritualSummary }
             }
         }
     }
 }
 
-/// OnboardingPage の Preview
+/// OnboardingPage の Preview。
+/// index 0 は画面そのもの (コンセプトから開始)、index 1 以降は 1 画面ずつしか撮れない新設ステップの表示確認用。
+/// SnapshotUITestPage / OnboardingPageSnapshotUITest の previewCount と個数を合わせる
 struct OnboardingPage_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingPage()
-            .modelContainer(PersistenceController.shared.container)
+        Group {
+            OnboardingPage()
+                .modelContainer(PersistenceController.shared.container)
+            stepPreview {
+                OnboardingPainQuestionStepView<OnboardingWakeAnswer>(
+                    question: Text("Can you wake up with a single alarm?"),
+                    choices: [
+                        .init(id: "onboarding_pain_wake_almost_never", label: Text("Almost never"), answer: .almostNever),
+                        .init(id: "onboarding_pain_wake_sometimes", label: Text("Sometimes"), answer: .sometimes),
+                        .init(id: "onboarding_pain_wake_almost_always", label: Text("Almost always"), answer: .almostAlways),
+                    ],
+                    onSelect: { _ in }
+                )
+            }
+            stepPreview {
+                OnboardingPainQuestionStepView<OnboardingMorningSatisfactionAnswer>(
+                    question: Text("Are you happy with how your mornings begin?"),
+                    choices: [
+                        .init(id: "onboarding_pain_satisfaction_not_really", label: Text("No, not really"), answer: .notReally),
+                        .init(id: "onboarding_pain_satisfaction_somewhat", label: Text("Somewhat"), answer: .somewhat),
+                        .init(id: "onboarding_pain_satisfaction_mostly", label: Text("Mostly"), answer: .mostly),
+                    ],
+                    onSelect: { _ in }
+                )
+            }
+            stepPreview {
+                OnboardingPainQuestionStepView<OnboardingFirstMinutesAnswer>(
+                    question: Text("What do your first minutes of the day look like?"),
+                    choices: [
+                        .init(id: "onboarding_first_minutes_scrolling", label: Text("Scrolling my phone"), answer: .scrolling),
+                        .init(id: "onboarding_first_minutes_rushing", label: Text("Rushing to start the day"), answer: .rushing),
+                        .init(id: "onboarding_first_minutes_ritual", label: Text("I have a morning ritual"), answer: .ritual),
+                    ],
+                    onSelect: { _ in }
+                )
+            }
+            stepPreview {
+                OnboardingPainQuestionStepView<OnboardingDayBeginAnswer>(
+                    question: Text("When does your day really begin?"),
+                    choices: [
+                        .init(id: "onboarding_day_begin_morning", label: Text("In the morning"), answer: .morning),
+                        .init(id: "onboarding_day_begin_noon", label: Text("Around noon"), answer: .noon),
+                        .init(id: "onboarding_day_begin_evening", label: Text("By evening, finally"), answer: .evening),
+                    ],
+                    onSelect: { _ in }
+                )
+            }
+            stepPreview {
+                OnboardingPainQuestionStepView<OnboardingUndoneGoalAnswer>(
+                    question: Text("Is there something you keep telling yourself you'll do?"),
+                    choices: [
+                        .init(id: "onboarding_undone_goal_yes", label: Text("Yes, and it stays undone"), answer: .undone),
+                        .init(id: "onboarding_undone_goal_a_few", label: Text("A few things"), answer: .aFew),
+                        .init(id: "onboarding_undone_goal_none", label: Text("Not really"), answer: .notReally),
+                    ],
+                    onSelect: { _ in }
+                )
+            }
+            stepPreview {
+                OnboardingBirthYearStepView(
+                    year: .constant(1990),
+                    yearRange: 1900...2026,
+                    onContinue: {},
+                    onSkip: {}
+                )
+            }
+            stepPreview {
+                OnboardingMorningsResultStepView(
+                    // 年をまたいでも撮影結果が変わらないよう、現在年を固定した 1990 年生まれの提示を出す
+                    variant: morningsResultVariant(birthYear: 1990, currentYear: 2026),
+                    onContinue: {}
+                )
+            }
+            stepPreview {
+                OnboardingMementoMoriStepView(onContinue: {})
+            }
+            stepPreview {
+                OnboardingRitualSummaryStepView(
+                    alarmTime: Calendar.autoupdatingCurrent.date(bySettingHour: 7, minute: 0, second: 0, of: .now) ?? .now,
+                    note: .startsTomorrow,
+                    onBegin: {}
+                )
+            }
+        }
+    }
+
+    /// 新設ステップの Preview を、実画面と同じ背景 (墨) と前景 (温白) で包む
+    private static func stepPreview<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        ZStack {
+            Color.ink.ignoresSafeArea()
+            content()
+        }
+        .foregroundStyle(Color.warmWhite)
     }
 }

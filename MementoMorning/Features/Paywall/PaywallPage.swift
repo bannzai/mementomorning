@@ -6,6 +6,11 @@ import RevenueCat
 /// 料金は RevenueCat の offering (lookup_key: PremiumEntitlement.offeringIdentifier) の packages から表示し、
 /// 購入・復元も RevenueCat 経由で行う (商品登録は #15)
 struct PaywallPage: View {
+    /// タイトルの上に出す「残りの朝の回数」。nil の時は文脈行を出さない。
+    /// デフォルトを nil にしているのは、オンボーディング以外の既存の呼び出し箇所
+    /// (アラーム設定・月カレンダー・回答ログ・開発者メニュー) を無変更のまま通すため (issue #140)
+    var remainingMorningsCount: Int?
+
     /// RevenueCat の offering。読み込み中・取得失敗・未 configure (#15 前) の間は nil
     @State private var offering: Offering?
     /// 購入・復元の処理中かどうか。二重実行を防ぎ、ボタンを無効化する
@@ -18,6 +23,12 @@ struct PaywallPage: View {
     @State private var annualIntroEligibility: IntroEligibilityStatus = .unknown
 
     @Environment(\.dismiss) private var dismiss
+
+    /// 自動生成の memberwise initializer は private な @State を持つため private になり、他ファイルから
+    /// remainingMorningsCount を渡せない。オンボーディング (別ファイル) から渡せるよう明示的に定義する
+    init(remainingMorningsCount: Int? = nil) {
+        self.remainingMorningsCount = remainingMorningsCount
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -43,8 +54,16 @@ struct PaywallPage: View {
     /// 見出しと英語サブラベル
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            // ja: すべての朝を、残すために。
-            Text("To keep every morning.")
+            if let remainingMorningsCount {
+                // ja: 残り約 %lld 回の朝をすべて残すために
+                Text("About \(remainingMorningsCount) mornings remain — keep every one")
+                    .font(.system(size: 12))
+                    .tracking(0.5)
+                    .lineSpacing(6)
+                    .foregroundStyle(Color.dawn.opacity(0.75))
+            }
+            // ja: すべての朝を残すために
+            Text("To keep every morning")
                 .font(.system(size: 27, weight: .light))
                 .tracking(1.08)
                 .lineSpacing(27 * 0.7)

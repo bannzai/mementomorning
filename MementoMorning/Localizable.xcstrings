@@ -1071,6 +1071,16 @@
         }
       }
     },
+    "%@ — the alarm rings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ — アラームが鳴る"
+          }
+        }
+      }
+    },
     "%lld min" : {
       "localizations" : {
         "ja" : {
@@ -2001,6 +2011,16 @@
         }
       }
     },
+    "A few things" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いくつかある"
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "ar" : {
@@ -2211,6 +2231,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "關於"
+          }
+        }
+      }
+    },
+    "About %lld mornings remain — keep every one" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "残り約 %lld 回の朝をすべて残すために"
+          }
+        }
+      }
+    },
+    "About %lld remain" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "残りは約 %lld 回"
           }
         }
       }
@@ -2659,220 +2699,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "鬧鐘與通知"
-          }
-        }
-      }
-    },
-    "Alarm & notification permissions are requested next" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "في الخطوة التالية، سيُطلب منك السماح بالمنبّه والإشعارات."
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A continuació, se't demanaran els permisos per a l'alarma i les notificacions."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "V dalším kroku se zobrazí žádost o povolení budíku a oznámení."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du bliver bedt om at give tilladelse til alarm og notifikationer som det næste."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Als Nächstes wirst du um die Berechtigung für Wecker und Mitteilungen gebeten."
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Στη συνέχεια, θα σου ζητηθεί να επιτρέψεις το ξυπνητήρι και τις ειδοποιήσεις."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A continuación, se te pedirán permisos para la alarma y las notificaciones."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A continuación, se te solicitarán permisos para la alarma y las notificaciones."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seuraavaksi sinulta pyydetään lupaa herätyksille ja ilmoituksille."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Les autorisations pour l’alarme et les notifications vous seront demandées ensuite."
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "בשלב הבא תתבקש לאשר הרשאות לשעון המעורר ולהתראות."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "अगले चरण में आपसे अलार्म और सूचनाओं की अनुमति मांगी जाएगी।"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "U sljedećem koraku zatražit će se dopuštenje za alarm i obavijesti."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A következő lépésben engedélyt kérünk az ébresztőhöz és az értesítésekhez."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selanjutnya, kamu akan diminta memberikan izin untuk alarm dan notifikasi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In seguito, ti verranno richieste le autorizzazioni per la sveglia e le notifiche."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の画面でアラームと通知の許可をお願いします"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "다음 단계에서 알람 및 알림 권한을 요청해요."
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seterusnya, anda akan diminta memberikan kebenaran untuk penggera dan pemberitahuan."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deretter blir du bedt om å gi tillatelse til alarm og varslinger."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hierna wordt je gevraagd om toestemming voor alarmen en meldingen."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "W następnym kroku poprosimy cię o zgodę na alarmy i powiadomienia."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Em seguida, serão solicitadas as permissões para o alarme e as notificações."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "De seguida, ser-te-ão pedidas permissões para o alarme e as notificações."
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "În continuare, ți se vor solicita permisiuni pentru alarmă și notificări."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Далее вам будет предложено разрешить доступ к будильнику и уведомлениям."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "V ďalšom kroku sa zobrazí žiadosť o povolenie budíka a upozornení."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Därefter ombeds du att ge behörighet till alarm och notiser."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ในขั้นตอนถัดไป ระบบจะขอสิทธิ์ใช้งานนาฬิกาปลุกและการแจ้งเตือน"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sırada alarm ve bildirim izinleri istenecek."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Далі вам буде запропоновано надати дозволи для будильника та сповіщень."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tiếp theo, bạn sẽ được yêu cầu cấp quyền cho báo thức và thông báo."
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "下一步會要求你授予鬧鐘及通知的權限。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接下来会请求闹钟和通知权限。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "接下來會請求鬧鐘與通知權限。"
           }
         }
       }
@@ -3943,6 +3769,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已允許"
+          }
+        }
+      }
+    },
+    "Almost always" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "だいたい起きられる"
+          }
+        }
+      }
+    },
+    "Almost never" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ほとんど起きられない"
           }
         }
       }
@@ -5027,6 +4873,16 @@
         }
       }
     },
+    "Are you happy with how your mornings begin?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いまの朝の迎え方に満足していますか？"
+          }
+        }
+      }
+    },
     "Are you keeping it?" : {
       "localizations" : {
         "ar" : {
@@ -5241,6 +5097,26 @@
         }
       }
     },
+    "Around noon" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昼ごろ"
+          }
+        }
+      }
+    },
+    "At night, check the day against your morning answer" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夜は朝の回答と一日の答え合わせ"
+          }
+        }
+      }
+    },
     "Begin" : {
       "localizations" : {
         "ar" : {
@@ -5451,6 +5327,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開始"
+          }
+        }
+      }
+    },
+    "Birth year" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生まれ年"
+          }
+        }
+      }
+    },
+    "By evening, finally" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夕方になってようやく"
           }
         }
       }
@@ -5675,6 +5571,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "相機與麥克風"
+          }
+        }
+      }
+    },
+    "Can you wake up with a single alarm?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝は一度のアラームで起きられますか？"
           }
         }
       }
@@ -8552,6 +8458,46 @@
         }
       }
     },
+    "For two thousand years, people have kept a practice called memento mori — remember death, and the day becomes clear." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2000 年ものあいだ、人は「メメント・モリ」を続けてきました。死を想うと、今日が澄んで見える。"
+          }
+        }
+      }
+    },
+    "From tomorrow, mornings you can be proud of" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日から胸を張れる朝を"
+          }
+        }
+      }
+    },
+    "From tomorrow, wake up to mornings full of life" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日から気力の満ちる朝を迎えましょう"
+          }
+        }
+      }
+    },
+    "From tomorrow, your day begins in the morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日からあなたの一日は朝に始まります"
+          }
+        }
+      }
+    },
     "Gentle Chime" : {
       "localizations" : {
         "ja" : {
@@ -8782,6 +8728,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "我做到了"
+          }
+        }
+      }
+    },
+    "I have a morning ritual" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝の習慣がある"
           }
         }
       }
@@ -9428,6 +9384,16 @@
         }
       }
     },
+    "In the morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝から"
+          }
+        }
+      }
+    },
     "In the morning, stopping the recording stops the alarm." : {
       "localizations" : {
         "ar" : {
@@ -9642,6 +9608,16 @@
         }
       }
     },
+    "Is there something you keep telling yourself you'll do?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「いつかやる」と言い続けていることはありますか？"
+          }
+        }
+      }
+    },
     "It keeps ringing until you answer." : {
       "localizations" : {
         "ar" : {
@@ -9852,6 +9828,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你回答之前，鬧鐘會一直響。"
+          }
+        }
+      }
+    },
+    "It starts tomorrow morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の朝から始まります"
           }
         }
       }
@@ -11170,6 +11156,16 @@
         }
       }
     },
+    "Mostly" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おおむね満足している"
+          }
+        }
+      }
+    },
     "NEXT MORNING" : {
       "localizations" : {
         "ar" : {
@@ -11832,6 +11828,26 @@
         }
       }
     },
+    "No more snoozing\nOnly your answer stops the alarm" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もうスヌーズはいりません\nアラームを止めるのはあなたの答えだけ"
+          }
+        }
+      }
+    },
+    "No one knows how many mornings remain" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝があと何回あるかは誰にもわかりません"
+          }
+        }
+      }
+    },
     "No purchases to restore were found." : {
       "localizations" : {
         "ar" : {
@@ -12042,6 +12058,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "找不到可還原的購買項目。"
+          }
+        }
+      }
+    },
+    "No, not really" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "満足していない"
+          }
+        }
+      }
+    },
+    "None of them comes back" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そのどれも二度は来ません"
           }
         }
       }
@@ -12470,6 +12506,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暫不"
+          }
+        }
+      }
+    },
+    "Not really" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特にない"
           }
         }
       }
@@ -13544,6 +13590,16 @@
         }
       }
     },
+    "One question, answered facing yourself" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自分の顔を見ながら、ひとつの問いに答える"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "localizations" : {
         "ar" : {
@@ -14202,6 +14258,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "練習你的回答"
+          }
+        }
+      }
+    },
+    "Prefer not to say" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答えずに進む"
           }
         }
       }
@@ -16590,6 +16656,16 @@
         }
       }
     },
+    "Rushing to start the day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あわただしく一日が始まる"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "ar" : {
@@ -17024,6 +17100,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "誰にも言えなかったことを伝える"
+          }
+        }
+      }
+    },
+    "Scrolling my phone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スマホを眺めている"
           }
         }
       }
@@ -18806,6 +18892,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "しずかなパルス"
+          }
+        }
+      }
+    },
+    "Sometimes" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ときどき"
+          }
+        }
+      }
+    },
+    "Somewhat" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どちらとも言えない"
           }
         }
       }
@@ -21215,6 +21321,16 @@
         }
       }
     },
+    "That's exactly why each one counts" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "だからこそ一回ごとに意味があります"
+          }
+        }
+      }
+    },
     "The alarm keeps returning until you answer." : {
       "localizations" : {
         "ar" : {
@@ -23141,216 +23257,12 @@
         }
       }
     },
-    "To keep every morning." : {
+    "To keep every morning" : {
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "لكي تحتفظ بكل صباح."
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per conservar cada matí."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uchovat každé ráno."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "For at bevare hver morgen."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Um jeden Morgen zu bewahren."
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Για να κρατάς κάθε πρωί."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para conservar cada mañana."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada mañana."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jotta jokainen aamu säilyisi."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pour garder chaque matin."
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כדי לשמור כל בוקר."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हर सुबह को संजोने के लिए।"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Da sačuvaš svako jutro."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hogy megőrizd minden reggeled."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Untuk menyimpan setiap pagi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per conservare ogni mattina."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべての朝を、残すために。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "매일 아침을 간직하기 위해."
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Untuk menyimpan setiap pagi."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "For å ta vare på hver morgen."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Om elke ochtend te bewaren."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aby zachować każdy poranek."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada manhã."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada manhã."
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pentru a păstra fiecare dimineață."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Чтобы сохранить каждое утро."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uchovať každé ráno."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "För att bevara varje morgon."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เพื่อเก็บรักษาทุกเช้าไว้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her sabahı saklamak için."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Щоб зберегти кожен ранок."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Để lưu giữ mỗi buổi sáng."
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每個早晨。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每个清晨。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每個清晨。"
+            "value" : "すべての朝を残すために"
           }
         }
       }
@@ -23565,6 +23477,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今天"
+          }
+        }
+      }
+    },
+    "Tomorrow morning, answer that 'someday'" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の朝はその「いつか」に答えてください"
+          }
+        }
+      }
+    },
+    "Tomorrow morning, you'll practice it with one question." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の朝、ひとつの問いから始めましょう。"
+          }
+        }
+      }
+    },
+    "Tomorrow, your first minutes go to the question, not the phone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の最初の数分はスマホではなく問いのために"
           }
         }
       }
@@ -24853,6 +24795,16 @@
         }
       }
     },
+    "Used only to count your mornings. It never leaves this device." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの朝を数えるためだけに使います。この端末の外には出ません。"
+          }
+        }
+      }
+    },
     "Version" : {
       "localizations" : {
         "ar" : {
@@ -25301,12 +25253,52 @@
         }
       }
     },
+    "What do your first minutes of the day look like?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起きてすぐの時間をどう過ごしていますか？"
+          }
+        }
+      }
+    },
+    "What kind of morning did you truly want to wake up to?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたが本当に迎えたかった朝はどんな朝ですか"
+          }
+        }
+      }
+    },
     "When contacting support, copy this log and attach it to your message." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "問い合わせの際は、このログをコピーして添えてください。"
+          }
+        }
+      }
+    },
+    "When does your day really begin?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの一日が本当に始まるのはいつですか？"
+          }
+        }
+      }
+    },
+    "When were you born?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いつ生まれましたか？"
           }
         }
       }
@@ -25756,6 +25748,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最初の一行のコードを書く"
+          }
+        }
+      }
+    },
+    "Yes, and it stays undone" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あるが手つかずのまま"
           }
         }
       }
@@ -26402,6 +26404,16 @@
         }
       }
     },
+    "You've already had about %lld mornings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたはこれまでに約 %lld 回の朝を迎えました"
+          }
+        }
+      }
+    },
     "Your answer becomes a quiet card you can pass along." : {
       "localizations" : {
         "ar" : {
@@ -27040,6 +27052,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的第一個鬧鐘"
+          }
+        }
+      }
+    },
+    "Your morning ritual is ready." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの朝の儀式が、整いました。"
           }
         }
       }
