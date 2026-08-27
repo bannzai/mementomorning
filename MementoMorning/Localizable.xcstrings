@@ -5107,12 +5107,12 @@
         }
       }
     },
-    "At night, you check the day against your answer" : {
+    "At night, check the day against your morning answer" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "夜、答えと一日を答え合わせる"
+            "value" : "夜は朝の回答と一日の答え合わせ"
           }
         }
       }

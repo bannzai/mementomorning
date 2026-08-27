@@ -251,8 +251,8 @@ struct OnboardingRitualSummaryStepView: View {
                 // ja: 自分の顔を見ながら、ひとつの問いに答える
                 summaryRow(text: Text("One question, answered facing yourself"))
                 HairlineDivider()
-                // ja: 夜、答えと一日を答え合わせる
-                summaryRow(text: Text("At night, you check the day against your answer"))
+                // ja: 夜は朝の回答と一日の答え合わせ
+                summaryRow(text: Text("At night, check the day against your morning answer"))
             }
             .padding(.top, 28)
             noteText
