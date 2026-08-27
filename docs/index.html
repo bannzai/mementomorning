@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Memento Morning - 毎朝の問いに答えて止める目覚まし</title>
+<meta name="description" content="毎朝「今日死ぬとしたら、何をやりたいか」に答えてアラームを止める、iOS の目覚ましアプリ。答えるまで鳴り続け、答えた朝が人生カレンダーに点として残ります。回答は端末の中にだけ保存されます。" />
+<link rel="canonical" href="https://bannzai.github.io/mementomorning/" />
+<meta name="theme-color" content="#0B0C0E" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Memento Morning" />
+<meta property="og:title" content="Memento Morning - 毎朝の問いに答えて止める目覚まし" />
+<meta property="og:description" content="毎朝「今日死ぬとしたら、何をやりたいか」に答えてアラームを止める、iOS の目覚ましアプリ。答えた朝が人生カレンダーに点として残ります。" />
+<meta property="og:url" content="https://bannzai.github.io/mementomorning/" />
+<meta property="og:image" content="https://bannzai.github.io/mementomorning/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Memento Morning - 毎朝の問いに答えて止める目覚まし" />
+<meta name="twitter:description" content="毎朝「今日死ぬとしたら、何をやりたいか」に答えてアラームを止める、iOS の目覚ましアプリ。" />
+<meta name="twitter:image" content="https://bannzai.github.io/mementomorning/og.png" />
+<link rel="icon" type="image/png" href="./icon.png" />
+<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Memento Morning",
+  "alternateName": "Memento Morning - 人生を考える目覚まし",
+  "description": "毎朝「今日死ぬとしたら、何をやりたいか」に答えてアラームを止める目覚ましアプリ。答えるまで鳴り続け、答えた朝が人生カレンダーに点として残る。",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "iOS 26",
+  "url": "https://bannzai.github.io/mementomorning/",
+  "image": "https://bannzai.github.io/mementomorning/og.png",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+  "author": { "@type": "Person", "name": "bannzai" }
+}
+</script>
+<style>
+  :root {
+    --ink: #0B0C0E;
+    --fg: #E9E7E2;
+    --fg-2: rgba(233, 231, 226, 0.55);
+    --fg-3: rgba(233, 231, 226, 0.40);
+    --fg-4: rgba(233, 231, 226, 0.30);
+    --hair: rgba(233, 231, 226, 0.08);
+    --dot-off: rgba(233, 231, 226, 0.09);
+    --dawn: #C2A183;
+    --dawn-soft: rgba(194, 161, 131, 0.35);
+    --sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--ink);
+    color: var(--fg);
+    line-height: 1.8;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  a:focus-visible, .pill:focus-visible { outline: 1.5px solid var(--dawn); outline-offset: 4px; }
+  .container { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+
+  .label {
+    font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--fg-3); font-weight: 400;
+  }
+  .label .ja { letter-spacing: 0.2em; text-transform: none; }
+
+  /* header */
+  header { padding: 28px 0; }
+  header .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand-dot {
+    width: 12px; height: 12px; border-radius: 50%; background: var(--fg);
+    box-shadow: 0 0 18px rgba(233, 231, 226, 0.55);
+  }
+  .brand-name { font-size: 13px; letter-spacing: 0.14em; font-weight: 500; }
+  nav.top { display: flex; gap: 28px; }
+  nav.top a { font-size: 12px; letter-spacing: 0.12em; color: var(--fg-3); text-decoration: none; }
+  nav.top a:hover { color: var(--fg); }
+
+  /* hero */
+  .hero { padding: 72px 0 96px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 64px; align-items: center; }
+  .hero h1 {
+    margin-top: 28px; font-size: 44px; line-height: 1.55; font-weight: 300; letter-spacing: 0.05em;
+  }
+  .hero .en { margin-top: 14px; font-size: 13px; letter-spacing: 0.08em; color: var(--fg-3); font-weight: 300; }
+  .hero p.lead { margin-top: 36px; font-size: 16px; color: var(--fg-2); max-width: 30em; }
+  .actions { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .pill {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    border-radius: 999px; padding: 15px 28px; font-size: 14px; letter-spacing: 0.1em;
+    text-decoration: none; font-weight: 400; border: 1px solid transparent;
+  }
+  .pill.primary { background: var(--fg); color: var(--ink); font-weight: 500; }
+  .pill.secondary { border-color: rgba(233, 231, 226, 0.25); color: var(--fg); }
+  .pill.coming { border-color: var(--hair); color: var(--fg-3); cursor: default; }
+  .actions .note { font-size: 12px; color: var(--fg-4); letter-spacing: 0.04em; }
+
+  /* phone mock */
+  .phone {
+    width: 300px; height: 620px; border-radius: 46px; padding: 12px;
+    background: #050506; border: 1px solid rgba(233, 231, 226, 0.14);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.8);
+    flex: none; margin: 0 auto;
+  }
+  .screen {
+    position: relative; width: 100%; height: 100%; border-radius: 36px; overflow: hidden;
+    background: var(--ink); display: flex; flex-direction: column; align-items: center;
+    padding: 56px 28px 34px; text-align: center;
+  }
+  .screen .glow {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 260px; pointer-events: none;
+    background: radial-gradient(140% 100% at 50% 100%, rgba(194, 161, 131, 0.22) 0%, rgba(160, 120, 110, 0.08) 45%, rgba(11, 12, 14, 0) 75%);
+  }
+  .screen .horizon {
+    position: absolute; left: 0; right: 0; bottom: 176px; height: 1px;
+    background: linear-gradient(90deg, rgba(194, 161, 131, 0), rgba(194, 161, 131, 0.6), rgba(194, 161, 131, 0));
+  }
+  .screen .status { font-size: 11px; color: var(--fg-2); font-weight: 500; letter-spacing: 0.02em; position: absolute; top: 20px; left: 30px; }
+  .screen .next { margin-top: 44px; font-size: 9px; letter-spacing: 0.26em; color: var(--fg-3); }
+  .screen .time { margin-top: 10px; font-size: 76px; line-height: 1; font-weight: 200; letter-spacing: -0.02em; }
+  .screen .until { margin-top: 12px; font-size: 10px; color: var(--fg-3); letter-spacing: 0.04em; }
+  .screen .toggle {
+    margin-top: 26px; width: 52px; height: 32px; border-radius: 999px; position: relative;
+    background: rgba(194, 161, 131, 0.45);
+  }
+  .screen .toggle::after {
+    content: ""; position: absolute; top: 3px; right: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--fg);
+  }
+  .screen .today { margin-top: auto; position: relative; }
+  .screen .today .label { font-size: 9px; letter-spacing: 0.22em; color: var(--dawn); }
+  .screen .today p { margin-top: 8px; font-size: 14px; line-height: 1.7; letter-spacing: 0.03em; }
+  .screen .strip { margin-top: 22px; display: flex; gap: 7px; justify-content: center; position: relative; }
+  .screen .strip i { width: 8px; height: 8px; border-radius: 50%; background: var(--fg); display: block; }
+  .screen .strip i.off { background: var(--dot-off); }
+  .screen .strip i.now { box-shadow: 0 0 0 2.5px var(--dawn-soft); }
+  .screen .count { margin-top: 12px; font-size: 9px; letter-spacing: 0.18em; color: var(--fg-3); position: relative; }
+
+  /* sections */
+  section { padding: 96px 0; }
+  section h2 { font-size: 28px; font-weight: 300; line-height: 1.7; letter-spacing: 0.05em; margin-top: 20px; }
+  section .lead { margin-top: 16px; color: var(--fg-2); font-size: 15px; max-width: 34em; }
+
+  .ritual { display: flex; flex-direction: column; margin-top: 56px; }
+  .ritual .row {
+    display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; align-items: baseline;
+    padding: 34px 0; border-top: 1px solid var(--hair);
+  }
+  .ritual .row:last-child { border-bottom: 1px solid var(--hair); }
+  .ritual .no { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--fg-3); }
+  .ritual h3 { font-size: 19px; font-weight: 400; letter-spacing: 0.06em; }
+  .ritual h3 .en { margin-left: 14px; font-size: 10px; letter-spacing: 0.24em; color: var(--fg-3); text-transform: uppercase; font-weight: 400; }
+  .ritual p { margin-top: 10px; color: var(--fg-2); font-size: 15px; max-width: 40em; }
+
+  /* calendar */
+  .calendar-wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 64px; align-items: center; }
+  .calendar {
+    display: grid; grid-template-columns: repeat(7, 13px); gap: 11px; padding: 8px; justify-content: center;
+  }
+  .calendar i { width: 13px; height: 13px; border-radius: 50%; background: var(--dot-off); display: block; }
+  .calendar i.on { background: var(--fg); }
+  .calendar i.now { background: transparent; box-shadow: 0 0 0 3px var(--dawn-soft); }
+  .calendar-copy .dawn-line { margin-top: 32px; font-size: 13px; color: var(--fg-3); letter-spacing: 0.06em; }
+
+  /* premium & privacy */
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 64px; }
+  .list { margin-top: 32px; }
+  .list .item { padding: 22px 0; border-top: 1px solid var(--hair); }
+  .list .item:last-child { border-bottom: 1px solid var(--hair); }
+  .list .item h3 { font-size: 15px; font-weight: 400; letter-spacing: 0.06em; }
+  .list .item p { margin-top: 6px; font-size: 13px; color: var(--fg-3); }
+  .privacy p { margin-top: 24px; font-size: 15px; color: var(--fg-2); }
+
+  /* cta */
+  .cta { position: relative; text-align: center; padding: 140px 0 120px; overflow: hidden; }
+  .cta .dawn-bg {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 320px; pointer-events: none;
+    background: linear-gradient(180deg, rgba(194, 161, 131, 0) 0%, rgba(194, 161, 131, 0.22) 100%);
+  }
+  .cta .dawn-horizon {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: linear-gradient(90deg, rgba(194, 161, 131, 0), rgba(194, 161, 131, 0.7), rgba(194, 161, 131, 0));
+  }
+  .cta .container { position: relative; }
+  .cta h2 { font-size: 30px; }
+  .cta .actions { justify-content: center; }
+  .cta .en { margin-top: 12px; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--fg-3); }
+
+  /* support */
+  .support { text-align: center; padding: 80px 0; }
+  .support p { margin-top: 18px; color: var(--fg-2); font-size: 15px; }
+  .support a { color: var(--fg); text-decoration: none; border-bottom: 1px solid rgba(233, 231, 226, 0.3); }
+  .support a:hover { border-color: var(--fg); }
+
+  footer { border-top: 1px solid var(--hair); padding: 40px 0 56px; font-size: 12px; color: var(--fg-3); }
+  footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 40px; }
+  footer .links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  footer .links a { text-decoration: none; letter-spacing: 0.06em; }
+  footer .links a:hover { color: var(--fg); }
+  footer .links .sep { color: var(--fg-4); }
+  footer .copyright { letter-spacing: 0.1em; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 56px; padding: 40px 0 72px; }
+    .hero h1 { font-size: 32px; }
+    .calendar-wrap { grid-template-columns: 1fr; gap: 48px; }
+    .calendar { order: -1; }
+    section { padding: 72px 0; }
+    section h2, .cta h2 { font-size: 22px; }
+    .container { padding: 0 24px; }
+    nav.top { display: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .brand-dot { animation: breathe 4s ease-in-out infinite; }
+    @keyframes breathe { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; box-shadow: 0 0 26px rgba(233, 231, 226, 0.8); } }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a class="brand" href="#top" aria-label="Memento Morning">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">Memento Morning</span>
+      </a>
+      <nav class="top" aria-label="ページ内リンク">
+        <a href="#ritual">朝の儀式</a>
+        <a href="#calendar">人生カレンダー</a>
+        <a href="#premium">プレミアム</a>
+        <a href="#support">サポート</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="container hero">
+      <div class="hero-copy">
+        <p class="label"><span class="ja">毎朝死を想ってから起きるアラーム</span></p>
+        <h1>今日死ぬとしたら<br />何をやりたいか</h1>
+        <p class="en">If today were your last day, what would you want to do?</p>
+        <p class="lead">Memento Morning は、毎朝ひとつの問いに答えてアラームを止める目覚ましアプリです。問いはひとつだけ。答えるまで、アラームは繰り返しあなたを呼びます。</p>
+        <div class="actions">
+          <span class="pill coming">App Store で近日公開</span>
+          <span class="note">iOS 26 以降 · ダウンロードは無料</span>
+        </div>
+      </div>
+
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="glow"></div>
+          <div class="horizon"></div>
+          <span class="status">5:49</span>
+          <div class="next">次の朝 · NEXT MORNING</div>
+          <div class="time">5:50</div>
+          <div class="until">あと 8 時間 12 分 · 時刻をタップして変更</div>
+          <div class="toggle"></div>
+          <div class="today">
+            <div class="label">今朝のことば</div>
+            <p>家族と海を見に行く</p>
+          </div>
+          <div class="strip">
+            <i class="off"></i><i></i><i></i><i class="off"></i><i></i><i></i><i></i><i></i><i class="off"></i><i></i><i></i><i></i><i></i><i class="now"></i>
+          </div>
+          <div class="count">答えた朝 11</div>
+        </div>
+      </div>
+    </div>
+
+    <section id="ritual">
+      <div class="container">
+        <p class="label">Morning ritual</p>
+        <h2>問いに答えると朝が始まる</h2>
+        <p class="lead">派手な演出も、バッジも、炎もありません。静かな問いと、あなたの答えだけがあります。</p>
+        <div class="ritual">
+          <div class="row">
+            <span class="no">01</span>
+            <div>
+              <h3>朝<span class="en">Morning</span></h3>
+              <p>設定した時刻にアラームが鳴ります。今日の問いに、自分の顔を見ながら声で答えると、朝が始まります。答えるまで、アラームは繰り返しあなたを呼びます。</p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="no">02</span>
+            <div>
+              <h3>夜<span class="en">Night</span></h3>
+              <p>夜、「今日の答えを守れましたか?」とだけ確認します。やれた日も、やれなかった日も、そのまま残ります。</p>
+            </div>
+          </div>
+          <div class="row">
+            <span class="no">03</span>
+            <div>
+              <h3>蓄積<span class="en">Journal</span></h3>
+              <p>毎朝の回答が一日一粒、静かに積み重なります。七日目の朝、はじめて七つの答えが一枚に並びます。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calendar">
+      <div class="container calendar-wrap">
+        <div class="calendar-copy">
+          <p class="label">Life calendar</p>
+          <h2>1行が1週間<br />答えた朝が点として残る</h2>
+          <p class="lead">連続記録も、修復アイテムもありません。答えた朝だけが、人生カレンダーに点として埋まっていきます。</p>
+          <p class="dawn-line">点はいつかつながる</p>
+        </div>
+        <div class="calendar" aria-hidden="true">
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="on"></i><i class="on"></i><i class="off"></i><i class="on"></i>
+          <i class="on"></i><i class="on"></i><i class="off"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i class="on"></i><i class="off"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="off"></i>
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="off"></i><i class="on"></i><i class="on"></i>
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i class="off"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="off"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i class="off"></i>
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+          <i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i>
+        </div>
+      </div>
+    </section>
+
+    <section id="premium">
+      <div class="container two">
+        <div>
+          <p class="label">Premium</p>
+          <h2>すべての朝を残すために</h2>
+          <div class="list">
+            <div class="item">
+              <h3>無限追撃アラーム</h3>
+              <p>答えるまで鳴りやまない。毎朝の問いを忘れることはありません。</p>
+            </div>
+            <div class="item">
+              <h3>すべての履歴</h3>
+              <p>直近 7 日を超えて、答えたすべての朝が残ります。</p>
+            </div>
+            <div class="item">
+              <h3>夜のリマインド</h3>
+              <p>1 日 3 本まで 好きな時刻に</p>
+            </div>
+          </div>
+        </div>
+        <div class="privacy">
+          <p class="label">Privacy</p>
+          <h2>回答はあなたの端末の中にだけ</h2>
+          <p>毎朝の回答も、録画した動画も、サーバーには送信されません。動画は写真アプリのアルバム「Memento Morning」に保存され、答えはあなたの手元に残ります。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="dawn-bg" aria-hidden="true"></div>
+      <div class="dawn-horizon" aria-hidden="true"></div>
+      <div class="container">
+        <h2>死を想ってから<br />朝を始める</h2>
+        <p class="en">Memento mori every morning</p>
+        <div class="actions">
+          <span class="pill coming">App Store で近日公開</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="support" id="support">
+      <div class="container">
+        <p class="label">Support</p>
+        <h2>サポート・お問い合わせ</h2>
+        <p>使い方のご質問、不具合のご報告、ご要望は<br /><a href="mailto:bannzai.app@gmail.com">bannzai.app@gmail.com</a> までお送りください。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="links">
+        <a href="./Terms-ja">利用規約</a>
+        <a href="./PrivacyPolicy-ja">プライバシーポリシー</a>
+        <a href="./SpecifiedCommercialTransactionAct-ja">特定商取引法に基づく表示</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a href="./Terms-en" lang="en">Terms of Service</a>
+        <a href="./PrivacyPolicy-en" lang="en">Privacy Policy</a>
+      </div>
+      <div class="copyright">© bannzai</div>
+    </div>
+  </footer>
+</body>
+</html>
