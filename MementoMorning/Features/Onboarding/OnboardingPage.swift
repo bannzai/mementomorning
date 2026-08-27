@@ -424,6 +424,7 @@ struct OnboardingPage: View {
     private var pledgeStep: some View {
         OnboardingPledgeStepView(
             alarmTime: time,
+            firesToday: pledgeFiresToday(alarmTime: time, now: .now, calendar: .autoupdatingCurrent),
             onPledged: {
                 withAnimation(.easeInOut(duration: 0.6)) { step = .ritualSummary }
             }
@@ -1030,6 +1031,8 @@ struct OnboardingPage_Previews: PreviewProvider {
             stepPreview {
                 OnboardingPledgeStepView(
                     alarmTime: Calendar.autoupdatingCurrent.date(bySettingHour: 7, minute: 0, second: 0, of: .now) ?? .now,
+                    // 撮影時刻によって今日 / 明日が変わらないよう、明日の分岐に固定する
+                    firesToday: false,
                     onPledged: {}
                 )
             }

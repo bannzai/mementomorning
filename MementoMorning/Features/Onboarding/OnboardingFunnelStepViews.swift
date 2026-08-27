@@ -320,6 +320,9 @@ struct OnboardingRitualSummaryStepView: View {
 struct OnboardingPledgeStepView: View {
     /// 約束の一文に埋め込むアラーム時刻
     let alarmTime: Date
+    /// 約束した朝が今日かどうか (判定は pledgeFiresToday)。
+    /// 設定時刻より前にオンボーディングを終えると最初のアラームは当日に鳴るため、見出しと宣誓文の「明日」を「今日」に切り替える
+    let firesToday: Bool
     /// 約束が成立して余韻を置いた後に呼ばれる
     let onPledged: () -> Void
 
@@ -337,15 +340,12 @@ struct OnboardingPledgeStepView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // ja: 明日の自分に、ひとつの約束
-            Text("One promise to tomorrow's you")
+            titleText
                 .font(.system(size: 25, weight: .light))
                 .tracking(1.5)
                 .lineSpacing(10)
-            // ja: 明日の %@、私は目を覚まし、自分と向き合い、答えます。
-            //
             // 一人称の宣誓文のため、他ステップのタイトル (25pt) より小さい 21pt にする (メメント・モリの本文と同じ様式)
-            Text("Tomorrow at \(alarmTime.formatted(date: .omitted, time: .shortened)), I will wake up, face myself, and answer.")
+            pledgeText
                 .font(.system(size: 21, weight: .light))
                 .tracking(1.3)
                 .lineSpacing(12)
@@ -404,6 +404,28 @@ struct OnboardingPledgeStepView: View {
         // VoiceOver では長押しの代わりにダブルタップの既定アクションで約束を成立させる
         .accessibilityAction { pledge() }
         .accessibilityIdentifier("onboarding_pledge_hold")
+    }
+
+    /// 見出し。約束した朝が今日か明日かで呼びかける相手を変える
+    private var titleText: Text {
+        if firesToday {
+            // ja: 今日の自分に、ひとつの約束
+            return Text("One promise to today's you")
+        } else {
+            // ja: 明日の自分に、ひとつの約束
+            return Text("One promise to tomorrow's you")
+        }
+    }
+
+    /// 宣誓文。最初のアラームが鳴る日 (今日 / 明日) と設定時刻を埋め込む
+    private var pledgeText: Text {
+        if firesToday {
+            // ja: 今日の %@、私は目を覚まし、自分と向き合い、答えます。
+            return Text("Today at \(alarmTime.formatted(date: .omitted, time: .shortened)), I will wake up, face myself, and answer.")
+        } else {
+            // ja: 明日の %@、私は目を覚まし、自分と向き合い、答えます。
+            return Text("Tomorrow at \(alarmTime.formatted(date: .omitted, time: .shortened)), I will wake up, face myself, and answer.")
+        }
     }
 
     /// リングの下の案内。約束の成立後は成立したことを伝える文言に変わる
