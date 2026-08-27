@@ -2011,16 +2011,6 @@
         }
       }
     },
-    "A few" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "いくつかは"
-          }
-        }
-      }
-    },
     "A few things" : {
       "localizations" : {
         "ja" : {
@@ -2245,22 +2235,22 @@
         }
       }
     },
-    "About %lld mornings remain. Keep every one." : {
+    "About %lld mornings remain — keep every one" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "残りは約 %lld 回の朝。そのすべてを、残すために。"
+            "value" : "残り約 %lld 回の朝をすべて残すために"
           }
         }
       }
     },
-    "About %lld remain." : {
+    "About %lld remain" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "残りは、約 %lld 回。"
+            "value" : "残りは約 %lld 回"
           }
         }
       }
@@ -3783,22 +3773,22 @@
         }
       }
     },
-    "Almost every morning" : {
+    "Almost always" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ほとんど毎朝"
+            "value" : "だいたい起きられる"
           }
         }
       }
     },
-    "Almost none" : {
+    "Almost never" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ほとんど覚えていない"
+            "value" : "ほとんど起きられない"
           }
         }
       }
@@ -4883,6 +4873,16 @@
         }
       }
     },
+    "Are you happy with how your mornings begin?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いまの朝の迎え方に満足していますか？"
+          }
+        }
+      }
+    },
     "Are you keeping it?" : {
       "localizations" : {
         "ar" : {
@@ -5571,6 +5571,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "相機與麥克風"
+          }
+        }
+      }
+    },
+    "Can you wake up with a single alarm?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝は一度のアラームで起きられますか？"
           }
         }
       }
@@ -6915,16 +6925,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開発者用のログ"
-          }
-        }
-      }
-    },
-    "Does your morning start with the snooze button?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "朝は、スヌーズボタンから始まりますか？"
           }
         }
       }
@@ -8468,22 +8468,32 @@
         }
       }
     },
-    "From tomorrow, your day begins in the morning." : {
+    "From tomorrow, mornings you can be proud of" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明日から、あなたの一日は朝に始まります。"
+            "value" : "明日から胸を張れる朝を"
           }
         }
       }
     },
-    "From tomorrow, your mornings will be kept." : {
+    "From tomorrow, wake up to mornings full of life" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明日からの朝は、残っていきます。"
+            "value" : "明日から気力の満ちる朝を迎えましょう"
+          }
+        }
+      }
+    },
+    "From tomorrow, your day begins in the morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日からあなたの一日は朝に始まります"
           }
         }
       }
@@ -8504,26 +8514,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "母に長い電話をかける"
-          }
-        }
-      }
-    },
-    "How many mornings from last month do you actually remember?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "先月の朝を、いくつ覚えていますか？"
-          }
-        }
-      }
-    },
-    "How many of them will you leave for 'someday'?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "そのうち何回を、「いつか」のままにしますか？"
           }
         }
       }
@@ -9842,12 +9832,12 @@
         }
       }
     },
-    "It starts tomorrow morning." : {
+    "It starts tomorrow morning" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明日の朝から、始まります。"
+            "value" : "明日の朝から始まります"
           }
         }
       }
@@ -11166,12 +11156,12 @@
         }
       }
     },
-    "Most of them" : {
+    "Mostly" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "だいたい覚えている"
+            "value" : "おおむね満足している"
           }
         }
       }
@@ -11838,22 +11828,22 @@
         }
       }
     },
-    "No more snoozing. Only your answer stops the alarm." : {
+    "No more snoozing\nOnly your answer stops the alarm" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "もうスヌーズはいりません。アラームを止めるのは、あなたの答えだけ。"
+            "value" : "もうスヌーズはいりません\nアラームを止めるのはあなたの答えだけ"
           }
         }
       }
     },
-    "No one knows how many mornings remain." : {
+    "No one knows how many mornings remain" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "朝があと何回あるかは、誰にもわかりません。"
+            "value" : "朝があと何回あるかは誰にもわかりません"
           }
         }
       }
@@ -12072,12 +12062,22 @@
         }
       }
     },
-    "None of them comes back." : {
+    "No, not really" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "そのどれも、二度は来ません。"
+            "value" : "満足していない"
+          }
+        }
+      }
+    },
+    "None of them comes back" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そのどれも二度は来ません"
           }
         }
       }
@@ -15348,16 +15348,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無法恢復購買項目。"
-          }
-        }
-      }
-    },
-    "Rarely" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "めったにない"
           }
         }
       }
@@ -18916,6 +18906,16 @@
         }
       }
     },
+    "Somewhat" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どちらとも言えない"
+          }
+        }
+      }
+    },
     "Sound" : {
       "localizations" : {
         "ja" : {
@@ -21321,12 +21321,12 @@
         }
       }
     },
-    "That's exactly why each one counts." : {
+    "That's exactly why each one counts" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "だからこそ、一回ごとに意味があります。"
+            "value" : "だからこそ一回ごとに意味があります"
           }
         }
       }
@@ -23257,216 +23257,12 @@
         }
       }
     },
-    "To keep every morning." : {
+    "To keep every morning" : {
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "لكي تحتفظ بكل صباح."
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per conservar cada matí."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uchovat každé ráno."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "For at bevare hver morgen."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Um jeden Morgen zu bewahren."
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Για να κρατάς κάθε πρωί."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para conservar cada mañana."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada mañana."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jotta jokainen aamu säilyisi."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pour garder chaque matin."
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כדי לשמור כל בוקר."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हर सुबह को संजोने के लिए।"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Da sačuvaš svako jutro."
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hogy megőrizd minden reggeled."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Untuk menyimpan setiap pagi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per conservare ogni mattina."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "すべての朝を、残すために。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "매일 아침을 간직하기 위해."
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Untuk menyimpan setiap pagi."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "For å ta vare på hver morgen."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Om elke ochtend te bewaren."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aby zachować każdy poranek."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada manhã."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Para guardar cada manhã."
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pentru a păstra fiecare dimineață."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Чтобы сохранить каждое утро."
-          }
-        },
-        "sk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uchovať každé ráno."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "För att bevara varje morgon."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เพื่อเก็บรักษาทุกเช้าไว้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her sabahı saklamak için."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Щоб зберегти кожен ранок."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Để lưu giữ mỗi buổi sáng."
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每個早晨。"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每个清晨。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留住每個清晨。"
+            "value" : "すべての朝を残すために"
           }
         }
       }
@@ -23685,12 +23481,12 @@
         }
       }
     },
-    "Tomorrow morning, answer that 'someday.'" : {
+    "Tomorrow morning, answer that 'someday'" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明日の朝、その「いつか」に答えてください。"
+            "value" : "明日の朝はその「いつか」に答えてください"
           }
         }
       }
@@ -23705,12 +23501,12 @@
         }
       }
     },
-    "Tomorrow, your first minutes go to the question, not the phone." : {
+    "Tomorrow, your first minutes go to the question, not the phone" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "明日の最初の数分は、スマホではなく問いのために。"
+            "value" : "明日の最初の数分はスマホではなく問いのために"
           }
         }
       }
@@ -25462,7 +25258,17 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "目覚めてすぐの時間を、どう過ごしていますか？"
+            "value" : "起きてすぐの時間をどう過ごしていますか？"
+          }
+        }
+      }
+    },
+    "What kind of morning did you truly want to wake up to?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたが本当に迎えたかった朝はどんな朝ですか"
           }
         }
       }
@@ -25482,7 +25288,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたの一日は、いつ本当に始まりますか？"
+            "value" : "あなたの一日が本当に始まるのはいつですか？"
           }
         }
       }
@@ -25951,7 +25757,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ある。手つかずのまま"
+            "value" : "あるが手つかずのまま"
           }
         }
       }
@@ -26598,12 +26404,12 @@
         }
       }
     },
-    "You've already had about %lld mornings." : {
+    "You've already had about %lld mornings" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたはこれまでに、約 %lld 回の朝を迎えました。"
+            "value" : "あなたはこれまでに約 %lld 回の朝を迎えました"
           }
         }
       }

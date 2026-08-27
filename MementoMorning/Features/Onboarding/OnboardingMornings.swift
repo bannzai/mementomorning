@@ -6,12 +6,12 @@ extension String {
     /// (@AppStorage は Optional<Int> をそのまま扱えず、未回答を nil で表現できない。
     /// 生まれ年として実在しない 0 を未回答に割り当てることで、有効な入力と区別する)
     static let onboardingBirthYear = "onboardingBirthYear"
-    /// スヌーズのペイン認識質問への回答を保存する UserDefaults キー。
-    /// 値は OnboardingSnoozeAnswer の rawValue。未回答は空文字
-    static let onboardingSnoozeAnswer = "onboardingSnoozeAnswer"
-    /// 記憶のペイン認識質問への回答を保存する UserDefaults キー。
-    /// 値は OnboardingMemoryAnswer の rawValue。未回答は空文字
-    static let onboardingMemoryAnswer = "onboardingMemoryAnswer"
+    /// 起床のペイン認識質問への回答を保存する UserDefaults キー。
+    /// 値は OnboardingWakeAnswer の rawValue。未回答は空文字
+    static let onboardingWakeAnswer = "onboardingWakeAnswer"
+    /// 朝の迎え方への満足度の質問への回答を保存する UserDefaults キー。
+    /// 値は OnboardingMorningSatisfactionAnswer の rawValue。未回答は空文字
+    static let onboardingMorningSatisfactionAnswer = "onboardingMorningSatisfactionAnswer"
     /// 目覚めてすぐの過ごし方の質問への回答を保存する UserDefaults キー。
     /// 値は OnboardingFirstMinutesAnswer の rawValue。未回答は空文字
     static let onboardingFirstMinutesAnswer = "onboardingFirstMinutesAnswer"
@@ -23,18 +23,18 @@ extension String {
     static let onboardingUndoneGoalAnswer = "onboardingUndoneGoalAnswer"
 }
 
-/// 「朝はスヌーズボタンから始まりますか」への回答
-enum OnboardingSnoozeAnswer: String {
-    case almostEvery
+/// 「朝は一度のアラームで起きられますか」への回答
+enum OnboardingWakeAnswer: String {
+    case almostNever
     case sometimes
-    case rarely
+    case almostAlways
 }
 
-/// 「先月の朝をいくつ覚えていますか」への回答
-enum OnboardingMemoryAnswer: String {
-    case almostNone
-    case aFew
-    case most
+/// 「いまの朝の迎え方に満足していますか」への回答
+enum OnboardingMorningSatisfactionAnswer: String {
+    case notReally
+    case somewhat
+    case mostly
 }
 
 /// 「目覚めてすぐの時間をどう過ごしていますか」への回答
@@ -64,8 +64,8 @@ enum RitualSummaryNote {
     case answerSomeday
     /// スヌーズが要らなくなることを伝える
     case noMoreSnoozing
-    /// 朝が記録として残るようになることを伝える
-    case morningsKept
+    /// 明日から胸を張れる朝になることを伝える
+    case proudMornings
     /// 一日が朝から始まるようになることを伝える
     case dayBeginsMorning
     /// 最初の数分がスマホではなく問いに向かうことを伝える
@@ -75,23 +75,23 @@ enum RitualSummaryNote {
 }
 
 /// ペイン認識質問の回答から、儀式のサマリーに出す一文を 1 つ選ぶ。
-/// 優先順は「目的 (手つかずの『いつか』) > アラームのメカニクス (スヌーズ) > 記憶 > 一日の始まる時間帯 > スマホ習慣」。
+/// 優先順は「目的 (手つかずの『いつか』) > アラームのメカニクス (起床) > 朝の迎え方への満足 > 一日の始まる時間帯 > スマホ習慣」。
 /// 本アプリが解こうとしている課題に近いものほど強い動機づけになるため、この順で最初に該当したものだけを返す
 func ritualSummaryNote(
     undoneGoal: OnboardingUndoneGoalAnswer?,
-    snooze: OnboardingSnoozeAnswer?,
-    memory: OnboardingMemoryAnswer?,
+    wake: OnboardingWakeAnswer?,
+    satisfaction: OnboardingMorningSatisfactionAnswer?,
     dayBegin: OnboardingDayBeginAnswer?,
     firstMinutes: OnboardingFirstMinutesAnswer?
 ) -> RitualSummaryNote {
     if undoneGoal == .undone {
         return .answerSomeday
     }
-    if snooze == .almostEvery {
+    if wake == .almostNever {
         return .noMoreSnoozing
     }
-    if memory == .almostNone {
-        return .morningsKept
+    if satisfaction == .notReally {
+        return .proudMornings
     }
     if dayBegin == .evening {
         return .dayBeginsMorning

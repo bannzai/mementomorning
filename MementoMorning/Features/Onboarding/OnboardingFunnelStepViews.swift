@@ -10,7 +10,7 @@ struct OnboardingPainChoice<Answer>: Identifiable {
     let answer: Answer
 }
 
-/// ペイン認識質問のステップ (スヌーズ・記憶の 2 問で共通)。
+/// ペイン認識質問のステップ (5 問で共通)。
 /// 質問文と縦並びの選択ボタンだけを置き、タップで回答を確定して次のステップへ進む
 struct OnboardingPainQuestionStepView<Answer>: View {
     /// 質問文
@@ -121,9 +121,6 @@ struct OnboardingBirthYearStepView: View {
 struct OnboardingMorningsResultStepView: View {
     /// 提示するパターン
     let variant: MorningsResultVariant
-    /// 手つかずの「いつか」への追い打ちの一文を出すかどうか。
-    /// 回数を数えられた時 (counted) だけ意味を持つ (回数が出ていない画面で「そのうち何回を」と問えないため)
-    let showsUndoneGoalLine: Bool
     /// 次のステップへ進む時に呼ばれる
     let onContinue: () -> Void
 
@@ -131,44 +128,49 @@ struct OnboardingMorningsResultStepView: View {
         VStack(alignment: .leading, spacing: 0) {
             switch variant {
             case .counted(let lived, let remaining):
-                // ja: あなたはこれまでに、約 %lld 回の朝を迎えました。
-                Text("You've already had about \(lived) mornings.")
+                // ja: あなたはこれまでに約 %lld 回の朝を迎えました
+                Text("You've already had about \(lived) mornings")
                     .font(.system(size: 25, weight: .light))
                     .tracking(1.5)
                     .lineSpacing(12)
-                // ja: 残りは、約 %lld 回。
-                Text("About \(remaining) remain.")
+                // ja: 残りは約 %lld 回
+                Text("About \(remaining) remain")
                     .font(.system(size: 25, weight: .light))
                     .tracking(1.5)
                     .lineSpacing(12)
                     .padding(.top, 14)
-                // ja: そのどれも、二度は来ません。
-                Text("None of them comes back.")
+                // ja: そのどれも二度は来ません
+                Text("None of them comes back")
                     .font(.system(size: 12))
                     .lineSpacing(9)
                     .foregroundStyle(Color.warmWhite.opacity(0.45))
                     .padding(.top, 24)
-                if showsUndoneGoalLine {
-                    // ja: そのうち何回を、「いつか」のままにしますか？
-                    Text("How many of them will you leave for 'someday'?")
-                        .font(.system(size: 12))
-                        .lineSpacing(9)
-                        .foregroundStyle(Color.warmWhite.opacity(0.45))
-                        .padding(.top, 14)
-                }
             case .unknown:
-                // ja: 朝があと何回あるかは、誰にもわかりません。
-                Text("No one knows how many mornings remain.")
+                // ja: 朝があと何回あるかは誰にもわかりません
+                Text("No one knows how many mornings remain")
                     .font(.system(size: 25, weight: .light))
                     .tracking(1.5)
                     .lineSpacing(12)
-                // ja: だからこそ、一回ごとに意味があります。
-                Text("That's exactly why each one counts.")
+                // ja: だからこそ一回ごとに意味があります
+                Text("That's exactly why each one counts")
                     .font(.system(size: 12))
                     .lineSpacing(9)
                     .foregroundStyle(Color.warmWhite.opacity(0.45))
                     .padding(.top, 24)
             }
+            // 問いかけと誘いは、回数を数えられた時も数えられない時も同じ様式で続けて出す
+            // ja: あなたが本当に迎えたかった朝はどんな朝ですか
+            Text("What kind of morning did you truly want to wake up to?")
+                .font(.system(size: 12))
+                .lineSpacing(9)
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
+            // ja: 明日から気力の満ちる朝を迎えましょう
+            Text("From tomorrow, wake up to mornings full of life")
+                .font(.system(size: 12))
+                .lineSpacing(9)
+                .foregroundStyle(Color.warmWhite.opacity(0.45))
+                .padding(.top, 14)
             Spacer()
             Button {
                 onContinue()
@@ -279,23 +281,25 @@ struct OnboardingRitualSummaryStepView: View {
     private var noteText: Text {
         switch note {
         case .answerSomeday:
-            // ja: 明日の朝、その「いつか」に答えてください。
-            return Text("Tomorrow morning, answer that 'someday.'")
+            // ja: 明日の朝はその「いつか」に答えてください
+            return Text("Tomorrow morning, answer that 'someday'")
         case .noMoreSnoozing:
-            // ja: もうスヌーズはいりません。アラームを止めるのは、あなたの答えだけ。
-            return Text("No more snoozing. Only your answer stops the alarm.")
-        case .morningsKept:
-            // ja: 明日からの朝は、残っていきます。
-            return Text("From tomorrow, your mornings will be kept.")
+            // ja: もうスヌーズはいりません
+            //
+            // アラームを止めるのはあなたの答えだけ
+            return Text("No more snoozing\nOnly your answer stops the alarm")
+        case .proudMornings:
+            // ja: 明日から胸を張れる朝を
+            return Text("From tomorrow, mornings you can be proud of")
         case .dayBeginsMorning:
-            // ja: 明日から、あなたの一日は朝に始まります。
-            return Text("From tomorrow, your day begins in the morning.")
+            // ja: 明日からあなたの一日は朝に始まります
+            return Text("From tomorrow, your day begins in the morning")
         case .firstMinutesToQuestion:
-            // ja: 明日の最初の数分は、スマホではなく問いのために。
-            return Text("Tomorrow, your first minutes go to the question, not the phone.")
+            // ja: 明日の最初の数分はスマホではなく問いのために
+            return Text("Tomorrow, your first minutes go to the question, not the phone")
         case .startsTomorrow:
-            // ja: 明日の朝から、始まります。
-            return Text("It starts tomorrow morning.")
+            // ja: 明日の朝から始まります
+            return Text("It starts tomorrow morning")
         }
     }
 

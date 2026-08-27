@@ -55,15 +55,15 @@ struct PaywallPage: View {
     private var titleSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             if let remainingMorningsCount {
-                // ja: 残りは約 %lld 回の朝。そのすべてを、残すために。
-                Text("About \(remainingMorningsCount) mornings remain. Keep every one.")
+                // ja: 残り約 %lld 回の朝をすべて残すために
+                Text("About \(remainingMorningsCount) mornings remain — keep every one")
                     .font(.system(size: 12))
                     .tracking(0.5)
                     .lineSpacing(6)
                     .foregroundStyle(Color.dawn.opacity(0.75))
             }
-            // ja: すべての朝を、残すために。
-            Text("To keep every morning.")
+            // ja: すべての朝を残すために
+            Text("To keep every morning")
                 .font(.system(size: 27, weight: .light))
                 .tracking(1.08)
                 .lineSpacing(27 * 0.7)

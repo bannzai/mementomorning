@@ -40,81 +40,81 @@ final class OnboardingMorningsTests: XCTestCase {
 }
 
 /// ritualSummaryNote のテスト。
-/// 6 通りの分岐と、「目的 > スヌーズ > 記憶 > 時間帯 > スマホ習慣」の優先順による上書きを検査する
+/// 6 通りの分岐と、「目的 > 起床 > 満足 > 時間帯 > スマホ習慣」の優先順による上書きを検査する
 final class RitualSummaryNoteTests: XCTestCase {
     func testAnswerSomedayWhenGoalStaysUndone() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .undone, snooze: nil, memory: nil, dayBegin: nil, firstMinutes: nil),
+            ritualSummaryNote(undoneGoal: .undone, wake: nil, satisfaction: nil, dayBegin: nil, firstMinutes: nil),
             .answerSomeday
         )
     }
 
-    func testNoMoreSnoozingWhenSnoozingAlmostEveryMorning() {
+    func testNoMoreSnoozingWhenCannotWakeWithSingleAlarm() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: nil, snooze: .almostEvery, memory: nil, dayBegin: nil, firstMinutes: nil),
+            ritualSummaryNote(undoneGoal: nil, wake: .almostNever, satisfaction: nil, dayBegin: nil, firstMinutes: nil),
             .noMoreSnoozing
         )
     }
 
-    func testMorningsKeptWhenRememberingAlmostNone() {
+    func testProudMorningsWhenNotHappyWithMornings() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: nil, snooze: nil, memory: .almostNone, dayBegin: nil, firstMinutes: nil),
-            .morningsKept
+            ritualSummaryNote(undoneGoal: nil, wake: nil, satisfaction: .notReally, dayBegin: nil, firstMinutes: nil),
+            .proudMornings
         )
     }
 
     func testDayBeginsMorningWhenDayStartsByEvening() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: nil, snooze: nil, memory: nil, dayBegin: .evening, firstMinutes: nil),
+            ritualSummaryNote(undoneGoal: nil, wake: nil, satisfaction: nil, dayBegin: .evening, firstMinutes: nil),
             .dayBeginsMorning
         )
     }
 
     func testFirstMinutesToQuestionWhenScrolling() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: nil, snooze: nil, memory: nil, dayBegin: nil, firstMinutes: .scrolling),
+            ritualSummaryNote(undoneGoal: nil, wake: nil, satisfaction: nil, dayBegin: nil, firstMinutes: .scrolling),
             .firstMinutesToQuestion
         )
     }
 
     func testStartsTomorrowWhenNothingApplies() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: nil, snooze: nil, memory: nil, dayBegin: nil, firstMinutes: nil),
+            ritualSummaryNote(undoneGoal: nil, wake: nil, satisfaction: nil, dayBegin: nil, firstMinutes: nil),
             .startsTomorrow
         )
     }
 
     func testStartsTomorrowWhenAllAnsweredButNoneMatches() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .notReally, snooze: .rarely, memory: .most, dayBegin: .morning, firstMinutes: .ritual),
+            ritualSummaryNote(undoneGoal: .notReally, wake: .almostAlways, satisfaction: .mostly, dayBegin: .morning, firstMinutes: .ritual),
             .startsTomorrow
         )
     }
 
     func testUndoneGoalWinsOverEveryOtherAnswer() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .undone, snooze: .almostEvery, memory: .almostNone, dayBegin: .evening, firstMinutes: .scrolling),
+            ritualSummaryNote(undoneGoal: .undone, wake: .almostNever, satisfaction: .notReally, dayBegin: .evening, firstMinutes: .scrolling),
             .answerSomeday
         )
     }
 
-    func testSnoozeWinsOverMemoryAndLaterAnswers() {
+    func testWakeWinsOverSatisfactionAndLaterAnswers() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .aFew, snooze: .almostEvery, memory: .almostNone, dayBegin: .evening, firstMinutes: .scrolling),
+            ritualSummaryNote(undoneGoal: .aFew, wake: .almostNever, satisfaction: .notReally, dayBegin: .evening, firstMinutes: .scrolling),
             .noMoreSnoozing
         )
     }
 
-    func testMemoryWinsOverDayBeginAndFirstMinutes() {
+    func testSatisfactionWinsOverDayBeginAndFirstMinutes() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .aFew, snooze: .sometimes, memory: .almostNone, dayBegin: .evening, firstMinutes: .scrolling),
-            .morningsKept
+            ritualSummaryNote(undoneGoal: .aFew, wake: .sometimes, satisfaction: .notReally, dayBegin: .evening, firstMinutes: .scrolling),
+            .proudMornings
         )
     }
 
     func testDayBeginWinsOverFirstMinutes() {
         XCTAssertEqual(
-            ritualSummaryNote(undoneGoal: .aFew, snooze: .sometimes, memory: .most, dayBegin: .evening, firstMinutes: .scrolling),
+            ritualSummaryNote(undoneGoal: .aFew, wake: .sometimes, satisfaction: .mostly, dayBegin: .evening, firstMinutes: .scrolling),
             .dayBeginsMorning
         )
     }

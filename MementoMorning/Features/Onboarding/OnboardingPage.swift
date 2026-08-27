@@ -31,8 +31,8 @@ struct OnboardingPage: View {
     /// オンボーディングの進行ステップ
     private enum Step {
         case concept
-        case painSnooze
-        case painMemory
+        case painWake
+        case painSatisfaction
         case firstMinutes
         case dayBegin
         case undoneGoal
@@ -70,10 +70,10 @@ struct OnboardingPage: View {
     @AppStorage(.hasCompletedOnboarding) private var hasCompletedOnboarding: Bool = false
     /// 入力された生まれ年 (0 = 未回答)。残りの朝の回数の計算に使う
     @AppStorage(.onboardingBirthYear) private var onboardingBirthYear: Int = 0
-    /// スヌーズのペイン認識質問への回答 (OnboardingSnoozeAnswer の rawValue。未回答は空文字)
-    @AppStorage(.onboardingSnoozeAnswer) private var onboardingSnoozeAnswer: String = ""
-    /// 記憶のペイン認識質問への回答 (OnboardingMemoryAnswer の rawValue。未回答は空文字)
-    @AppStorage(.onboardingMemoryAnswer) private var onboardingMemoryAnswer: String = ""
+    /// 起床のペイン認識質問への回答 (OnboardingWakeAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingWakeAnswer) private var onboardingWakeAnswer: String = ""
+    /// 朝の迎え方への満足度の質問への回答 (OnboardingMorningSatisfactionAnswer の rawValue。未回答は空文字)
+    @AppStorage(.onboardingMorningSatisfactionAnswer) private var onboardingMorningSatisfactionAnswer: String = ""
     /// 目覚めてすぐの過ごし方の質問への回答 (OnboardingFirstMinutesAnswer の rawValue。未回答は空文字)
     @AppStorage(.onboardingFirstMinutesAnswer) private var onboardingFirstMinutesAnswer: String = ""
     /// 一日が本当に始まる時間帯の質問への回答 (OnboardingDayBeginAnswer の rawValue。未回答は空文字)
@@ -119,10 +119,10 @@ struct OnboardingPage: View {
             switch step {
             case .concept:
                 conceptStep.transition(.opacity)
-            case .painSnooze:
-                painSnoozeStep.transition(.opacity)
-            case .painMemory:
-                painMemoryStep.transition(.opacity)
+            case .painWake:
+                painWakeStep.transition(.opacity)
+            case .painSatisfaction:
+                painSatisfactionStep.transition(.opacity)
             case .firstMinutes:
                 firstMinutesStep.transition(.opacity)
             case .dayBegin:
@@ -179,9 +179,9 @@ struct OnboardingPage: View {
     /// セクション外のステップでは nil にしてプログレス表示を出さない
     private var funnelProgressRatio: CGFloat? {
         switch step {
-        case .painSnooze:
+        case .painWake:
             return 1.0 / 8.0
-        case .painMemory:
+        case .painSatisfaction:
             return 2.0 / 8.0
         case .firstMinutes:
             return 3.0 / 8.0
@@ -264,7 +264,7 @@ struct OnboardingPage: View {
                 .padding(.top, 14)
             Spacer()
             Button {
-                withAnimation(.easeInOut(duration: 0.6)) { step = .painSnooze }
+                withAnimation(.easeInOut(duration: 0.6)) { step = .painWake }
             } label: {
                 // ja: はじめる
                 Text("Begin")
@@ -279,41 +279,41 @@ struct OnboardingPage: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// ステップ 2: ペイン認識質問 1 (スヌーズ)。回答は儀式サマリーの一文の出し分けに使う
-    private var painSnoozeStep: some View {
-        OnboardingPainQuestionStepView<OnboardingSnoozeAnswer>(
-            // ja: 朝は、スヌーズボタンから始まりますか？
-            question: Text("Does your morning start with the snooze button?"),
+    /// ステップ 2: ペイン認識質問 1 (起床)。回答は儀式サマリーの一文の出し分けに使う
+    private var painWakeStep: some View {
+        OnboardingPainQuestionStepView<OnboardingWakeAnswer>(
+            // ja: 朝は一度のアラームで起きられますか？
+            question: Text("Can you wake up with a single alarm?"),
             choices: [
-                // ja: ほとんど毎朝
-                .init(id: "onboarding_pain_snooze_almost_every", label: Text("Almost every morning"), answer: .almostEvery),
+                // ja: ほとんど起きられない
+                .init(id: "onboarding_pain_wake_almost_never", label: Text("Almost never"), answer: .almostNever),
                 // ja: ときどき
-                .init(id: "onboarding_pain_snooze_sometimes", label: Text("Sometimes"), answer: .sometimes),
-                // ja: めったにない
-                .init(id: "onboarding_pain_snooze_rarely", label: Text("Rarely"), answer: .rarely),
+                .init(id: "onboarding_pain_wake_sometimes", label: Text("Sometimes"), answer: .sometimes),
+                // ja: だいたい起きられる
+                .init(id: "onboarding_pain_wake_almost_always", label: Text("Almost always"), answer: .almostAlways),
             ],
             onSelect: { answer in
-                onboardingSnoozeAnswer = answer.rawValue
-                withAnimation(.easeInOut(duration: 0.6)) { step = .painMemory }
+                onboardingWakeAnswer = answer.rawValue
+                withAnimation(.easeInOut(duration: 0.6)) { step = .painSatisfaction }
             }
         )
     }
 
-    /// ステップ 3: ペイン認識質問 2 (記憶)。回答は儀式サマリーの一文の出し分けに使う
-    private var painMemoryStep: some View {
-        OnboardingPainQuestionStepView<OnboardingMemoryAnswer>(
-            // ja: 先月の朝を、いくつ覚えていますか？
-            question: Text("How many mornings from last month do you actually remember?"),
+    /// ステップ 3: ペイン認識質問 2 (朝の迎え方への満足)。回答は儀式サマリーの一文の出し分けに使う
+    private var painSatisfactionStep: some View {
+        OnboardingPainQuestionStepView<OnboardingMorningSatisfactionAnswer>(
+            // ja: いまの朝の迎え方に満足していますか？
+            question: Text("Are you happy with how your mornings begin?"),
             choices: [
-                // ja: ほとんど覚えていない
-                .init(id: "onboarding_pain_memory_almost_none", label: Text("Almost none"), answer: .almostNone),
-                // ja: いくつかは
-                .init(id: "onboarding_pain_memory_a_few", label: Text("A few"), answer: .aFew),
-                // ja: だいたい覚えている
-                .init(id: "onboarding_pain_memory_most", label: Text("Most of them"), answer: .most),
+                // ja: 満足していない
+                .init(id: "onboarding_pain_satisfaction_not_really", label: Text("No, not really"), answer: .notReally),
+                // ja: どちらとも言えない
+                .init(id: "onboarding_pain_satisfaction_somewhat", label: Text("Somewhat"), answer: .somewhat),
+                // ja: おおむね満足している
+                .init(id: "onboarding_pain_satisfaction_mostly", label: Text("Mostly"), answer: .mostly),
             ],
             onSelect: { answer in
-                onboardingMemoryAnswer = answer.rawValue
+                onboardingMorningSatisfactionAnswer = answer.rawValue
                 withAnimation(.easeInOut(duration: 0.6)) { step = .firstMinutes }
             }
         )
@@ -322,7 +322,7 @@ struct OnboardingPage: View {
     /// ステップ 4: ペイン認識質問 3 (目覚めてすぐの過ごし方)。回答は儀式サマリーの一文の出し分けに使う
     private var firstMinutesStep: some View {
         OnboardingPainQuestionStepView<OnboardingFirstMinutesAnswer>(
-            // ja: 目覚めてすぐの時間を、どう過ごしていますか？
+            // ja: 起きてすぐの時間をどう過ごしていますか？
             question: Text("What do your first minutes of the day look like?"),
             choices: [
                 // ja: スマホを眺めている
@@ -342,7 +342,7 @@ struct OnboardingPage: View {
     /// ステップ 5: ペイン認識質問 4 (一日が本当に始まる時間帯)。回答は儀式サマリーの一文の出し分けに使う
     private var dayBeginStep: some View {
         OnboardingPainQuestionStepView<OnboardingDayBeginAnswer>(
-            // ja: あなたの一日は、いつ本当に始まりますか？
+            // ja: あなたの一日が本当に始まるのはいつですか？
             question: Text("When does your day really begin?"),
             choices: [
                 // ja: 朝から
@@ -359,14 +359,13 @@ struct OnboardingPage: View {
         )
     }
 
-    /// ステップ 6: ペイン認識質問 5 (手つかずの「いつか」)。
-    /// 回答は儀式サマリーの一文と、残りの朝の追い打ちの一文の出し分けに使う
+    /// ステップ 6: ペイン認識質問 5 (手つかずの「いつか」)。回答は儀式サマリーの一文の出し分けに使う
     private var undoneGoalStep: some View {
         OnboardingPainQuestionStepView<OnboardingUndoneGoalAnswer>(
             // ja: 「いつかやる」と言い続けていることはありますか？
             question: Text("Is there something you keep telling yourself you'll do?"),
             choices: [
-                // ja: ある。手つかずのまま
+                // ja: あるが手つかずのまま
                 .init(id: "onboarding_undone_goal_yes", label: Text("Yes, and it stays undone"), answer: .undone),
                 // ja: いくつかある
                 .init(id: "onboarding_undone_goal_a_few", label: Text("A few things"), answer: .aFew),
@@ -402,7 +401,6 @@ struct OnboardingPage: View {
     private var morningsResultStep: some View {
         OnboardingMorningsResultStepView(
             variant: morningsResultVariant(birthYear: onboardingBirthYear, currentYear: currentYear),
-            showsUndoneGoalLine: OnboardingUndoneGoalAnswer(rawValue: onboardingUndoneGoalAnswer) == .undone,
             onContinue: {
                 withAnimation(.easeInOut(duration: 0.6)) { step = .mementoMori }
             }
@@ -424,8 +422,8 @@ struct OnboardingPage: View {
             alarmTime: time,
             note: ritualSummaryNote(
                 undoneGoal: OnboardingUndoneGoalAnswer(rawValue: onboardingUndoneGoalAnswer),
-                snooze: OnboardingSnoozeAnswer(rawValue: onboardingSnoozeAnswer),
-                memory: OnboardingMemoryAnswer(rawValue: onboardingMemoryAnswer),
+                wake: OnboardingWakeAnswer(rawValue: onboardingWakeAnswer),
+                satisfaction: OnboardingMorningSatisfactionAnswer(rawValue: onboardingMorningSatisfactionAnswer),
                 dayBegin: OnboardingDayBeginAnswer(rawValue: onboardingDayBeginAnswer),
                 firstMinutes: OnboardingFirstMinutesAnswer(rawValue: onboardingFirstMinutesAnswer)
             ),
@@ -943,23 +941,23 @@ struct OnboardingPage_Previews: PreviewProvider {
             OnboardingPage()
                 .modelContainer(PersistenceController.shared.container)
             stepPreview {
-                OnboardingPainQuestionStepView<OnboardingSnoozeAnswer>(
-                    question: Text("Does your morning start with the snooze button?"),
+                OnboardingPainQuestionStepView<OnboardingWakeAnswer>(
+                    question: Text("Can you wake up with a single alarm?"),
                     choices: [
-                        .init(id: "onboarding_pain_snooze_almost_every", label: Text("Almost every morning"), answer: .almostEvery),
-                        .init(id: "onboarding_pain_snooze_sometimes", label: Text("Sometimes"), answer: .sometimes),
-                        .init(id: "onboarding_pain_snooze_rarely", label: Text("Rarely"), answer: .rarely),
+                        .init(id: "onboarding_pain_wake_almost_never", label: Text("Almost never"), answer: .almostNever),
+                        .init(id: "onboarding_pain_wake_sometimes", label: Text("Sometimes"), answer: .sometimes),
+                        .init(id: "onboarding_pain_wake_almost_always", label: Text("Almost always"), answer: .almostAlways),
                     ],
                     onSelect: { _ in }
                 )
             }
             stepPreview {
-                OnboardingPainQuestionStepView<OnboardingMemoryAnswer>(
-                    question: Text("How many mornings from last month do you actually remember?"),
+                OnboardingPainQuestionStepView<OnboardingMorningSatisfactionAnswer>(
+                    question: Text("Are you happy with how your mornings begin?"),
                     choices: [
-                        .init(id: "onboarding_pain_memory_almost_none", label: Text("Almost none"), answer: .almostNone),
-                        .init(id: "onboarding_pain_memory_a_few", label: Text("A few"), answer: .aFew),
-                        .init(id: "onboarding_pain_memory_most", label: Text("Most of them"), answer: .most),
+                        .init(id: "onboarding_pain_satisfaction_not_really", label: Text("No, not really"), answer: .notReally),
+                        .init(id: "onboarding_pain_satisfaction_somewhat", label: Text("Somewhat"), answer: .somewhat),
+                        .init(id: "onboarding_pain_satisfaction_mostly", label: Text("Mostly"), answer: .mostly),
                     ],
                     onSelect: { _ in }
                 )
@@ -1009,8 +1007,6 @@ struct OnboardingPage_Previews: PreviewProvider {
                 OnboardingMorningsResultStepView(
                     // 年をまたいでも撮影結果が変わらないよう、現在年を固定した 1990 年生まれの提示を出す
                     variant: morningsResultVariant(birthYear: 1990, currentYear: 2026),
-                    // 追い打ちの一文も一緒に確認できるよう、手つかずの「いつか」がある回答の側で撮る
-                    showsUndoneGoalLine: true,
                     onContinue: {}
                 )
             }
