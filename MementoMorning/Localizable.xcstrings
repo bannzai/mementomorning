@@ -8518,6 +8518,16 @@
         }
       }
     },
+    "Hold to promise" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "長押しで約束する"
+          }
+        }
+      }
+    },
     "I did" : {
       "localizations" : {
         "ar" : {
@@ -9838,6 +9848,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日の朝から始まります"
+          }
+        }
+      }
+    },
+    "It's a promise." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "約束しました"
           }
         }
       }
@@ -13586,6 +13606,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開啟"
+          }
+        }
+      }
+    },
+    "One promise to tomorrow's you" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の自分に、ひとつの約束"
           }
         }
       }
@@ -23477,6 +23507,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今天"
+          }
+        }
+      }
+    },
+    "Tomorrow at %@, I will wake up, face myself, and answer." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明日の %@、私は目を覚まし、自分と向き合い、答えます。"
           }
         }
       }
