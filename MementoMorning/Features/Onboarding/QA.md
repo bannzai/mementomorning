@@ -1,8 +1,8 @@
 ---
 feature: Onboarding
 verification: mobile-mcp
-last_verified_commit: d40bf8d
-last_verified_at: 2026-08-27
+last_verified_commit: dbacf7163b860278f7d43bc13ef374ca5c4d0856
+last_verified_at: 2026-08-28
 ---
 
 # Onboarding QA
@@ -27,12 +27,12 @@ last_verified_at: 2026-08-27
 
 - [x] **初回表示**: 新規インストール状態 (開発者メニューの Reset onboarding で再現) で起動すると、コンセプト提示「死を想ってから、朝を始める。」が表示される。ボタンは「はじめる」のみで、旧フローにあった補足「次の画面でアラームと通知の許可をお願いします」は表示されない (issue #140 で許可が次画面でなくなったため削除)
   - 自動化: manual（初回状態の作り込みと目視確認）
-- [ ] **15 ステップの通し**: 「はじめる」(onboarding_begin) → 起床の質問「朝は一度のアラームで起きられますか？」→ 満足の質問「いまの朝の迎え方に満足していますか？」→ 起きてすぐの過ごし方の質問 → 一日が始まる時間帯の質問 → 手つかずの「いつか」の質問 → 生まれ年 → 残りの朝 → メメント・モリ → 許可ステップ (アラーム・通知の許可ダイアログ) → 回答の練習 → アラーム設定 → 明日への約束 → 儀式のサマリー → ペイウォール、の順にフェードで進む
+- [x] **15 ステップの通し**: 「はじめる」(onboarding_begin) → 起床の質問「朝は一度のアラームで起きられますか？」→ 満足の質問「いまの朝の迎え方に満足していますか？」→ 起きてすぐの過ごし方の質問 → 一日が始まる時間帯の質問 → 手つかずの「いつか」の質問 → 生まれ年 → 残りの朝 → メメント・モリ → 許可ステップ (アラーム・通知の許可ダイアログ) → 回答の練習 → アラーム設定 → 明日への約束 → 儀式のサマリー → ペイウォール、の順にフェードで進む
   - 自動化: manual（OS 許可ダイアログの操作が必要）
   - 許可ダイアログの説明文: 英語ロケールで Info.plist に書いた用途説明文が表示される (issue #50 でキー名表示を解消済み)
 - [x] **プログレス表示**: 起床の質問から メメント・モリ までの 8 画面だけ、画面上部 (セーフエリア直下) に夜明け色の 1pt のラインが 1/8 → 8/8 と伸びる。コンセプト・許可以降 (明日への約束を含む)・ペイウォールには出ない
   - 自動化: manual（描画の目視確認）
-- [ ] **明日への約束の長押し**: アラーム設定の保存後、見出し「明日の自分に、ひとつの約束」と宣誓文「明日の 7:00、私は目を覚まし、自分と向き合い、答えます。」(設定した時刻が入る) が表示され、リング (onboarding_pledge_hold) の下に「長押しで約束する」が出る。リングを 1.2 秒以上長押しすると夜明け色のリングが満ちて案内が「約束しました」に変わり、約 0.8 秒後に儀式のサマリーへフェードで進む。1.2 秒未満で指を離すとリングは戻り、進まない。「つづける」などのボタンは無く、長押し以外で進む導線は無い
+- [x] **明日への約束の長押し**: アラーム設定の保存後、見出し「明日の自分に、ひとつの約束」と宣誓文「明日の 7:00、私は目を覚まし、自分と向き合い、答えます。」(設定した時刻が入る) が表示され、リング (onboarding_pledge_hold) の下に「長押しで約束する」が出る。リングを 1.2 秒以上長押しすると夜明け色のリングが満ちて案内が「約束しました」に変わり、約 0.8 秒後に儀式のサマリーへフェードで進む。1.2 秒未満で指を離すとリングは戻り、進まない。「つづける」などのボタンは無く、長押し以外で進む導線は無い
   - 自動化: manual（長押しの時間と描画の目視確認。mobile-mcp の long_press は duration 2000 (ms) 以上、ios-wda.sh は `longpress <x> <y> 2000` で成立させる。短押しの検証は通常の tap で行う）
 - [x] **ペイン認識質問の回答が儀式サマリーに効く**: 5 問の回答から次の優先順で最初に該当した一文だけがサマリーに出る。(1) 手つかずの「いつか」が「あるが手つかずのまま」→「明日の朝はその「いつか」に答えてください」 (2) 起床が「ほとんど起きられない」→「もうスヌーズはいりません」(改行)「アラームを止めるのはあなたの答えだけ」 (3) 満足が「満足していない」→「明日から胸を張れる朝を」 (4) 一日の始まりが「夕方になってようやく」→「明日からあなたの一日は朝に始まります」 (5) 起きてすぐが「スマホを眺めている」→「明日の最初の数分はスマホではなく問いのために」 (6) どれにも当てはまらない→「明日の朝から始まります」
   - 自動化: manual（選択の組み合わせを変えて目視確認。選択ロジック自体は MementoMorningTests/OnboardingMorningsTests.swift の RitualSummaryNoteTests がカバー済み）
@@ -313,7 +313,7 @@ last_verified_at: 2026-08-27
 
 </details>
 
-### **14 ステップの通し**: 「はじめる」(onboarding_begin) → 起床の質問「朝は一度のアラームで起きられますか？」→ 満足の質問「いまの朝の迎え方に満足していますか？」→ 起きてすぐの過ごし方の質問 → 一日が始まる時間帯の質問 → 手つかずの「いつか」の質問 → 生まれ年 → 残りの朝 → メメント・モリ → 許可ステップ (アラーム・通知の許可ダイアログ) → 回答の練習 → アラーム設定 → 儀式のサマリー → ペイウォール、の順にフェードで進む
+### (約束ステップの追加前) **14 ステップの通し**: 「はじめる」(onboarding_begin) → 起床の質問「朝は一度のアラームで起きられますか？」→ 満足の質問「いまの朝の迎え方に満足していますか？」→ 起きてすぐの過ごし方の質問 → 一日が始まる時間帯の質問 → 手つかずの「いつか」の質問 → 生まれ年 → 残りの朝 → メメント・モリ → 許可ステップ (アラーム・通知の許可ダイアログ) → 回答の練習 → アラーム設定 → 儀式のサマリー → ペイウォール、の順にフェードで進む
 
 <details><summary>動作確認スクショ</summary>
 
@@ -336,7 +336,7 @@ last_verified_at: 2026-08-27
 
 </details>
 
-### **プログレス表示**: 起床の質問から メメント・モリ までの 8 画面だけ、画面上部 (セーフエリア直下) に夜明け色の 1pt のラインが 1/8 → 8/8 と伸びる。コンセプト・許可以降・ペイウォールには出ない
+### **プログレス表示**: 起床の質問から メメント・モリ までの 8 画面だけ、画面上部 (セーフエリア直下) に夜明け色の 1pt のラインが 1/8 → 8/8 と伸びる。コンセプト・許可以降 (明日への約束を含む)・ペイウォールには出ない
 
 <details><summary>動作確認スクショ</summary>
 
@@ -401,13 +401,86 @@ last_verified_at: 2026-08-27
 
 </details>
 
+### **15 ステップの通し**: 「はじめる」(onboarding_begin) → 起床の質問「朝は一度のアラームで起きられますか？」→ 満足の質問「いまの朝の迎え方に満足していますか？」→ 起きてすぐの過ごし方の質問 → 一日が始まる時間帯の質問 → 手つかずの「いつか」の質問 → 生まれ年 → 残りの朝 → メメント・モリ → 許可ステップ (アラーム・通知の許可ダイアログ) → 回答の練習 → アラーム設定 → 明日への約束 → 儀式のサマリー → ペイウォール、の順にフェードで進む
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-28** (simtunnel の iOS 26.5 simulator、セッション `mementomorning-issue-144`、`--ref issue-144`、英語ロケール・UTC、commit `dbacf71`。新規インストール状態から `ios-wda.sh` の tap / longpress / elements で操作した。回答は起床「Almost never」・満足「No, not really」・起きてすぐ「Scrolling my phone」・一日の始まり「In the morning」・手つかずの「いつか」「Yes, and it stays undone」、生まれ年 1987、練習は「Later」でスキップ)
+
+コンセプト → 起床の質問 → 満足の質問 → 起きてすぐの過ごし方 → 一日が始まる時間帯 → 手つかずの「いつか」
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/6fe5fd0f-9fd4-4dbc-8bcd-4cd786edf30b.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/aba321ed-02ff-495c-82d6-c2d2f3008505.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/e382cb49-4800-4f7a-8f02-9da58bc5a1bf.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/83a9a170-3e25-4d03-be5d-2a546a31bbf3.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/58b07df0-456b-408b-86ba-bbd64f3f2b33.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/26b2e099-e131-43ce-a7f1-85e8d4a438c3.jpg" width="300" />
+
+生まれ年 (1987) → 残りの朝 → メメント・モリ → 許可ステップ → アラーム許可ダイアログ → 通知許可ダイアログ
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/80bb9fe7-43e0-49f0-b374-2fa19be8f6ce.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/630495a3-c251-47e8-8f91-56f4f033c5ef.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/4af96851-04c4-4640-b4b5-06a71fb0d1ec.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/cf85df34-129b-4c83-845c-216be3d7aa9f.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/62336f9b-1b36-41c0-be44-2595ef735cbc.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/469a773d-8c51-4132-9033-136c1993d1bf.jpg" width="300" />
+
+回答の練習 (「Later」でスキップ) → アラーム設定 (7:00 AM) → **明日への約束** → 儀式のサマリー → ペイウォール → ホーム
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/9e556f06-51fb-431f-b408-05f9b3f5e508.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/3f1895bd-2863-4b03-9fd7-3f5d8625d110.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/d8c89d2a-7ac1-4015-887b-022d52a077bd.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/ad71d598-43d6-4ccc-bfc7-b66007297fa3.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/44cab53c-1ef3-40c8-8738-be8fbf024891.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/388f00e8-09cc-45e1-8dd2-2938f2e67bf7.jpg" width="300" />
+
+15 ステップが仕様の順で並び、アラーム設定と儀式のサマリーの間に明日への約束が入っている。プログレスラインは起床の質問 (1/8) からメメント・モリ (8/8) までの 8 画面にだけ出ており、コンセプト・許可以降 (明日への約束を含む)・ペイウォールには出ていない。許可ステップでは OS のアラーム許可ダイアログ (説明文は Info.plist の「Used to ring the alarm at your set time and stop it by answering today's question.」) と通知許可ダイアログが順に出て、どちらも「Allow」で進み、通知ダイアログの時点でアラーム行が「Allowed」になっている。ホームは NEXT MORNING 7:00 / 「0 mornings answered」
+
+</details>
+
+### **明日への約束の長押し**: アラーム設定の保存後、見出し「明日の自分に、ひとつの約束」と宣誓文「明日の 7:00、私は目を覚まし、自分と向き合い、答えます。」(設定した時刻が入る) が表示され、リング (onboarding_pledge_hold) の下に「長押しで約束する」が出る。リングを 1.2 秒以上長押しすると夜明け色のリングが満ちて案内が「約束しました」に変わり、約 0.8 秒後に儀式のサマリーへフェードで進む。1.2 秒未満で指を離すとリングは戻り、進まない。「つづける」などのボタンは無く、長押し以外で進む導線は無い
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-28** (simtunnel の iOS 26.5 simulator、セッション `mementomorning-issue-144`、`--ref issue-144`、英語ロケール・UTC、commit `dbacf71`。新規インストール状態から `ios-wda.sh` の tap / longpress / elements で操作した。回答は起床「Almost never」・満足「No, not really」・起きてすぐ「Scrolling my phone」・一日の始まり「In the morning」・手つかずの「いつか」「Yes, and it stays undone」、生まれ年 1987、練習は「Later」でスキップ)
+
+1. 初期表示。見出し「One promise to tomorrow's you」、宣誓文「Tomorrow at 7:00 AM, I will wake up, face myself, and answer.」(アラーム設定で保存した 7:00 が入っている)、リングと「Hold to promise」が出ている。画面上部にプログレスラインは出ていない。`elements` の出力にも `onboarding_pledge_text` / `onboarding_pledge_hold` / `onboarding_pledge_caption` の 3 つが揃っている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/d8c89d2a-7ac1-4015-887b-022d52a077bd.jpg" width="300" />
+
+2. 短押しでは進まない。リング中心 (201, 705pt) を通常の `tap` で 1 回叩いて 1 秒後に撮影しても、明日への約束のままで案内も「Hold to promise」のまま (`elements` でも `onboarding_pledge_caption` の値が「Hold to promise」のまま)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/a43953e0-bcbd-4644-91b4-6f723464860c.jpg" width="300" />
+
+3. 長押しの途中 (押し始めから約 0.9 秒)。夜明け色のリングが時計回りに満ちていく途中で、案内はまだ「Hold to promise」
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/04fdd195-0cd8-4f93-95df-b6cd61e9e319.jpg" width="300" />
+
+4. 約束の成立 (押し始めから約 1.5 秒)。リングが満ちきり、中心の点が明るくなり、案内が「It's a promise.」に変わっている
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/a831482f-abe6-4e1e-8fe1-83c25fd054da.jpg" width="300" />
+
+5. 成立の約 0.8 秒後に儀式のサマリーへ進む。1 行目が「7:00 AM — the alarm rings」
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/ad71d598-43d6-4ccc-bfc7-b66007297fa3.jpg" width="300" />
+
+「つづける」等のボタンは無く、この画面のボタン要素は `onboarding_pledge_hold` (リング) だけだった (`elements` の出力)
+
+**再現手順のメモ (初見で詰まった点)**
+
+- 成立は `ios-wda.sh longpress <x> <y> 2000` で確実に起きる。ただし SwiftUI の `onLongPressGesture(minimumDuration: 1.2)` は**押している最中の 1.2 秒経過時**に成立し、そこから 0.8 秒でサマリーへ進むため、「It's a promise.」が写るのは押し始めから 1.2〜2.0 秒の 0.8 秒間だけ。指を離してから `shot` を投げると WDA の往復 (実測で 0.7 秒超) が間に合わず、サマリーが写る
+- そのため上の 3・4 は、`longpress <x> <y> 6000` をバックグラウンドで走らせ、押し始めから 0.55 秒 / 1.35 秒後に `shot` を投げて撮影した (長押しの長さを伸ばしても成立と遷移のタイミングは 1.2 秒 / 2.0 秒のまま変わらない)
+- 短押しの検証は通常の `tap` でよい
+
+</details>
+
 </details>
 
 ---
 
 ## 2. 完了
 
-- [ ] **アラーム設定の保存で明日への約束、そして儀式のサマリーへ**: アラーム設定ステップ (初期値 7:00) で保存すると、ホームではなく明日への約束へフェードで進み、宣誓文に設定した時刻 (7:00) が入る。約束の成立で儀式のサマリーへ進み、1 行目にも同じ時刻が入る
+- [x] **アラーム設定の保存で明日への約束、そして儀式のサマリーへ**: アラーム設定ステップ (初期値 7:00) で保存すると、ホームではなく明日への約束へフェードで進み、宣誓文に設定した時刻 (7:00) が入る。約束の成立で儀式のサマリーへ進み、1 行目にも同じ時刻が入る
   - 自動化: manual（画面遷移と表示の確認）
 - [x] **ペイウォールの文脈行**: 儀式のサマリーの「はじめる」(onboarding_summary_begin) でペイウォールが全画面表示され、生まれ年を答えている場合だけ見出し「すべての朝を残すために」の上に夜明け色で「残り約 N 回の朝をすべて残すために」が出る。生まれ年をスキップした場合と、既存の呼び出し (アラーム設定・カレンダー・回答ログ・開発者メニュー) では出ない
   - 自動化: manual（表示の目視確認）
@@ -445,7 +518,7 @@ last_verified_at: 2026-08-27
 
 </details>
 
-### **アラーム設定の保存で儀式のサマリーへ**: アラーム設定ステップ (初期値 7:00) で保存すると、ホームではなく儀式のサマリーへフェードで進み、1 行目に設定した時刻 (7:00) が入る
+### (約束ステップの追加前) **アラーム設定の保存で儀式のサマリーへ**: アラーム設定ステップ (初期値 7:00) で保存すると、ホームではなく儀式のサマリーへフェードで進み、1 行目に設定した時刻 (7:00) が入る
 
 <details><summary>動作確認スクショ</summary>
 
@@ -563,7 +636,7 @@ last_verified_at: 2026-08-27
 
 </details>
 
-### **サマリー・ペイウォール表示中の kill で再走する**: アラーム保存後、儀式のサマリーやペイウォールの表示中にアプリを終了して再起動すると、完了扱いでホームへ飛ばず、オンボーディングがコンセプトから再走する。アラーム設定ステップには保存済みの時刻が復元される
+### **サマリー・ペイウォール表示中の kill で再走する**: アラーム保存後、明日への約束・儀式のサマリー・ペイウォールの表示中にアプリを終了して再起動すると、完了扱いでホームへ飛ばず、オンボーディングがコンセプトから再走する。アラーム設定ステップには保存済みの時刻が復元される
 
 <details><summary>動作確認スクショ</summary>
 
@@ -619,6 +692,22 @@ last_verified_at: 2026-08-27
 
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/30e1a2dc-fe75-40cc-9c14-17492339cea0.png" width="300" />
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260827/a974fa7a-82c8-4f43-ba0b-d0bb5a286e14.png" width="300" />
+
+</details>
+
+### **アラーム設定の保存で明日への約束、そして儀式のサマリーへ**: アラーム設定ステップ (初期値 7:00) で保存すると、ホームではなく明日への約束へフェードで進み、宣誓文に設定した時刻 (7:00) が入る。約束の成立で儀式のサマリーへ進み、1 行目にも同じ時刻が入る
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-08-28** (simtunnel の iOS 26.5 simulator、セッション `mementomorning-issue-144`、`--ref issue-144`、英語ロケール・UTC、commit `dbacf71`。新規インストール状態から `ios-wda.sh` の tap / longpress / elements で操作した。回答は起床「Almost never」・満足「No, not really」・起きてすぐ「Scrolling my phone」・一日の始まり「In the morning」・手つかずの「いつか」「Yes, and it stays undone」、生まれ年 1987、練習は「Later」でスキップ)
+
+アラーム設定ステップ (初期値 7:00 AM) で「Set alarm」を押すと、ホームではなく明日への約束へ進み、宣誓文に 7:00 AM が入っている。約束が成立すると儀式のサマリーへ進み、1 行目も「7:00 AM — the alarm rings」になる
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/3f1895bd-2863-4b03-9fd7-3f5d8625d110.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/d8c89d2a-7ac1-4015-887b-022d52a077bd.jpg" width="300" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/ad71d598-43d6-4ccc-bfc7-b66007297fa3.jpg" width="300" />
+
+ホームへ着くのはこの後のペイウォールを閉じた時点で、ホームの NEXT MORNING も 7:00 になっている (上の「15 ステップの通し」のホームのスクショ)
 
 </details>
 
