@@ -119,3 +119,33 @@ final class RitualSummaryNoteTests: XCTestCase {
         )
     }
 }
+
+/// pledgeFiresToday のテスト。
+/// 設定時刻より前なら当日、設定時刻ちょうど・設定時刻より後なら翌日と判定することを検査する
+final class PledgeFiresTodayTests: XCTestCase {
+    private let calendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+        return calendar
+    }()
+
+    private func date(hour: Int, minute: Int) -> Date {
+        calendar.date(from: DateComponents(year: 2026, month: 8, day: 28, hour: hour, minute: minute))!
+    }
+
+    func testFiresTodayWhenNowIsBeforeAlarmTime() {
+        XCTAssertTrue(pledgeFiresToday(alarmTime: date(hour: 7, minute: 0), now: date(hour: 6, minute: 0), calendar: calendar))
+    }
+
+    func testFiresTomorrowWhenNowIsAfterAlarmTime() {
+        XCTAssertFalse(pledgeFiresToday(alarmTime: date(hour: 7, minute: 0), now: date(hour: 8, minute: 0), calendar: calendar))
+    }
+
+    func testFiresTomorrowWhenNowEqualsAlarmTime() {
+        XCTAssertFalse(pledgeFiresToday(alarmTime: date(hour: 7, minute: 0), now: date(hour: 7, minute: 0), calendar: calendar))
+    }
+
+    func testFiresTodayOneMinuteBeforeAlarmTime() {
+        XCTAssertTrue(pledgeFiresToday(alarmTime: date(hour: 7, minute: 0), now: date(hour: 6, minute: 59), calendar: calendar))
+    }
+}

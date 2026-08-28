@@ -22,8 +22,9 @@ func needsPermissionSettingsGuidance(
 
 /// 初回起動時のオンボーディング。
 /// コンセプト提示 → ペイン認識の 5 問 → 生まれ年 → 残りの朝 → メメント・モリ → アラーム・通知の許可 →
-/// 回答の練習 → 最初のアラーム設定 → 儀式のサマリー、の 13 ステップを 1 画面内のフェードで進め、
-/// 最後にペイウォールを fullScreenCover で表示して完了する (課金転換型ファネルへの再設計。issue #140)
+/// 回答の練習 → 最初のアラーム設定 → 明日への約束 → 儀式のサマリー、の 14 ステップを 1 画面内のフェードで進め、
+/// 最後にペイウォールを fullScreenCover で表示して完了する (課金転換型ファネルへの再設計。issue #140。
+/// 約束ステップはペイウォールの前にコミットを引き出すための追加。issue #144)
 /// (デザイン: design_handoff_memento_morning の 1m「夜明けの一枚目」。画面遷移はフェードのみ)。
 /// 練習ステップは、朝の初回がぶっつけ本番の録画にならないよう事前に一度録画を試すチュートリアル (issue #44)。
 /// カメラ・マイク・写真ライブラリ・音声認識の権限も、使い道の説明を見せてからここでまとめてリクエストする
@@ -42,6 +43,7 @@ struct OnboardingPage: View {
         case permission
         case practice
         case alarmSetting
+        case pledge
         case ritualSummary
     }
 
@@ -141,6 +143,8 @@ struct OnboardingPage: View {
                 practiceStep.transition(.opacity)
             case .alarmSetting:
                 alarmSettingStep.transition(.opacity)
+            case .pledge:
+                pledgeStep.transition(.opacity)
             case .ritualSummary:
                 ritualSummaryStep.transition(.opacity)
             }
@@ -195,7 +199,7 @@ struct OnboardingPage: View {
             return 7.0 / 8.0
         case .mementoMori:
             return 8.0 / 8.0
-        case .concept, .permission, .practice, .alarmSetting, .ritualSummary:
+        case .concept, .permission, .practice, .alarmSetting, .pledge, .ritualSummary:
             return nil
         }
     }
@@ -416,7 +420,18 @@ struct OnboardingPage: View {
         )
     }
 
-    /// ステップ 13: 儀式のサマリー。「はじめる」でペイウォールへ進む
+    /// ステップ 13: 明日の朝への約束。設定したアラーム時刻を埋め込んだ宣誓文を長押しで成立させ、サマリーへ進む
+    private var pledgeStep: some View {
+        OnboardingPledgeStepView(
+            alarmTime: time,
+            firesToday: pledgeFiresToday(alarmTime: time, now: .now, calendar: .autoupdatingCurrent),
+            onPledged: {
+                withAnimation(.easeInOut(duration: 0.6)) { step = .ritualSummary }
+            }
+        )
+    }
+
+    /// ステップ 14: 儀式のサマリー。「はじめる」でペイウォールへ進む
     private var ritualSummaryStep: some View {
         OnboardingRitualSummaryStepView(
             alarmTime: time,
@@ -882,7 +897,7 @@ struct OnboardingPage: View {
         notificationAuthorizationStatus = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
     }
 
-    /// 入力内容を保存して再スケジュールし、成功したら儀式のサマリーへ進む
+    /// 入力内容を保存して再スケジュールし、成功したら明日への約束へ進む
     /// (AlarmSettingPage.save と同じ update-or-insert / rollback / 再スケジュール完了待ちの流れ)。
     /// オンボーディングの完了はサマリーに続くペイウォールを閉じた時に行うため、ここでは完了フラグを立てない。
     /// ペイウォール表示中にアプリを kill されるとオンボーディングが再走するが、アラーム設定は永続化済みで、
@@ -926,7 +941,7 @@ struct OnboardingPage: View {
                 isSaving = false
             } else {
                 isSaving = false
-                withAnimation(.easeInOut(duration: 0.6)) { step = .ritualSummary }
+                withAnimation(.easeInOut(duration: 0.6)) { step = .pledge }
             }
         }
     }
@@ -1012,6 +1027,14 @@ struct OnboardingPage_Previews: PreviewProvider {
             }
             stepPreview {
                 OnboardingMementoMoriStepView(onContinue: {})
+            }
+            stepPreview {
+                OnboardingPledgeStepView(
+                    alarmTime: Calendar.autoupdatingCurrent.date(bySettingHour: 7, minute: 0, second: 0, of: .now) ?? .now,
+                    // 撮影時刻によって今日 / 明日が変わらないよう、明日の分岐に固定する
+                    firesToday: false,
+                    onPledged: {}
+                )
             }
             stepPreview {
                 OnboardingRitualSummaryStepView(

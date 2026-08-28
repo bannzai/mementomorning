@@ -132,3 +132,14 @@ func morningsResultVariant(birthYear: Int, currentYear: Int) -> MorningsResultVa
     guard age >= 0, age < averageLifeExpectancyYears else { return .unknown }
     return .counted(lived: age * 365, remaining: (averageLifeExpectancyYears - age) * 365)
 }
+
+/// 約束した朝 (alarmTime の時・分に鳴る直近のアラーム) が now と同じ日かどうか。
+/// 設定時刻より前にオンボーディングを終えた場合 (例: 6:00 に 7:00 を設定) は最初のアラームが当日に鳴るため true になり、
+/// 約束ステップの見出しと宣誓文を「今日」に切り替える (発火日の判定はアラーム登録と同じ nextOccurrence を使う)
+func pledgeFiresToday(alarmTime: Date, now: Date, calendar: Calendar) -> Bool {
+    let components = calendar.dateComponents([.hour, .minute], from: alarmTime)
+    return calendar.isDate(
+        nextOccurrence(hour: components.hour ?? 0, minute: components.minute ?? 0, now: now, calendar: calendar),
+        inSameDayAs: now
+    )
+}

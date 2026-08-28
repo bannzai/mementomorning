@@ -311,3 +311,147 @@ struct OnboardingRitualSummaryStepView: View {
             .padding(.vertical, 16)
     }
 }
+
+/// 明日の朝への約束を交わすステップ (課金転換型ファネルのコミットメント段階)。
+/// 設定したアラーム時刻を埋め込んだ約束の一文を示し、リングを長押しし続けて満たすことで約束が成立する。
+/// ペイン認識で自覚した課題に対して「明日は起きて答える」というコミットを自分の指で引き出してから、
+/// 儀式のサマリーとペイウォールへ進む (issue #144。参考にした Wayk は署名でコミットを引き出すが、
+/// 本アプリは描画キャンバスを持ち込まず、ハプティクスとリングの充填だけで静かに成立させる)
+struct OnboardingPledgeStepView: View {
+    /// 約束の一文に埋め込むアラーム時刻
+    let alarmTime: Date
+    /// 約束した朝が今日かどうか (判定は pledgeFiresToday)。
+    /// 設定時刻より前にオンボーディングを終えると最初のアラームは当日に鳴るため、見出しと宣誓文の「明日」を「今日」に切り替える
+    let firesToday: Bool
+    /// 約束が成立して余韻を置いた後に呼ばれる
+    let onPledged: () -> Void
+
+    /// 約束の成立に必要な長押しの長さ (秒)。
+    /// タップの誤操作で成立せず、かつ待たされたと感じない長さとして 1.2 秒にする。
+    /// リングの充填アニメーションも同じ長さで、満ちた瞬間に約束が成立する
+    static let holdDuration: TimeInterval = 1.2
+    /// 約束の成立から次のステップへ進むまでの余韻 (秒)。満ちたリングとハプティクスを受け取る間
+    static let pledgedPause: TimeInterval = 0.8
+
+    /// 長押し中かどうか。リングの充填アニメーションの起点
+    @State private var isHolding = false
+    /// 約束が成立したかどうか。true の間はリングを満ちたままにし、指を離しても戻さない
+    @State private var hasPledged = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            titleText
+                .font(.system(size: 25, weight: .light))
+                .tracking(1.5)
+                .lineSpacing(10)
+            // 一人称の宣誓文のため、他ステップのタイトル (25pt) より小さい 21pt にする (メメント・モリの本文と同じ様式)
+            pledgeText
+                .font(.system(size: 21, weight: .light))
+                .tracking(1.3)
+                .lineSpacing(12)
+                .padding(.top, 28)
+                .accessibilityIdentifier("onboarding_pledge_text")
+            Spacer()
+            VStack(spacing: 24) {
+                pledgeRing
+                caption
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color.warmWhite.opacity(0.45))
+                    .accessibilityIdentifier("onboarding_pledge_caption")
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .foregroundStyle(Color.warmWhite)
+        .padding(.top, 130)
+        .padding(.horizontal, 36)
+        .padding(.bottom, 48)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        // 押し始めに柔らかく、成立時に硬く。記録操作のハプティクス (NightReflectionPage) と同じ .impact を使う
+        .sensoryFeedback(.impact(flexibility: .soft), trigger: isHolding) { _, newValue in newValue }
+        .sensoryFeedback(.impact(flexibility: .rigid), trigger: hasPledged)
+    }
+
+    /// 長押しの間に夜明け色で満ちていくリング。指を離すと戻り、約束が成立すると満ちたままになる
+    private var pledgeRing: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.warmWhite.opacity(0.2), lineWidth: 1)
+            Circle()
+                .trim(from: 0, to: isHolding || hasPledged ? 1 : 0)
+                .stroke(Color.dawn, style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(
+                    isHolding ? .linear(duration: Self.holdDuration) : .easeOut(duration: 0.25),
+                    value: isHolding
+                )
+            Circle()
+                .fill(Color.dawn)
+                .frame(width: 8, height: 8)
+                .opacity(hasPledged ? 1 : (isHolding ? 0.7 : 0.35))
+                .animation(.easeInOut(duration: 0.25), value: isHolding)
+                .animation(.easeInOut(duration: 0.25), value: hasPledged)
+        }
+        .frame(width: 96, height: 96)
+        .contentShape(Circle())
+        .onLongPressGesture(minimumDuration: Self.holdDuration, maximumDistance: 40) {
+            pledge()
+        } onPressingChanged: { pressing in
+            isHolding = pressing
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(captionText)
+        .accessibilityAddTraits(.isButton)
+        // VoiceOver では長押しの代わりにダブルタップの既定アクションで約束を成立させる
+        .accessibilityAction { pledge() }
+        .accessibilityIdentifier("onboarding_pledge_hold")
+    }
+
+    /// 見出し。約束した朝が今日か明日かで呼びかける相手を変える
+    private var titleText: Text {
+        if firesToday {
+            // ja: 今日の自分に、ひとつの約束
+            return Text("One promise to today's you")
+        } else {
+            // ja: 明日の自分に、ひとつの約束
+            return Text("One promise to tomorrow's you")
+        }
+    }
+
+    /// 宣誓文。最初のアラームが鳴る日 (今日 / 明日) と設定時刻を埋め込む
+    private var pledgeText: Text {
+        if firesToday {
+            // ja: 今日の %@、私は目を覚まし、自分と向き合い、答えます。
+            return Text("Today at \(alarmTime.formatted(date: .omitted, time: .shortened)), I will wake up, face myself, and answer.")
+        } else {
+            // ja: 明日の %@、私は目を覚まし、自分と向き合い、答えます。
+            return Text("Tomorrow at \(alarmTime.formatted(date: .omitted, time: .shortened)), I will wake up, face myself, and answer.")
+        }
+    }
+
+    /// リングの下の案内。約束の成立後は成立したことを伝える文言に変わる
+    private var caption: some View {
+        captionText
+            .contentTransition(.opacity)
+            .animation(.easeInOut(duration: 0.25), value: hasPledged)
+    }
+
+    private var captionText: Text {
+        if hasPledged {
+            // ja: 約束しました
+            return Text("It's a promise.")
+        } else {
+            // ja: 長押しで約束する
+            return Text("Hold to promise")
+        }
+    }
+
+    /// 約束を成立させ、余韻を置いてから次のステップへ進む。成立後の再呼び出しは何もしない (二重遷移の防止)
+    private func pledge() {
+        guard !hasPledged else { return }
+        hasPledged = true
+        Task {
+            try? await Task.sleep(for: .seconds(Self.pledgedPause))
+            onPledged()
+        }
+    }
+}
