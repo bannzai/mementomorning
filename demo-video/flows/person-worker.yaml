@@ -1,0 +1,4 @@
+# 人物カット (録画 UI + 人物セルフィー合成) のプレースホルダ flow (デモ動画 issue #141)。
+# このシーンのクリップは Maestro 収録ではなく demo-video/scripts/make-people-cuts.sh が
+# morning-question.raw.mp4 から生成する。本ファイルは validate-config.sh のシーン検証
+# (flow の存在チェック) を通すためだけに存在し、record-scene.sh で実行しない

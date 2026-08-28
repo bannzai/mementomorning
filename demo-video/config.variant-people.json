@@ -1,0 +1,116 @@
+{
+  "profile": "demo-portrait",
+  "output_dir": "output",
+  "output_name": "memento-morning-demo-people.mp4",
+  "bgm": {
+    "file": "output/narration/bgm-mix.m4a",
+    "volume": 1.0
+  },
+  "narration_mix": {
+    "voice": "Sulafat",
+    "bgm": "assets/bgm-mandolin.m4a",
+    "bgm_gain": 0.28,
+    "style_prompt": "Speak in English, in a warm, lively, encouraging tone:"
+  },
+  "subtitle_scale": 1.25,
+  "scenes": [
+    {
+      "id": "why-someday-en",
+      "flow": "flows/why-someday-en.yaml",
+      "narration": "You keep saying \"someday.\" How many years has it been?",
+      "target_duration": 5,
+      "trim_start": 0
+    },
+    {
+      "id": "alarm",
+      "flow": "flows/alarm.yaml",
+      "subtitle": "A morning alarm\nOnly one way to stop it",
+      "narration": "Memento Morning is a morning alarm. And there is only one way to stop it.",
+      "target_duration": 6.0,
+      "trim_start": 3.0
+    },
+    {
+      "id": "why-question-en",
+      "flow": "flows/why-question-en.yaml",
+      "narration": "Answer the question. If today were your last day, what would you want to do?",
+      "target_duration": 6.0,
+      "trim_start": 0
+    },
+    {
+      "id": "person-worker",
+      "flow": "flows/person-worker.yaml",
+      "narration": "Leave on time. Really talk with my wife.",
+      "narration_voice": "Orus",
+      "narration_style_prompt": "Speak in English, quietly but with quiet determination, like a just-woken man in his thirties talking to the phone camera:",
+      "target_duration": 4.5,
+      "trim_start": 0
+    },
+    {
+      "id": "person-student",
+      "flow": "flows/person-student.yaml",
+      "narration": "I'll apologize to the friend I've been avoiding.",
+      "narration_voice": "Leda",
+      "narration_style_prompt": "Speak in English, quietly but with quiet determination, like a just-woken young woman talking to the phone camera:",
+      "target_duration": 3.8,
+      "trim_start": 0
+    },
+    {
+      "id": "person-parent",
+      "flow": "flows/person-parent.yaml",
+      "narration": "Today I help my son ride his bike.",
+      "narration_voice": "Achird",
+      "narration_style_prompt": "Speak in English, quietly but with quiet determination, like a just-woken father talking to the phone camera:",
+      "target_duration": 4.0,
+      "trim_start": 0
+    },
+    {
+      "id": "person-creator",
+      "flow": "flows/person-creator.yaml",
+      "narration": "I finish that unfinished song. Today.",
+      "narration_voice": "Zephyr",
+      "narration_style_prompt": "Speak in English, quietly but with quiet determination, like a just-woken young woman talking to the phone camera:",
+      "target_duration": 4.0,
+      "trim_start": 0
+    },
+    {
+      "id": "night-banner",
+      "flow": "flows/night-banner.yaml",
+      "subtitle": "An evening reminder\nof your morning answer",
+      "narration": "In the evening, a reminder brings back your morning answer.",
+      "target_duration": 5,
+      "trim_start": 31.0
+    },
+    {
+      "id": "journal",
+      "flow": "flows/journal.yaml",
+      "subtitle": "Look back on every\nmorning resolution",
+      "narration": "Every morning resolution, in video and words, is there to look back on.",
+      "target_duration": 6.0,
+      "trim_start": 8.1
+    },
+    {
+      "id": "calendar",
+      "flow": "flows/calendar.yaml",
+      "subtitle": "It all began with\na morning you answered",
+      "narration": "The night you left on time. The song you finished. It all began with a morning you answered.",
+      "target_duration": 7.5,
+      "trim_start": 6.5
+    },
+    {
+      "id": "paywall",
+      "flow": "flows/paywall.yaml",
+      "subtitle": "Rings until you answer\nWake up with a goal",
+      "narration": "With Premium, it keeps ringing until you answer. So every morning, you wake up with a goal.",
+      "target_duration": 7.5,
+      "trim_start": 9.6,
+      "speed": 0.85
+    },
+    {
+      "id": "brand-en",
+      "flow": "flows/brand-en.yaml",
+      "narration": "Memento Morning.",
+      "target_duration": 3,
+      "trim_start": 0
+    }
+  ]
+}

@@ -21,6 +21,9 @@ set -euo pipefail
 # 安全版 (config.variant-upbeat-founder.json が参照。実名・肖像を使わない Shipaton 提出用の保険。
 # 肖像も外すのは、パブリシティ権が氏名だけでなく肖像にも及び、線画でも人物が特定できるため):
 #   why-founder-safe / why-founder-legacy
+# people バリアント (config.variant-people.json が参照。issue #141。英語。「やりたいことを先送りする人」への
+# 冒頭訴求 + 問いの提示 + 締めのブランドカード):
+#   why-someday-en / why-question-en / brand-en
 #
 # 使い方 (compose-video.sh の前に実行する):
 #   bash demo-video/scripts/generate-appeal-cards.sh
@@ -53,7 +56,7 @@ done
 # Nano Banana Pro で生成した線画で「わかる程度」に留める (採用判断の経緯は PR #95 コメント参照)
 PORTRAIT=demo-video/assets/founder-portrait.png
 
-# id|1 行目|2 行目|肖像を載せるか (portrait / 空)
+# id|1 行目|2 行目|スタイル (portrait = 肖像を載せる / brand = 1 行目をタイトル・2 行目をサブの 2 段組み / 空)
 CARDS='why-founder|A famous founder asked himself|one question, every morning.|portrait
 why-jobs|Steve Jobs asked himself|one question, every morning.|portrait
 why-jobs-legacy|That one habit|made every day count.|portrait
@@ -63,43 +66,58 @@ why-jobs-ja|スティーブ・ジョブズは毎朝、|自分にひとつの質�
 why-jobs-legacy-ja|そのひとつの習慣が、|毎日を意味あるものにした。|portrait
 why-value-ja|目標とともに、目覚める。|二度寝ではなく、起きる理由を。|
 why-founder-safe|A famous founder asked himself|one question, every morning.|
-why-founder-legacy|That one habit|made every day count.|'
+why-founder-legacy|That one habit|made every day count.|
+why-someday-en|"Someday," you keep saying.|How many years has it been?|
+why-question-en|If today were your last day,|what would you want to do?|
+brand-en|Memento Morning|Remember death. Then begin your morning.|brand'
+
+# 行の推定描画幅が画面幅 92% に収まるように基準 fontsize を縮小して返す
+# (compose-video.sh の glyph_ratio と同じ近似。マルチバイト判定は bytes > chars で、
+#  全角を含む行は等幅 100%、ラテンのみの行は 62% で見積もる)
+fit_fontsize() {
+    local line="$1" fontsize="$2"
+    local chars bytes glyph_ratio=62
+    chars=$(printf '%s' "$line" | LC_ALL=en_US.UTF-8 wc -m | tr -d ' ')
+    bytes=$(printf '%s' "$line" | LC_ALL=C wc -c | tr -d ' ')
+    (( bytes > chars )) && glyph_ratio=100
+    local max_width=$((WIDTH * 92 / 100))
+    if (( chars > 0 && chars * fontsize * glyph_ratio / 100 > max_width )); then
+        fontsize=$((max_width * 100 / (chars * glyph_ratio)))
+    fi
+    echo "$fontsize"
+}
 
 # タイトルカード (compose-video.sh の card-main/card-sub) と同じ見た目に寄せる:
-# 黒背景に白文字・中央寄せ。drawtext の複数行は左寄せになるため 1 行ずつ中央に描く。
-# fontsize は最長行が画面幅 92% に収まるように縮小する (compose-video.sh の
-# ラテン文字係数 62% と同じ近似。カード文言は英語のみの前提)
-while IFS='|' read -r id line1 line2 with_portrait; do
+# 黒背景に白文字・中央寄せ。drawtext の複数行は左寄せになるため 1 行ずつ中央に描く
+while IFS='|' read -r id line1 line2 style; do
     [[ -n "$id" ]] || continue
-    if [[ "$with_portrait" == "portrait" && ! -f "$PORTRAIT" ]]; then
+    if [[ "$style" == "portrait" && ! -f "$PORTRAIT" ]]; then
         echo "ERROR: $PORTRAIT がありません" >&2
         exit 1
     fi
 
-    # 全角 (CJK) を含む行は等幅 100%、ラテンのみは 62% で幅を見積もる
-    # (compose-video.sh の glyph_ratio と同じ近似。マルチバイト判定は bytes > chars)
-    max_chars=0
-    glyph_ratio=62
-    for line in "$line1" "$line2"; do
-        chars=$(printf '%s' "$line" | LC_ALL=en_US.UTF-8 wc -m | tr -d ' ')
-        bytes=$(printf '%s' "$line" | LC_ALL=C wc -c | tr -d ' ')
-        (( bytes > chars )) && glyph_ratio=100
-        (( chars > max_chars )) && max_chars=$chars
-    done
-    fontsize=$((HEIGHT / 16))
-    max_width=$((WIDTH * 92 / 100))
-    if (( max_chars * fontsize * glyph_ratio / 100 > max_width )); then
-        fontsize=$((max_width * 100 / (max_chars * glyph_ratio)))
-    fi
-
-    # 肖像ありのカードは肖像を上寄せ中央に置き、テキストをその下に配置する。
-    # 肖像なしのカードは従来どおりテキストを画面中央に置く
-    if [[ "$with_portrait" == "portrait" ]]; then
-        y1="1280-${fontsize}"
-        y2="1280+${fontsize}"
+    if [[ "$style" == "brand" ]]; then
+        # ブランドカードは compose-video.sh のタイトルカードと同じ 2 段組み
+        # (1 行目 = card-main サイズ、2 行目 = card-sub サイズ)
+        fontsize1=$(fit_fontsize "$line1" $((HEIGHT / 14)))
+        fontsize2=$(fit_fontsize "$line2" $((HEIGHT / 26)))
+        y1="(h-text_h)/2-$((HEIGHT / 20))"
+        y2="(h-text_h)/2+$((HEIGHT / 20))"
     else
-        y1="(h-text_h)/2-${fontsize}"
-        y2="(h-text_h)/2+${fontsize}"
+        # 訴求カードは 2 行同サイズ。幅の見積もりが大きい方の行に合わせて縮小する
+        fontsize1=$(fit_fontsize "$line1" $((HEIGHT / 16)))
+        fontsize2=$(fit_fontsize "$line2" $((HEIGHT / 16)))
+        (( fontsize2 < fontsize1 )) && fontsize1=$fontsize2
+        fontsize2=$fontsize1
+        # 肖像ありのカードは肖像を上寄せ中央に置き、テキストをその下に配置する。
+        # 肖像なしのカードは従来どおりテキストを画面中央に置く
+        if [[ "$style" == "portrait" ]]; then
+            y1="1280-${fontsize1}"
+            y2="1280+${fontsize1}"
+        else
+            y1="(h-text_h)/2-${fontsize1}"
+            y2="(h-text_h)/2+${fontsize1}"
+        fi
     fi
     mkdir -p demo-video/output/work
     t1=demo-video/output/work/appeal-$id-1.txt
@@ -107,11 +125,11 @@ while IFS='|' read -r id line1 line2 with_portrait; do
     printf '%s' "$line1" >"$t1"
     printf '%s' "$line2" >"$t2"
 
-    draw="drawtext=fontfile='$FONT':textfile='$t1':expansion=none:fontsize=$fontsize:fontcolor=white:x=(w-text_w)/2:y=$y1"
-    draw="$draw,drawtext=fontfile='$FONT':textfile='$t2':expansion=none:fontsize=$fontsize:fontcolor=white:x=(w-text_w)/2:y=$y2"
+    draw="drawtext=fontfile='$FONT':textfile='$t1':expansion=none:fontsize=$fontsize1:fontcolor=white:x=(w-text_w)/2:y=$y1"
+    draw="$draw,drawtext=fontfile='$FONT':textfile='$t2':expansion=none:fontsize=$fontsize2:fontcolor=white:x=(w-text_w)/2:y=$y2"
 
-    echo "--- カード生成: $id (fontsize=$fontsize${with_portrait:+, portrait})"
-    if [[ "$with_portrait" == "portrait" ]]; then
+    echo "--- カード生成: $id (fontsize=$fontsize1/$fontsize2${style:+, $style})"
+    if [[ "$style" == "portrait" ]]; then
         # colorlevels は肖像画像の背景 (実測 RGB 約 21/255 ≒ 0.08) をカードの純黒に潰し、
         # 画像の矩形の縁が見えないようにするため
         ffmpeg -nostdin -y -v error \
@@ -129,4 +147,4 @@ while IFS='|' read -r id line1 line2 with_portrait; do
     fi
 done <<<"$CARDS"
 
-echo "--- 生成完了: $CLIP_DIR/why-*.mp4"
+echo "--- 生成完了: $CLIP_DIR/why-*.mp4, $CLIP_DIR/brand-*.mp4"
