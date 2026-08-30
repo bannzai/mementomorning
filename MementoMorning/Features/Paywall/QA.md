@@ -1,7 +1,7 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: 8c5fab33c27bd378a61624fb885a920cae3acb64
+last_verified_commit: c179510d2e5582f5800560f4593b75ceb553bac3
 last_verified_at: 2026-08-31
 ---
 
@@ -70,7 +70,7 @@ last_verified_at: 2026-08-31
 **確認日: 2026-08-31 (simtunnel、英語ロケール、RevenueCat Test Store。issue #151 の固定価格削除後)**
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260831/0ae53662-9c70-43e4-859f-fb4b7309e80c.jpg" width="320" />
 
-(年 $38.00 + ひと月 $3.17 換算・月 $5.00・一生 $61.50 が同じ画面に表示され、アクセシビリティツリーでも 3 つの価格がすべて USD であることを確認。package 未取得時にプランを隠す分岐は PaywallPlanVisibilityTests の 2 テストで確認し、PaywallPage.swift に円建て固定価格が残っていないことを静的検査した)
+(年 $38.00 + ひと月 $3.17 換算・月 $5.00・一生 $61.50 が同じ画面に表示され、アクセシビリティツリーでも 3 つの価格がすべて USD であることを確認。package 未取得時にプランを隠す分岐と、SnapshotUITest / Preview 専用表示値を本番経路から分離する分岐は PaywallPlanVisibilityTests の 3 テストで確認した。MementoMorningSnapshotUITests の build-for-testing も成功し、PaywallPage.swift に円建て固定価格が残っていないことを静的検査した)
 
 </details>
 
