@@ -24,7 +24,7 @@ struct MementoMorningApp: App {
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
         // 課金判定 (PremiumEntitlement) は StopAlarmIntent など View 外からも参照するため、View の登場を待たず起動直後に初期化する。
         // 多言語スクリーンショット撮影中は configure しない (Config.local の API キー有無や通信状況で
-        // Paywall の表示が環境ごとに変わるため、未 configure の見本価格に固定する)
+        // Paywall の表示が環境ごとに変わらないよう、PreviewProvider から専用の表示値を注入する)
         if !isSnapshotUITest {
             PremiumEntitlement.configureIfPossible()
         }

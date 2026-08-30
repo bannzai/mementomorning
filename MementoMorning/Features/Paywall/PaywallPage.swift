@@ -22,13 +22,30 @@ struct PaywallPage: View {
     /// 年額プランの導入オファー (無料トライアル) をこのユーザーが使えるか。問い合わせ前・判定不能は unknown
     @State private var annualIntroEligibility: IntroEligibilityStatus = .unknown
 
+    #if DEBUG
+    /// SnapshotUITest と Xcode Preview だけで使う表示価格。本番の初期化経路からは注入できない。
+    private let previewPlanPrices: PaywallPreviewPlanPrices?
+    #endif
+
     @Environment(\.dismiss) private var dismiss
 
     /// 自動生成の memberwise initializer は private な @State を持つため private になり、他ファイルから
     /// remainingMorningsCount を渡せない。オンボーディング (別ファイル) から渡せるよう明示的に定義する
     init(remainingMorningsCount: Int? = nil) {
         self.remainingMorningsCount = remainingMorningsCount
+        #if DEBUG
+        previewPlanPrices = nil
+        #endif
     }
+
+    #if DEBUG
+    /// RevenueCat を configure しない SnapshotUITest / Preview でレイアウトと翻訳を確認するための初期化。
+    /// fileprivate にして、このファイルの PreviewProvider 以外から固定価格を注入できないようにする。
+    fileprivate init(previewPlanPrices: PaywallPreviewPlanPrices) {
+        remainingMorningsCount = nil
+        self.previewPlanPrices = previewPlanPrices
+    }
+    #endif
 
     var body: some View {
         VStack(spacing: 0) {
@@ -140,7 +157,7 @@ struct PaywallPage: View {
                         .padding(.vertical, 24)
                 }
             } else {
-                if shouldShowPlan(package: offering?.annual),
+                if shouldShowPlan(package: offering?.annual, priceText: annualPriceText),
                    let annualPriceText,
                    let annualPerMonthPriceText {
                     Button {
@@ -170,7 +187,7 @@ struct PaywallPage: View {
                     .accessibilityIdentifier("paywall_yearly_button")
                 }
 
-                if shouldShowPlan(package: offering?.monthly), let monthlyPriceText {
+                if shouldShowPlan(package: offering?.monthly, priceText: monthlyPriceText), let monthlyPriceText {
                     Button {
                         Task { await purchase(package: offering?.monthly) }
                     } label: {
@@ -183,7 +200,7 @@ struct PaywallPage: View {
                     .accessibilityIdentifier("paywall_monthly_button")
                 }
 
-                if shouldShowPlan(package: offering?.lifetime), let lifetimePriceText {
+                if shouldShowPlan(package: offering?.lifetime, priceText: lifetimePriceText), let lifetimePriceText {
                     Button {
                         Task { await purchase(package: offering?.lifetime) }
                     } label: {
@@ -248,19 +265,26 @@ struct PaywallPage: View {
     /// StoreKit から解決できないこと (商品の反映待ち等) があり、その時に見本価格を代わりに出すと
     /// Storefront によっては実際と異なる価格を見せてしまうため (実測: US storefront のシミュレータで
     /// 年額・月額が未解決のまま円の見本価格が表示された)。
-    /// 未 configure (キーを持たない開発ビルド・Preview) でも固定価格は描画しない。
-    private func shouldShowPlan(package: Package?) -> Bool {
-        shouldShowPaywallPlan(packageAvailable: package != nil)
+    /// 通常の初期化経路では、未 configure (キーを持たない開発ビルドを含む) でも固定価格は描画しない。
+    /// SnapshotUITest / Preview だけは、このファイル内の専用 initializer から明示注入した表示値を使う。
+    private func shouldShowPlan(package: Package?, priceText: String?) -> Bool {
+        shouldShowPaywallPlan(packageAvailable: package != nil, displayPriceAvailable: priceText != nil)
     }
 
     /// RevenueCat から取得した年額の表示価格。未取得時はプランごと描画しない。
     private var annualPriceText: String? {
-        offering?.annual?.storeProduct.localizedPriceString
+        #if DEBUG
+        if let previewPlanPrices { return previewPlanPrices.annual }
+        #endif
+        return offering?.annual?.storeProduct.localizedPriceString
     }
 
     /// 年額プランのひと月あたり換算の表示価格。ストア価格を 12 (ヶ月) で割り、商品の通貨フォーマッタで整形する。
     /// 商品未取得時はプランごと描画しない。
     private var annualPerMonthPriceText: String? {
+        #if DEBUG
+        if let previewPlanPrices { return previewPlanPrices.annualPerMonth }
+        #endif
         guard let storeProduct = offering?.annual?.storeProduct else { return nil }
         return storeProduct.priceFormatter?.string(from: storeProduct.price / 12 as NSDecimalNumber)
             ?? storeProduct.localizedPriceString
@@ -286,12 +310,18 @@ struct PaywallPage: View {
 
     /// RevenueCat から取得した月額の表示価格。未取得時はプランごと描画しない。
     private var monthlyPriceText: String? {
-        offering?.monthly?.storeProduct.localizedPriceString
+        #if DEBUG
+        if let previewPlanPrices { return previewPlanPrices.monthly }
+        #endif
+        return offering?.monthly?.storeProduct.localizedPriceString
     }
 
     /// RevenueCat から取得した一生プランの表示価格。未取得時はプランごと描画しない。
     private var lifetimePriceText: String? {
-        offering?.lifetime?.storeProduct.localizedPriceString
+        #if DEBUG
+        if let previewPlanPrices { return previewPlanPrices.lifetime }
+        #endif
+        return offering?.lifetime?.storeProduct.localizedPriceString
     }
 
     /// offering を読み込む。未 configure (キーを持たない開発ビルド・Preview) では何もしない。
@@ -388,9 +418,9 @@ struct PaywallPage: View {
     }
 }
 
-/// 価格を取得できないプランに固定価格を補わず、package が存在する時だけ表示する。
-func shouldShowPaywallPlan(packageAvailable: Bool) -> Bool {
-    packageAvailable
+/// 実商品または DEBUG の Preview 専用表示値があるプランだけを表示する。
+func shouldShowPaywallPlan(packageAvailable: Bool, displayPriceAvailable: Bool) -> Bool {
+    packageAvailable || displayPriceAvailable
 }
 
 /// RevenueCat の購読期間を DateComponentsFormatter へ渡せる DateComponents に変換する。
@@ -410,6 +440,28 @@ func dateComponents(subscriptionPeriod: SubscriptionPeriod) -> DateComponents {
 
 struct PaywallPage_Previews: PreviewProvider {
     static var previews: some View {
+        #if DEBUG
+        PaywallPage(previewPlanPrices: .snapshot)
+        #else
         PaywallPage()
+        #endif
     }
 }
+
+#if DEBUG
+/// RevenueCat を configure しない SnapshotUITest / Preview のレイアウト確認専用価格。
+/// fileprivate の Preview 専用 initializer からだけ注入し、通常のアプリ経路では使わない。
+fileprivate struct PaywallPreviewPlanPrices {
+    let annual: String
+    let annualPerMonth: String
+    let monthly: String
+    let lifetime: String
+
+    static let snapshot = PaywallPreviewPlanPrices(
+        annual: "$38.00",
+        annualPerMonth: "$3.17",
+        monthly: "$5.00",
+        lifetime: "$61.50"
+    )
+}
+#endif
