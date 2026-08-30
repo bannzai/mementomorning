@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: 7be4ec0d3e614c6572ed3c8d1846e7636caf8893
-last_verified_at: 2026-08-28
+last_verified_commit: 8c5fab33c27bd378a61624fb885a920cae3acb64
+last_verified_at: 2026-08-31
 ---
 
 # Paywall QA
@@ -24,8 +24,8 @@ last_verified_at: 2026-08-28
 
 - [x] **導線からの表示**: ジャーナルのロック行 (journal_paywall_link) とアラーム設定の「無限追撃アラーム」行 (alarm_setting_endless_alarm_row) のどちらからも sheet で開く
   - 自動化: manual（sheet 遷移の確認）
-- [x] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
-  - 自動化: `.maestro/flows/paywall-teststore.yaml`（Test Store のストア価格は USD のため、見本価格 (¥) と画面上で判別できる。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift がカバー済み）
+- [x] **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される。package を取得できないプランは固定価格へフォールバックせず表示しない
+  - 自動化: `.maestro/flows/paywall-teststore.yaml`（Test Store のストア価格は USD のため、円建ての固定価格と画面上で判別できる。商品定義・判定のロジックは MementoMorningTests/StoreKitConfigurationTests.swift / PremiumEntitlementTests.swift / PaywallSubscriptionPeriodTests.swift がカバー済み）
 - [ ] **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
   - ⏭️ スキップ: Test Store の年額商品には introductory offer を設定していないため、Debug ビルドの既定では「offer なし → 表記なし」側しか確認できない (2026-08-17 の Test Store 検証でも表記なしを確認)。eligible 時に表示される側は**実機 QA へ** (Sandbox / StoreKit Configuration の Xcode Run で確認する)
   - 確認範囲 (2026-08-22): StoreKit Configuration の CLI 検証 (`xcodebuild test -only-testing:MementoMorningTests/StoreKitConfigurationTests`、iOS 26.2 simulator) で、`.storekit` の 3 商品の価格・年額のみの 7 日間無料トライアル offer 定義・購入による entitlement 付与までは 2 テスト成功 (exit 0) を確認。残るのは eligible 時の paywall_yearly_free_trial の目視のみ
@@ -53,7 +53,7 @@ last_verified_at: 2026-08-28
 
 </details>
 
-### **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される
+### **価格の表示**: offering の取得後、年額 (paywall_yearly_button。ひと月あたり換算付き)・月額 (paywall_monthly_button)・一生 (paywall_lifetime_button) の各プランがストア価格で表示される。package を取得できないプランは固定価格へフォールバックせず表示しない
 
 <details><summary>動作確認スクショ</summary>
 
@@ -67,16 +67,21 @@ last_verified_at: 2026-08-28
 
 (3 プランとも Test Store の USD ストア価格で表示。フロー破損 (開発者メニュー日本語化での文言変更にアサーションが未追随) の修復後の再確認)
 
+**確認日: 2026-08-31 (simtunnel、英語ロケール、RevenueCat Test Store。issue #151 の固定価格削除後)**
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260831/0ae53662-9c70-43e4-859f-fb4b7309e80c.jpg" width="320" />
+
+(年 $38.00 + ひと月 $3.17 換算・月 $5.00・一生 $61.50 が同じ画面に表示され、アクセシビリティツリーでも 3 つの価格がすべて USD であることを確認。package 未取得時にプランを隠す分岐は PaywallPlanVisibilityTests の 2 テストで確認し、PaywallPage.swift に円建て固定価格が残っていないことを静的検査した)
+
 </details>
 
 ### **年額の無料トライアル表記**: offering の年額に無料トライアルの introductory offer があり、かつそのユーザーが使える (eligible) 場合に、年額ボタン (paywall_yearly_button) の中に期間つきの無料表記 (paywall_yearly_free_trial。例: 1 week free) が表示される。offer が無い・有料の導入価格・トライアル利用済み (ineligible)・判定不能 (unknown) の場合は表示しない
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-08-17 (未 configure のローカルビルド。英語ロケール)**
+**確認日: 2026-08-17 (issue #151 より前の旧実装。未 configure のローカルビルド。英語ロケール)**
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260817/77b7ed68-5bc1-4345-9b2d-959e4a1e38d3.png" width="320" />
 
-(offering を取得できないため見本価格の表示。トライアル行は出ない = 取得できない時に固定文言を出さない方針どおり)
+(当時は offering を取得できない時に見本価格を表示していたが、issue #151 で見本価格自体を削除済み。トライアル行を固定文言で出さないことを確認した履歴として保持)
 
 </details>
 
