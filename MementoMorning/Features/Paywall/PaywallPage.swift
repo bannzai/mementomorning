@@ -121,8 +121,7 @@ struct PaywallPage: View {
     /// 購入ボタンと注釈・復元・法務リンク
     private var purchaseSection: some View {
         VStack(spacing: 12) {
-            // Storefront と異なる固定の円価格を見せないため、offering 取得までは購入ボタンを出さない (PR #30 レビュー指摘)。
-            // 未 configure (#15 前の開発ビルド・Preview) だけは目安価格の見本表示に倒す
+            // Storefront と異なる固定価格を見せないため、offering 取得までは購入ボタンを出さない (PR #30 レビュー指摘)。
             if Purchases.isConfigured && offering == nil {
                 if offeringLoadFailed {
                     Button {
@@ -141,7 +140,9 @@ struct PaywallPage: View {
                         .padding(.vertical, 24)
                 }
             } else {
-                if shouldShowPlan(package: offering?.annual) {
+                if shouldShowPlan(package: offering?.annual),
+                   let annualPriceText,
+                   let annualPerMonthPriceText {
                     Button {
                         Task { await purchase(package: offering?.annual) }
                     } label: {
@@ -169,7 +170,7 @@ struct PaywallPage: View {
                     .accessibilityIdentifier("paywall_yearly_button")
                 }
 
-                if shouldShowPlan(package: offering?.monthly) {
+                if shouldShowPlan(package: offering?.monthly), let monthlyPriceText {
                     Button {
                         Task { await purchase(package: offering?.monthly) }
                     } label: {
@@ -182,7 +183,7 @@ struct PaywallPage: View {
                     .accessibilityIdentifier("paywall_monthly_button")
                 }
 
-                if shouldShowPlan(package: offering?.lifetime) {
+                if shouldShowPlan(package: offering?.lifetime), let lifetimePriceText {
                     Button {
                         Task { await purchase(package: offering?.lifetime) }
                     } label: {
@@ -243,24 +244,24 @@ struct PaywallPage: View {
     }
 
     /// そのプランのボタンを描画してよいか。
-    /// configure 済みなら package が実在する時だけ描画する。offering は取得できても個別の package が
+    /// package が実在する時だけ描画する。offering は取得できても個別の package が
     /// StoreKit から解決できないこと (商品の反映待ち等) があり、その時に見本価格を代わりに出すと
     /// Storefront によっては実際と異なる価格を見せてしまうため (実測: US storefront のシミュレータで
     /// 年額・月額が未解決のまま円の見本価格が表示された)。
-    /// 未 configure (キーを持たない開発ビルド・Preview) では、デザイン確認のため見本価格で描画する
+    /// 未 configure (キーを持たない開発ビルド・Preview) でも固定価格は描画しない。
     private func shouldShowPlan(package: Package?) -> Bool {
-        !Purchases.isConfigured || package != nil
+        shouldShowPaywallPlan(packageAvailable: package != nil)
     }
 
-    /// 年額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥6,000/年) を見本表示する
-    private var annualPriceText: String {
-        offering?.annual?.storeProduct.localizedPriceString ?? "¥6,000"
+    /// RevenueCat から取得した年額の表示価格。未取得時はプランごと描画しない。
+    private var annualPriceText: String? {
+        offering?.annual?.storeProduct.localizedPriceString
     }
 
     /// 年額プランのひと月あたり換算の表示価格。ストア価格を 12 (ヶ月) で割り、商品の通貨フォーマッタで整形する。
-    /// offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥6,000 / 12ヶ月 = ¥500) を見本表示する
-    private var annualPerMonthPriceText: String {
-        guard let storeProduct = offering?.annual?.storeProduct else { return "¥500" }
+    /// 商品未取得時はプランごと描画しない。
+    private var annualPerMonthPriceText: String? {
+        guard let storeProduct = offering?.annual?.storeProduct else { return nil }
         return storeProduct.priceFormatter?.string(from: storeProduct.price / 12 as NSDecimalNumber)
             ?? storeProduct.localizedPriceString
     }
@@ -283,17 +284,17 @@ struct PaywallPage: View {
         return formatter.string(from: dateComponents(subscriptionPeriod: introductoryDiscount.subscriptionPeriod))
     }
 
-    /// 月額の表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥800/月) を見本表示する
-    private var monthlyPriceText: String {
-        offering?.monthly?.storeProduct.localizedPriceString ?? "¥800"
+    /// RevenueCat から取得した月額の表示価格。未取得時はプランごと描画しない。
+    private var monthlyPriceText: String? {
+        offering?.monthly?.storeProduct.localizedPriceString
     }
 
-    /// 一生プランの表示価格。offering 未取得の間 (未 configure のみ到達) は PROJECT.md で確定した価格 (¥9,800) を見本表示する
-    private var lifetimePriceText: String {
-        offering?.lifetime?.storeProduct.localizedPriceString ?? "¥9,800"
+    /// RevenueCat から取得した一生プランの表示価格。未取得時はプランごと描画しない。
+    private var lifetimePriceText: String? {
+        offering?.lifetime?.storeProduct.localizedPriceString
     }
 
-    /// offering を読み込む。未 configure (キーを持たない開発ビルド・Preview) では何もしない (見本価格の表示に倒す)。
+    /// offering を読み込む。未 configure (キーを持たない開発ビルド・Preview) では何もしない。
     /// lookup_key (PremiumEntitlement.offeringIdentifier) の識別子だけで取得する。`.current` へのフォールバックは
     /// Dashboard の Current 指定次第で別キャンペーン用 offering の商品を売ってしまうため使わない (PR #30 レビュー指摘)。
     /// offering は取得できても全 package が未解決 (商品の反映待ち等) なら購入手段が無いため、読み込み失敗として再読み込み導線に倒す (PR #30 レビュー指摘)
@@ -385,6 +386,11 @@ struct PaywallPage: View {
             purchaseError = String(localized: "Purchases couldn't be restored.") + "\n\(error.localizedDescription)"
         }
     }
+}
+
+/// 価格を取得できないプランに固定価格を補わず、package が存在する時だけ表示する。
+func shouldShowPaywallPlan(packageAvailable: Bool) -> Bool {
+    packageAvailable
 }
 
 /// RevenueCat の購読期間を DateComponentsFormatter へ渡せる DateComponents に変換する。
