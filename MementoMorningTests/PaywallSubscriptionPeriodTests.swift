@@ -3,6 +3,25 @@ import XCTest
 
 @testable import MementoMorning
 
+/// ペイウォールは RevenueCat で商品が解決できたプランだけ表示する。
+/// 未 configure の Preview を含め、商品未取得時に固定価格を出す経路を戻さないためのテスト。
+final class PaywallPlanVisibilityTests: XCTestCase {
+    /// 実商品も Preview 専用表示値も無いプランは表示しないこと。
+    func testPlanIsHiddenWhenPackageIsUnavailable() {
+        XCTAssertFalse(shouldShowPaywallPlan(packageAvailable: false, displayPriceAvailable: false))
+    }
+
+    /// RevenueCat の package があるプランは表示すること。
+    func testPlanIsShownWhenPackageIsAvailable() {
+        XCTAssertTrue(shouldShowPaywallPlan(packageAvailable: true, displayPriceAvailable: false))
+    }
+
+    /// DEBUG の Preview 専用表示値がある時は、package が無くてもスナップショット対象を表示すること。
+    func testPlanIsShownWhenPreviewPriceIsInjected() {
+        XCTAssertTrue(shouldShowPaywallPlan(packageAvailable: false, displayPriceAvailable: true))
+    }
+}
+
 /// ペイウォールの無料トライアル表記が使う購読期間の変換 (dateComponents(subscriptionPeriod:)) のテスト。
 /// 無料トライアルの期間は固定文言ではなく offering の introductory offer から組み立てるため、
 /// 単位の取り違え (週を月として出す等) が実際と異なる無料期間の表示に直結する
