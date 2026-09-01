@@ -125,7 +125,7 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
         transcribedVideoAssetIdentifier: videoAssetIdentifier
     ) else { return }
 
-    answer.setText(text: text)
+    answer.completeVideoTranscription(text: text, videoAssetIdentifier: videoAssetIdentifier)
     do {
         try modelContext.save()
         // 仮テキストから認識結果への置き換えをホーム画面ウィジェットへ反映する (issue #46)

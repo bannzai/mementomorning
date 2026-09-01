@@ -60,6 +60,8 @@ struct ContentView: View {
             SevenMorningsPage()
         }
         .fullScreenCover(item: $oneMonthLetterPresentation, onDismiss: {
+            // 手紙の表示中に待機していた 7 日の節目を先に提示し、その対象がなければ次の未読手紙を提示する。
+            presentSevenMorningsIfNeeded()
             // プレミアムユーザーが複数の未読手紙を持つ場合は、閉じた後に次の 1 通を判定する。
             presentOneMonthLetterIfNeeded()
         }) { presentation in

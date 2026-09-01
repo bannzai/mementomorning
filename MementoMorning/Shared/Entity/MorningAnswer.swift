@@ -109,6 +109,19 @@ final class MorningAnswer {
         self.updatedDateTime = .now
     }
 
+    /// 同じ動画の文字起こし成功結果を本文へ反映し、結果が現在の本文と同じでも completed へ進める。
+    /// completed へ進んだ後や録り直し後の古い結果では更新しないため冪等
+    func completeVideoTranscription(text: String, videoAssetIdentifier: String) {
+        guard self.videoAssetIdentifier == videoAssetIdentifier,
+              videoTranscriptionStatus == .pending
+        else {
+            return
+        }
+        self.text = text
+        self.videoTranscriptionStatusRawValue = VideoTranscriptionStatus.completed.rawValue
+        self.updatedDateTime = .now
+    }
+
     /// 動画回答の保存済み動画の localIdentifier を更新する (同じ日に動画で答え直した時は新しい動画で上書きする)。
     /// nil で消去する (動画回答の後にテキストで答え直した時に、古い動画を指し続けないようにする)
     func setVideoAssetIdentifier(videoAssetIdentifier: String?) {
