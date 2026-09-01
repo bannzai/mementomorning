@@ -122,6 +122,15 @@ struct ContentView: View {
     /// 回答が次の 30 件単位へ達していて課金条件も満たすなら、その通数の手紙を全画面表示する。
     private func presentOneMonthLetterIfNeeded(answerCount: Int? = nil) {
         if isUnitTest || isSnapshotUITest || isPreview { return }
+        // 初期表示・保存通知・課金状態変更のどの経路でも、未表示の 7 日節目を先に提示する。
+        // onAppear と onChange(initial: true) の実行順には依存させない
+        if shouldPresentSevenMorningsMilestone(
+            answerCount: sevenMorningsAnswers.count,
+            isPresented: isSevenMorningsMilestonePresented
+        ) {
+            presentSevenMorningsIfNeeded()
+            return
+        }
         guard !isRootModalPresented,
               !isSevenMorningsPagePresented,
               oneMonthLetterPresentation == nil,
