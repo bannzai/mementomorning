@@ -28,6 +28,8 @@ struct DebugMenuPage: View {
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
     /// 疑似録画モードのフラグ。カメラの無いシミュレータで動画回答のパイプラインを検証するために使う (冪等なトグル)
     @AppStorage(.debugSimulateVideoAnswer) private var debugSimulateVideoAnswer = false
+    /// 最後に表示した「一ヶ月の手紙」の通数。リセット結果を即時表示し、ContentView の再判定も発火させる。
+    @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
 
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
@@ -82,6 +84,32 @@ struct DebugMenuPage: View {
                     Text(verbatim: "七つの朝の節目をリセット")
                 }
                 .accessibilityIdentifier("debug_reset_seven_mornings_milestone")
+            }
+            Section {
+                Text(verbatim: "表示済みの手紙: \(lastPresentedOneMonthLetterNumber) 通")
+                    .accessibilityIdentifier("debug_one_month_letter_state")
+
+                Button {
+                    seedOneMonthLetterSampleAnswersIfNeeded(modelContext: modelContext)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "一ヶ月の手紙用回答を投入 (60 日分)")
+                }
+                .accessibilityIdentifier("debug_seed_one_month_letter_answers")
+
+                Text(verbatim: "既存回答がある場合は投入しない。必要なら先に全回答を削除する")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+
+                Button {
+                    // 0 へ戻す冪等な操作。回答が 30 件以上なら ContentView が最初の手紙を再表示する。
+                    lastPresentedOneMonthLetterNumber = 0
+                } label: {
+                    Text(verbatim: "一ヶ月の手紙の表示履歴をリセット")
+                }
+                .accessibilityIdentifier("debug_reset_one_month_letter_milestone")
+            } header: {
+                Text(verbatim: "一ヶ月の手紙 (issue #96)")
             }
             // デザインシェル (機能配線前の画面) の描画確認用の導線。
             // 朝の問いはアラーム停止 (#4)、ペイウォールはジャーナルのロック行からも開ける

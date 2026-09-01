@@ -1,6 +1,86 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "A Letter from Your Mornings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの朝からの手紙"
+          }
+        }
+      }
+    },
+    "Across your answers, one word kept returning." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの答えの中で、何度も戻ってきた言葉がありました。"
+          }
+        }
+      }
+    },
+    "Call my family and tell them I love them" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族に電話して、愛していると伝える"
+          }
+        }
+      }
+    },
+    "Carry it with me" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この言葉と歩いていく"
+          }
+        }
+      }
+    },
+    "Maybe it is what you have kept wanting to hold close." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "それは、あなたが大切にしたいと願い続けていたものかもしれません。"
+          }
+        }
+      }
+    },
+    "Spend unhurried time with my family" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "家族とゆっくり過ごす"
+          }
+        }
+      }
+    },
+    "Thirty mornings have passed." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "三十の朝が過ぎました。"
+          }
+        }
+      }
+    },
+    "Your words are still slowly taking shape." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの言葉は今も、ゆっくり形をつくっています。"
+          }
+        }
+      }
+    },
     "%@ / month" : {
       "localizations" : {
         "ar" : {

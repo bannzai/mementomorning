@@ -4,13 +4,14 @@ import SwiftData
 
 /// 起動直後に表示するルート画面 (ホーム)。
 /// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる。
-/// 回答が 7 件に達したら、7 日の節目「七つの朝」(SevenMorningsPage) を一度だけ表示する
+/// 回答が 7 件に達したら「七つの朝」、以降 30 件ごとに「一ヶ月の手紙」を表示する。
 struct ContentView: View {
     /// RootView が朝の問い (fullScreenCover) や夜の振り返り (sheet) を提示中かどうか。
     /// 共有を促すダイアログ (issue #74) はホームが前面にある時にだけ出すため、提示中は出さず閉じた後に判定し直す
     var isRootModalPresented = false
 
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) private var modelContext
     /// ホームの基準日 (今日の 0 時)。HomeContent のクエリ条件と粒ストリップの今日判定の基準になる
     @State private var today = Calendar.current.startOfDay(for: .now)
 
@@ -23,12 +24,24 @@ struct ContentView: View {
     /// 7 日の節目画面を表示中かどうか
     @State private var isSevenMorningsPagePresented = false
 
+    /// 「一ヶ月の手紙」の判定に使う全期間の回答件数。履歴本体は保持せず fetchCount で取得する。
+    @State private var oneMonthLetterAnswerCount = 0
+    /// 最後に表示した「一ヶ月の手紙」の通数。0 は未表示。
+    @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
+    /// RevenueCat の entitlement キャッシュと検証用上書きを監視し、プレミアム解放直後に未読の手紙を再判定する。
+    @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
+    @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
+    /// fullScreenCover に渡した手紙の通数を、表示が閉じるまで固定する。
+    @State private var oneMonthLetterPresentation: OneMonthLetterPresentation?
+
     var body: some View {
         NavigationStack {
             HomeContent(
                 today: today,
-                // 7 日の節目のシートも同じモーダル層に出るため、閉じるまで共有を促すダイアログを出さない
-                isCoveredByOtherScreen: isRootModalPresented || isSevenMorningsPagePresented
+                // 節目画面も同じモーダル層に出るため、閉じるまで共有を促すダイアログを出さない
+                isCoveredByOtherScreen: isRootModalPresented
+                    || isSevenMorningsPagePresented
+                    || oneMonthLetterPresentation != nil
             )
                 // 基準日が変わったら @Query の predicate を組み直すため view ごと作り直す
                 .id(today)
@@ -36,16 +49,47 @@ struct ContentView: View {
         .onChange(of: scenePhase) { _, newValue in
             guard newValue == .active else { return }
             today = Calendar.current.startOfDay(for: .now)
+            refreshOneMonthLetterAnswerCount()
         }
-        .sheet(isPresented: $isSevenMorningsPagePresented) {
+        .sheet(isPresented: $isSevenMorningsPagePresented, onDismiss: {
+            presentOneMonthLetterIfNeeded()
+        }) {
             SevenMorningsPage()
+        }
+        .fullScreenCover(item: $oneMonthLetterPresentation, onDismiss: {
+            // プレミアムユーザーが複数の未読手紙を持つ場合は、閉じた後に次の 1 通を判定する。
+            presentOneMonthLetterIfNeeded()
+        }) { presentation in
+            OneMonthLetterPage(milestoneNumber: presentation.milestoneNumber)
+        }
+        .onAppear {
+            refreshOneMonthLetterAnswerCount()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
+            refreshOneMonthLetterAnswerCount()
         }
         .onChange(of: sevenMorningsAnswers.count, initial: true) { _, _ in
             presentSevenMorningsIfNeeded()
         }
+        .onChange(of: oneMonthLetterAnswerCount) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
         // 表示済みフラグのリセット (開発者メニュー) 後に、再起動なしで再表示を確認できるようにする
         .onChange(of: isSevenMorningsMilestonePresented) { _, _ in
             presentSevenMorningsIfNeeded()
+        }
+        .onChange(of: lastPresentedOneMonthLetterNumber) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
+        .onChange(of: premiumEntitlementActive) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
+        .onChange(of: debugPremiumOverride) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
+        .onChange(of: isRootModalPresented) { _, _ in
+            presentSevenMorningsIfNeeded()
+            presentOneMonthLetterIfNeeded()
         }
     }
 
@@ -53,12 +97,35 @@ struct ContentView: View {
     private func presentSevenMorningsIfNeeded() {
         // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に節目画面の表示とフラグの書き込みが走らないようここで打ち切る
         if isUnitTest { return }
+        guard !isRootModalPresented, oneMonthLetterPresentation == nil else { return }
         if shouldPresentSevenMorningsMilestone(
             answerCount: sevenMorningsAnswers.count,
             isPresented: isSevenMorningsMilestonePresented
         ) {
             isSevenMorningsPagePresented = true
         }
+    }
+
+    /// 回答が次の 30 件単位へ達していて課金条件も満たすなら、その通数の手紙を全画面表示する。
+    private func presentOneMonthLetterIfNeeded() {
+        if isUnitTest || isSnapshotUITest || isPreview { return }
+        guard !isRootModalPresented,
+              !isSevenMorningsPagePresented,
+              oneMonthLetterPresentation == nil,
+              let milestoneNumber = nextOneMonthLetterNumber(
+                  answerCount: oneMonthLetterAnswerCount,
+                  lastPresentedNumber: lastPresentedOneMonthLetterNumber,
+                  isPremium: PremiumEntitlement.isPremium
+              )
+        else {
+            return
+        }
+        oneMonthLetterPresentation = OneMonthLetterPresentation(milestoneNumber: milestoneNumber)
+    }
+
+    /// 回答本文を全件保持せず、「一ヶ月の手紙」の到達判定に必要な件数だけを更新する。
+    private func refreshOneMonthLetterAnswerCount() {
+        oneMonthLetterAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
     }
 }
 
@@ -85,13 +152,15 @@ private struct HomeContent: View {
     @AppStorage(.lastSharePromptDate) private var lastSharePromptDate: Double = 0
     /// 7 日の節目を表示済みかどうか。節目の提示が確定する前に共有を促すダイアログを出さないための判定に使う
     @AppStorage(.isSevenMorningsMilestonePresented) private var isSevenMorningsMilestonePresented = false
+    /// 30 日の節目が同時に成立した時、共有ダイアログより「一ヶ月の手紙」を優先するために参照する。
+    @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
     /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
 
     /// ホームの基準日 (今日の 0 時)。ContentView が日付跨ぎで更新する
     let today: Date
-    /// ホームの上に別画面 (朝の問い・夜の振り返り・7 日の節目) が提示されているかどうか。
+    /// ホームの上に別画面 (朝の問い・夜の振り返り・節目画面) が提示されているかどうか。
     /// 提示中に共有を促すダイアログを出すと、その画面と一緒に閉じられたり提示に失敗したりするため、閉じた後に出す
     let isCoveredByOtherScreen: Bool
 
@@ -202,9 +271,14 @@ private struct HomeContent: View {
         // 伝わっていないことがある。節目が提示されるべき状態 (件数が 7 件以上で未表示) なら節目を優先して待ち、
         // シートが閉じて isCoveredByOtherScreen が変わった時に判定し直す (節目シートの上に出したり、競合で出ないまま記録したりしない)
         if shouldPresentSevenMorningsMilestone(
-            answerCount: (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0,
+            answerCount: answeredCount,
             isPresented: isSevenMorningsMilestonePresented
         ) { return }
+        if nextOneMonthLetterNumber(
+            answerCount: answeredCount,
+            lastPresentedNumber: lastPresentedOneMonthLetterNumber,
+            isPremium: PremiumEntitlement.isPremium
+        ) != nil { return }
         guard shouldPresentSharePrompt(
             todayAnswerText: todayAnswers.first?.text,
             placeholderText: videoAnswerPlaceholderText,

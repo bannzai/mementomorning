@@ -49,3 +49,33 @@ func seedSampleAnswersIfNeeded(modelContext: ModelContext) {
         assertionFailure(error.localizedDescription)
     }
 }
+
+/// 「一ヶ月の手紙」の初回無料と 2 通目のプレミアム制限を続けて検証できる 60 日分の回答を投入する。
+/// 既に回答が 1 件でもあれば何もしないため、既存データを上書きせず冪等。
+@MainActor
+func seedOneMonthLetterSampleAnswersIfNeeded(modelContext: ModelContext) {
+    do {
+        var descriptor = FetchDescriptor<MorningAnswer>()
+        descriptor.fetchLimit = 1
+        guard try modelContext.fetch(descriptor).isEmpty else { return }
+
+        for index in 0..<(oneMonthLetterAnswerCount * 2) {
+            let answeredDate = Calendar.current.startOfDay(
+                for: Calendar.current.date(byAdding: .day, value: -index, to: .now)!
+            )
+            let text = if index.isMultiple(of: 2) {
+                // ja: 家族とゆっくり過ごす
+                String(localized: "Spend unhurried time with my family")
+            } else {
+                // ja: 家族に電話して、愛していると伝える
+                String(localized: "Call my family and tell them I love them")
+            }
+            modelContext.insert(MorningAnswer(answeredDate: answeredDate, text: text))
+        }
+        try modelContext.save()
+        reloadHomeWidgetTimelines()
+    } catch {
+        modelContext.rollback()
+        assertionFailure(error.localizedDescription)
+    }
+}
