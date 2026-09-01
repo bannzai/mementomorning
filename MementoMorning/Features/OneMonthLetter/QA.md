@@ -1,7 +1,7 @@
 ---
 feature: OneMonthLetter
 verification: mobile-mcp
-last_verified_commit: 83adf33
+last_verified_commit: 5f592ca
 last_verified_at: 2026-09-01
 ---
 
@@ -37,10 +37,10 @@ last_verified_at: 2026-09-01
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-09-01** (レビュー修正後の `83adf33`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/58ac62e5-2f3d-48ee-9817-810c3941c6d9.jpg" width="320" />
+**確認日: 2026-09-01** (最終レビュー修正後の `5f592ca`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/c66a0194-2b1f-492d-9a60-706740fe4496.jpg" width="320" />
 
-(初回表示、無料状態での2通目制限、プレミアム強制 ON 直後の2通目表示、再起動後の再表示防止、履歴リセット直後の1通目表示を再確認した。simtunnel run: https://github.com/bannzai/mementomorning/actions/runs/33457229053)
+(初回表示、無料状態での2通目制限、プレミアム強制 ON 直後の2通目表示、再起動後の再表示防止を再確認した。simtunnel run: https://github.com/bannzai/mementomorning/actions/runs/33460303044)
 
 **確認日: 2026-09-01** (simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/870e6924-9bfe-4c18-afa4-46e3ec4dea5c.jpg" width="320">
