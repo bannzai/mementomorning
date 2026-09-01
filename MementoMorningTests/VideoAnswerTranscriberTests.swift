@@ -1,4 +1,5 @@
 import Speech
+import SwiftData
 import XCTest
 
 @testable import MementoMorning
@@ -6,6 +7,34 @@ import XCTest
 /// 動画回答の文字起こしの判定 (isTranscriptionAvailable / shouldApplyTranscription) のテスト。
 /// 文字起こしの実行可否と、遅れて届いた結果を回答へ適用してよいかの分岐を網羅する
 final class VideoAnswerTranscriberTests: XCTestCase {
+    func testPlaceholderDetectionIsIndependentOfCurrentLocale() {
+        XCTAssertTrue(isVideoAnswerPlaceholderText("Answered with a video"))
+        XCTAssertTrue(isVideoAnswerPlaceholderText("動画で答えました"))
+        XCTAssertFalse(isVideoAnswerPlaceholderText("Spend time with my family"))
+    }
+
+    @MainActor
+    func testInterruptedPendingTranscriptionBecomesFailedOnRecovery() throws {
+        let modelContext = ModelContext(
+            try ModelContainer(
+                for: PersistenceController.schema,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
+        )
+        let answer = MorningAnswer(
+            answeredDate: .now,
+            text: "Answered with a video",
+            videoAssetIdentifier: "asset-interrupted"
+        )
+        modelContext.insert(answer)
+        try modelContext.save()
+
+        recoverInterruptedVideoTranscriptions(modelContext: modelContext)
+        recoverInterruptedVideoTranscriptions(modelContext: modelContext)
+
+        XCTAssertEqual(answer.videoTranscriptionStatus, .failed)
+    }
+
     func testAuthorizedAndAvailableAndOnDeviceIsTranscribable() {
         XCTAssertTrue(
             isTranscriptionAvailable(
@@ -68,11 +97,10 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         )
     }
 
-    func testPlaceholderTextWithSameVideoIsApplied() {
+    func testPendingTranscriptionWithSameVideoIsApplied() {
         XCTAssertTrue(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .pending,
                 currentVideoAssetIdentifier: "asset-1",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -83,8 +111,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // ユーザーが先に手で直した回答を、後から届いた文字起こし結果で上書きしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: "家族と海を見に行く",
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .completed,
                 currentVideoAssetIdentifier: "asset-1",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -95,8 +122,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // 同じ日に録り直した新しい動画の回答を、古い動画の文字起こし結果で上書きしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .pending,
                 currentVideoAssetIdentifier: "asset-2",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -107,8 +133,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // 動画の後にテキストで答え直した回答 (videoAssetIdentifier が消えている) は文字起こしの対象にしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: nil,
                 currentVideoAssetIdentifier: nil,
                 transcribedVideoAssetIdentifier: "asset-1"
             )

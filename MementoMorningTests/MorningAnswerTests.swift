@@ -23,10 +23,10 @@ final class MorningAnswerTests: XCTestCase {
     }
 
     func testInitStoresVideoAssetIdentifier() {
-        XCTAssertEqual(
-            MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-1").videoAssetIdentifier,
-            "asset-1"
-        )
+        let answer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-1")
+
+        XCTAssertEqual(answer.videoAssetIdentifier, "asset-1")
+        XCTAssertEqual(answer.videoTranscriptionStatus, .pending)
     }
 
     func testSetVideoAssetIdentifierUpdatesIdentifierAndUpdatedDateTime() {
@@ -46,6 +46,38 @@ final class MorningAnswerTests: XCTestCase {
         answer.setVideoAssetIdentifier(videoAssetIdentifier: nil)
 
         XCTAssertNil(answer.videoAssetIdentifier)
+        XCTAssertNil(answer.videoTranscriptionStatus)
+    }
+
+    func testVideoTranscriptionStatusMovesFromPendingToFailedOrCompleted() {
+        let failedAnswer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-4")
+        failedAnswer.markVideoTranscriptionFailed(videoAssetIdentifier: "asset-4")
+        XCTAssertEqual(failedAnswer.videoTranscriptionStatus, .failed)
+
+        let completedAnswer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-5")
+        completedAnswer.setText(text: "家族と海を見に行く")
+        completedAnswer.markVideoTranscriptionFailed(videoAssetIdentifier: "asset-5")
+        XCTAssertEqual(completedAnswer.videoTranscriptionStatus, .completed)
+    }
+
+    func testSavingUnchangedVideoPlaceholderKeepsTranscriptionPending() {
+        let answer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-6")
+        let updatedDateTimeBeforeSet = answer.updatedDateTime
+
+        answer.setText(text: "動画で答えました")
+
+        XCTAssertEqual(answer.videoTranscriptionStatus, .pending)
+        XCTAssertEqual(answer.updatedDateTime, updatedDateTimeBeforeSet)
+    }
+
+    func testMatchingTranscriptionTextStillCompletesPendingVideo() {
+        let answer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-7")
+
+        answer.completeVideoTranscription(text: "動画で答えました", videoAssetIdentifier: "asset-7")
+        answer.completeVideoTranscription(text: "上書きしない", videoAssetIdentifier: "asset-7")
+
+        XCTAssertEqual(answer.text, "動画で答えました")
+        XCTAssertEqual(answer.videoTranscriptionStatus, .completed)
     }
 
     func testSetFulfilledUpdatesIsFulfilledAndUpdatedDateTime() {
