@@ -1,8 +1,8 @@
 ---
 feature: SevenMornings
 verification: mobile-mcp
-last_verified_commit: 401e4abf0b08248e767d8ac2ec02a5b769f58d37
-last_verified_at: 2026-08-24
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # SevenMornings QA

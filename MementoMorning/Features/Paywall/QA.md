@@ -1,8 +1,8 @@
 ---
 feature: Paywall
 verification: mobile-mcp
-last_verified_commit: c179510d2e5582f5800560f4593b75ceb553bac3
-last_verified_at: 2026-08-31
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # Paywall QA
@@ -165,6 +165,13 @@ Paywall 下部のリンク行 (購入を復元・利用規約・プライバシ�
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/8eb385d5-3237-445b-8a2f-98d276db6223.png" width="320" />
 
 (復元後に paywall が dismiss され開発者メニューへ戻った直後の画面)
+
+**確認日: 2026-09-01** (simtunnel リモート simulator、RevenueCat Test Store)
+
+年額を「Test valid purchase」で購入後、開発者メニューから Paywall を開き直して「Restore Purchases」を実行した。entitlement が返り、Paywall が dismiss されて開発者メニューへ戻った。復元操作前と復元成功後:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/a07f8ff4-7d7f-4414-8419-bd3a058c7af3.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/34a74477-e59a-49c5-963f-fc2cf62ed8f2.jpg" width="320" />
 
 </details>
 

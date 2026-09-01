@@ -1,8 +1,8 @@
 ---
 feature: NightReflection
 verification: mobile-mcp
-last_verified_commit: 176772549b6edc8961f87e5b501983a538a42ce3
-last_verified_at: 2026-08-22
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # NightReflection QA

@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: 963fbe2de95584f29327a1694c0ff8dfd025d100
-last_verified_at: 2026-08-26
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # AlarmSetting QA
