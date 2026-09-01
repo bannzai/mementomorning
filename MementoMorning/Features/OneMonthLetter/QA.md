@@ -1,7 +1,7 @@
 ---
 feature: OneMonthLetter
 verification: mobile-mcp
-last_verified_commit: d3dd2d2
+last_verified_commit: 76dc920
 last_verified_at: 2026-09-01
 ---
 
@@ -36,6 +36,11 @@ last_verified_at: 2026-09-01
 ### **初回の手紙と頻出語**: 無料状態で開発者メニューから 60 日分の回答を投入すると、1 通目が全画面で表示され、30 件の回答で最頻出の「family」が示される
 
 <details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-09-01** (節目の連続表示修正後の `76dc920`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/9d8665b6-6c76-4ba6-9d6e-e937f9abbfed.jpg" width="320" />
+
+(60 日分の回答投入で `LETTER 1` を表示し、閉じた直後に保存・再起動を挟まず `seven_mornings_title` が現れることを要素ツリーと画面で確認した。simtunnel run: https://github.com/bannzai/mementomorning/actions/runs/33468083669)
 
 **確認日: 2026-09-01** (レビュー指摘5件と全ロケール翻訳を反映した `c65995b`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/063facd0-f3e3-44f2-aa95-f030460971ca.jpg" width="320" />
