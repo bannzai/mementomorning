@@ -43,17 +43,49 @@ final class OneMonthLetterTests: XCTestCase {
         XCTAssertEqual(mostFrequentMeaningfulWord(in: texts), "家族")
     }
 
+    func testMostFrequentSpanishWordIgnoresFunctionWords() {
+        let texts = [
+            "La familia y la familia",
+            "Que la familia esté cerca",
+        ]
+
+        XCTAssertEqual(mostFrequentMeaningfulWord(in: texts), "familia")
+    }
+
     func testTieUsesWordThatAppearedFirst() {
         XCTAssertEqual(mostFrequentMeaningfulWord(in: ["Ocean family", "family ocean"]), "Ocean")
     }
 
     func testLetterWaitsForAllAnswersAndVideoTranscription() {
-        let completedAnswers = Array(repeating: "Call my family", count: oneMonthLetterAnswerCount)
-        XCTAssertTrue(isOneMonthLetterReady(answerTexts: completedAnswers, placeholderText: "Answered with a video"))
-        XCTAssertFalse(isOneMonthLetterReady(answerTexts: Array(completedAnswers.dropLast()), placeholderText: "Answered with a video"))
+        let completedStatuses: [VideoTranscriptionStatus?] = Array(repeating: nil, count: oneMonthLetterAnswerCount)
+        XCTAssertTrue(
+            isOneMonthLetterReady(
+                answerCount: oneMonthLetterAnswerCount,
+                videoTranscriptionStatuses: completedStatuses
+            )
+        )
+        XCTAssertFalse(
+            isOneMonthLetterReady(
+                answerCount: oneMonthLetterAnswerCount - 1,
+                videoTranscriptionStatuses: Array(completedStatuses.dropLast())
+            )
+        )
 
-        var pendingAnswers = completedAnswers
-        pendingAnswers[29] = "Answered with a video"
-        XCTAssertFalse(isOneMonthLetterReady(answerTexts: pendingAnswers, placeholderText: "Answered with a video"))
+        var pendingStatuses = completedStatuses
+        pendingStatuses[29] = .pending
+        XCTAssertFalse(
+            isOneMonthLetterReady(
+                answerCount: oneMonthLetterAnswerCount,
+                videoTranscriptionStatuses: pendingStatuses
+            )
+        )
+
+        pendingStatuses[29] = .failed
+        XCTAssertTrue(
+            isOneMonthLetterReady(
+                answerCount: oneMonthLetterAnswerCount,
+                videoTranscriptionStatuses: pendingStatuses
+            )
+        )
     }
 }

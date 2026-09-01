@@ -1,6 +1,13 @@
 import Foundation
 import SwiftData
 
+/// 動画回答の文字起こし状態。RawValue だけを SwiftData に保存し、ロケールに依存せず判定する。
+enum VideoTranscriptionStatus: String {
+    case pending
+    case completed
+    case failed
+}
+
 /// 毎朝の問い「今日死ぬとしたら何をやりたいですか？」へのユーザーの回答。1 日 1 件蓄積され、人生ジャーナルの最小単位になる
 @Model
 final class MorningAnswer {
@@ -17,6 +24,17 @@ final class MorningAnswer {
     /// 動画回答で写真ライブラリへ保存した動画の PHAsset localIdentifier。テキスト回答では nil。
     /// 文字起こし (issue #25) が音声トラックの取得に使う。Optional のプリミティブ型のため軽量マイグレーションで追加できる
     private(set) var videoAssetIdentifier: String?
+    /// 動画回答の文字起こし状態。nil はこの項目の追加前に保存された動画回答を表す。
+    /// Optional のプリミティブ型にして、既存ストアを軽量マイグレーションできるようにする
+    private(set) var videoTranscriptionStatusRawValue: String?
+
+    /// 既存の動画回答は文字起こし処理中ではないため failed として扱い、節目の提示を永久に止めない。
+    /// テキスト回答には文字起こし状態が無いので nil を返す
+    var videoTranscriptionStatus: VideoTranscriptionStatus? {
+        guard videoAssetIdentifier != nil else { return nil }
+        guard let videoTranscriptionStatusRawValue else { return .failed }
+        return VideoTranscriptionStatus(rawValue: videoTranscriptionStatusRawValue) ?? .failed
+    }
 
     // videoAssetIdentifier はテキスト回答の既存呼び出し側では常に nil のため、既定値付きで追加する
     init(id: UUID = .init(), answeredDate: Date, text: String, videoAssetIdentifier: String? = nil) {
@@ -24,6 +42,7 @@ final class MorningAnswer {
         self.answeredDate = answeredDate
         self.text = text
         self.videoAssetIdentifier = videoAssetIdentifier
+        self.videoTranscriptionStatusRawValue = videoAssetIdentifier == nil ? nil : VideoTranscriptionStatus.pending.rawValue
     }
 
     /// 指定日 (0 時基準) の回答を取得する。1 日 1 件のため 1 件だけ取得する。
@@ -38,6 +57,9 @@ final class MorningAnswer {
     /// text を更新する
     func setText(text: String) {
         self.text = text
+        if videoAssetIdentifier != nil {
+            self.videoTranscriptionStatusRawValue = VideoTranscriptionStatus.completed.rawValue
+        }
         self.updatedDateTime = .now
     }
 
@@ -45,6 +67,18 @@ final class MorningAnswer {
     /// nil で消去する (動画回答の後にテキストで答え直した時に、古い動画を指し続けないようにする)
     func setVideoAssetIdentifier(videoAssetIdentifier: String?) {
         self.videoAssetIdentifier = videoAssetIdentifier
+        self.videoTranscriptionStatusRawValue = videoAssetIdentifier == nil ? nil : VideoTranscriptionStatus.pending.rawValue
+        self.updatedDateTime = .now
+    }
+
+    /// 同じ動画の文字起こしが失敗したことを記録する。録り直し後の古い処理結果では状態を変えない
+    func markVideoTranscriptionFailed(videoAssetIdentifier: String) {
+        guard self.videoAssetIdentifier == videoAssetIdentifier,
+              videoTranscriptionStatus == .pending
+        else {
+            return
+        }
+        self.videoTranscriptionStatusRawValue = VideoTranscriptionStatus.failed.rawValue
         self.updatedDateTime = .now
     }
 

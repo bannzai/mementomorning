@@ -11,16 +11,22 @@ func mostFrequentMeaningfulWord(in answerTexts: [String]) -> String? {
     var order: [String] = []
 
     for text in answerTexts {
-        let tokenizer = NLTokenizer(unit: .word)
-        tokenizer.string = text
+        let tagger = NLTagger(tagSchemes: [.lexicalClass])
+        tagger.string = text
         if let language = NLLanguageRecognizer.dominantLanguage(for: text) {
-            tokenizer.setLanguage(language)
+            tagger.setLanguage(language, range: text.startIndex..<text.endIndex)
         }
-        tokenizer.enumerateTokens(in: text.startIndex..<text.endIndex) { range, _ in
+        tagger.enumerateTags(
+            in: text.startIndex..<text.endIndex,
+            unit: .word,
+            scheme: .lexicalClass,
+            options: [.omitPunctuation, .omitWhitespace, .omitOther]
+        ) { tag, range in
             let word = String(text[range]).trimmingCharacters(in: tokenTrimCharacters)
             let normalizedWord = normalizeOneMonthLetterWord(word)
             guard !normalizedWord.isEmpty,
                   normalizedWord.rangeOfCharacter(from: .letters) != nil,
+                  isMeaningfulLexicalClass(tag),
                   !oneMonthLetterStopWords.contains(normalizedWord)
             else {
                 return true
@@ -50,6 +56,22 @@ private func normalizeOneMonthLetterWord(_ word: String) -> String {
         options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive],
         locale: Locale(identifier: "en_US_POSIX")
     )
+}
+
+/// NaturalLanguage が対応する言語では品詞を使って機能語を除外する。
+/// 品詞モデルが語を分類できない場合に備え、英語・日本語の最小リストも併用する。
+private let oneMonthLetterFunctionWordTags: Set<NLTag> = [
+    .pronoun,
+    .determiner,
+    .particle,
+    .preposition,
+    .conjunction,
+    .classifier,
+]
+
+private func isMeaningfulLexicalClass(_ tag: NLTag?) -> Bool {
+    guard let tag else { return true }
+    return !oneMonthLetterFunctionWordTags.contains(tag)
 }
 
 /// 手紙の主題になりにくい英語の機能語と、日本語の助詞・助動詞。

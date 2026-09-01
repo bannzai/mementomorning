@@ -114,7 +114,11 @@ struct OneMonthLetterPage: View {
     }
 
     private var keyword: String? {
-        mostFrequentMeaningfulWord(in: answers.map(\.text))
+        mostFrequentMeaningfulWord(
+            in: answers
+                .filter { $0.videoTranscriptionStatus != .failed }
+                .map(\.text)
+        )
     }
 }
 

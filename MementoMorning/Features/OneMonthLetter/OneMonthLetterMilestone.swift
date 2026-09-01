@@ -24,10 +24,12 @@ func nextOneMonthLetterNumber(
     return nextNumber
 }
 
-/// 対象の 30 件が揃い、動画回答の文字起こしもすべて完了しているかを返す。
-/// 仮テキストを頻出語へ混ぜず、文字起こしの保存通知後に正しい本文で手紙を作る。
-func isOneMonthLetterReady(answerTexts: [String], placeholderText: String) -> Bool {
-    answerTexts.count == oneMonthLetterAnswerCount && !answerTexts.contains(placeholderText)
+/// 対象の 30 件が揃い、処理中の動画文字起こしが無いかを返す。
+/// 文字起こし失敗は待機対象にせず、該当回答だけ頻出語の抽出対象から除外して以後の手紙も進める。
+func isOneMonthLetterReady(answerCount: Int, videoTranscriptionStatuses: [VideoTranscriptionStatus?]) -> Bool {
+    answerCount == oneMonthLetterAnswerCount
+        && videoTranscriptionStatuses.count == answerCount
+        && !videoTranscriptionStatuses.contains(.pending)
 }
 
 /// fullScreenCover(item:) で表示対象の通数を固定するための値。

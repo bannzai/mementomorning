@@ -124,8 +124,8 @@ struct ContentView: View {
               ),
               let answers = try? modelContext.fetch(oneMonthLetterAnswersDescriptor(milestoneNumber: milestoneNumber)),
               isOneMonthLetterReady(
-                  answerTexts: answers.map(\.text),
-                  placeholderText: videoAnswerPlaceholderText
+                  answerCount: answers.count,
+                  videoTranscriptionStatuses: answers.map(\.videoTranscriptionStatus)
               )
         else {
             return
@@ -289,11 +289,18 @@ private struct HomeContent: View {
             answerCount: currentAnswerCount,
             isPresented: isSevenMorningsMilestonePresented
         ) { return }
-        if nextOneMonthLetterNumber(
+        if let milestoneNumber = nextOneMonthLetterNumber(
             answerCount: currentAnswerCount,
             lastPresentedNumber: lastPresentedOneMonthLetterNumber,
             isPremium: PremiumEntitlement.isPremium
-        ) != nil { return }
+        ),
+           let answers = try? modelContext.fetch(oneMonthLetterAnswersDescriptor(milestoneNumber: milestoneNumber)),
+           isOneMonthLetterReady(
+               answerCount: answers.count,
+               videoTranscriptionStatuses: answers.map(\.videoTranscriptionStatus)
+           ) {
+            return
+        }
         guard shouldPresentSharePrompt(
             todayAnswerText: todayAnswers.first?.text,
             placeholderText: videoAnswerPlaceholderText,

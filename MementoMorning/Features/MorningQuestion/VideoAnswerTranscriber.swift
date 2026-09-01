@@ -25,14 +25,13 @@ func isTranscriptionAvailable(
 /// 文字起こしの結果を回答へ書き込んでよいかを判定する純粋関数。
 /// 文字起こしは回答の確定より後に (画面が閉じた後も) 完了するため、その間に回答が変わっている可能性がある。
 /// ユーザーが先に手で編集した回答や、同じ日に録り直された新しい動画の回答を、
-/// 古い文字起こし結果で上書きしないよう、仮テキストのままかつ同じ動画を指している時だけ適用する
+/// 古い文字起こし結果で上書きしないよう、処理中かつ同じ動画を指している時だけ適用する
 func shouldApplyTranscription(
-    currentText: String,
-    placeholderText: String,
+    currentStatus: VideoTranscriptionStatus?,
     currentVideoAssetIdentifier: String?,
     transcribedVideoAssetIdentifier: String
 ) -> Bool {
-    currentText == placeholderText && currentVideoAssetIdentifier == transcribedVideoAssetIdentifier
+    currentStatus == .pending && currentVideoAssetIdentifier == transcribedVideoAssetIdentifier
 }
 
 /// 写真ライブラリへ保存済みの動画回答の音声を文字起こしし、認識できた本文を返す。
@@ -102,14 +101,26 @@ func transcribeVideoAnswer(videoAssetIdentifier: String) async -> String? {
 /// 文字起こしの完了時点で回答が書き換わっている場合 (手動編集・録り直し) は適用しない
 @MainActor
 func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: Date, modelContext: ModelContext) async {
-    guard let text = await transcribeVideoAnswer(videoAssetIdentifier: videoAssetIdentifier) else { return }
+    guard let text = await transcribeVideoAnswer(videoAssetIdentifier: videoAssetIdentifier) else {
+        // 失敗を処理中のままにすると「一ヶ月の手紙」が永久に待機するため、同じ動画を指している回答だけ失敗へ進める。
+        // 保存通知を発生させることで、節目表示と共有ダイアログを失敗後の状態で再判定できる
+        guard let answer = try? MorningAnswer.answer(day: answeredDate, calendar: .current, modelContext: modelContext) else {
+            return
+        }
+        answer.markVideoTranscriptionFailed(videoAssetIdentifier: videoAssetIdentifier)
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+        }
+        return
+    }
     // 取得に失敗した時に未回答と誤認して新しい回答を作らないよう throwing 版で取り直し、失敗したら適用せず終える
     guard let answer = try? MorningAnswer.answer(day: answeredDate, calendar: .current, modelContext: modelContext) else {
         return
     }
     guard shouldApplyTranscription(
-        currentText: answer.text,
-        placeholderText: videoAnswerPlaceholderText,
+        currentStatus: answer.videoTranscriptionStatus,
         currentVideoAssetIdentifier: answer.videoAssetIdentifier,
         transcribedVideoAssetIdentifier: videoAssetIdentifier
     ) else { return }

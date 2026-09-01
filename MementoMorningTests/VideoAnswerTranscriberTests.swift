@@ -68,11 +68,10 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         )
     }
 
-    func testPlaceholderTextWithSameVideoIsApplied() {
+    func testPendingTranscriptionWithSameVideoIsApplied() {
         XCTAssertTrue(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .pending,
                 currentVideoAssetIdentifier: "asset-1",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -83,8 +82,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // ユーザーが先に手で直した回答を、後から届いた文字起こし結果で上書きしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: "家族と海を見に行く",
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .completed,
                 currentVideoAssetIdentifier: "asset-1",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -95,8 +93,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // 同じ日に録り直した新しい動画の回答を、古い動画の文字起こし結果で上書きしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: .pending,
                 currentVideoAssetIdentifier: "asset-2",
                 transcribedVideoAssetIdentifier: "asset-1"
             )
@@ -107,8 +104,7 @@ final class VideoAnswerTranscriberTests: XCTestCase {
         // 動画の後にテキストで答え直した回答 (videoAssetIdentifier が消えている) は文字起こしの対象にしない
         XCTAssertFalse(
             shouldApplyTranscription(
-                currentText: videoAnswerPlaceholderText,
-                placeholderText: videoAnswerPlaceholderText,
+                currentStatus: nil,
                 currentVideoAssetIdentifier: nil,
                 transcribedVideoAssetIdentifier: "asset-1"
             )
