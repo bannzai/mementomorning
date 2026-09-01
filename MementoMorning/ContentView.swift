@@ -30,6 +30,7 @@ struct ContentView: View {
     @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
     /// RevenueCat の entitlement キャッシュと検証用上書きを監視し、プレミアム解放直後に未読の手紙を再判定する。
     @AppStorage(.premiumEntitlementActive) private var premiumEntitlementActive = false
+    @AppStorage(.premiumEntitlementExpiration) private var premiumEntitlementExpiration: Double = 0
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
     /// fullScreenCover に渡した手紙の通数を、表示が閉じるまで固定する。
     @State private var oneMonthLetterPresentation: OneMonthLetterPresentation?
@@ -63,10 +64,11 @@ struct ContentView: View {
             OneMonthLetterPage(milestoneNumber: presentation.milestoneNumber)
         }
         .onAppear {
-            refreshOneMonthLetterAnswerCount()
+            presentOneMonthLetterIfNeeded(answerCount: refreshOneMonthLetterAnswerCount())
         }
         .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
-            refreshOneMonthLetterAnswerCount()
+            // 文字起こし完了では回答件数が変わらないため、保存通知ごとに提示条件も直接再判定する。
+            presentOneMonthLetterIfNeeded(answerCount: refreshOneMonthLetterAnswerCount())
         }
         .onChange(of: sevenMorningsAnswers.count, initial: true) { _, _ in
             presentSevenMorningsIfNeeded()
@@ -82,6 +84,9 @@ struct ContentView: View {
             presentOneMonthLetterIfNeeded()
         }
         .onChange(of: premiumEntitlementActive) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
+        .onChange(of: premiumEntitlementExpiration) { _, _ in
             presentOneMonthLetterIfNeeded()
         }
         .onChange(of: debugPremiumOverride) { _, _ in
@@ -107,15 +112,20 @@ struct ContentView: View {
     }
 
     /// 回答が次の 30 件単位へ達していて課金条件も満たすなら、その通数の手紙を全画面表示する。
-    private func presentOneMonthLetterIfNeeded() {
+    private func presentOneMonthLetterIfNeeded(answerCount: Int? = nil) {
         if isUnitTest || isSnapshotUITest || isPreview { return }
         guard !isRootModalPresented,
               !isSevenMorningsPagePresented,
               oneMonthLetterPresentation == nil,
               let milestoneNumber = nextOneMonthLetterNumber(
-                  answerCount: oneMonthLetterAnswerCount,
+                  answerCount: answerCount ?? oneMonthLetterAnswerCount,
                   lastPresentedNumber: lastPresentedOneMonthLetterNumber,
                   isPremium: PremiumEntitlement.isPremium
+              ),
+              let answers = try? modelContext.fetch(oneMonthLetterAnswersDescriptor(milestoneNumber: milestoneNumber)),
+              isOneMonthLetterReady(
+                  answerTexts: answers.map(\.text),
+                  placeholderText: videoAnswerPlaceholderText
               )
         else {
             return
@@ -124,8 +134,11 @@ struct ContentView: View {
     }
 
     /// 回答本文を全件保持せず、「一ヶ月の手紙」の到達判定に必要な件数だけを更新する。
-    private func refreshOneMonthLetterAnswerCount() {
-        oneMonthLetterAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+    @discardableResult
+    private func refreshOneMonthLetterAnswerCount() -> Int {
+        let answerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
+        oneMonthLetterAnswerCount = answerCount
+        return answerCount
     }
 }
 
@@ -267,15 +280,17 @@ private struct HomeContent: View {
         // 多言語スクリーンショット・Preview は今日の回答を持つサンプルを表示するため、撮影・描画確認をダイアログで覆わない
         if isUnitTest || isSnapshotUITest || isPreview { return }
         if isCoveredByOtherScreen || isSharePromptPresented { return }
+        // initial onChange は onAppear の State 更新より先に走り得るため、この判定では同期取得した確定件数を使う。
+        let currentAnswerCount = (try? modelContext.fetchCount(FetchDescriptor<MorningAnswer>())) ?? 0
         // 7 件目の回答が成立した更新では、親 (ContentView) が節目シートを提示する変更がまだ isCoveredByOtherScreen に
         // 伝わっていないことがある。節目が提示されるべき状態 (件数が 7 件以上で未表示) なら節目を優先して待ち、
         // シートが閉じて isCoveredByOtherScreen が変わった時に判定し直す (節目シートの上に出したり、競合で出ないまま記録したりしない)
         if shouldPresentSevenMorningsMilestone(
-            answerCount: answeredCount,
+            answerCount: currentAnswerCount,
             isPresented: isSevenMorningsMilestonePresented
         ) { return }
         if nextOneMonthLetterNumber(
-            answerCount: answeredCount,
+            answerCount: currentAnswerCount,
             lastPresentedNumber: lastPresentedOneMonthLetterNumber,
             isPremium: PremiumEntitlement.isPremium
         ) != nil { return }

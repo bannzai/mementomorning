@@ -46,4 +46,14 @@ final class OneMonthLetterTests: XCTestCase {
     func testTieUsesWordThatAppearedFirst() {
         XCTAssertEqual(mostFrequentMeaningfulWord(in: ["Ocean family", "family ocean"]), "Ocean")
     }
+
+    func testLetterWaitsForAllAnswersAndVideoTranscription() {
+        let completedAnswers = Array(repeating: "Call my family", count: oneMonthLetterAnswerCount)
+        XCTAssertTrue(isOneMonthLetterReady(answerTexts: completedAnswers, placeholderText: "Answered with a video"))
+        XCTAssertFalse(isOneMonthLetterReady(answerTexts: Array(completedAnswers.dropLast()), placeholderText: "Answered with a video"))
+
+        var pendingAnswers = completedAnswers
+        pendingAnswers[29] = "Answered with a video"
+        XCTAssertFalse(isOneMonthLetterReady(answerTexts: pendingAnswers, placeholderText: "Answered with a video"))
+    }
 }

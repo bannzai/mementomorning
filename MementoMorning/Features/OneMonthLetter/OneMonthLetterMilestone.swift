@@ -24,6 +24,12 @@ func nextOneMonthLetterNumber(
     return nextNumber
 }
 
+/// 対象の 30 件が揃い、動画回答の文字起こしもすべて完了しているかを返す。
+/// 仮テキストを頻出語へ混ぜず、文字起こしの保存通知後に正しい本文で手紙を作る。
+func isOneMonthLetterReady(answerTexts: [String], placeholderText: String) -> Bool {
+    answerTexts.count == oneMonthLetterAnswerCount && !answerTexts.contains(placeholderText)
+}
+
 /// fullScreenCover(item:) で表示対象の通数を固定するための値。
 struct OneMonthLetterPresentation: Identifiable {
     let milestoneNumber: Int
