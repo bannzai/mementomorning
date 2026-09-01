@@ -1,7 +1,7 @@
 ---
 feature: OneMonthLetter
 verification: mobile-mcp
-last_verified_commit: 431c4a08997f06ffa429ac7a0ff3f59c825d2be5
+last_verified_commit: 83adf33
 last_verified_at: 2026-09-01
 ---
 
@@ -29,13 +29,18 @@ last_verified_at: 2026-09-01
 - [x] **プレミアムの2通目**: 開発者メニューでプレミアムを強制 ON にすると、未読の2通目が全画面で表示される
   - 自動化: manual（DEBUG のプレミアム上書きと表示状態の突き合わせが必要）
 
-### 動作確認
+#### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
 ### **初回の手紙と頻出語**: 無料状態で開発者メニューから 60 日分の回答を投入すると、1 通目が全画面で表示され、30 件の回答で最頻出の「family」が示される
 
 <details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-09-01** (レビュー修正後の `83adf33`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/58ac62e5-2f3d-48ee-9817-810c3941c6d9.jpg" width="320" />
+
+(初回表示、無料状態での2通目制限、プレミアム強制 ON 直後の2通目表示、再起動後の再表示防止、履歴リセット直後の1通目表示を再確認した。simtunnel run: https://github.com/bannzai/mementomorning/actions/runs/33457229053)
 
 **確認日: 2026-09-01** (simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
 <img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/870e6924-9bfe-4c18-afa4-46e3ec4dea5c.jpg" width="320">
@@ -76,7 +81,7 @@ last_verified_at: 2026-09-01
 - [x] **表示履歴のリセット**: 表示済みの1通目は再起動後も再表示されず、開発者メニューで表示履歴をリセットすると即座に1通目が再表示される
   - 自動化: manual（再起動と UserDefaults の状態操作が必要）
 
-### 動作確認
+#### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
 
