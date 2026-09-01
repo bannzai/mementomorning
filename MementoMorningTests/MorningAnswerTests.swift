@@ -60,6 +60,16 @@ final class MorningAnswerTests: XCTestCase {
         XCTAssertEqual(completedAnswer.videoTranscriptionStatus, .completed)
     }
 
+    func testSavingUnchangedVideoPlaceholderKeepsTranscriptionPending() {
+        let answer = MorningAnswer(answeredDate: .now, text: "動画で答えました", videoAssetIdentifier: "asset-6")
+        let updatedDateTimeBeforeSet = answer.updatedDateTime
+
+        answer.setText(text: "動画で答えました")
+
+        XCTAssertEqual(answer.videoTranscriptionStatus, .pending)
+        XCTAssertEqual(answer.updatedDateTime, updatedDateTimeBeforeSet)
+    }
+
     func testSetFulfilledUpdatesIsFulfilledAndUpdatedDateTime() {
         let answer = MorningAnswer(answeredDate: .now, text: "家族と過ごす")
         let updatedDateTimeBeforeSet = answer.updatedDateTime

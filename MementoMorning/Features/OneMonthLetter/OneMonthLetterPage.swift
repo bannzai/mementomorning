@@ -36,7 +36,7 @@ struct OneMonthLetterPage: View {
                         .foregroundStyle(Color.dawn.opacity(0.8))
                         .padding(.top, 72)
 
-                    // ja: あなたの朝からの手紙
+                    // ja: あなたが重ねた朝からの手紙
                     Text("A Letter from Your Mornings")
                         .font(.system(size: 34, weight: .light, design: .serif))
                         .foregroundStyle(Color.warmWhite)
@@ -44,7 +44,7 @@ struct OneMonthLetterPage: View {
                         .padding(.top, 20)
                         .accessibilityIdentifier("one_month_letter_title")
 
-                    // ja: 三十の朝が過ぎました。
+                    // ja: 30回の朝を重ねました。
                     Text("Thirty mornings have passed.")
                         .font(.system(size: 15, weight: .light))
                         .tracking(0.45)
@@ -57,7 +57,7 @@ struct OneMonthLetterPage: View {
                         .padding(.vertical, 42)
 
                     if let keyword {
-                        // ja: あなたの答えの中で、何度も戻ってきた言葉がありました。
+                        // ja: あなたの答えには、何度も現れる言葉がありました。
                         Text("Across your answers, one word kept returning.")
                             .font(.system(size: 16, weight: .light, design: .serif))
                             .foregroundStyle(Color.warmWhite.opacity(0.72))
@@ -77,7 +77,7 @@ struct OneMonthLetterPage: View {
                             .foregroundStyle(Color.warmWhite.opacity(0.72))
                             .multilineTextAlignment(.center)
                     } else {
-                        // ja: あなたの言葉は今も、ゆっくり形をつくっています。
+                        // ja: あなたの言葉は今も、ゆっくり形になりつつあります。
                         Text("Your words are still slowly taking shape.")
                             .font(.system(size: 16, weight: .light, design: .serif))
                             .foregroundStyle(Color.warmWhite.opacity(0.72))

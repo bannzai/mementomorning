@@ -56,6 +56,10 @@ final class OneMonthLetterTests: XCTestCase {
         XCTAssertEqual(mostFrequentMeaningfulWord(in: ["Ocean family", "family ocean"]), "Ocean")
     }
 
+    func testSingleOccurrencesDoNotBecomeARecurringWord() {
+        XCTAssertNil(mostFrequentMeaningfulWord(in: ["Ocean", "Family", "Mountain"]))
+    }
+
     func testLetterWaitsForAllAnswersAndVideoTranscription() {
         let completedStatuses: [VideoTranscriptionStatus?] = Array(repeating: nil, count: oneMonthLetterAnswerCount)
         XCTAssertTrue(

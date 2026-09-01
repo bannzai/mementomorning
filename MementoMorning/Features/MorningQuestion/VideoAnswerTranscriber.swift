@@ -148,6 +148,27 @@ func transcribeAndApplyVideoAnswer(videoAssetIdentifier: String, answeredDate: D
     }
 }
 
+/// 前回のプロセス終了で中断された文字起こしを failed へ進める。
+/// ContentView のプロセス起動時に一度だけ呼び、処理中の回答が節目を永久に止めないようにする。
+/// failed へ進んだ回答は次回以降取得されないため冪等
+@MainActor
+func recoverInterruptedVideoTranscriptions(modelContext: ModelContext) {
+    let pendingStatus = VideoTranscriptionStatus.pending.rawValue
+    let descriptor = FetchDescriptor<MorningAnswer>(
+        predicate: #Predicate { $0.videoTranscriptionStatusRawValue == pendingStatus }
+    )
+    guard let answers = try? modelContext.fetch(descriptor), !answers.isEmpty else { return }
+    for answer in answers {
+        guard let videoAssetIdentifier = answer.videoAssetIdentifier else { continue }
+        answer.markVideoTranscriptionFailed(videoAssetIdentifier: videoAssetIdentifier)
+    }
+    do {
+        try modelContext.save()
+    } catch {
+        modelContext.rollback()
+    }
+}
+
 /// 音声認識の権限をリクエストし、確定した権限状態を返す (完了ハンドラの async ラッパー)。
 /// 決定済み (許可/拒否) の権限にシステムはダイアログを出さず現在の状態を返すため、何度呼んでも安全 (冪等)。
 /// オンボーディングの練習ステップ (OnboardingPage) からも呼び、起き抜けの朝に不意のダイアログを出さないよう事前に確定させる

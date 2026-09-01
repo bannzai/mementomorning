@@ -34,6 +34,8 @@ struct ContentView: View {
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
     /// fullScreenCover に渡した手紙の通数を、表示が閉じるまで固定する。
     @State private var oneMonthLetterPresentation: OneMonthLetterPresentation?
+    /// 前回のプロセス終了で中断された動画文字起こしは、プロセス起動時に一度だけ回収する。
+    @State private var hasRecoveredInterruptedVideoTranscriptions = false
 
     var body: some View {
         NavigationStack {
@@ -64,6 +66,10 @@ struct ContentView: View {
             OneMonthLetterPage(milestoneNumber: presentation.milestoneNumber)
         }
         .onAppear {
+            if !hasRecoveredInterruptedVideoTranscriptions {
+                hasRecoveredInterruptedVideoTranscriptions = true
+                recoverInterruptedVideoTranscriptions(modelContext: modelContext)
+            }
             presentOneMonthLetterIfNeeded(answerCount: refreshOneMonthLetterAnswerCount())
         }
         .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in

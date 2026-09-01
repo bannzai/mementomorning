@@ -8,6 +8,22 @@ enum VideoTranscriptionStatus: String {
     case failed
 }
 
+/// 保存時のアプリ言語にかかわらず、文字起こし前の仮テキストかを判定する。
+/// 文字起こし状態を追加する前の既存データ移行時だけ本文判定が必要なため、全同梱ロケールの訳を照合する
+private let localizedVideoAnswerPlaceholderTexts: Set<String> = Set(
+    ["Answered with a video"] + Bundle.main.localizations.map { localization in
+        String(
+            localized: "Answered with a video",
+            bundle: .main,
+            locale: Locale(identifier: localization)
+        )
+    }
+)
+
+func isVideoAnswerPlaceholderText(_ text: String) -> Bool {
+    localizedVideoAnswerPlaceholderTexts.contains(text)
+}
+
 /// 毎朝の問い「今日死ぬとしたら何をやりたいですか？」へのユーザーの回答。1 日 1 件蓄積され、人生ジャーナルの最小単位になる
 @Model
 final class MorningAnswer {
@@ -32,7 +48,9 @@ final class MorningAnswer {
     /// テキスト回答には文字起こし状態が無いので nil を返す
     var videoTranscriptionStatus: VideoTranscriptionStatus? {
         guard videoAssetIdentifier != nil else { return nil }
-        guard let videoTranscriptionStatusRawValue else { return .failed }
+        guard let videoTranscriptionStatusRawValue else {
+            return isVideoAnswerPlaceholderText(text) ? .failed : .completed
+        }
         return VideoTranscriptionStatus(rawValue: videoTranscriptionStatusRawValue) ?? .failed
     }
 
@@ -56,6 +74,7 @@ final class MorningAnswer {
 
     /// text を更新する
     func setText(text: String) {
+        guard self.text != text else { return }
         self.text = text
         if videoAssetIdentifier != nil {
             self.videoTranscriptionStatusRawValue = VideoTranscriptionStatus.completed.rawValue

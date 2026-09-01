@@ -43,7 +43,7 @@ func mostFrequentMeaningfulWord(in answerTexts: [String]) -> String? {
         }
     }
 
-    guard let highestCount = counts.values.max(),
+    guard let highestCount = counts.values.max(), highestCount >= 2,
           let normalizedWord = order.first(where: { counts[$0] == highestCount })
     else {
         return nil

@@ -1,4 +1,5 @@
 import Speech
+import SwiftData
 import XCTest
 
 @testable import MementoMorning
@@ -6,6 +7,34 @@ import XCTest
 /// 動画回答の文字起こしの判定 (isTranscriptionAvailable / shouldApplyTranscription) のテスト。
 /// 文字起こしの実行可否と、遅れて届いた結果を回答へ適用してよいかの分岐を網羅する
 final class VideoAnswerTranscriberTests: XCTestCase {
+    func testPlaceholderDetectionIsIndependentOfCurrentLocale() {
+        XCTAssertTrue(isVideoAnswerPlaceholderText("Answered with a video"))
+        XCTAssertTrue(isVideoAnswerPlaceholderText("動画で答えました"))
+        XCTAssertFalse(isVideoAnswerPlaceholderText("Spend time with my family"))
+    }
+
+    @MainActor
+    func testInterruptedPendingTranscriptionBecomesFailedOnRecovery() throws {
+        let modelContext = ModelContext(
+            try ModelContainer(
+                for: PersistenceController.schema,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
+        )
+        let answer = MorningAnswer(
+            answeredDate: .now,
+            text: "Answered with a video",
+            videoAssetIdentifier: "asset-interrupted"
+        )
+        modelContext.insert(answer)
+        try modelContext.save()
+
+        recoverInterruptedVideoTranscriptions(modelContext: modelContext)
+        recoverInterruptedVideoTranscriptions(modelContext: modelContext)
+
+        XCTAssertEqual(answer.videoTranscriptionStatus, .failed)
+    }
+
     func testAuthorizedAndAvailableAndOnDeviceIsTranscribable() {
         XCTAssertTrue(
             isTranscriptionAvailable(
