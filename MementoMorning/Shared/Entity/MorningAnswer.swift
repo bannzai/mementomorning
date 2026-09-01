@@ -9,16 +9,43 @@ enum VideoTranscriptionStatus: String {
 }
 
 /// 保存時のアプリ言語にかかわらず、文字起こし前の仮テキストかを判定する。
-/// 文字起こし状態を追加する前の既存データ移行時だけ本文判定が必要なため、全同梱ロケールの訳を照合する
-private let localizedVideoAnswerPlaceholderTexts: Set<String> = Set(
-    ["Answered with a video"] + Bundle.main.localizations.map { localization in
-        String(
-            localized: "Answered with a video",
-            bundle: .main,
-            locale: Locale(identifier: localization)
-        )
-    }
-)
+/// 文字起こし状態を追加する前の既存データ移行時だけ本文判定が必要なため、当時保存され得た全同梱訳を固定して照合する。
+/// Bundle.main はテストホストや拡張機能ではアプリ本体のローカライズを列挙しないため、実行中 Bundle には依存させない
+private let localizedVideoAnswerPlaceholderTexts: Set<String> = [
+    "Answered with a video",
+    "تمت الإجابة بفيديو",
+    "Resposta amb un vídeo",
+    "Odpovězeno videem",
+    "Besvaret med en video",
+    "Mit einem Video beantwortet",
+    "Απαντήθηκε με βίντεο",
+    "Respondido con un vídeo",
+    "Respondido con un video",
+    "Vastattu videolla",
+    "Répondu en vidéo",
+    "נענה באמצעות סרטון",
+    "वीडियो से उत्तर दिया गया",
+    "Odgovoreno videozapisom",
+    "Videóval megválaszolva",
+    "Dijawab dengan video",
+    "Risposto con un video",
+    "動画で答えました",
+    "동영상으로 답했어요",
+    "Besvart med en video",
+    "Beantwoord met een video",
+    "Odpowiedziano za pomocą wideo",
+    "Respondido com um vídeo",
+    "Răspuns printr-un videoclip",
+    "Ответ дан в видео",
+    "Zodpovedané videom",
+    "Besvarad med en video",
+    "ตอบด้วยวิดีโอแล้ว",
+    "Videoyla yanıtlandı",
+    "Відповідь надано за допомогою відео",
+    "Đã trả lời bằng video",
+    "已用影片回答",
+    "已用视频回答",
+]
 
 func isVideoAnswerPlaceholderText(_ text: String) -> Bool {
     localizedVideoAnswerPlaceholderTexts.contains(text)
