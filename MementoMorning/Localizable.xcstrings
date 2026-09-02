@@ -44581,10 +44581,214 @@
     },
     "When contacting support, copy this log and attach it to your message." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند التواصل مع الدعم، انسخ هذا السجل وأرفقه برسالتك."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quan contactis amb el servei d’assistència, copia aquest registre i adjunta’l al missatge."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Při kontaktování podpory zkopíruj tento protokol a přilož ho ke své zprávě."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når du kontakter support, skal du kopiere denne log og vedhæfte den til din besked."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du den Support kontaktierst, kopiere dieses Protokoll und füge es deiner Nachricht bei."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όταν επικοινωνείς με την υποστήριξη, αντέγραψε αυτό το αρχείο καταγραφής και επισύναψέ το στο μήνυμά σου."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al contactar con soporte, copia este registro y adjúntalo a tu mensaje."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando contactes a soporte, copia este registro y adjúntalo a tu mensaje."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kun otat yhteyttä tukeen, kopioi tämä loki ja liitä se viestiisi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorsque vous contactez l’assistance, copiez ce journal et joignez-le à votre message."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בעת פנייה לתמיכה, העתק את היומן הזה וצרף אותו להודעה שלך."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सहायता टीम से संपर्क करते समय, इस लॉग को कॉपी करके अपने संदेश के साथ संलग्न करें।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kada kontaktiraš podršku, kopiraj ovaj zapis i priloži ga svojoj poruci."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha felveszed a kapcsolatot az ügyfélszolgálattal, másold ki ezt a naplót, és csatold az üzenetedhez."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat menghubungi dukungan, salin log ini dan lampirkan pada pesan kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando contatti l’assistenza, copia questo log e allegalo al tuo messaggio."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "問い合わせの際は、このログをコピーして添えてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지원팀에 문의할 때 이 로그를 복사해 메시지에 첨부해 주세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apabila menghubungi sokongan, salin log ini dan lampirkannya pada mesej anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når du kontakter kundestøtte, kopier denne loggen og legg den ved meldingen din."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neem je contact op met support, kopieer dan dit logboek en voeg het toe aan je bericht."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontaktując się z pomocą techniczną, skopiuj ten dziennik i dołącz go do swojej wiadomości."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao entrar em contato com o suporte, copie este registro e anexe-o à sua mensagem."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao contactar o suporte, copia este registo e anexa-o à tua mensagem."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Când contactezi serviciul de asistență, copiază acest jurnal și atașează-l mesajului tău."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При обращении в службу поддержки скопируйте этот журнал и прикрепите его к своему сообщению."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pri kontaktovaní podpory skopíruj tento denník a prilož ho k svojej správe."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "När du kontaktar supporten, kopiera den här loggen och bifoga den i ditt meddelande."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อติดต่อฝ่ายสนับสนุน โปรดคัดลอกบันทึกนี้และแนบไปกับข้อความของคุณ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destekle iletişime geçerken bu günlüğü kopyalayıp mesajına ekle."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Звертаючись до служби підтримки, скопіюйте цей журнал і додайте його до свого повідомлення."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khi liên hệ với bộ phận hỗ trợ, hãy sao chép nhật ký này và đính kèm vào tin nhắn của bạn."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡支援時，請複製此記錄並附在你的訊息中。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系支持时，请复制此日志并附在你的消息中。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡支援時，請複製此記錄並附在你的訊息中。"
           }
         }
       }
