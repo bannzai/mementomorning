@@ -665,18 +665,223 @@
       }
     },
     "NSMotionUsageDescription" : {
+      "comment" : "人生カレンダー上の粒 (dot) は「朝の問いに答えた朝」を表す。原文の \"your answered mornings\" は「朝を答えた」ではなく「あなたが問いに答えた朝」の意味なので、各言語で「答えた朝」を朝が回答の対象になる構文 (the mornings that you answered) に訳さず、「問いに答えた日の朝」を表す構文にする。NSCameraUsageDescription の「朝の問い」の訳と整合させる。",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم لإمالة جهازك وجعل النقاط المتراكمة التي تمثل الصباحات التي أجبت فيها عن السؤال تتدحرج."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S’utilitza per inclinar el dispositiu i fer rodar els punts apilats que representen els matins en què vas respondre la pregunta."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží k naklánění zařízení a rozpohybování nahromaděných teček označujících rána s odpovědí na otázku."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges til at vippe enheden og få de stablede prikker, der viser morgener, hvor du besvarede spørgsmålet, til at rulle."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird verwendet, um dein Gerät zu neigen und die gestapelten Punkte für die Morgen, an denen du die Frage beantwortet hast, ins Rollen zu bringen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται για να γέρνετε τη συσκευή και να κυλούν οι στοιβαγμένες τελείες που αντιπροσωπεύουν τα πρωινά κατά τα οποία απαντήσατε στην ερώτηση."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Used to tilt the device and let the piled dots of your answered mornings roll."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para inclinar el dispositivo y hacer rodar los puntos apilados que representan las mañanas en las que respondiste a la pregunta."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa para inclinar el dispositivo y hacer rodar los puntos apilados que representan las mañanas en las que respondiste la pregunta."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään laitteen kallistamiseen ja niiden aamujen vastauksia kuvaavien päällekkäisten pisteiden vierittämiseen, jolloin vastasit kysymykseen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé pour incliner votre appareil et faire rouler les points empilés représentant les matins où vous avez répondu à la question."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש להטיית המכשיר ולגרימת הנקודות המוערמות שמייצגות את הבקרים שבהם ענית על השאלה להתגלגל."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके डिवाइस को झुकाने और उन सुबहों को दर्शाने वाले जमा बिंदुओं को घुमाने के लिए उपयोग किया जाता है, जिनमें आपने सवाल का जवाब दिया है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koristi se za naginjanje uređaja i kotrljanje naslaganih točaka koje predstavljaju jutra kada si odgovorio na pitanje."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az eszköz megdöntésére és a kérdésre választ adó reggeleidet jelölő egymásra rakódott pontok görgetésére szolgál."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk memiringkan perangkat dan membuat titik-titik bertumpuk yang mewakili pagi saat kamu menjawab pertanyaan bergulir."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve per inclinare il dispositivo e far rotolare i punti sovrapposti che rappresentano le mattine in cui hai risposto alla domanda."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "端末の傾きに合わせて、積もった答えた朝の粒を転がすために使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기기를 기울여 질문에 답한 아침을 나타내는 쌓인 점들이 굴러가게 하는 데 사용됩니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digunakan untuk mencondongkan peranti dan membuat titik-titik bertindan yang mewakili pagi ketika anda menjawab soalan bergolek."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes til å vippe enheten og få de stablede prikkene som viser morgener da du svarte på spørsmålet, til å rulle."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt gebruikt om je apparaat te kantelen en de opgestapelde stippen voor de ochtenden waarop je de vraag beantwoordde te laten rollen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy do przechylania urządzenia i wprawiania w ruch ułożonych jedna na drugiej kropek oznaczających poranki, w które odpowiedziałeś na pytanie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usado para inclinar o dispositivo e fazer rolar os pontos empilhados que representam as manhãs em que você respondeu à pergunta."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizado para inclinar o dispositivo e fazer rolar os pontos empilhados que representam as manhãs em que respondeste à pergunta."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit pentru a înclina dispozitivul și a face să se rostogolească punctele suprapuse care reprezintă diminețile în care ai răspuns la întrebare."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется, чтобы наклонять устройство и заставлять катиться скопившиеся точки, обозначающие утра, когда вы ответили на вопрос."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slúži na nakláňanie zariadenia a rozpohybovanie nahromadených bodiek označujúcich rána, keď si odpovedal na otázku."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används för att luta enheten och få de staplade prickarna som visar morgnar då du besvarade frågan att rulla."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้สำหรับเอียงอุปกรณ์และทำให้จุดที่ซ้อนกันซึ่งแสดงถึงเช้าที่คุณตอบคำถามกลิ้งไป"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soruyu yanıtladığın sabahları temsil eden üst üste yığılmış noktaları döndürmek için cihazı eğmekte kullanılır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується, щоб нахиляти пристрій і змушувати котитися накопичені крапки, що позначають ранки, коли ви відповіли на запитання."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Được dùng để nghiêng thiết bị và làm lăn các chấm xếp chồng, biểu thị những buổi sáng bạn đã trả lời câu hỏi."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於傾斜裝置，讓代表你回答問題的早晨的堆疊圓點滾動。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于倾斜设备，让代表你回答问题的早晨的堆叠圆点滚动。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於傾斜裝置，讓代表你回答問題的早晨的堆疊圓點滾動。"
           }
         }
       }
