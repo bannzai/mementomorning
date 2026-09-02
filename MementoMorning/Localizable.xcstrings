@@ -15262,10 +15262,214 @@
     },
     "From tomorrow, your day begins in the morning" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابتداءً من الغد، يبدأ يومك في الصباح"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de demà, el teu dia comença al matí"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od zítřka začíná tvůj den ráno"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra i morgen begynder din dag om morgenen"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ab morgen beginnt dein Tag am Morgen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Από αύριο, η μέρα σου ξεκινά το πρωί"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de mañana, tu día comienza por la mañana"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desde mañana, tu día comienza por la mañana"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huomisesta alkaen päiväsi alkaa aamulla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dès demain, votre journée commence le matin"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ממחר, היום שלך מתחיל בבוקר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कल से आपका दिन सुबह शुरू होगा"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od sutra tvoj dan počinje ujutro"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holnaptól reggel kezdődik a napod"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai besok, harimu dimulai di pagi hari"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da domani, la tua giornata inizia al mattino"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日からあなたの一日は朝に始まります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내일부터 하루가 아침에 시작돼요"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai esok, hari anda bermula pada waktu pagi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra i morgen begynner dagen din om morgenen"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vanaf morgen begint je dag in de ochtend"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od jutra twój dzień zaczyna się rano"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de amanhã, seu dia começa pela manhã"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de amanhã, o teu dia começa de manhã"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De mâine, ziua ta începe dimineața"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С завтрашнего дня ваш день начинается утром"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od zajtra sa tvoj deň začína ráno"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Från och med imorgon börjar din dag på morgonen"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตั้งแต่พรุ่งนี้ วันของคุณจะเริ่มต้นในตอนเช้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yarından itibaren günün sabah başlayacak"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Із завтрашнього дня ваш день починатиметься вранці"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Từ ngày mai, một ngày của bạn bắt đầu vào buổi sáng"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從明天開始，你的一天由早上展開"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从明天起，你的一天从早晨开始"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從明天起，你的一天從早晨開始"
           }
         }
       }
