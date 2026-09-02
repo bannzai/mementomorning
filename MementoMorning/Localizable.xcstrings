@@ -7985,10 +7985,214 @@
     },
     "At night, check the day against your morning answer" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في الليل، راجع يومك في ضوء إجابتك الصباحية"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A la nit, contrasta el dia amb la teva resposta del matí"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Večer porovnej svůj den s ranní odpovědí"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om aftenen kan du holde dagen op mod dit morgensvar"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abends kannst du den Tag mit deiner morgendlichen Antwort abgleichen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το βράδυ, αντιπαράβαλε τη μέρα με την πρωινή σου απάντηση"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por la noche, compara el día con tu respuesta de la mañana"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por la noche, contrasta tu día con tu respuesta de la mañana"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Illalla vertaa päivääsi aamulla antamaasi vastaukseen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le soir, comparez votre journée à votre réponse du matin"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בלילה, בדוק את היום מול התשובה שלך מהבוקר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रात में, अपने दिन की तुलना अपने सुबह के जवाब से करें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navečer usporedi dan sa svojim jutarnjim odgovorom"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este vesd össze a napodat a reggeli válaszoddal"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Di malam hari, bandingkan harimu dengan jawaban pagimu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sera, confronta la giornata con la tua risposta del mattino"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "夜は朝の回答と一日の答え合わせ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "밤에는 아침의 답변에 비추어 하루를 돌아봐요"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pada waktu malam, bandingkan hari anda dengan jawapan pagi anda"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om kvelden kan du se dagen opp mot morgensvaret ditt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijk ’s avonds terug op de dag aan de hand van je ochtendantwoord"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wieczorem porównaj dzień ze swoją poranną odpowiedzią"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À noite, compare o seu dia com a sua resposta da manhã"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À noite, compara o teu dia com a tua resposta da manhã"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seara, compară-ți ziua cu răspunsul tău de dimineață"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вечером сопоставьте свой день с утренним ответом"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Večer porovnaj svoj deň s rannou odpoveďou"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På kvällen kan du stämma av dagen mot ditt morgonsvar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ในตอนกลางคืน ทบทวนวันของคุณเทียบกับคำตอบในตอนเช้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam, gününü sabahki yanıtınla karşılaştır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увечері зіставте свій день із ранковою відповіддю"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buổi tối, hãy đối chiếu ngày hôm nay với câu trả lời buổi sáng của bạn"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晚上，對照你早上的回答，回顧這一天"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晚上，对照你早上的回答回顾这一天"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晚上，對照你早上的回答回顧這一天"
           }
         }
       }
