@@ -25106,10 +25106,214 @@
     },
     "One question, answered facing yourself" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سؤال واحد، تجيب عنه وأنت تواجه نفسك"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una pregunta, resposta mirant-te a tu mateix"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedna otázka, na kterou odpovídáš tváří v tvář sobě"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ét spørgsmål, besvaret ansigt til ansigt med dig selv"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Frage, die du dir selbst gegenüber beantwortest"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μία ερώτηση, απαντημένη κοιτώντας τον εαυτό σου"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una pregunta, respondida frente a ti mismo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una pregunta, respondida frente a ti mismo"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yksi kysymys, johon vastaat kasvotusten itsesi kanssa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une question, à laquelle vous répondez face à vous-même"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שאלה אחת, שאתה עונה עליה מול עצמך"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक सवाल, जिसका जवाब आप खुद का सामना करते हुए दें"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedno pitanje, na koje odgovaraš gledajući sebe"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Egy kérdés, amelyre önmagaddal szembenézve válaszolsz"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satu pertanyaan, dijawab sambil berhadapan dengan diri sendiri"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una domanda, a cui rispondi guardandoti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "自分の顔を見ながら、ひとつの問いに答える"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나 자신을 마주 보며 답하는 한 가지 질문"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satu soalan, dijawab sambil berhadapan dengan diri sendiri"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ett spørsmål, besvart ansikt til ansikt med deg selv"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eén vraag, beantwoord terwijl je jezelf aankijkt"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedno pytanie, na które odpowiadasz, patrząc sobie w twarz"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma pergunta, respondida olhando para si mesmo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma pergunta, respondida a olhar para ti próprio"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O întrebare, la care răspunzi privind către tine însuți"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Один вопрос, на который вы отвечаете, глядя на себя"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jedna otázka, na ktorú odpovedáš tvárou v tvár sebe"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En fråga, besvarad ansikte mot ansikte med dig själv"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หนึ่งคำถามที่ตอบโดยเผชิญหน้ากับตัวเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kendinle yüzleşerek yanıtladığın tek bir soru"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Одне запитання, на яке ви відповідаєте, дивлячись на себе"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Một câu hỏi, được trả lời khi đối diện với chính mình"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一個問題，面對自己作答"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一个问题，面对自己作答"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一個問題，面對自己作答"
           }
         }
       }
