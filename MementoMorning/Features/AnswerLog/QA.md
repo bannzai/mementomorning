@@ -1,8 +1,8 @@
 ---
 feature: AnswerLog
 verification: mobile-mcp
-last_verified_commit: 25e17c225a4716fab8723809a68a9c1cf405fa8e
-last_verified_at: 2026-08-22
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # AnswerLog QA

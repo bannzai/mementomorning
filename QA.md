@@ -1,8 +1,8 @@
 ---
 feature: _root
 verification: mobile-mcp
-last_verified_commit: 75b0bf87eb1e52b1737ef435c61b32f36467f8b9
-last_verified_at: 2026-08-26
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # QA 全体ガイド
@@ -73,10 +73,40 @@ last_verified_at: 2026-08-26
 - 発見日: 2026-08-22。mobile-mcp の `mobile_type_keys` に `\b` を渡すと、バックスペースではなく `\b` という文字列がそのまま入力される
 - 対処: Maestro の `tapOn: {id: <identifier>}` → `eraseText: 60` を使う。`eraseText` はカーソルより前しか消さず、`tapOn` はタップ位置にカーソルを置くため、1 回では消し残ることがある。同じ flow を 2〜3 回繰り返して、要素の value が消えたことを確認してから次へ進む
 
-### リモート simulator (simtunnel) では通知バナーの発火確認ができない
+### リモート simulator (simtunnel) の通知バナーは動画で確認する
 
-- 発見日: 2026-08-17。夜リマインドの 1 分後発火を待って撮影しても、バナーが出なかったのか消えた後なのかを 1 フレームでは判別できない。WDA のスワイプでは通知センターも開けなかった
-- 対処: 通知タップを伴う項目 (夜リマインド等) はローカル simulator で確認する (通知検証の手順は verify-ui-mobile-mcp skill の「通知タップの検証」参照)
+- 更新日: 2026-09-01。simtunnel issue #38 の対応後は `simtunnel record <session> <output.mjpeg> --duration 70` で 1 分後の通知バナーを連続収録できる。静止画を 1 枚だけ取得する方法では表示時間を取り逃がすため、通知発火の確認には動画を使う
+- 通知タップは WDA の blind tap では安定しない。通知の配信・本文は録画フレームで確認し、通知タップ後のアプリ内経路は開発者メニューの「夜の振り返りを開く (通知タップ相当)」で同じ `NotificationRouter` を通して確認する
+
+## 2026-09-01 `/run-qa --all` 再実行結果
+
+- 対象: `main` の commit `c856c8535623d1d5eef031fe0776555cbab68dce`
+- 環境: simtunnel の iPhone 17 / iOS 26.5 simulator、英語ロケール。GitHub Actions run:
+  https://github.com/bannzai/mementomorning/actions/runs/33453319870
+- 全 100 項目を既存エビデンス・実装・ユニットテストの対応まで再点検し、依存 issue の解消を必要としていた主要導線を simulator で再操作した。チェック済み 86 項目、未チェック 14 項目。未チェックは実機限定、日付跨ぎ、到達不能状態、失敗注入手段なしの項目だけで、simtunnel の旧制約を理由にした項目は残っていない
+- Onboarding: 新規インストールから権限拒否 → 設定アプリで Alarm を許可 → 再表示で Allowed → 初回アラーム設定 → 誓約の長押し → Paywall → 購入 → ホームまで通し、再起動後にオンボーディングが再表示されないことを確認した
+- Paywall: RevenueCat Test Store の年額 $38.00、月額 $5.00、買い切り $61.50 を確認し、年額の「Test valid purchase」で entitlement が有効になって Paywall が閉じることを確認した。購入後に Paywall を開き直して「Restore Purchases」を実行し、entitlement が返って Paywall が閉じることも再確認した
+- SevenMornings / ShareCard: 10 日分のサンプル回答から古い順の 7 件が 1 回だけ表示され、7 枚カードと単体カードの共有シートを確認した。その後の再起動では節目画面が再表示されなかった
+- NightReflection: 1 分後の実通知を動画収録し、タイトル「Are you keeping it?」と当日回答を含む本文を確認した。通知タップ相当の `NotificationRouter` 経路で画面を開き、「I did」の保存と再表示を確認した
+- MorningQuestion: 疑似録画を 10 秒で自動停止し、写真アプリの「Memento Morning」アルバムへの保存、回答成立、ホームの「Answered with a video」への反映まで確認した
+- AnswerLog / LifeCalendar: プレミアム状態で 7 日より前を含む 10 件の履歴と、月間グリッド・当日の選択内容を確認した
+- AnswerEdit の空文字保存不可は WDA が TextField の全消去に対応しないため、既存の Maestro 証跡と `trim` 条件を再点検した。今回 WDA が入力した制御文字は保存せず sheet を閉じ、元の回答が維持されていることを確認した
+- AlarmSetting の実発火は、今回の 2 分後設定後に tunnel が HTTP 応答不能となり画面証跡を取得できなかったため、新しい合格根拠には採用していない。2026-08-22 と 2026-08-25 の既存証跡にある AlarmKit 画面とアクセシビリティツリーを再点検した
+
+主要な再実行画面:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/366bd0e0-ed21-45aa-8c2a-682bf0028233.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/f8fd736e-0f35-4140-a9f1-4f86ba3623c1.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/a07f8ff4-7d7f-4414-8419-bd3a058c7af3.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/34a74477-e59a-49c5-963f-fc2cf62ed8f2.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/db4d5f9e-5a13-46c6-9fff-e96dfa5bc57e.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/216f972c-4460-42c8-bfd6-43b35db6b29f.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/ca4e629a-4aed-44b1-af15-bb3fca247878.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/e995b12b-29ac-4b16-80a3-a77dddbf6fa4.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/6703dd28-184d-4e3a-8e0b-a8033c2700a7.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/c1890f52-0ebb-41cd-ac4e-0481664ebfbe.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/8fc16bad-9d26-406a-b697-6fc6d16ebee9.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/efe33c95-a43b-4789-9533-98354a9222ea.jpg" width="320" />
 
 ## 横断確認項目
 
@@ -95,7 +125,7 @@ last_verified_at: 2026-08-26
 <details>
 <summary>動作確認エビデンス</summary>
 
-### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される
+### **起動でホーム表示**: オンボーディング完了済みの状態で起動すると、ホーム (NEXT MORNING の大時刻・背景に積もる答えた朝の粒・Journal / Calendar / Settings リンク) が表示される。背景の粒 (温白 9%) の上でも操作系の文字が読める (issue #117 で直近 14 日の粒ストリップを背景の積み上げに置き換え。issue #137 で Dots リンクと点画面を削除)
 
 <details><summary>動作確認スクショ</summary>
 

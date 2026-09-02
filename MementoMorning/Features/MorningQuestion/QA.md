@@ -1,8 +1,8 @@
 ---
 feature: MorningQuestion
 verification: mobile-mcp
-last_verified_commit: df1562da3e044da995775ed350704e6b5ddccff2
-last_verified_at: 2026-08-22
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # MorningQuestion QA

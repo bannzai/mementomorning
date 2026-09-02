@@ -1,8 +1,8 @@
 ---
 feature: LifeCalendar
 verification: mobile-mcp
-last_verified_commit: 75b0bf87eb1e52b1737ef435c61b32f36467f8b9
-last_verified_at: 2026-08-26
+last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
+last_verified_at: 2026-09-01
 ---
 
 # LifeCalendar QA
@@ -35,6 +35,39 @@ last_verified_at: 2026-08-26
 #### 動作確認
 <details>
 <summary>動作確認エビデンス</summary>
+
+### **月グリッド**: 曜日ヘッダー付きの 7 列グリッドに今月の日付が並び、答えた日は温白の粒に墨の数字、未回答の過去日は薄い数字、未来日はさらに薄い数字で表示される
+
+**確認日: 2026-09-01** (simtunnel リモート simulator、英語ロケール、サンプル回答 10 日分)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/efe33c95-a43b-4789-9533-98354a9222ea.jpg" width="320" />
+
+### **今日のリング**: 今日のマスにだけ夜明け色のリングが付く
+
+**確認日: 2026-09-01** (同じ月グリッドで確認)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/efe33c95-a43b-4789-9533-98354a9222ea.jpg" width="320" />
+
+### **月送り**: 前月・翌月ボタンで表示月を切り替えられる。範囲は最古の回答月〜今月で、範囲外方向のボタンは無効表示になる
+
+**確認日: 2026-09-01** (simtunnel リモート simulator、サンプル回答 10 日分 = 8 月 23 日〜9 月 1 日)
+
+9 月で前月ボタンを押すと 8 月へ移動し、8 月で前月ボタンを押しても 8 月のまま変わらなかった。次月ボタンで 9 月へ復帰し、9 月で次月ボタンを押しても 9 月のまま変わらなかった。最古の回答月〜今月の移動と、範囲外方向の無効化を両方確認した:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/aeec5305-8003-4005-bf45-7435730e83a7.jpg" width="320" />
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/8cb6abc4-7e14-4228-9fbf-43207c0aab6c.jpg" width="320" />
+
+### **答えた朝の件数**: グリッドの下に全期間の回答数が表示される
+
+**確認日: 2026-09-01** (10 mornings answered を確認)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/efe33c95-a43b-4789-9533-98354a9222ea.jpg" width="320" />
+
+### **日付タップで回答を開く**: 答えた日のマスをタップすると、その日の回答がジャーナルと同じ行 (AnswerLogRow) でグリッドの下に表示される (issue #130)。行のタップで共有カードが sheet で開き、別の日のタップで行が切り替わり、月送りで行は消える。無料枠 (直近 7 日) より前の答えた日はペイウォールが開き、未回答日はタップしても何も起きない
+
+**確認日: 2026-09-01** (今日のマスをタップし、回答行「Today / Ship my app to the world」を確認。共有・無料枠分岐は下記の既存証跡を再点検)
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260901/efe33c95-a43b-4789-9533-98354a9222ea.jpg" width="320" />
 
 **確認日: 2026-08-26** (simtunnel リモート simulator、英語ロケール、開発者メニューでサンプル回答 10 日分を投入。issue #137 の点画面削除 + カレンダー復活 (75b0bf8) 後の回帰確認)
 
