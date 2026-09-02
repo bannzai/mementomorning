@@ -40943,10 +40943,214 @@
     },
     "Tomorrow at %@, I will wake up, face myself, and answer." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غدًا عند %@، سأستيقظ، وأواجه نفسي، وأجيب."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demà a les %@, em despertaré, m’enfrontaré a mi mateix i respondré."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zítra v %@ se probudím, postavím se sám sobě a odpovím."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgen kl. %@ vågner jeg, ser mig selv i øjnene og svarer."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen um %@ wache ich auf, stelle mich mir selbst und antworte."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αύριο στις %@, θα ξυπνήσω, θα αντιμετωπίσω τον εαυτό μου και θα απαντήσω."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana a las %@, despertaré, me miraré de frente y responderé."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana a las %@, despertaré, me miraré de frente y responderé."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huomenna klo %@ herään, kohtaan itseni ja vastaan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demain à %@, je me réveillerai, me ferai face et répondrai."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחר בשעה %@ אתעורר, אתמודד עם עצמי ואענה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कल %@ बजे मैं जागूँगा, अपना सामना करूँगा और जवाब दूँगा।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sutra u %@ probudit ću se, suočiti sa sobom i odgovoriti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holnap %@-kor felébredek, szembenézek önmagammal, és válaszolok."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besok pukul %@, aku akan bangun, menghadapi diriku sendiri, dan menjawab."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domani alle %@ mi sveglierò, affronterò me stesso e risponderò."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日の %@、私は目を覚まし、自分と向き合い、答えます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내일 %@에 일어나, 나 자신을 마주하고 답할 거예요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esok pada %@, saya akan bangun, berdepan dengan diri sendiri dan menjawab."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgen kl. %@ våkner jeg, møter meg selv og svarer."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen om %@ word ik wakker, kijk ik mezelf aan en antwoord ik."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jutro o %@ obudzę się, stanę twarzą w twarz ze sobą i odpowiem."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanhã, às %@, vou acordar, me encarar e responder."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanhã, às %@, vou acordar, encarar-me e responder."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mâine, la %@, mă voi trezi, mă voi confrunta cu mine și voi răspunde."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра в %@ я проснусь, посмотрю себе в глаза и отвечу."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zajtra o %@ sa zobudím, postavím sa sám sebe a odpoviem."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgon kl. %@ vaknar jag, möter mig själv och svarar."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พรุ่งนี้เวลา %@ ฉันจะตื่นขึ้นมา เผชิญหน้ากับตัวเอง และตอบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yarın saat %@'da uyanacağım, kendimle yüzleşeceğim ve cevap vereceğim."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра о %@ я прокинуся, подивлюся собі у вічі й відповім."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày mai lúc %@, tôi sẽ thức dậy, đối diện với chính mình và trả lời."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天 %@，我會醒來，面對自己，然後回答。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天 %@，我会醒来，面对自己，然后回答。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天 %@，我會醒來，面對自己，然後回答。"
           }
         }
       }
