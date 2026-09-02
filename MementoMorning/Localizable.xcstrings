@@ -14620,10 +14620,214 @@
     },
     "For two thousand years, people have kept a practice called memento mori — remember death, and the day becomes clear." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "على مدى ألفي عام، حافظ الناس على ممارسة تُسمّى memento mori — تذكّر الموت، فيتّضح اليوم."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durant dos mil anys, la gent ha mantingut una pràctica anomenada memento mori — recorda la mort, i el dia es torna clar."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lidé už dva tisíce let dodržují praxi zvanou memento mori — pamatuj na smrt a den se vyjasní."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I to tusind år har mennesker holdt fast i en praksis kaldet memento mori — husk døden, så bliver dagen klar."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seit zweitausend Jahren pflegen Menschen eine Praxis namens memento mori – erinnere dich an den Tod, und der Tag wird klar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εδώ και δύο χιλιάδες χρόνια, οι άνθρωποι τηρούν μια πρακτική που ονομάζεται memento mori — θυμήσου τον θάνατο και η μέρα ξεκαθαρίζει."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durante dos mil años, la gente ha mantenido una práctica llamada memento mori: recuerda la muerte y el día se vuelve claro."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desde hace dos mil años, las personas practican algo llamado memento mori: recuerda la muerte y el día se vuelve claro."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihmiset ovat harjoittaneet kahdentuhannen vuoden ajan memento mori -nimistä käytäntöä — muista kuolema, niin päivä kirkastuu."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depuis deux mille ans, les gens perpétuent une pratique appelée memento mori — souvenez-vous de la mort, et le jour s’éclaircit."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "במשך אלפיים שנה אנשים מקיימים מנהג שנקרא memento mori — זכור את המוות, והיום מתבהר."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दो हज़ार वर्षों से लोग memento mori नामक एक अभ्यास करते आए हैं — मृत्यु को याद रखें, और दिन स्पष्ट हो जाता है।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Već dvije tisuće godina ljudi njeguju praksu pod nazivom memento mori — sjeti se smrti i dan će postati jasniji."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kétezer éve őriznek az emberek egy memento mori nevű gyakorlatot — emlékezz a halálra, és kitisztul a nap."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selama dua ribu tahun, orang-orang menjalankan praktik bernama memento mori — ingatlah kematian, dan hari menjadi lebih jernih."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da duemila anni, le persone seguono una pratica chiamata memento mori: ricorda la morte e la giornata si fa più limpida."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2000 年ものあいだ、人は「メメント・モリ」を続けてきました。死を想うと、今日が澄んで見える。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2천 년 동안 사람들은 memento mori라는 실천을 이어왔어요 — 죽음을 기억하면 하루가 선명해져요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selama dua ribu tahun, orang ramai mengamalkan amalan yang dipanggil memento mori — ingatlah kematian, dan hari menjadi lebih jelas."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I to tusen år har mennesker holdt fast ved en praksis kalt memento mori — husk døden, så blir dagen klar."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al tweeduizend jaar houden mensen vast aan een praktijk die memento mori wordt genoemd — herinner je de dood, en de dag wordt helder."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od dwóch tysięcy lat ludzie kultywują praktykę zwaną memento mori — pamiętaj o śmierci, a dzień stanie się jasny."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Há dois mil anos, as pessoas mantêm uma prática chamada memento mori — lembre-se da morte, e o dia se torna claro."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Há dois mil anos, as pessoas mantêm uma prática chamada memento mori — lembra-te da morte, e o dia torna-se claro."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De două mii de ani, oamenii păstrează o practică numită memento mori — amintește-ți de moarte, iar ziua devine limpede."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Две тысячи лет люди придерживаются практики, называемой memento mori, — помните о смерти, и день становится яснее."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Už dvetisíc rokov ľudia dodržiavajú prax zvanú memento mori — pamätaj na smrť a deň sa vyjasní."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I två tusen år har människor hållit fast vid en praktik som kallas memento mori — minns döden, så klarnar dagen."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตลอดสองพันปีที่ผ่านมา ผู้คนยึดถือแนวทางที่เรียกว่า memento mori — จดจำความตาย แล้ววันนั้นจะกระจ่างชัดขึ้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İnsanlar iki bin yıldır memento mori adı verilen bir uygulamayı sürdürüyor — ölümü hatırla, gün berraklaşsın."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже дві тисячі років люди дотримуються практики, що називається memento mori, — пам’ятайте про смерть, і день стане яснішим."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suốt hai nghìn năm, con người đã gìn giữ một thực hành gọi là memento mori — hãy nhớ đến cái chết, và ngày hôm nay sẽ trở nên sáng rõ."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兩千年來，人們一直奉行一種名為 memento mori 的修習——記住死亡，這一天便會變得清晰。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "两千年来，人们一直践行一种名为 memento mori 的修习——记住死亡，这一天便会变得清晰。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "兩千年來，人們一直踐行一種名為 memento mori 的修習——記住死亡，這一天便會變得清晰。"
           }
         }
       }
