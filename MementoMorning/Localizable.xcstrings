@@ -43083,10 +43083,214 @@
     },
     "Used only to count your mornings. It never leaves this device." : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُستخدم فقط لعدّ صباحاتك. ولا يغادر هذا الجهاز أبدًا."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'utilitza només per comptar els teus matins. No surt mai d'aquest dispositiu."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slouží pouze k počítání tvých rán. Nikdy neopustí toto zařízení."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruges kun til at tælle dine morgener. Det forlader aldrig denne enhed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird nur zum Zählen deiner Morgen verwendet. Nichts verlässt dieses Gerät."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρησιμοποιείται μόνο για να μετρά τα πρωινά σου. Δεν φεύγει ποτέ από αυτή τη συσκευή."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa solo para contar tus mañanas. Nunca sale de este dispositivo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se usa solo para contar tus mañanas. Nunca sale de este dispositivo."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käytetään vain aamuiesi laskemiseen. Se ei koskaan poistu tältä laitteelta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisé uniquement pour compter vos matins. Cela ne quitte jamais cet appareil."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "משמש רק לספירת הבקרים שלך. הוא לעולם לא עוזב את המכשיר הזה."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इसका इस्तेमाल सिर्फ आपकी सुबहों की गिनती के लिए होता है। यह इस डिवाइस से कभी बाहर नहीं जाता।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koristi se samo za brojanje tvojih jutara. Nikad ne napušta ovaj uređaj."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Csak a reggeleid számolására használjuk. Soha nem hagyja el ezt az eszközt."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya digunakan untuk menghitung pagi kamu. Data tidak pernah meninggalkan perangkat ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usato solo per contare le tue mattine. Non lascia mai questo dispositivo."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "あなたの朝を数えるためだけに使います。この端末の外には出ません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아침을 세는 데만 사용해요. 이 기기 밖으로는 절대 나가지 않아요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya digunakan untuk mengira pagi anda. Ia tidak pernah meninggalkan peranti ini."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukes bare til å telle morgenene dine. Det forlater aldri denne enheten."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt alleen gebruikt om je ochtenden te tellen. Het verlaat dit apparaat nooit."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Służy tylko do liczenia twoich poranków. Nigdy nie opuszcza tego urządzenia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É usado apenas para contar suas manhãs. Ele nunca sai deste dispositivo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É utilizado apenas para contar as tuas manhãs. Nunca sai deste dispositivo."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este folosit doar pentru a-ți număra diminețile. Nu părăsește niciodată acest dispozitiv."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используется только для подсчёта ваших утр. Оно никогда не покидает это устройство."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používa sa iba na počítanie tvojich rán. Toto zariadenie nikdy neopustí."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Används bara för att räkna dina morgnar. Det lämnar aldrig den här enheten."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้เพื่อนับจำนวนเช้าของคุณเท่านั้น ข้อมูลจะไม่ออกจากอุปกรณ์นี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca sabahlarını saymak için kullanılır. Bu cihazdan asla çıkmaz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовується лише для підрахунку ваших ранків. Воно ніколи не залишає цей пристрій."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chỉ được dùng để đếm những buổi sáng của bạn. Dữ liệu không bao giờ rời khỏi thiết bị này."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只用於計算你度過了多少個早晨。資料絕不會離開這部裝置。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅用于统计你度过了多少个早晨。数据绝不会离开这台设备。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "僅用於計算你度過了多少個早晨。資料絕不會離開這部裝置。"
           }
         }
       }
