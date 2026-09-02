@@ -21896,10 +21896,214 @@
     },
     "No more snoozing\nOnly your answer stops the alarm" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا مزيد من الغفوة\nإجابتك وحدها توقف المنبّه"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prou d’ajornar l’alarma\nNomés la teva resposta atura l’alarma"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Už žádné odkládání\nBudík zastaví jen tvoje odpověď"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke mere snooze\nKun dit svar stopper alarmen"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Schlummern mehr\nNur deine Antwort stoppt den Wecker"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τέρμα η αναβολή\nΜόνο η απάντησή σου σταματά το ξυπνητήρι"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se acabó posponer\nSolo tu respuesta detiene la alarma"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No más posponer\nSolo tu respuesta detiene la alarma"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei enää torkutusta\nVain vastauksesi sammuttaa herätyksen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fini les reports\nSeule votre réponse arrête l’alarme"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא עוד נודניק\nרק התשובה שלך עוצרת את השעון המעורר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अब स्नूज़ नहीं\nसिर्फ़ आपका जवाब अलार्म बंद करेगा"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nema više odgode\nAlarm zaustavlja samo tvoj odgovor"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nincs több szundi\nCsak a válaszod állítja le az ébresztőt"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak ada lagi tunda\nHanya jawabanmu yang menghentikan alarm"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basta rimandare\nSolo la tua risposta ferma la sveglia"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "もうスヌーズはいりません\nアラームを止めるのはあなたの答えだけ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "더 이상 미루지 마세요\n답변해야 알람이 멈춰요"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiada lagi tunda\nHanya jawapan anda menghentikan penggera"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke mer slumring\nBare svaret ditt stopper alarmen"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen gesluimer meer\nAlleen je antwoord stopt het alarm"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koniec z drzemkami\nTylko twoja odpowiedź wyłącza alarm"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chega de soneca\nSó sua resposta para o alarme"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chega de adiar\nSó a tua resposta desliga o despertador"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gata cu amânarea\nDoar răspunsul tău oprește alarma"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Больше никаких повторов\nТолько ваш ответ отключает будильник"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Už žiadne odkladanie\nBudík zastaví len tvoja odpoveď"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slut på snooze\nBara ditt svar stoppar alarmet"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีการเลื่อนปลุกอีกต่อไป\nมีเพียงคำตอบของคุณที่หยุดนาฬิกาปลุก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artık erteleme yok\nAlarmı yalnızca cevabın durdurur"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Більше ніякого відкладання\nЛише ваша відповідь зупиняє будильник"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không còn báo lại\nChỉ câu trả lời của bạn mới tắt được chuông báo thức"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不再賴床\n只有你的回答能停止鬧鐘"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不再贪睡\n只有你的回答能停止闹钟"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不再賴床\n只有你的回答能停止鬧鐘"
           }
         }
       }
