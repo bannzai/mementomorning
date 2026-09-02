@@ -17616,10 +17616,214 @@
     },
     "Is there something you keep telling yourself you'll do?" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل هناك شيء تواصل إخبار نفسك بأنك ستفعله؟"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi ha alguna cosa que et repeteixes que faràs?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je něco, co si pořád říkáš, že uděláš?"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er der noget, du bliver ved med at sige til dig selv, at du vil gøre?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gibt es etwas, von dem du dir immer wieder sagst, dass du es tun wirst?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υπάρχει κάτι που λες συνεχώς στον εαυτό σου ότι θα κάνεις;"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Hay algo que sigues diciéndote que harás?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Hay algo que sigues diciéndote que harás?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onko jotain, mitä sanot itsellesi jatkuvasti tekeväsi?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Y a-t-il quelque chose que vous vous dites sans cesse que vous ferez ?"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יש משהו שאתה ממשיך לומר לעצמך שתעשה?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्या कोई ऐसी चीज़ है, जिसे आप ख़ुद से कहते रहते हैं कि आप करेंगे?"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Postoji li nešto što si stalno govoriš da ćeš učiniti?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Van valami, amiről folyton azt mondod magadnak, hogy meg fogod tenni?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adakah sesuatu yang terus kamu katakan kepada diri sendiri akan kamu lakukan?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C'è qualcosa che continui a dirti che farai?"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "「いつかやる」と言い続けていることはありますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계속 하겠다고 스스로에게 말하는 일이 있나요?"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ada sesuatu yang selalu anda katakan kepada diri sendiri akan anda lakukan?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er det noe du stadig sier til deg selv at du skal gjøre?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is er iets waarvan je jezelf steeds zegt dat je het zult doen?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czy jest coś, co wciąż powtarzasz sobie, że zrobisz?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tem algo que você vive dizendo a si mesmo que vai fazer?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Há algo que continuas a dizer a ti que vais fazer?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Există ceva ce îți tot spui că vei face?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Есть ли что-то, что вы всё время говорите себе, что сделаете?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je niečo, čo si stále hovoríš, že urobíš?"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finns det något du hela tiden säger till dig själv att du ska göra?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มีอะไรที่คุณบอกตัวเองอยู่เสมอว่าจะทำไหม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yapacağını kendine söyleyip durduğun bir şey var mı?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чи є щось, що ви весь час кажете собі, що зробите?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Có điều gì bạn cứ tự nhủ mình sẽ làm không?"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有沒有一件事，你總是告訴自己會去做？"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有没有什么事，你总是告诉自己会去做？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有沒有什麼事，你總是告訴自己會去做？"
           }
         }
       }
