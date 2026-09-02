@@ -41585,10 +41585,214 @@
     },
     "Tomorrow, your first minutes go to the question, not the phone" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غدًا، خصّص دقائقك الأولى للسؤال، لا للهاتف."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demà, dedica els primers minuts a la pregunta, no al telèfon."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zítra věnuj první minuty otázce, ne telefonu."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgen går dine første minutter til spørgsmålet, ikke telefonen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen gehören deine ersten Minuten der Frage, nicht dem Telefon."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αύριο, τα πρώτα σου λεπτά θα είναι αφιερωμένα στο ερώτημα, όχι στο τηλέφωνο."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana, dedica tus primeros minutos a la pregunta, no al teléfono."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana, dedica tus primeros minutos a la pregunta, no al celular."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huomenna käytät ensimmäiset minuuttisi kysymykseen, et puhelimeen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demain, consacrez vos premières minutes à la question, pas au téléphone."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מחר, הקדש את הדקות הראשונות לשאלה, לא לטלפון."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कल के शुरुआती मिनट फ़ोन पर नहीं, इस सवाल पर बिताएँ।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sutra posveti prve minute pitanju, a ne telefonu."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Holnap az első perceidet a kérdésnek szenteld, ne a telefonnak."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besok, gunakan menit-menit pertamamu untuk pertanyaan ini, bukan ponsel."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domani, dedica i tuoi primi minuti alla domanda, non al telefono."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "明日の最初の数分はスマホではなく問いのために"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내일, 처음 몇 분은 휴대폰이 아니라 이 질문에 써보세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esok, luangkan minit-minit pertama untuk soalan ini, bukan telefon."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgen går de første minuttene dine til spørsmålet, ikke telefonen."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen besteed je je eerste minuten aan de vraag, niet aan je telefoon."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jutro poświęć pierwsze minuty pytaniu, nie telefonowi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanhã, dedique seus primeiros minutos à pergunta, não ao celular."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amanhã, dedica os teus primeiros minutos à pergunta, não ao telemóvel."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mâine, dedică primele minute întrebării, nu telefonului."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра посвятите первые минуты вопросу, а не телефону."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zajtra venuj prvé minúty otázke, nie telefónu."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I morgon går dina första minuter till frågan, inte telefonen."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พรุ่งนี้ ใช้เวลาช่วงแรกกับคำถาม ไม่ใช่โทรศัพท์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yarın, ilk dakikalarını telefona değil, soruya ayır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завтра присвятіть перші хвилини запитанню, а не телефону."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày mai, hãy dành những phút đầu tiên cho câu hỏi, thay vì cho điện thoại."
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天，最初的幾分鐘留給這個問題，而不是手機。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天，最初的几分钟留给这个问题，而不是手机。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "明天，最初的幾分鐘留給這個問題，而不是手機。"
           }
         }
       }
