@@ -24,5 +24,4 @@ SwiftUI コード内の翻訳対象文字列に `// ja:` コメントを追加�
 ## 完了基準
 
 - [ ] `find_missing_ja_translations.py` の検出が 0 件
-- [ ] 固有名詞が `Text()` の補間で埋め込まれている
-- [ ] 英文が英語圏の文化やテンションになぞって作成されている
+- [ ] 追加した文言・翻訳が `.claude/rules/localization-guidelines.md` に準拠している
