@@ -1,4 +1,5 @@
 import AVFoundation
+import LicenseList
 import SwiftUI
 import SwiftData
 
@@ -212,6 +213,16 @@ struct AlarmSettingPage: View {
                 // ja: 問い合わせ
                 Link(String(localized: "Contact"), destination: LegalLinks.contact)
                     .accessibilityIdentifier("alarm_setting_contact_link")
+                NavigationLink {
+                    LicenseListView()
+                        .licenseViewStyle(.withRepositoryAnchorLink)
+                        // ja: OSS ライセンス
+                        .navigationTitle("Open Source Licenses")
+                } label: {
+                    // ja: OSS ライセンス
+                    Text("Open Source Licenses")
+                }
+                .accessibilityIdentifier("alarm_setting_licenses_link")
                 LabeledContent {
                     Text(verbatim: appVersionText())
                 } label: {

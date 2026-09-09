@@ -25532,6 +25532,16 @@
         }
       }
     },
+    "Open Source Licenses" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OSS ライセンス"
+          }
+        }
+      }
+    },
     "Photo library" : {
       "localizations" : {
         "ar" : {
