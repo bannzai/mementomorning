@@ -19,15 +19,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: xcodebuild -version
+      # CI は SPM ビルドプラグインの対話承認ができないため、Build・Test で承認検証を省略する
       - name: Build
         run: |
           set -o pipefail
           xcodebuild -project MementoMorning.xcodeproj -scheme MementoMorning \
+            -skipPackagePluginValidation \
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO build
       - name: Test
         run: |
           set -o pipefail
           xcodebuild -project MementoMorning.xcodeproj -scheme MementoMorning \
+            -skipPackagePluginValidation \
             -destination 'platform=iOS Simulator,name=iPhone 17' \
             CODE_SIGNING_ALLOWED=NO test
