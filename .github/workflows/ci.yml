@@ -17,7 +17,7 @@ jobs:
     if: ${{ !contains(github.event.pull_request.title, '[Skip CI]') }}
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: xcodebuild -version
       # CI は SPM ビルドプラグインの対話承認ができないため、Build・Test で承認検証を省略する
       - name: Build
