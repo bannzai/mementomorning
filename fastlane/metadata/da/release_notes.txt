@@ -1,1 +1,2 @@
-Første version
+Premium-planer er nu tilgængelige: årsplan med 7 dages gratis prøveperiode, månedsplan og livstidsplan
+Open source-licenser kan ses fra alarmindstillingerne

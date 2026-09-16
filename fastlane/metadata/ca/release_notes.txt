@@ -1,1 +1,2 @@
-Versió inicial
+Ara hi ha plans Premium disponibles: anual amb una prova gratuïta de 7 dies, mensual i de per vida
+Les llicències de codi obert es poden consultar des de la configuració de l’alarma

@@ -1,1 +1,2 @@
-Ensimmäinen versio
+Premium-tilaukset ovat nyt saatavilla: vuositilaus 7 päivän ilmaisella kokeilujaksolla, kuukausitilaus ja elinikäinen tilaus
+Avoimen lähdekoodin lisenssit voi tarkistaa herätyksen asetuksista

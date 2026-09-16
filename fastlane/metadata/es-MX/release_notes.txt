@@ -1,1 +1,2 @@
-Versión inicial
+Los planes Premium ya están disponibles: anual con una prueba gratuita de 7 días, mensual y de por vida
+Las licencias de código abierto se pueden consultar desde los ajustes de la alarma
