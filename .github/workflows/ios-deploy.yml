@@ -119,10 +119,12 @@ jobs:
 
       # CURRENT_PROJECT_VERSION の上書きは全ターゲットに効くため、app と extension のビルド番号は常に一致する
       # 署名は project.pbxproj の Release 設定 (CODE_SIGN_STYLE[sdk=iphoneos*] = Manual + PROVISIONING_PROFILE_SPECIFIER) に従う
+      # CI は SPM ビルドプラグイン (LicenseList の PrepareLicenseList) の対話承認ができないため、ci.yml と同じく承認検証を省略する
       - name: Archive
         run: |
           set -o pipefail
           xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -configuration Release \
+            -skipPackagePluginValidation \
             -destination 'generic/platform=iOS' \
             -archivePath "$ARCHIVE_PATH"  \
             CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
