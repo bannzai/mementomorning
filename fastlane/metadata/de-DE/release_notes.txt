@@ -1,1 +1,2 @@
-Erste Version
+Premium-Pläne sind jetzt verfügbar: jährlich mit einer 7-tägigen kostenlosen Testversion, monatlich und lebenslang
+Open-Source-Lizenzen können in den Wecker-Einstellungen angezeigt werden

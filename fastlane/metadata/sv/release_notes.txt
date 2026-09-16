@@ -1,1 +1,2 @@
-Första versionen
+Premiumplaner är nu tillgängliga: årsvis med en kostnadsfri provperiod på 7 dagar, månadsvis och livstid
+Licenser för öppen källkod kan visas i larminställningarna

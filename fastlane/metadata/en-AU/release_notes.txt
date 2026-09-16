@@ -1,1 +1,2 @@
-Initial release
+Premium plans are now available: yearly with a 7-day free trial, monthly, and lifetime
+Open source licenses can be viewed from alarm settings

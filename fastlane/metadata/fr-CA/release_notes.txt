@@ -1,1 +1,2 @@
-Première version
+Les forfaits Premium sont désormais disponibles : annuel avec un essai gratuit de 7 jours, mensuel et à vie
+Les licences open source peuvent être consultées depuis les réglages de l’alarme
