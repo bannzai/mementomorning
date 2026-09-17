@@ -1,0 +1,50 @@
+{
+  "source": {
+    "url": "https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/62d312cd-22b9-426f-942c-6a7c00803202.mp4",
+    "sha256": "5dd6a85666ed88575556f9c3685b9997c22f1b4074574a08bda95c327d842dfc"
+  },
+  "variants": [
+    {
+      "id": "last-day",
+      "person": "worker",
+      "start": 17,
+      "duration": 4.5,
+      "headline": {
+        "en": "My alarm won't stop\nuntil I say what I'd do\non my last day",
+        "ja": "今日が最後の日なら\n何をしたいか声に出すまで\n止まらない目覚まし"
+      },
+      "answer": {
+        "en": "Leave on time\nReally talk with my wife",
+        "ja": "定時で帰って\n妻とちゃんと話す"
+      }
+    },
+    {
+      "id": "one-question",
+      "person": "student",
+      "start": 21.5,
+      "duration": 3.8,
+      "headline": {
+        "en": "Every morning my alarm\nasks what I'd do\nif today were my last day",
+        "ja": "もし今日が最後の日なら\n何をしたいか\n毎朝問いかける目覚まし"
+      },
+      "answer": {
+        "en": "I'll apologize to the friend\nI've been avoiding",
+        "ja": "ずっと避けていた友達に\n謝る"
+      }
+    },
+    {
+      "id": "someday",
+      "person": "creator",
+      "start": 29.3,
+      "duration": 4,
+      "headline": {
+        "en": "This alarm turns my\n\"someday\" into a promise\nI have to say out loud",
+        "ja": "いつかやると言っていたことを\n今日やると声に出して誓う\n目覚まし"
+      },
+      "answer": {
+        "en": "I finish that unfinished song\nToday",
+        "ja": "作りかけの曲を完成させる\n今日こそ"
+      }
+    }
+  ]
+}

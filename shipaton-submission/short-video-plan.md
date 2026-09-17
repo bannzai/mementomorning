@@ -83,6 +83,55 @@ agent が行う:
 - TikTok / YouTube / Instagram / X への投稿と、プロフィール欄へのリンク設置
 - C (毎朝の実回答) の撮影は日々の利用そのもの。公開してよい回答だけを選ぶ
 
+## 16 秒の候補 3 案 (issue #167)
+
+英語を主、日本語を従とし、同じ人物・音声・順序で編集テキストを差し替える。
+固定テロップの正は `demo-video/config.shorts.json`、生成手順は `demo-video/README.md`。
+最終採用と投稿はユーザーが行う。投稿先での実際の UI の被り・反応は未計測。
+
+### 止める条件から入る案 (last-day)
+
+英語キャプション:
+
+> If today were your last day, what would you do? Say it before the day gets away from you. Memento Morning asks you every morning. Endless follow-up alarms are a Premium feature. What would your answer be?
+
+日本語キャプション:
+
+> 今日が最後の日なら、何をしたいですか。いつもの一日が始まる前に、声に出してみる。Memento Morning は毎朝その問いを届ける目覚ましです。回答するまで繰り返し鳴るアラームはプレミアム機能。あなたなら何と答えますか。
+
+### 毎朝の問いから入る案 (one-question)
+
+英語キャプション:
+
+> One question before the notifications and the to-do list. If today were your last day, what would you want to do? Mine might be one conversation I've been putting off. What's yours?
+
+日本語キャプション:
+
+> 通知やタスクを見る前に、一つだけ。もし今日が最後の日なら、何をしたいですか。ずっと避けていた人と話す。それだけでもいい。あなたの答えも聞かせてください。
+
+### 先送りから入る案 (someday)
+
+英語キャプション:
+
+> That unfinished song. That conversation. That thing you keep saving for someday. Memento Morning is an alarm that asks what matters today. Say one thing out loud. Endless follow-up alarms require Premium.
+
+日本語キャプション:
+
+> 作りかけの曲も、避けていた会話も、いつかやるつもりだったことも。Memento Morning は、今日何をしたいかを問いかける目覚ましです。一つだけ声に出して、今日の約束に。回答するまで繰り返し鳴るアラームはプレミアム機能です。
+
+各投稿の末尾に、映像の由来を明示する文を付ける:
+
+- 英語: `Illustrative demo with AI-generated fictional people and voices`
+- 日本語: `架空の人物と音声をAIで生成したデモ映像です`
+
+一般ハッシュタグ案:
+
+- 英語: `#MementoMorning #MementoMori #MorningRoutine #IntentionalLiving`
+- 日本語: `#MementoMorning #朝の習慣 #今日を大切に #目覚まし`
+
+イベント用 `#Shipaton2026` は **仮置き・公式ハッシュタグ未確認**。
+#163 で確認するまでは公式タグとして扱わず、投稿時の必須タグ欄へ転記しない。
+
 ## セッション再開
 
 ```sh

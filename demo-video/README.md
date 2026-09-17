@@ -135,3 +135,37 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 - 夜リマインドのバナーはシステム UI のため Maestro の要素検出に乗らない。`night-banner.yaml` は
   アサートせず固定時間ホームを映して到着を録画に収め、到着はフレーム抽出で確認する
 - `xcrun simctl status_bar` の `--time` は HH:mm 形式 (ISO 日時文字列は Invalid argument で失敗する)
+
+## 16 秒の縦動画 3 案 × 英日 (issue #167)
+
+macOS の Python 3、Pillow (`python3 -m pip install Pillow==12.3.0`)、ffmpeg / ffprobe を使う。
+`config.shorts.json` に固定テロップ・回答訳・人物の切り出し位置と原動画の URL / SHA-256 を置く。
+
+```sh
+mkdir -p tmp
+python3 demo-video/scripts/generate-shorts.py > tmp/shorts-build.log 2>&1
+```
+
+初回は公開済み people 版を取得し、以降はキャッシュをハッシュ照合して使う。
+手元の同じ原動画を使う場合は `--source /絶対パス/memento-morning-demo-people.mp4` を付ける。
+違う版は失敗として扱う。原動画の再制作・API キー・シミュレータは不要。
+再実行はこの生成物だけを同名で作り直す。
+
+出力は `output/shorts/{last-day,one-question,someday}-{en,ja}.mp4`、
+対応する 1 秒ごとのコンタクトシート `.png`、規格検査結果 `verification.json`。
+動画・中間素材は既存の `output/` の gitignore 対象のまま。
+英日で映像の順序と音声は共通、編集テキストのみ差し替える。回答音声は英語のまま。
+
+冒頭の架空人物 → アラーム設定画面 → 問い → 録画 UI で回答 → 無音に近い余韻 →
+夜の振り返りを表す編集カード → 最後の 1 秒のブランド名、の順。
+夜のカードはアプリ UI・OS 通知の再現ではなく、その人が語った回答を使う編集表現。
+旧カレンダー画面や別の回答が入った通知は使わない。
+アラーム音は合成した演出音、人物・口パクと声は既存デモの生成素材であり、実機の連続操作記録ではない。
+BGM の権利表記は上の `bgm-mandolin.m4a` の項目を参照。
+
+固定テロップは x=60〜940、y=240〜490 に全編表示し、
+Issue 指定の上 12%・下 20%・右 12% の除外範囲を避ける。
+プレミアム機能の注記も下 20% より上に表示する。
+生成時に ffprobe の規格確認と全 480 フレームの見出し照合を行う。
+公開前にはコンタクトシートと最終フレームを目視し、音声のデコード・音量も検査する。
+`puts` への公開は生成スクリプトに含めず、検査した出力だけをアップロードする。
