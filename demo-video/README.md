@@ -105,6 +105,37 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 (登場人物ごとに別の声で話させる people バリアント用。未指定シーンは narration_mix へフォールバック)。
 バリアントを作る時は config を差し替えて「generate-narration.sh → compose-video.sh → verify-output.sh」を繰り返す。
 
+## 縦動画 (TikTok / YouTube Shorts / X 用、issue #167)
+
+2 分デモとは別に、全編に 1 文のテロップを固定した約 19.8 秒の縦動画 (1080x1920) を 3 案 × 英日で作る。
+構成は「布団から手を出してスマホを取り、顔を出す人物 → 朝の問いの実画面 (全画面) → 録画中の実画面で人物が答えを声に出す → 無音の一拍 →
+人生カレンダー → ブランドカード」。人物の映像と声は Veo (veo-3.1-fast-generate-preview) で
+`assets/person-*.png` の架空人物を動かしたもの (`config.shorts.json` の `motion` にプロンプト、`variants` に
+テロップと答えの字幕)。合成手順・タイムライン・収録クリップのフレーム実測値は `scripts/build-shorts.py` のヘッダーが正。
+
+```sh
+# 1. 収録 (上記「収録環境の初期化」の後。朝の問いは prep/morning-question.yaml で疑似録画モードにしてから)
+bash $SKILL/record-scene.sh demo-video/config.json morning-question
+bash $SKILL/record-scene.sh demo-video/config.json calendar
+# 2. 人物クリップの生成 (要 GEMINI_API_KEY。1 本 1〜3 分。出力は gitignore 対象)
+PY=~/.claude/skills/gemini-image-generator/.venv/bin/python3
+for p in worker student creator; do $PY demo-video/scripts/generate-shorts-motion.py --person $p --kind wake; done
+for p in worker student creator; do $PY demo-video/scripts/generate-shorts-motion.py --person $p --kind speak; done
+# 3. 合成 (output/shorts/<variant>-<lang>.mp4 と 1 秒 1 フレームの .png)
+python3 demo-video/scripts/build-shorts.py
+# 4. 検証: 区間ごとの音量 (アラーム → 声 → 無音 → 一音) と、発話の書き起こし
+bash demo-video/scripts/measure-short-audio.sh demo-video/output/shorts/last-day-en.mp4
+$PY demo-video/scripts/inspect-short.py demo-video/output/shorts/last-day-en.mp4   # Gemini に映像と音声を検査させる
+# Gemini が使えない時の発話確認: 録画区間 (8.2〜15.2 秒) を 16kHz mono の wav にして whisper.cpp で書き起こす
+ffmpeg -ss 8.2 -to 15.2 -i demo-video/output/shorts/last-day-en.mp4 -vn -ac 1 -ar 16000 tmp/speech.wav
+whisper-cli -m tmp/ggml-base.en.bin -l en -nt tmp/speech.wav   # モデルは https://huggingface.co/ggerganov/whisper.cpp から取得
+```
+
+収録時の注意: sim-boot の既定 (`SIMSLIM_EXCEPT=store`) で simslim が Photos のデーモン (assetsd 等) を止めるため、
+疑似録画の保存が `PHPhotosErrorDomain Code=3301` で失敗して「Try saving again」から進まない。
+`SIMSLIM_EXCEPT=store,photos sim-boot` で起動するか、起動済みなら `simslim on <UDID> --except store,photos` で戻す
+(2026-09-17 実測)。
+
 ## アセット
 
 - `assets/selfie.png` / `assets/selfie-talk-{1,2,3}.png`: Nano Banana Pro (gemini-3-pro-image-preview) で

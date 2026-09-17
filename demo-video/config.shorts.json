@@ -1,0 +1,66 @@
+{
+  "profile": { "width": 1080, "height": 1920, "fps": 30 },
+  "output_dir": "output/shorts",
+  "motion": {
+    "model": "veo-3.1-fast-generate-preview",
+    "parameters": {
+      "aspect_ratio": "9:16",
+      "duration_seconds": 8,
+      "resolution": "1080p",
+      "person_generation": "allow_adult"
+    },
+    "clips": {
+      "speak": {
+        "prompt": "Animate this AI-generated fictional adult portrait into a single continuous eight-second handheld front-camera morning video. Preserve the exact adult identity, pajamas, bedroom and framing. Ordinary intimate smartphone footage with subtle hand movement and natural breathing, no cinematic cuts. The person has just woken up. In the first 1.8 seconds they blink slowly and glance at a question on the phone just below the lens, briefly thinking. At about 2 seconds they speak the exact English dialogue below in a quiet sleepy conversational voice, with natural synchronized lips. Finish speaking by 6.2 seconds. In the final 1.8 seconds they close their mouth, breathe out and look quietly resolved. Natural daylight gradually catches their eyes. Audio contains only their voice, a little bedding rustle and quiet room tone. No music, alarm, beeps, narrator, other people, captions, subtitles, logos, watermarks, text, phone screens or graphical interface. Keep the face in the middle of the portrait with room above the head for an editorial caption. The performance is sincere and understated."
+      },
+      "wake": {
+        "mode": "reference",
+        "prompt": "A single continuous eight-second handheld smartphone front-camera video in a dim bedroom at dawn, ordinary intimate footage, no cinematic cuts. The person is the same fictional adult as the reference image, in the same bedroom and pajamas. For the first three seconds the frame shows only a rumpled duvet pulled completely over the sleeping person's head with no face visible; the phone lies on the pillow filming the duvet at a slight tilt while its alarm is going off. Then a hand pushes out from under the duvet, fumbles across the sheet, finds the phone and lifts it. As the phone rises the duvet slides down and the person's sleepy face comes into view for the first time at about five seconds, eyes half closed, squinting at the bright screen with a tired, slightly annoyed expression. At about six and a half seconds they blink the sleep away and look straight into the lens, awake but not ready, as if the phone is asking them something, and hold that gaze quietly until the end. Dim early-morning light through curtains. Audio contains only quiet room tone and bedding rustle. No music, alarm sound, beeps, speech, narrator, other people, captions, subtitles, logos, watermarks, text, phone screens or graphical interface. Keep the face in the middle of the portrait with room above the head for an editorial caption. Understated and sincere."
+      }
+    }
+  },
+  "people": {
+    "worker": { "portrait": "assets/person-worker.png", "speak_dialogue": "Today I'm leaving on time. I want to really talk with my wife.", "speak_extra": "The fictional adult man pulls the duvet slightly down from his mouth before speaking. After speaking he gives a small nod and his shoulders relax." },
+    "student": { "portrait": "assets/person-student.png", "speak_dialogue": "I'll apologize to the friend I've been avoiding.", "speak_extra": "The fictional adult woman briefly looks away as if the question reminded her of someone, then looks back at the camera. Her voice is hesitant at first and firm at the end. After speaking she releases a little breath, with a very small relieved smile." },
+    "creator": { "portrait": "assets/person-creator.png", "speak_dialogue": "That unfinished song. I'm finishing it today.", "speak_extra": "The fictional adult musician glances toward the music equipment in her room and back to the camera. After speaking she straightens up slightly, looking determined to get out of bed." }
+  },
+  "brand_tagline": { "en": "Answer one question to wake up", "ja": "ひとつの問いに答えて 朝を始める" },
+  "variants": [
+    {
+      "id": "last-day",
+      "person": "worker",
+      "caption": {
+        "en": "POV: my alarm won't stop\nuntil I say what I'd do\nif today were my last day",
+        "ja": "今日が最後の日なら何をするか\n声に出すまで止まらない\n目覚まし"
+      },
+      "answer_subtitle": {
+        "en": "Today I'm leaving on time\nI want to really talk with my wife",
+        "ja": "今日は定時で帰る\n妻とちゃんと話したい"
+      }
+    },
+    {
+      "id": "one-question",
+      "person": "student",
+      "caption": {
+        "en": "My alarm asks me\none question\nevery morning",
+        "ja": "毎朝 ひとつだけ\n問いかけてくる\n目覚まし"
+      },
+      "answer_subtitle": {
+        "en": "I'll apologize to the friend\nI've been avoiding",
+        "ja": "ずっと避けてきた友達に\n謝る"
+      }
+    },
+    {
+      "id": "someday",
+      "person": "creator",
+      "caption": {
+        "en": "You keep saying \"someday\"\nThis alarm makes you\nsay it today",
+        "ja": "「いつか」と言い続けてきたことを\n今日やると言わせる\n目覚まし"
+      },
+      "answer_subtitle": {
+        "en": "That unfinished song\nI'm finishing it today",
+        "ja": "作りかけのあの曲を\n今日 完成させる"
+      }
+    }
+  ]
+}
