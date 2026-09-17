@@ -40,7 +40,7 @@
     "source_repository_open_source": true,
     "premium_access": {
       "method": "free_trial",
-      "details": "The yearly plan (Premium) includes a 7-day free trial. Monthly and Lifetime have no trial. The paywall appears at the end of first-launch onboarding, so judges can start the trial right after install. Alternate paths: Journal > locked row older than 7 days, or Alarm settings > Endless follow-up alarms."
+      "details": "The yearly plan (Premium) includes a 7-day free trial for eligible customers. Monthly and Lifetime have no trial. The paywall appears at the end of first-launch onboarding. Alternate paths: Journal > See every morning when older history is locked, or Alarm settings > unlimited follow-ups."
     },
     "primary_language": "en-US",
     "english_translation_path": ""
@@ -57,10 +57,46 @@
       "safe_variant_path": ""
     },
     "app_icon_path": "../MementoMorning/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
-    "screenshot_paths": [],
-    "screenshots_have_device_frames": null,
+    "screenshot_paths": [
+      "screenshots/01-home.png",
+      "screenshots/02-morning-question.png",
+      "screenshots/03-journal.png",
+      "screenshots/04-accumulated-mornings.png",
+      "screenshots/05-seven-mornings.png",
+      "screenshots/06-share-card.png",
+      "screenshots/07-paywall.png",
+      "screenshots/08-night-reflection.png",
+      "screenshots/09-calendar.png"
+    ],
+    "screenshots_have_device_frames": false,
     "submission_text_path": "devpost-submission.md",
     "target_awards": ["RevenueCat Design Award", "Most Viral App"],
-    "criteria_evidence": []
+    "criteria_evidence": [
+      {
+        "award": "RevenueCat Design Award",
+        "official_criterion": "Innovative ideas",
+        "evidence": "devpost-submission.md describes the morning-question camera overlay, AlarmKit stop-intent follow-ups subject to plan and settings, on-device transcription, and evening reflection. Implementations: Features/MorningQuestion, Utils/StopAlarmIntent.swift, and Features/NightReflection. This is implementation evidence, not a claim that the system stop UI is unbypassable."
+      },
+      {
+        "award": "RevenueCat Design Award",
+        "official_criterion": "Aesthetics",
+        "evidence": "devpost-submission.md connects the dark palette, warm dots, recording haptics, and serif Seven Mornings share card to the quiet visual direction. Shared/MorningDotsPhysicsView.swift implements SpriteKit physics and CoreMotion tilt; Features/SevenMornings implements the share card. PR #120 records the dots/calendar redesign."
+      },
+      {
+        "award": "Most Viral App",
+        "official_criterion": "Virality",
+        "evidence": "Not yet evidenced. devpost-submission.md explicitly records that no verified Noise campaign, viral-post URL, or attributable results are available. The secondary award is conditional on Noise participation and real evidence; implemented sharing alone does not establish virality."
+      },
+      {
+        "award": "Most Viral App",
+        "official_criterion": "Scalability",
+        "evidence": "Features/ShareCard/AnswerShareCardPage.swift and Features/SevenMornings/SevenMorningsShareCardView.swift render reusable single-answer and seven-answer images. SevenMorningsPage.swift exports with ShareLink. devpost-submission.md distinguishes implemented repeatability from unmeasured distribution at scale."
+      },
+      {
+        "award": "Most Viral App",
+        "official_criterion": "Conversion relevance",
+        "evidence": "The Seven Mornings card includes the question, dated answers, and app name. devpost-submission.md explains the intended connection between that image and the journal concept while explicitly stating that conversion to downloads is unmeasured."
+      }
+    ]
   }
 }
