@@ -29,13 +29,15 @@ jobs:
       id-token: write # Tailscale の OIDC (workload identity federation) 認証に必要
       contents: read
     # タグ運用はしないため main の commit SHA で固定する（更新時は SHA を書き換える）
-    uses: bannzai/simtunnel/.github/workflows/session.yml@82f8e8f60eec1bf19f5889e08f219b59bbc146ee # main 2026-08-12
+    uses: bannzai/simtunnel/.github/workflows/session.yml@aa02a15765a76ab4c27d7e3fbd2eca6f17432b77 # main 2026-09-12
     with:
       session: ${{ inputs.session }}
       device: ${{ inputs.device }}
       duration_minutes: ${{ inputs.duration_minutes }}
       build_project: MementoMorning.xcodeproj
       build_scheme: MementoMorning
+      # 通常 CI と同様、LicenseList プラグインの対話承認を省略する
+      build_extra_args: -skipPackagePluginValidation
     secrets:
       TS_OIDC_CLIENT_ID: ${{ secrets.TS_OIDC_CLIENT_ID }}
       TS_OIDC_AUDIENCE: ${{ secrets.TS_OIDC_AUDIENCE }}
