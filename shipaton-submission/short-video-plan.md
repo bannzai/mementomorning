@@ -83,6 +83,40 @@ agent が行う:
 - TikTok / YouTube / Instagram / X への投稿と、プロフィール欄へのリンク設置
 - C (毎朝の実回答) の撮影は日々の利用そのもの。公開してよい回答だけを選ぶ
 
+## 制作した縦動画 (issue #167、2026-09-17)
+
+`demo-video/output/shorts/<案>-<言語>.mp4` (約 17.6 秒、1080x1920)。3 案の違いは固定テロップと登場人物だけで、構成は共通
+(目を覚ます → 問いの実画面 → 録画中に答えを声に出す → 無音の一拍 → 人生カレンダー → ブランド)。
+
+| 案 | 固定テロップ (英語) | 人物と答え |
+| --- | --- | --- |
+| last-day | POV: my alarm won't stop until I say what I'd do if today were my last day | 会社員: Today I'm leaving on time. I want to really talk with my wife. |
+| one-question | My alarm asks me one question every morning | 学生: I'll apologize to the friend I've been avoiding. |
+| someday | You keep saying "someday" This alarm makes you say it today | クリエイター: That unfinished song. I'm finishing it today. |
+
+### 投稿用キャプション案
+
+英語 (TikTok / Shorts / X 共通。1 行目がフック、リンクはプロフィール欄):
+
+```text
+My alarm won't stop until I say what I'd do if today were my last day.
+Memento Morning is on the App Store. iOS 26+, free, 7-day free trial on the yearly plan.
+Link in bio.
+#Shipaton #BuildInPublic #alarmclock #morningroutine #mementomori #indiedev #ios
+```
+
+日本語:
+
+```text
+今日が最後の日なら何をするか、声に出すまで止まらない目覚まし。
+Memento Morning、App Store で公開中。iOS 26 以上、無料 (年額プランのみ 7 日間無料)。
+リンクはプロフィールから。
+#Shipaton #BuildInPublic #目覚まし #朝活 #メメントモリ #個人開発
+```
+
+ハッシュタグの注記: `#Shipaton` `#BuildInPublic` は Devpost の公式ページに指定が無く仮置き。公式のタグ・メンション先は #163 で確認してから差し替える。
+素材の注記: 登場人物は生成 AI で作った架空人物 (静止画は Nano Banana Pro、動きと声は Veo)。実在人物ではない旨を、聞かれたら答えられるようにしておく。
+
 ## セッション再開
 
 ```sh
