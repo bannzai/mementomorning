@@ -107,8 +107,8 @@ documents/PROJECT.md の決定と合わせて選ぶ)。upbeat はトーン違い
 
 ## 縦動画 (TikTok / YouTube Shorts / X 用、issue #167)
 
-2 分デモとは別に、全編に 1 文のテロップを固定した約 17.6 秒の縦動画 (1080x1920) を 3 案 × 英日で作る。
-構成は「目を覚ます人物 → 朝の問いの実画面 (全画面) → 録画中の実画面で人物が答えを声に出す → 無音の一拍 →
+2 分デモとは別に、全編に 1 文のテロップを固定した約 19.8 秒の縦動画 (1080x1920) を 3 案 × 英日で作る。
+構成は「布団から手を出してスマホを取り、顔を出す人物 → 朝の問いの実画面 (全画面) → 録画中の実画面で人物が答えを声に出す → 無音の一拍 →
 人生カレンダー → ブランドカード」。人物の映像と声は Veo (veo-3.1-fast-generate-preview) で
 `assets/person-*.png` の架空人物を動かしたもの (`config.shorts.json` の `motion` にプロンプト、`variants` に
 テロップと答えの字幕)。合成手順・タイムライン・収録クリップのフレーム実測値は `scripts/build-shorts.py` のヘッダーが正。
@@ -126,8 +126,8 @@ python3 demo-video/scripts/build-shorts.py
 # 4. 検証: 区間ごとの音量 (アラーム → 声 → 無音 → 一音) と、発話の書き起こし
 bash demo-video/scripts/measure-short-audio.sh demo-video/output/shorts/last-day-en.mp4
 $PY demo-video/scripts/inspect-short.py demo-video/output/shorts/last-day-en.mp4   # Gemini に映像と音声を検査させる
-# Gemini が使えない時の発話確認: 6〜13 秒を 16kHz mono の wav にして whisper.cpp で書き起こす
-ffmpeg -ss 6 -to 13 -i demo-video/output/shorts/last-day-en.mp4 -vn -ac 1 -ar 16000 tmp/speech.wav
+# Gemini が使えない時の発話確認: 録画区間 (8.2〜15.2 秒) を 16kHz mono の wav にして whisper.cpp で書き起こす
+ffmpeg -ss 8.2 -to 15.2 -i demo-video/output/shorts/last-day-en.mp4 -vn -ac 1 -ar 16000 tmp/speech.wav
 whisper-cli -m tmp/ggml-base.en.bin -l en -nt tmp/speech.wav   # モデルは https://huggingface.co/ggerganov/whisper.cpp から取得
 ```
 

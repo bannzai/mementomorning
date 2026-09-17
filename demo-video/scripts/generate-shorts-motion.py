@@ -44,6 +44,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     fingerprint = hashlib.sha256(
         image.read_bytes() + prompt.encode() + json.dumps(parameters, sort_keys=True).encode() + model.encode()
+        + clip.get("mode", "first-frame").encode()
     ).hexdigest()[:12]
     cached = out_dir / f"{args.kind}-{args.person}-{fingerprint}.mp4"
     final = out_dir / f"{args.kind}-{args.person}.mp4"
@@ -58,11 +59,22 @@ def main() -> None:
     if operation_file.exists():
         operation = types.GenerateVideosOperation.model_validate_json(operation_file.read_text())
     else:
-        operation = client.models.generate_videos(
-            model=model,
-            source=types.GenerateVideosSource(prompt=prompt, image=types.Image.from_file(location=str(image))),
-            config=types.GenerateVideosConfig(**parameters),
-        )
+        # mode "reference": 静止画を最初のフレームに固定せず、人物の参照画像として渡す (布団に潜った状態から
+        # 始めるなど、最初のフレームに顔が無い構図を作るため)。既定 (image-to-video) は静止画が最初のフレームになる
+        if clip.get("mode") == "reference":
+            source = types.GenerateVideosSource(prompt=prompt)
+            config = types.GenerateVideosConfig(
+                **parameters,
+                reference_images=[
+                    types.VideoGenerationReferenceImage(
+                        image=types.Image.from_file(location=str(image)), reference_type="asset"
+                    )
+                ],
+            )
+        else:
+            source = types.GenerateVideosSource(prompt=prompt, image=types.Image.from_file(location=str(image)))
+            config = types.GenerateVideosConfig(**parameters)
+        operation = client.models.generate_videos(model=model, source=source, config=config)
         operation_file.write_text(operation.model_dump_json(exclude_none=True))
         print(f"STARTED={args.kind}-{args.person}", flush=True)
     for attempt in range(90):

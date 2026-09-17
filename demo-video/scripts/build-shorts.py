@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """TikTok / YouTube Shorts / X 用の縦動画 (issue #167) を ffmpeg で合成する。
 
-構成 (約 17.6 秒、1080x1920、30fps。全編に 1 文のテロップを固定表示):
-  0.0- 4.5  目を覚ます人物 (Veo 生成クリップ wake-<person>.mp4) + アラーム音
-  4.5- 6.0  朝の問いの実画面 (全画面)。インカメラのプレビューに人物 (speak クリップ) を lighten 合成
-  6.0-13.0  録画中の実画面。人物が答えを声に出す (speak クリップの音声)。アラーム音は声の下で小さくなり、録画停止で止まる
- 13.0-13.3  黒 (無音の一拍)
- 13.3-16.0  人生カレンダーの実画面 (全画面) + 静かな一音
- 16.0-17.6  ブランドカード (中央)
+構成 (約 19.8 秒、1080x1920、30fps。全編に 1 文のテロップを固定表示):
+  0.0- 6.7  布団に潜った状態から手を出してスマホを取り、顔を出して画面を見る人物 (Veo 生成クリップ wake-<person>.mp4) + アラーム音
+  6.7- 8.2  朝の問いの実画面 (全画面)。インカメラのプレビューに人物 (speak クリップ) を lighten 合成
+  8.2-15.2  録画中の実画面。人物が答えを声に出す (speak クリップの音声)。アラーム音は声の下で小さくなり、録画停止で止まる
+ 15.2-15.5  黒 (無音の一拍)
+ 15.5-18.2  人生カレンダーの実画面 (全画面) + 静かな一音
+ 18.2-19.8  ブランドカード (中央)
 
 使い方:
   python3 demo-video/scripts/build-shorts.py [--variant ID] [--lang en|ja]
@@ -39,11 +39,13 @@ FONT = "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc"
 MQ_QUESTION_SHOWN = 2.2   # 問いと録画ボタンが表示され切った時刻
 MQ_RECORD_START = 5.9     # 録画タイマー 0:00 の出現
 CAL_GRID_SHOWN = 5.6      # 月グリッドが表示され切った時刻
-# 人物の wake クリップの使い始め (冒頭に目が開いているフレームがある個体は飛ばす)
-WAKE_IN = {"worker": 0.5, "student": 0.4, "creator": 0.4}
+# 人物の wake クリップの使い始め。2026-09-18 生成の 3 本は 0〜2 秒が布団だけの静止、2〜3.5 秒で手が出てスマホを取り、
+# 3〜3.5 秒で顔が出て、6.5〜7 秒で目を開けて画面を見る。布団だけの静止を約 1.2 秒に詰め、画面を見た直後 (7.5 秒) で切る
+WAKE_IN = {"worker": 0.8, "student": 0.8, "creator": 0.8}
 
 # タイムライン (秒)
-WAKE_LEN = 4.5
+# 合計尺を 20 秒以内に収める範囲で、目を開けて画面を見る 7.5 秒時点まで使う長さ
+WAKE_LEN = 6.7
 QUESTION_LEN = 1.5
 RECORD_LEN = 7.0
 BEAT_LEN = 0.3
@@ -61,7 +63,8 @@ T_ANSWER_SUB_END = T_RECORD + 6.4 - SPEAK_IN
 
 # 収録クリップ (1206x2622) を 1080x1920 に敷き詰める。上 120px でステータスバーの時計を切り、下は「Answer in text」の
 # リンクが切れる範囲で、問い・録画ボタン・タイマー・カレンダーは残る (録画ボタンは y≈1864 で下端ぎりぎり)。
-# 問いの文字は y≈385〜502 に来るため、上部の固定テロップは y 136〜340 (フォント 52・3 行) に収めて重ねない
+# 問いの文字は上端が y≈360 (2026-09-18 に完成動画のフレームで実測) に来るため、上部の固定テロップは
+# 枠込みで y 108〜324 (フォント 48・3 行・y=132) に収めて重ねない
 FULLBLEED = "fps=30,scale=1080:2348,crop=1080:1920:0:120,setsar=1"
 # 人物をカメラプレビューに lighten 合成するとき、白い UI 文字が必ず残るよう人物側の輝度上限を下げる
 PERSON = "fps=30,scale=1080:1920,setsar=1,colorlevels=romax=0.72:gomax=0.72:bomax=0.72"
@@ -134,18 +137,19 @@ def build(variant: dict, lang: str, workdir: Path) -> Path:
         f"drawtext=fontfile='{FONT}':textfile='{tagline}':fontsize=40:fontcolor=white@0.8:x=(w-text_w)/2:y=(h-text_h)/2+50[brand]",
         "[wake][question][record][beat][calendar][brand]concat=n=6:v=1:a=0[body]",
         # 固定テロップ (全編) と答えの字幕 (発話中)
-        f"[body]{drawtext(caption, 52, '160')},"
+        # カレンダーの区間だけ、画面上端のタイトル「Calendar」(y≈85〜125) に枠が掛からない位置まで下げる
+        "[body]" + drawtext(caption, 48, f"'if(between(t,{T_CAL},{T_BRAND}),190,132)'") + ","
         f"{drawtext(answer, 46, '1320', f'between(t,{T_ANSWER_SUB_START},{T_ANSWER_SUB_END})', 0.45)},format=yuv420p[v]",
-        # 音: アラーム (0〜録画停止。声の下で小さく)、目覚めの環境音、答えの声、締めの一音
+        # 音: アラーム (0〜録画停止。声の下で小さく)、答えの声、締めの一音。wake クリップの音声は使わない
+        # (プロンプトで禁じても Veo が着信音や独り言を入れる個体があり、アプリのアラーム音と二重になるため)
         f"[4:a]atrim=0:{T_BEAT},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
         f"afade=t=in:st=0:d=0.3,"
         f"volume='if(lt(t,{T_RECORD}),0.9,if(lt(t,{T_RECORD + 2}),0.9-0.6*(t-{T_RECORD})/2,0.3))':eval=frame[alarm]",
-        f"[0:a]atrim=start={wake_in}:duration={WAKE_LEN},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,volume=0.5[wake_a]",
         f"[1:a]atrim=start={SPEAK_IN}:duration={RECORD_LEN},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
         f"adelay={int(T_RECORD * 1000)}|{int(T_RECORD * 1000)}[speak_a]",
         f"[5:a]atrim=0:{CAL_LEN},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,volume=0.45,"
         f"afade=t=out:st={CAL_LEN - 1.0}:d=1.0,adelay={int(T_CAL * 1000)}|{int(T_CAL * 1000)}[chime_a]",
-        "[alarm][wake_a][speak_a][chime_a]amix=inputs=4:duration=longest:normalize=0,alimiter=limit=0.95[a]",
+        "[alarm][speak_a][chime_a]amix=inputs=3:duration=longest:normalize=0,alimiter=limit=0.95[a]",
     ]
     cmd = [
         "ffmpeg", "-nostdin", "-y", "-v", "error",
@@ -161,7 +165,7 @@ def build(variant: dict, lang: str, workdir: Path) -> Path:
     sheet = out.with_suffix(".png")
     subprocess.run([
         "ffmpeg", "-nostdin", "-y", "-v", "error", "-i", str(out),
-        "-vf", "fps=1,scale=240:-1,tile=6x3", "-frames:v", "1", str(sheet),
+        "-vf", "fps=1,scale=240:-1,tile=5x4", "-frames:v", "1", str(sheet),
     ], check=True)
     return out
 
