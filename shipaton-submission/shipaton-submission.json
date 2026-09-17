@@ -1,0 +1,66 @@
+{
+  "rules": {
+    "url": "https://revenuecat-shipaton-2026.devpost.com/rules",
+    "checked_at": "2026-09-16",
+    "submission_start": "2026-07-31T08:00:00-07:00",
+    "submission_deadline": "2026-09-30T23:45:00-07:00",
+    "eligible_first_release_start": "2026-07-31",
+    "eligible_first_release_end": "2026-09-30",
+    "allowed_platforms": ["iOS", "Android", "Samsung Galaxy"],
+    "allowed_stores": ["Apple App Store", "Google Play Store", "Samsung Galaxy Store"],
+    "premium_access_methods": ["free_trial", "promo_code"],
+    "unpublished_project_exception_award": "Next Gen Award",
+    "video": {
+      "max_duration_seconds": 120,
+      "public_hosts": ["youtube.com", "youtu.be", "vimeo.com"]
+    },
+    "app_icon": {
+      "width": 1024,
+      "height": 1024
+    },
+    "screenshot": {
+      "width": 1179,
+      "height": 2556,
+      "device_frames_allowed": false
+    },
+    "english_translation_required_for_non_english": true
+  },
+  "project": {
+    "name": "Memento Morning",
+    "platform": "iOS",
+    "store": "Apple App Store",
+    "store_url": "https://apps.apple.com/us/app/memento-morning/id6801673264",
+    "published": true,
+    "first_public_release_date": "2026-09-15",
+    "revenuecat_sdk_or_ads_integrated": true,
+    "purchase_or_ads_working": false,
+    "accessible_from_us": true,
+    "next_gen_award_only": false,
+    "source_repository_url": "https://github.com/bannzai/mementomorning",
+    "source_repository_open_source": true,
+    "premium_access": {
+      "method": "free_trial",
+      "details": "The yearly plan (Premium) includes a 7-day free trial. Monthly and Lifetime have no trial. The paywall appears at the end of first-launch onboarding, so judges can start the trial right after install. Alternate paths: Journal > locked row older than 7 days, or Alarm settings > Endless follow-up alarms."
+    },
+    "primary_language": "en-US",
+    "english_translation_path": ""
+  },
+  "artifacts": {
+    "demo_video": {
+      "config_path": "demo-video.config.json",
+      "local_path": "../demo-video/output/memento-morning-demo-people.mp4",
+      "public_url": "https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/bannzai/mementomorning/20260828/62d312cd-22b9-426f-942c-6a7c00803202.mp4",
+      "publicly_visible": false,
+      "shows_working_app": true,
+      "third_party_materials_cleared": true,
+      "uses_real_person_name_or_likeness": false,
+      "safe_variant_path": ""
+    },
+    "app_icon_path": "../MementoMorning/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+    "screenshot_paths": [],
+    "screenshots_have_device_frames": null,
+    "submission_text_path": "devpost-submission.md",
+    "target_awards": ["RevenueCat Design Award", "Most Viral App"],
+    "criteria_evidence": []
+  }
+}
