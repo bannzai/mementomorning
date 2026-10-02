@@ -10,6 +10,9 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read # checkout のみ
+
 jobs:
   # public repo のため macOS runner は無料 (private では使わない方針の例外)
   build-and-test:
