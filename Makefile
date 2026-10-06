@@ -47,3 +47,12 @@ test:
 
 clean:
 	rm -rf $(DERIVED_DATA)
+
+# 引数なしの make で動作確認 (verify) を実行する
+.DEFAULT_GOAL := verify
+
+# build と test は同じ DerivedData を使うため、-j 指定でも並列に起動させない (各 target は xcodebuild 1 本で、make 側の並列化で速くなるものは無い)
+.NOTPARALLEL:
+
+.PHONY: verify
+verify: build test
