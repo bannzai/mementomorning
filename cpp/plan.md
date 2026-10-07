@@ -27,7 +27,7 @@
 
 ## 次工程
 
-1. `cpp_create.sh journal-202610 --locale ja --template-version e53a538a-93aa-4213-a3ab-82c17fc8be3c` で作成 (2026-10-07 時点では Apple 側の一時障害 `ENTITY_ERROR.RELATIONSHIP.REQUIRED` で作成できず、再試行中)
+1. `cpp_create.sh journal-202610 --locale ja --template-version e53a538a-93aa-4213-a3ab-82c17fc8be3c` で作成する。**2026-10-07 時点で未作成**: 同じ body が他の 7 アプリでは通るのに、このアプリ (と あみだくじ) だけ `POST /v1/appCustomProductPages` が 409 `ENTITY_ERROR.RELATIONSHIP.REQUIRED` ("You must provide a value for the relationship 'appCustomProductPageLocalizations'") を返す。`--template-version` の有無にかかわらず同じで、原因は未特定。App Store Connect の Web で CPP を作れるか試す
 2. `cpp_apply_config.sh --config cpp/config.json` で promotionalText と keywords を適用
 3. `asset_library_set_placement.sh --target cpp` で header / search results を配置し、ユーザー確認後に `cpp_submit.sh <CPP_ID>` で提出
 4. 承認後、App Analytics で CPP ごとの impressions / CVR を計測
