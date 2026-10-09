@@ -345,32 +345,40 @@ private struct HomeContent: View {
                         .foregroundStyle(Color.warmWhite)
                 }
                 .buttonStyle(.plain)
-                if alarmSetting.isEnabled {
-                    TimelineView(.everyMinute) { context in
-                        let remainingMinutes = Int(
-                            nextOccurrence(
-                                hour: alarmSetting.hour,
-                                minute: alarmSetting.minute,
-                                now: context.date,
-                                calendar: .current
-                            ).timeIntervalSince(context.date) / 60
-                        )
-                        // ja: あと %lld 時間 %lld 分 · 時刻をタップして変更
-                        Text("In \(remainingMinutes / 60) hr \(remainingMinutes % 60) min · Tap the time to change")
-                            .font(.system(size: 12))
-                            .tracking(0.96)
-                            .foregroundStyle(Color.warmWhite.opacity(0.4))
-                    }
-                } else {
-                    // OFF 中はアラームが 1 件もスケジュールされないため、発火予定があるかのようなカウントダウンは出さない
-                    // ja: アラームはオフ · 時刻をタップして変更
-                    Text("Alarm is off · Tap the time to change")
+                // 残り時間と「次の朝が 1 日限定の OFF の対象か」は現在時刻で変わる (スキップした朝の発火時刻を過ぎると
+                // 次の朝が翌日へ進み ON に戻る) ため、小見出しとトグルをまとめて毎分再評価する (issue #182)
+                TimelineView(.everyMinute) { context in
+                    let isNextMorningEnabled = isNextMorningAlarmEnabled(now: context.date, alarmSetting: alarmSetting, calendar: .current)
+                    VStack(spacing: 8) {
+                        Group {
+                            if isNextMorningEnabled {
+                                let remainingMinutes = Int(
+                                    nextOccurrence(
+                                        hour: alarmSetting.hour,
+                                        minute: alarmSetting.minute,
+                                        now: context.date,
+                                        calendar: .current
+                                    ).timeIntervalSince(context.date) / 60
+                                )
+                                // ja: あと %lld 時間 %lld 分 · 時刻をタップして変更
+                                Text("In \(remainingMinutes / 60) hr \(remainingMinutes % 60) min · Tap the time to change")
+                            } else if alarmSetting.isEnabled {
+                                // 次の朝だけスキップ中。翌日以降は先行登録済みのため、永続の OFF と区別して 1 回限りであることを示す
+                                // ja: 次の朝だけオフ · 時刻をタップして変更
+                                Text("Off for the next morning only · Tap the time to change")
+                            } else {
+                                // OFF 中はアラームが 1 件もスケジュールされないため、発火予定があるかのようなカウントダウンは出さない
+                                // ja: アラームはオフ · 時刻をタップして変更
+                                Text("Alarm is off · Tap the time to change")
+                            }
+                        }
                         .font(.system(size: 12))
                         .tracking(0.96)
                         .foregroundStyle(Color.warmWhite.opacity(0.4))
+                        alarmToggle(alarmSetting: alarmSetting, isEnabled: isNextMorningEnabled)
+                            .padding(.top, 26)
+                    }
                 }
-                alarmToggle(alarmSetting: alarmSetting)
-                    .padding(.top, 26)
                 if let lastRescheduleError, !lastRescheduleError.isEmpty {
                     // エラーメッセージはそのまま表示する (加工しない)。エラーも低彩度で表現する (デザイントークン参照)
                     Text(lastRescheduleError)
@@ -400,27 +408,28 @@ private struct HomeContent: View {
         .padding(.top, 110)
     }
 
-    /// アラーム有効/無効のトグル (56×34 の pill。ON 背景は夜明け色 45%)
-    private func alarmToggle(alarmSetting: AlarmSetting) -> some View {
+    /// 次の朝のアラームのトグル (56×34 の pill。ON 背景は夜明け色 45%)。
+    /// isEnabled は次の朝の実効状態 (isNextMorningAlarmEnabled) で、設定の isEnabled そのものではない (issue #182)
+    private func alarmToggle(alarmSetting: AlarmSetting, isEnabled: Bool) -> some View {
         Button {
-            toggleAlarm(alarmSetting: alarmSetting)
+            toggleAlarm(alarmSetting: alarmSetting, isEnabled: isEnabled)
         } label: {
-            ZStack(alignment: alarmSetting.isEnabled ? .trailing : .leading) {
+            ZStack(alignment: isEnabled ? .trailing : .leading) {
                 Capsule()
-                    .fill(alarmSetting.isEnabled ? Color.alarmToggleOn : Color.warmWhite.opacity(0.14))
+                    .fill(isEnabled ? Color.alarmToggleOn : Color.warmWhite.opacity(0.14))
                 Circle()
                     .fill(Color.warmWhite)
                     .frame(width: 28, height: 28)
                     .padding(3)
             }
             .frame(width: 56, height: 34)
-            .animation(.easeInOut(duration: 0.3), value: alarmSetting.isEnabled)
+            .animation(.easeInOut(duration: 0.3), value: isEnabled)
         }
         .buttonStyle(.plain)
         // ja: アラーム
         .accessibilityLabel(String(localized: "Alarm"))
         .accessibilityValue(
-            alarmSetting.isEnabled
+            isEnabled
                 // ja: オン
                 ? Text("On")
                 // ja: オフ
@@ -536,10 +545,20 @@ private struct HomeContent: View {
         .padding(.bottom, 24)
     }
 
-    /// アラームの有効/無効を切り替えて再スケジュールする。
+    /// 次の朝のアラームのトグルを切り替えて再スケジュールする (issue #182)。
+    /// ON → OFF は設定を OFF にせず次の朝 1 回だけをスキップする (翌日以降の先行登録は残り、スキップした朝の発火時刻を
+    /// 過ぎると表示も自動で ON に戻る)。OFF → ON はスキップを解除し、設定画面で OFF にしていた場合もそのまま ON にする。
+    /// isEnabled は押した時点の表示状態 (ユーザーが見て操作した状態) で、スキップする朝は押した時刻から決め直す。
     /// 再スケジュールの失敗は Rescheduler が lastRescheduleError へ書き込み、@AppStorage 経由でトグル下に表示される
-    private func toggleAlarm(alarmSetting: AlarmSetting) {
-        alarmSetting.setIsEnabled(isEnabled: !alarmSetting.isEnabled)
+    private func toggleAlarm(alarmSetting: AlarmSetting, isEnabled: Bool) {
+        if isEnabled {
+            alarmSetting.setSkippedDate(
+                skippedDate: nextMorningDate(hour: alarmSetting.hour, minute: alarmSetting.minute, now: .now, calendar: .current)
+            )
+        } else {
+            alarmSetting.setSkippedDate(skippedDate: nil)
+            alarmSetting.setIsEnabled(isEnabled: true)
+        }
         do {
             try modelContext.save()
         } catch {

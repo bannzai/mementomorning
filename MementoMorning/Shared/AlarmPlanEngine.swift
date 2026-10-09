@@ -31,10 +31,12 @@ struct PlannedAlarm: Equatable {
 /// 判定仕様:
 /// - alarmSetting が nil または isEnabled == false なら空を返す
 /// - now より後 lookaheadDays 日以内の hour:minute の発火日時 (毎日) のうち、
-///   answeredDates (回答済みの日の 0 時の集合) に含まれる日を除いて全て展開し、
+///   answeredDates (回答済みの日の 0 時の集合) に含まれる日と、alarmSetting.skippedDate
+///   (ホームのトグルで 1 日限定の OFF にした朝。issue #182) の日を除いて全て展開し、
 ///   各発火につきメイン 1 件 + backupAlarmIntervalMinutes 分刻みのバックアップ backupAlarmCount 件を返す
 ///   (回答の成立 = answeredDates で当日の発火が計画から消える。回答手段には依存しない。
-///   未回答時の追撃は本エンジンではなく StopAlarmIntent + SnoozeGate が担う: 無料はスヌーズ上限あり・プレミアムは無限)
+///   未回答時の追撃は本エンジンではなく StopAlarmIntent + SnoozeGate が担う: 無料はスヌーズ上限あり・プレミアムは無限。
+///   スキップした朝の翌日以降は従来どおり先行登録されるため、ON に戻す処理や通知は要らない)
 /// - alarmFiredDate (直近のアラーム発火日時 = その朝の main の発火予定日時) が now と同じ日で、
 ///   その日が未回答なら、その main に対する未来のバックアップを計画に残す
 ///   (スワイプ消去はアラーム停止の Intent を通らないため、発火検知だけして全再計画するとその朝の保険が消えてしまう)
@@ -54,7 +56,10 @@ func planAlarms(
         now: now,
         lookaheadDays: lookaheadDays,
         calendar: calendar
-    ).filter { !answeredDates.contains(calendar.startOfDay(for: $0)) }
+    ).filter { fireDate in
+        let fireDay = calendar.startOfDay(for: fireDate)
+        return !answeredDates.contains(fireDay) && fireDay != alarmSetting.skippedDate
+    }
 
     let firedDayBackups: [PlannedAlarm]
     if let alarmFiredDate,
@@ -89,6 +94,22 @@ func nextOccurrence(hour: Int, minute: Int, now: Date, calendar: Calendar) -> Da
         matchingPolicy: .nextTime,
         direction: .forward
     ) ?? now.addingTimeInterval(86400)
+}
+
+/// ホームのトグルが対象にする「次の朝」(now より後の直近の hour:minute が属する日の 0 時)。
+/// 1 日限定の OFF (AlarmSetting.skippedDate) はこの日を単位に記録・判定する (issue #182)。
+/// 暦日ではなく次の発火日を単位にするのは、夜に OFF にした時に翌朝のアラームを止められるようにするため
+/// (暦日単位だと 0 時に解除され、翌朝が鳴ってしまう)
+func nextMorningDate(hour: Int, minute: Int, now: Date, calendar: Calendar) -> Date {
+    calendar.startOfDay(for: nextOccurrence(hour: hour, minute: minute, now: now, calendar: calendar))
+}
+
+/// 次の朝のアラームが鳴る状態かを返す (ホームのトグルの表示と、タップ時の切り替え先の判定に使う)。
+/// 設定画面で OFF にされている (isEnabled == false) か、次の朝が 1 日限定の OFF の対象 (skippedDate) なら false。
+/// スキップした朝の発火時刻を過ぎると次の朝が翌日へ進むため、何もしなくても true に戻る
+func isNextMorningAlarmEnabled(now: Date, alarmSetting: AlarmSetting, calendar: Calendar) -> Bool {
+    alarmSetting.isEnabled
+        && alarmSetting.skippedDate != nextMorningDate(hour: alarmSetting.hour, minute: alarmSetting.minute, now: now, calendar: calendar)
 }
 
 /// now より後 lookaheadDays 日以内の hour:minute の発火日時を昇順で全て返す (毎日 1 回)。
