@@ -1,8 +1,8 @@
 ---
 feature: AlarmSetting
 verification: mobile-mcp
-last_verified_commit: c856c8535623d1d5eef031fe0776555cbab68dce
-last_verified_at: 2026-09-01
+last_verified_commit: ff8838f97aefa951f7790b047d456057981f9591
+last_verified_at: 2026-10-10
 ---
 
 # AlarmSetting QA
@@ -20,6 +20,7 @@ last_verified_at: 2026-09-01
 | S1 | 設定した時刻にアラームが発火する (発火判定は画面表示で行う) | アラーム発火 |
 | S2 | `.claude/rules/ios-alarmkit-constraints.md` の運用ルールに準拠している | — (コードレビューで担保。QA 手動確認の対象外) |
 | S3 | ユニットテストが全件パスし CI がグリーン | — (CI で担保。QA 手動確認の対象外) |
+| S4 | ホームのトグル OFF は次の朝 1 回だけのスキップで、翌日以降は鳴り、スキップした朝を過ぎると表示も ON に戻る (issue #182) | ホームのトグル OFF は次の朝だけ |
 
 ## 1. 表示
 
@@ -180,7 +181,9 @@ Clear Log タップ後の空状態 (「No logs」):
   - ⏭️ スキップ: ホームが --:-- になる状態 (オンボーディング完了済み + AlarmSetting が 0 件) に到達する手段が無い。OnboardingPage.save() は AlarmSetting を insert して保存できた時だけ hasCompletedOnboarding を true にするため、オンボーディングを抜けた時点で必ず設定が 1 件存在する。開発者メニューの「オンボーディングをリセット」は AlarmSetting を消さず、DebugMenuPage に AlarmSetting を削除する操作も無い (2026-08-22 時点)
 - [x] **アラーム発火**: 1〜2 分後の時刻に変更する (自動保存される) と、その時刻にアラームが発火する (発火判定は画面表示。シミュレータは sound .default だと鳴らない)
   - 自動化: manual（発火待ちと画面表示の目視判定が必要）
-  - 実行ナレッジ: **AlarmKit のアラート内容はスクリーンショットでは黒い角丸としてしか写らない** (システム側の別レイヤーで描画されるため。`xcrun simctl io screenshot` でも同じ)。発火の判定は WDA のアクセシビリティツリーで行い、アプリ名・問いの本文・停止ボタン (`xmark`) が出ていることを確認する
+  - 実行ナレッジ: **AlarmKit のアラート内容はスクリーンショットでは黒い角丸としてしか写らない** (システム側の別レイヤーで描画されるため。`xcrun simctl io screenshot` でも同じ)。発火の判定は WDA のアクセシビリティツリーで行い、アプリ名・問いの本文・停止ボタン (`xmark`) が出ていることを確認する。simtunnel (iOS 26.5) では WDA の `elements` にアラートの要素が出ないことがあり、その時はスクリーンショット上部の黒い角丸と × で判定する (2026-10-09 の実測)
+- [x] **ホームのトグル OFF は次の朝だけ**: 開発者メニューの「アラームを 2 分後に設定」の後にホームのトグル (home_alarm_toggle) を OFF にすると、小見出しが「Off for the next morning only · Tap the time to change」(ja: 次の朝だけオフ · 時刻をタップして変更) になり、設定画面のトグルは ON のまま (AlarmSetting.isEnabled は変わらず skippedDate に次の朝が記録される)。2 分後にアラートも朝の問い画面も出ず、発火予定時刻を過ぎると操作なしでトグルが ON に戻って翌日までの残り時間の表示になる。同じ手順で OFF にしなければ 2 分後に発火する (issue #182)
+  - 自動化: manual（発火待ちと画面表示の目視判定が必要）
 - [ ] **再スケジュール失敗の表示**: 再スケジュールに失敗した場合はエラーメッセージのアラートが表示される (ホームにも home_reschedule_error が出る)
   - 自動化: todo
 
@@ -300,6 +303,30 @@ Gentle Chime (同梱音源 = AlertSound.named) を選んだ状態で開発者メ
 {"type":"StaticText","label":"今日死ぬとしたら何をやりたいですか？"}
 {"type":"Button","label":"停止","identifier":"xmark"}
 ```
+
+</details>
+
+### **ホームのトグル OFF は次の朝だけ**: 開発者メニューの「アラームを 2 分後に設定」の後にホームのトグル (home_alarm_toggle) を OFF にすると、小見出しが「Off for the next morning only · Tap the time to change」(ja: 次の朝だけオフ · 時刻をタップして変更) になり、設定画面のトグルは ON のまま (AlarmSetting.isEnabled は変わらず skippedDate に次の朝が記録される)。2 分後にアラートも朝の問い画面も出ず、発火予定時刻を過ぎると操作なしでトグルが ON に戻って翌日までの残り時間の表示になる。同じ手順で OFF にしなければ 2 分後に発火する (issue #182)
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-10-09** (iPhone 17 / iOS 26.5、simtunnel のリモート simulator、英語ロケール・UTC)
+
+開発者メニューで 2 分後 (18:22) に設定した直後のホーム。残り時間「In 0 hr 2 min」、トグルは ON:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/7a9f64fb-99eb-47da-8c01-ebb5bd50ee49-03-home-before-off.jpg" width="320">
+
+トグルを OFF にした直後。小見出しが「Off for the next morning only · Tap the time to change」になり、トグルは OFF (要素ツリー: `home_alarm_toggle` の value が `Off`):
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/45d8de87-ec69-48aa-83af-ee5cf08d149b-04-home-off.jpg" width="320">
+
+スキップした 18:22 を過ぎた 18:24。アラートも朝の問い画面も出ず、トグルは操作なしで ON に戻り、小見出しは翌日までの残り時間「In 23 hr 58 min」(18:22:17 の要素ツリーで既に `On` / 「In 24 hr 0 min」):
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/a2c4e4e7-686b-48ce-9e5e-0c385fe3b498-05-home-after-skipped-time.jpg" width="320">
+
+対照: 続けて 2 分後 (18:27) に設定し、OFF にせずに待つと 18:27 に AlarmKit のアラート (画面上部の黒い角丸と × 停止ボタン) が出た。この時 WDA の `elements` にはアラートの要素 (xmark・問いの本文) が出ず、判定はスクリーンショットで行った:
+
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/ef687330-a60a-4a89-9021-18862468309f-07-control-alert-visible.jpg" width="320">
 
 </details>
 
