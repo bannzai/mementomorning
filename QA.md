@@ -73,6 +73,13 @@ last_verified_at: 2026-09-01
 - 発見日: 2026-08-22。mobile-mcp の `mobile_type_keys` に `\b` を渡すと、バックスペースではなく `\b` という文字列がそのまま入力される
 - 対処: Maestro の `tapOn: {id: <identifier>}` → `eraseText: 60` を使う。`eraseText` はカーソルより前しか消さず、`tapOn` はタップ位置にカーソルを置くため、1 回では消し残ることがある。同じ flow を 2〜3 回繰り返して、要素の value が消えたことを確認してから次へ進む
 
+### iPhone Duo の Simulator で外側・内側ディスプレイを確認する
+
+- 発見日: 2026-10-09 (issue #183)。姿勢の切り替えは `bash ~/.claude/skills/ios-simulator/scripts/duo-pose.sh set --udid <UDID> open|closed` (Device Hub のウィンドウを操作するためローカル専用。手順は ios-simulator skill Phase 2「折りたたみ端末の外側・内側ディスプレイを切り替える」)。外側は `xcrun simctl io <UDID> screenshot --display=primary`、内側は `--display=primary-1` で撮る。「閉じた姿勢 → 開いた姿勢 → 閉じ直した姿勢」の順に撮ると、開閉後に崩れが残る画面を見つけられる (ホームの粒がそれに当たった)
+- iPhone Duo では NavigationStack のツールバー (ホームの開発者メニューのハンマー・戻るボタン) と時計・Wi-Fi が OS によって右端の列に置かれ、mobilecli の `dump ui` に現れない。閉じた姿勢では座標 (417, 195) をタップする。sheet は内側ディスプレイではフォームシート (中央の窓) として出る
+- システムのアラート (通知・カメラの許可、共有を促すダイアログ) のボタンも `dump ui` に出ない。`Alert` 要素の矩形から左右のボタンの座標を求めてタップする (右 = 許可、左 = 許可しない / 今はしない)
+- AlarmKit の許可は、`xcrun simctl privacy reset` でもアプリのアンインストールでも拒否のまま残る (mobiletimerd が `Denial for com.bannzai.MementoMorning to use AlarmKit` を出してダイアログが出ない)。設定アプリ →「アプリ」→「MementoMorning」→「アラーム」のトグルを ON にすると許可される (iPhone 17 Pro / iOS 27.0 の Simulator でも同じ)
+
 ### リモート simulator (simtunnel) の通知バナーは動画で確認する
 
 - 更新日: 2026-09-01。simtunnel issue #38 の対応後は `simtunnel record <session> <output.mjpeg> --duration 70` で 1 分後の通知バナーを連続収録できる。静止画を 1 枚だけ取得する方法では表示時間を取り逃がすため、通知発火の確認には動画を使う
@@ -200,6 +207,38 @@ last_verified_at: 2026-09-01
 手順 3 で朝の問いが表示されたのは停止操作の効果ではなく、手動で前面化した時に `Rescheduler` が「発火予定日時を過ぎた main アラームの記録」を検知して発火を記録する経路による (発火記録 `lastAlarmFiredDate` も停止時刻ではなく main の発火予定日時 12:43:00 で入っていた)。
 
 これは `.claude/rules/ios-alarmkit-constraints.md` に記録済みのシミュレータ制約 (issue #3 / issue #97 で再現。`Could not find an intent with identifier StopAlarmIntent` で `perform()` が未実行になる) と一致する。したがって **停止操作を起点にした追撃アラームの再登録 (「答えるまで止まらない」の中核) はシミュレータでは確認できず、実機 QA (issue #2) に残る**。
+
+</details>
+
+</details>
+
+## 2. iPhone Duo (外側・内側ディスプレイ) での主要画面の表示
+
+- [x] **外側・内側ディスプレイで主要画面が崩れない**: iPhone Duo (iOS 27.1) の Simulator で、オンボーディングの全ステップ・ホーム・朝の問い・ジャーナル・カレンダー・設定・ペイウォール・編集・共有カード・七つの朝・一ヶ月の手紙・夜の振り返りを、閉じた姿勢 (外側)・開いた姿勢 (内側)・閉じ直した姿勢の順に撮り、見切れ・重なり・不自然な余白・固定幅による偏り・サイドバー化が無い (issue #183。姿勢の切り替えと撮影の手順は実行ナレッジ「iPhone Duo の Simulator で外側・内側ディスプレイを確認する」)
+  - 自動化: manual (姿勢の切り替えがローカルの Device Hub の操作でしかできないため)
+  - 確認範囲: 2026-10-09 に Xcode 27.1 (27A9275) でビルドした Debug ビルドで 22 画面を確認した。崩れは、ホームの背景に積もる答えた朝の粒 (`MorningDotsPhysicsView`) の 1 件で、閉じた姿勢で起動して開くと内側ディスプレイの左に偏り、開いた姿勢で起動して閉じると外側ディスプレイの右端で切れる。表示領域の幅が変わったら粒のシーンを作り直す修正を入れ、修正後は開閉のどちらの順でも粒が中央に積もる。他の 21 画面は崩れなし (全画面のスクリーンショットは PR #184 の本文)
+
+#### 動作確認
+<details>
+<summary>動作確認エビデンス</summary>
+
+### **外側・内側ディスプレイで主要画面が崩れない**
+
+<details><summary>動作確認スクショ</summary>
+
+**確認日: 2026-10-09** (iPhone Duo / iOS 27.1 のローカル Simulator、日本語ロケール、一ヶ月の手紙用回答 60 日分投入後)
+
+修正前: 閉じた姿勢で起動して開くと、粒が内側ディスプレイの左に偏る
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/f9fbd13c-cac9-4d36-ac5a-7ac2070947f2-home-60-inner.png" width="480" />
+
+修正後: 開くと粒が内側ディスプレイの幅に積もり直す
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/e39880b2-2e5e-4dee-af80-665b61128094-home-60-after-inner.png" width="480" />
+
+修正前: 開いた姿勢で起動して閉じると、内側の幅に広がった粒が外側ディスプレイの右端で切れる
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/a9e57362-d601-405b-91ed-0ebcf5b46435-home-60-before-openlaunch-closed.png" width="320" />
+
+修正後: 閉じると粒が外側ディスプレイの幅に積もり直す
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/09/14fd15c9-593b-4ae9-8962-06ef10b86d48-home-60-after-openlaunch-closed.png" width="320" />
 
 </details>
 
