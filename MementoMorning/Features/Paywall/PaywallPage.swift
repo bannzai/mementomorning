@@ -96,8 +96,8 @@ struct PaywallPage: View {
     }
 
     /// プレミアムの機能一覧 (ヘアライン区切り)。
-    /// 特典の記載は現時点で実際に解放される機能 (無限追撃・全履歴) だけに絞る。
-    /// 30/90/180 日の節目・問いのデッキはデザイン handoff 1l の掲載項目だが未実装のため、各機能の実装時に行を追加する (PR #30 レビュー指摘)
+    /// 特典の記載は現時点で実際に解放される機能 (無限追撃・全履歴・90 日の問い直し) だけに絞る。
+    /// 30/180 日の節目・問いのデッキはデザイン handoff 1l の掲載項目だが未実装のため、各機能の実装時に行を追加する (PR #30 レビュー指摘)
     private var featureListSection: some View {
         VStack(spacing: 0) {
             featureRow(
@@ -111,6 +111,12 @@ struct PaywallPage: View {
                 title: Text("All your mornings"),
                 // ja: 7日を越えて、すべての朝を
                 detail: Text("Every morning, beyond the last 7 days.")
+            )
+            featureRow(
+                // ja: 90 日の問い直し
+                title: Text("The 90-day revisit"),
+                // ja: 1 日目の答えの隣に 90 日目の答えを
+                detail: Text("Your first answer beside your ninetieth")
             )
         }
         .padding(.horizontal, 36)

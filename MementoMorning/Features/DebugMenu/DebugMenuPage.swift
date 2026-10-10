@@ -30,6 +30,8 @@ struct DebugMenuPage: View {
     @AppStorage(.debugSimulateVideoAnswer) private var debugSimulateVideoAnswer = false
     /// 最後に表示した「一ヶ月の手紙」の通数。リセット結果を即時表示し、ContentView の再判定も発火させる。
     @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
+    /// 「問い直し」を表示済みかどうか。リセット結果を即時表示し、ContentView の再判定も発火させる。
+    @AppStorage(.isQuestionRevisitMilestonePresented) private var isQuestionRevisitMilestonePresented = false
 
     /// 現在の回答件数。デバッグ操作の結果を画面上で確認できるように表示する
     @State private var morningAnswerCount = 0
@@ -110,6 +112,32 @@ struct DebugMenuPage: View {
                 .accessibilityIdentifier("debug_reset_one_month_letter_milestone")
             } header: {
                 Text(verbatim: "一ヶ月の手紙 (issue #96)")
+            }
+            Section {
+                Text(verbatim: "問い直しの表示済み: \(isQuestionRevisitMilestonePresented)")
+                    .accessibilityIdentifier("debug_question_revisit_state")
+
+                Button {
+                    seedQuestionRevisitSampleAnswersIfNeeded(modelContext: modelContext)
+                    refreshAnswerStates()
+                } label: {
+                    Text(verbatim: "問い直し用回答を投入 (90 日分)")
+                }
+                .accessibilityIdentifier("debug_seed_question_revisit_answers")
+
+                Text(verbatim: "既存回答がある場合は投入しない。必要なら先に全回答を削除する。表示はプレミアム強制 ON の時だけで、未読の七つの朝・一ヶ月の手紙を閉じた後に出る")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+
+                Button {
+                    // false へ戻す冪等な操作。回答が 90 件以上かつプレミアムなら ContentView が問い直しを再表示する。
+                    isQuestionRevisitMilestonePresented = false
+                } label: {
+                    Text(verbatim: "問い直しの表示履歴をリセット")
+                }
+                .accessibilityIdentifier("debug_reset_question_revisit_milestone")
+            } header: {
+                Text(verbatim: "問い直し (issue #187)")
             }
             // デザインシェル (機能配線前の画面) の描画確認用の導線。
             // 朝の問いはアラーム停止 (#4)、ペイウォールはジャーナルのロック行からも開ける
