@@ -15688,6 +15688,16 @@
         }
       }
     },
+    "Has your answer changed?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたの答えは変わりましたか"
+          }
+        }
+      }
+    },
     "Have a long phone call with my mother" : {
       "localizations" : {
         "ar" : {
@@ -29404,6 +29414,16 @@
         }
       }
     },
+    "Return to this morning" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今朝へ戻る"
+          }
+        }
+      }
+    },
     "Rings at your time, even in silent mode." : {
       "localizations" : {
         "ar" : {
@@ -38175,6 +38195,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正因如此，每一個都很重要。"
+          }
+        }
+      }
+    },
+    "The 90-day revisit" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "90 日の問い直し"
           }
         }
       }
@@ -47806,6 +47836,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的第一個鬧鐘"
+          }
+        }
+      }
+    },
+    "Your first answer beside your ninetieth" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 日目の答えの隣に 90 日目の答えを"
           }
         }
       }
