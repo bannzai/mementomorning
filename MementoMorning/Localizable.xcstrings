@@ -24248,6 +24248,16 @@
         }
       }
     },
+    "Off for the next morning only · Tap the time to change" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の朝だけオフ · 時刻をタップして変更"
+          }
+        }
+      }
+    },
     "Older mornings unlock with Premium." : {
       "localizations" : {
         "ar" : {

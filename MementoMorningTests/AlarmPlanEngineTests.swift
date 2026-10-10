@@ -154,6 +154,60 @@ final class AlarmPlanEngineTests: XCTestCase {
         XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0))
     }
 
+    func testPlanAlarmsSkipsSkippedDate() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // 前夜 20:00 にホームのトグルを OFF にした状況 (次の朝 = 翌日 7:00 をスキップ)。翌日だけが計画から消え、翌々日以降は残る
+        let now = dateTime(year: 2026, month: 8, day: 13, hour: 20, minute: 0)
+        alarmSetting.setSkippedDate(skippedDate: dateTime(year: 2026, month: 8, day: 14, hour: 0, minute: 0))
+
+        let planned = planAlarms(now: now, alarmSetting: alarmSetting, calendar: calendar)
+
+        XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 15, hour: 7, minute: 0))
+        XCTAssertFalse(planned.contains { calendar.isDate($0.fireDate, inSameDayAs: dateTime(year: 2026, month: 8, day: 14, hour: 7, minute: 0)) })
+        XCTAssertEqual(planned.filter { $0.origin == ScheduledAlarmOrigin.main }.count, 6)
+    }
+
+    func testPlanAlarmsIgnoresPastSkippedDate() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // スキップした朝が過ぎた後の再スケジュール。過去の記録は解除しなくても計画に影響しない
+        let now = dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0)
+        alarmSetting.setSkippedDate(skippedDate: dateTime(year: 2026, month: 8, day: 12, hour: 0, minute: 0))
+
+        let planned = planAlarms(now: now, alarmSetting: alarmSetting, calendar: calendar)
+
+        XCTAssertEqual(planned.first?.fireDate, dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 0))
+        XCTAssertEqual(planned.filter { $0.origin == ScheduledAlarmOrigin.main }.count, 7)
+    }
+
+    func testNextMorningDateIsTodayWhenSettingTimeIsAfterNow() {
+        let nextMorning = nextMorningDate(hour: 7, minute: 0, now: dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0), calendar: calendar)
+
+        XCTAssertEqual(nextMorning, dateTime(year: 2026, month: 8, day: 13, hour: 0, minute: 0))
+    }
+
+    func testNextMorningDateIsTomorrowWhenSettingTimeIsBeforeNow() {
+        // 夜に OFF にした時の対象は翌朝 (暦日単位にすると 0 時に解除されて翌朝が鳴ってしまう)
+        let nextMorning = nextMorningDate(hour: 7, minute: 0, now: dateTime(year: 2026, month: 8, day: 13, hour: 20, minute: 0), calendar: calendar)
+
+        XCTAssertEqual(nextMorning, dateTime(year: 2026, month: 8, day: 14, hour: 0, minute: 0))
+    }
+
+    func testIsNextMorningAlarmEnabledReturnsToTrueAfterSkippedMorningPasses() {
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0)
+        // 今日 7:00 をスキップ → 発火時刻を過ぎると次の朝が翌日へ進み、解除の操作なしで ON に戻る
+        alarmSetting.setSkippedDate(skippedDate: dateTime(year: 2026, month: 8, day: 13, hour: 0, minute: 0))
+
+        XCTAssertFalse(isNextMorningAlarmEnabled(now: dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0), alarmSetting: alarmSetting, calendar: calendar))
+        XCTAssertTrue(isNextMorningAlarmEnabled(now: dateTime(year: 2026, month: 8, day: 13, hour: 7, minute: 30), alarmSetting: alarmSetting, calendar: calendar))
+    }
+
+    func testIsNextMorningAlarmEnabledReturnsFalseWhenDisabled() {
+        // 設定画面の永続 OFF はスキップの有無に関わらず OFF
+        let alarmSetting = AlarmSetting(hour: 7, minute: 0, isEnabled: false)
+
+        XCTAssertFalse(isNextMorningAlarmEnabled(now: dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0), alarmSetting: alarmSetting, calendar: calendar))
+    }
+
     func testPlanAlarmsIsIdempotent() {
         let alarmSetting = AlarmSetting(hour: 7, minute: 0)
         let now = dateTime(year: 2026, month: 8, day: 13, hour: 6, minute: 0)

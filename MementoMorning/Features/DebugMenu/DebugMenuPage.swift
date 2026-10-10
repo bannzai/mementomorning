@@ -608,13 +608,15 @@ struct DebugMenuPage: View {
     }
 
     /// アラーム設定を fireDate の時・分へ更新して有効化し、再スケジュールする (単一レコード運用。無ければ作成する)。
-    /// 何度実行しても同じ時刻・有効状態に収束する冪等な操作
+    /// ホームのトグルによる 1 日限定の OFF (issue #182) も解除する (残っていると fireDate の朝が計画から除外され、
+    /// 発火しないのをアラームの不具合と見誤るため)。何度実行しても同じ時刻・有効状態に収束する冪等な操作
     private func setAlarm(fireDate: Date) async {
         let components = Calendar.current.dateComponents([.hour, .minute], from: fireDate)
         do {
             if let alarmSetting = try modelContext.fetch(FetchDescriptor<AlarmSetting>()).first {
                 alarmSetting.setTime(hour: components.hour!, minute: components.minute!)
                 alarmSetting.setIsEnabled(isEnabled: true)
+                alarmSetting.setSkippedDate(skippedDate: nil)
             } else {
                 modelContext.insert(AlarmSetting(hour: components.hour!, minute: components.minute!))
             }

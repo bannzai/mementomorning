@@ -31,6 +31,11 @@ final class AlarmSetting {
     /// Optional のプリミティブ型で持つのは軽量マイグレーションのため (swiftdata-guidelines.md)。
     /// nil (未設定。既存レコードを含む) と範囲外の解決は effectiveSnoozeIntervalMinutes が行う (既定の 2 分へ倒す)
     private(set) var snoozeIntervalMinutes: Int?
+    /// ホームのトグルで 1 日限定の OFF にした朝の日付 (発火日時が属する日の 0 時。issue #182)。
+    /// Optional のプリミティブ型で持つのは軽量マイグレーションのため (swiftdata-guidelines.md)。
+    /// nil (未設定。既存レコードを含む) はスキップ無し。設定画面のトグル (isEnabled) と違い 1 回の朝にだけ効き、
+    /// 過去の日付が残っていても次の朝とは一致しないため解除の処理は要らない
+    private(set) var skippedDate: Date?
 
     /// @Model は memberwise init を自動生成しないため明示的に定義する。
     /// snoozeLimit の既定 nil は軽量マイグレーションで既存レコードに入る値と同じ「未選択」であり、
@@ -75,6 +80,12 @@ final class AlarmSetting {
     /// スヌーズの間隔の分数を更新する
     func setSnoozeIntervalMinutes(snoozeIntervalMinutes: Int?) {
         self.snoozeIntervalMinutes = snoozeIntervalMinutes
+        self.updatedDateTime = .now
+    }
+
+    /// 1 日限定で OFF にする朝の日付を更新する (nil = スキップ無し)
+    func setSkippedDate(skippedDate: Date?) {
+        self.skippedDate = skippedDate
         self.updatedDateTime = .now
     }
 }
