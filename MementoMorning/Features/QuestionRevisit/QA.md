@@ -1,7 +1,7 @@
 ---
 feature: QuestionRevisit
 verification: mobile-mcp
-last_verified_commit: 6bcca97
+last_verified_commit: 18d613d
 last_verified_at: 2026-10-11
 ---
 
@@ -47,13 +47,13 @@ last_verified_at: 2026-10-11
 
 <details><summary>動作確認スクショ</summary>
 
-**確認日: 2026-10-11** (`6bcca97`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/11/02718b4f-324e-4eb6-bd61-1c19ae6e3b38-shot-revisit-premium.jpg" width="320" />
+**確認日: 2026-10-11** (`18d613d`、simtunnel、iPhone 17 / iOS 26.5、英語ロケール)
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/11/84b69ed7-025e-472c-a250-32f7b93e3944-shot-revisit-final.jpg" width="320" />
 
-(プレミアム強制 ON の直後に `LETTER 2` → `LETTER 3` が順に出て、3 通目を閉じた直後に `question_revisit_title` の全画面が出た。左に 1 件目 (Jul 14, 2026「Start building the app I keep dreaming about」)、右に 90 件目 (Oct 11, 2026「Ship my app to the world」) が並び、問い「Has your answer changed?」と閉じるボタンだけで、記号・カウンターは無い。この版では内容が画面の上 1/3 に寄っていたため `4df714f` で中央に寄せた)
+(プレミアム強制 ON → 90 日分投入で `seven_mornings_title` → `LETTER 1` → `LETTER 2` → `LETTER 3` が順に出て、3 通目を閉じた直後に `question_revisit_title` の全画面が出た。左に 1 件目 (Jul 14, 2026「Start building the app I keep dreaming about」)、右に 90 件目 (Oct 11, 2026「Ship my app to the world」) が画面の中央に並び、問い「Has your answer changed?」と閉じるボタンだけで、記号・カウンターは無い。`6bcca97` では内容が上 1/3 に寄り、中央に寄せた `4df714f` では区切り線が画面いっぱいに伸びたため、`18d613d` で回答の高さに固定した)
 
-ペイウォールの特典に「The 90-day revisit」の行が増えていることも確認した:
-<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/11/5161f7f9-cec7-4989-8ce0-631fa97bca60-shot-paywall.jpg" width="320" />
+ペイウォールの特典に「The 90-day revisit」の行が増え、見出しと特典をスクロールにしても購入・復元・法務リンクが下に固定されていることも確認した:
+<img src="https://pub-7f3469dd3e2e445b9b8ec2d1381b5ea8.r2.dev/2026/10/11/b60e1ce4-0e60-41a4-82c3-2f7244b4e430-shot-paywall-final.jpg" width="320" />
 
 </details>
 
