@@ -13,49 +13,54 @@ struct QuestionRevisitPage: View {
     var body: some View {
         ZStack {
             Color.ink.ignoresSafeArea()
-            ScrollView {
-                VStack(spacing: 0) {
-                    if let firstAnswer = firstAnswers.first, let ninetiethAnswer = ninetiethAnswers.first {
-                        HStack(alignment: .top, spacing: 24) {
-                            answerColumn(answer: firstAnswer)
-                                .accessibilityIdentifier("question_revisit_first_answer")
-                            Rectangle()
-                                .fill(Color.dawn.opacity(0.45))
-                                .frame(width: 1)
-                            answerColumn(answer: ninetiethAnswer)
-                                .accessibilityIdentifier("question_revisit_ninetieth_answer")
+            // 回答 2 件と問いだけの短い内容を画面の中央に置き、長い回答の時だけスクロールする
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: 0)
+                        if let firstAnswer = firstAnswers.first, let ninetiethAnswer = ninetiethAnswers.first {
+                            HStack(alignment: .top, spacing: 24) {
+                                answerColumn(answer: firstAnswer)
+                                    .accessibilityIdentifier("question_revisit_first_answer")
+                                Rectangle()
+                                    .fill(Color.dawn.opacity(0.45))
+                                    .frame(width: 1)
+                                answerColumn(answer: ninetiethAnswer)
+                                    .accessibilityIdentifier("question_revisit_ninetieth_answer")
+                            }
                         }
-                        .padding(.top, 96)
-                    }
 
-                    // ja: あなたの答えは変わりましたか
-                    Text("Has your answer changed?")
-                        .font(.system(size: 24, weight: .light, design: .serif))
-                        .foregroundStyle(Color.warmWhite)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 64)
-                        .accessibilityIdentifier("question_revisit_title")
+                        // ja: あなたの答えは変わりましたか
+                        Text("Has your answer changed?")
+                            .font(.system(size: 24, weight: .light, design: .serif))
+                            .foregroundStyle(Color.warmWhite)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 64)
+                            .accessibilityIdentifier("question_revisit_title")
+                        Spacer(minLength: 0)
 
-                    Button {
-                        dismiss()
-                    } label: {
-                        // ja: 今朝へ戻る
-                        Text("Return to this morning")
-                            .font(.system(size: 13, weight: .medium))
-                            .tracking(1.1)
-                            .foregroundStyle(Color.ink)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(Color.dawn)
+                        Button {
+                            dismiss()
+                        } label: {
+                            // ja: 今朝へ戻る
+                            Text("Return to this morning")
+                                .font(.system(size: 13, weight: .medium))
+                                .tracking(1.1)
+                                .foregroundStyle(Color.ink)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(Color.dawn)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("question_revisit_close_button")
+                        .padding(.top, 54)
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("question_revisit_close_button")
-                    .padding(.top, 54)
+                    .padding(.horizontal, 34)
+                    .padding(.top, 72)
                     .padding(.bottom, 40)
+                    .frame(maxWidth: 560)
+                    .frame(maxWidth: .infinity, minHeight: geometry.size.height)
                 }
-                .padding(.horizontal, 34)
-                .frame(maxWidth: 560)
-                .frame(maxWidth: .infinity)
             }
         }
         .interactiveDismissDisabled()
