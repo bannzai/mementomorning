@@ -24497,7 +24497,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Απενεργοποιημένο μόνο για το επόμενο πρωί · Πατήστε την ώρα για αλλαγή"
+            "value" : "Απενεργοποιημένο μόνο για το επόμενο πρωί · Πάτησε την ώρα για αλλαγή"
           }
         },
         "es" : {
@@ -24605,7 +24605,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desativado apenas na manhã seguinte · Toque na hora para a alterar"
+            "value" : "Desativado apenas na manhã seguinte · Toca na hora para o alterar"
           }
         },
         "ro" : {
