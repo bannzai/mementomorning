@@ -79,3 +79,40 @@ func seedOneMonthLetterSampleAnswersIfNeeded(modelContext: ModelContext) {
         assertionFailure(error.localizedDescription)
     }
 }
+
+/// 90 日の節目「問い直し」(issue #187) を検証できる 90 日分の回答を投入する。
+/// 1 件目 (最も古い) と 90 件目 (今日) の本文を変え、左右に並べた時に答えの変化が見えるようにする。
+/// 既に回答が 1 件でもあれば何もしないため、既存データを上書きせず冪等。
+@MainActor
+func seedQuestionRevisitSampleAnswersIfNeeded(modelContext: ModelContext) {
+    do {
+        var descriptor = FetchDescriptor<MorningAnswer>()
+        descriptor.fetchLimit = 1
+        guard try modelContext.fetch(descriptor).isEmpty else { return }
+
+        // index 0 = 今日 = 90 件目、index 89 = 最も古い = 1 件目。
+        // 永続化されるサンプルデータのため String(localized:) でアプリの言語に合わせる (.claude/rules/coding-rules-entity.md)
+        for index in 0..<questionRevisitMilestoneAnswerCount {
+            let answeredDate = Calendar.current.startOfDay(
+                for: Calendar.current.date(byAdding: .day, value: -index, to: .now)!
+            )
+            let text = switch index {
+            case 0:
+                // ja: 自分のアプリを世界に出す
+                String(localized: "Ship my app to the world")
+            case questionRevisitMilestoneAnswerCount - 1:
+                // ja: 夢に見続けたアプリを作り始める
+                String(localized: "Start building the app I keep dreaming about")
+            default:
+                // ja: 家族とゆっくり過ごす
+                String(localized: "Spend unhurried time with my family")
+            }
+            modelContext.insert(MorningAnswer(answeredDate: answeredDate, text: text))
+        }
+        try modelContext.save()
+        reloadHomeWidgetTimelines()
+    } catch {
+        modelContext.rollback()
+        assertionFailure(error.localizedDescription)
+    }
+}

@@ -4,7 +4,7 @@ import SwiftData
 
 /// 起動直後に表示するルート画面 (ホーム)。
 /// 基準日 (今日の 0 時) を保持し、日付を跨いで foreground 復帰した時はクエリごと作り直して翌朝の状態に追従させる。
-/// 回答が 7 件に達したら「七つの朝」、以降 30 件ごとに「一ヶ月の手紙」を表示する。
+/// 回答が 7 件に達したら「七つの朝」、以降 30 件ごとに「一ヶ月の手紙」、90 件に達したら「問い直し」を表示する。
 struct ContentView: View {
     /// RootView が朝の問い (fullScreenCover) や夜の振り返り (sheet) を提示中かどうか。
     /// 共有を促すダイアログ (issue #74) はホームが前面にある時にだけ出すため、提示中は出さず閉じた後に判定し直す
@@ -34,6 +34,10 @@ struct ContentView: View {
     @AppStorage(.debugPremiumOverride) private var debugPremiumOverride = false
     /// fullScreenCover に渡した手紙の通数を、表示が閉じるまで固定する。
     @State private var oneMonthLetterPresentation: OneMonthLetterPresentation?
+    /// 90 日の節目「問い直し」を表示済みかどうか。初回インストール時は未表示のため false から始める
+    @AppStorage(.isQuestionRevisitMilestonePresented) private var isQuestionRevisitMilestonePresented = false
+    /// 90 日の節目「問い直し」を表示中かどうか
+    @State private var isQuestionRevisitPagePresented = false
     /// 前回のプロセス終了で中断された動画文字起こしは、プロセス起動時に一度だけ回収する。
     @State private var hasRecoveredInterruptedVideoTranscriptions = false
 
@@ -45,6 +49,7 @@ struct ContentView: View {
                 isCoveredByOtherScreen: isRootModalPresented
                     || isSevenMorningsPagePresented
                     || oneMonthLetterPresentation != nil
+                    || isQuestionRevisitPagePresented
             )
                 // 基準日が変わったら @Query の predicate を組み直すため view ごと作り直す
                 .id(today)
@@ -63,9 +68,17 @@ struct ContentView: View {
             // 手紙の表示中に待機していた 7 日の節目を先に提示し、その対象がなければ次の未読手紙を提示する。
             presentSevenMorningsIfNeeded()
             // プレミアムユーザーが複数の未読手紙を持つ場合は、閉じた後に次の 1 通を判定する。
+            // 未読の手紙が無ければ、その中で 90 日の節目「問い直し」を判定する (提示順は 7 日 → 30 日 → 90 日)
             presentOneMonthLetterIfNeeded()
         }) { presentation in
             OneMonthLetterPage(milestoneNumber: presentation.milestoneNumber)
+        }
+        .fullScreenCover(isPresented: $isQuestionRevisitPagePresented, onDismiss: {
+            // 問い直しの表示中に待機していた 7 日・30 日の節目があれば、閉じた後に先頭から提示し直す
+            presentSevenMorningsIfNeeded()
+            presentOneMonthLetterIfNeeded()
+        }) {
+            QuestionRevisitPage()
         }
         .onAppear {
             if !hasRecoveredInterruptedVideoTranscriptions {
@@ -91,6 +104,9 @@ struct ContentView: View {
         .onChange(of: lastPresentedOneMonthLetterNumber) { _, _ in
             presentOneMonthLetterIfNeeded()
         }
+        .onChange(of: isQuestionRevisitMilestonePresented) { _, _ in
+            presentOneMonthLetterIfNeeded()
+        }
         .onChange(of: premiumEntitlementActive) { _, _ in
             presentOneMonthLetterIfNeeded()
         }
@@ -110,7 +126,7 @@ struct ContentView: View {
     private func presentSevenMorningsIfNeeded() {
         // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に節目画面の表示とフラグの書き込みが走らないようここで打ち切る
         if isUnitTest { return }
-        guard !isRootModalPresented, oneMonthLetterPresentation == nil else { return }
+        guard !isRootModalPresented, oneMonthLetterPresentation == nil, !isQuestionRevisitPagePresented else { return }
         if shouldPresentSevenMorningsMilestone(
             answerCount: sevenMorningsAnswers.count,
             isPresented: isSevenMorningsMilestonePresented
@@ -120,6 +136,7 @@ struct ContentView: View {
     }
 
     /// 回答が次の 30 件単位へ達していて課金条件も満たすなら、その通数の手紙を全画面表示する。
+    /// 未読の手紙が無ければ、続けて 90 日の節目「問い直し」を判定する (提示順は 7 日 → 30 日 → 90 日)。
     private func presentOneMonthLetterIfNeeded(answerCount: Int? = nil) {
         if isUnitTest || isSnapshotUITest || isPreview { return }
         // 初期表示・保存通知・課金状態変更のどの経路でも、未表示の 7 日節目を先に提示する。
@@ -134,12 +151,19 @@ struct ContentView: View {
         guard !isRootModalPresented,
               !isSevenMorningsPagePresented,
               oneMonthLetterPresentation == nil,
-              let milestoneNumber = nextOneMonthLetterNumber(
-                  answerCount: answerCount ?? oneMonthLetterAnswerCount,
-                  lastPresentedNumber: lastPresentedOneMonthLetterNumber,
-                  isPremium: PremiumEntitlement.isPremium
-              ),
-              let answers = try? modelContext.fetch(oneMonthLetterAnswersDescriptor(milestoneNumber: milestoneNumber)),
+              !isQuestionRevisitPagePresented
+        else {
+            return
+        }
+        guard let milestoneNumber = nextOneMonthLetterNumber(
+            answerCount: answerCount ?? oneMonthLetterAnswerCount,
+            lastPresentedNumber: lastPresentedOneMonthLetterNumber,
+            isPremium: PremiumEntitlement.isPremium
+        ) else {
+            presentQuestionRevisitIfNeeded(answerCount: answerCount ?? oneMonthLetterAnswerCount)
+            return
+        }
+        guard let answers = try? modelContext.fetch(oneMonthLetterAnswersDescriptor(milestoneNumber: milestoneNumber)),
               isOneMonthLetterReady(
                   answerCount: answers.count,
                   videoTranscriptionStatuses: answers.map(\.videoTranscriptionStatus)
@@ -148,6 +172,26 @@ struct ContentView: View {
             return
         }
         oneMonthLetterPresentation = OneMonthLetterPresentation(milestoneNumber: milestoneNumber)
+    }
+
+    /// 回答が 90 件に達していて未表示かつプレミアムなら、「問い直し」を全画面表示する。
+    /// 呼び出し側 (presentOneMonthLetterIfNeeded) が未読の手紙が無いことと他のモーダルが出ていないことを確認済みのため、
+    /// ここでは 90 日の条件と 1 件目・90 件目の文字起こしの完了だけを見る
+    private func presentQuestionRevisitIfNeeded(answerCount: Int) {
+        guard shouldPresentQuestionRevisitMilestone(
+                  answerCount: answerCount,
+                  isPresented: isQuestionRevisitMilestonePresented,
+                  isPremium: PremiumEntitlement.isPremium
+              ),
+              let firstAnswer = try? modelContext.fetch(questionRevisitAnswerDescriptor(number: 1)).first,
+              let ninetiethAnswer = try? modelContext.fetch(questionRevisitAnswerDescriptor(number: questionRevisitMilestoneAnswerCount)).first,
+              isQuestionRevisitReady(
+                  videoTranscriptionStatuses: [firstAnswer.videoTranscriptionStatus, ninetiethAnswer.videoTranscriptionStatus]
+              )
+        else {
+            return
+        }
+        isQuestionRevisitPagePresented = true
     }
 
     /// 回答本文を全件保持せず、「一ヶ月の手紙」の到達判定に必要な件数だけを更新する。
@@ -184,6 +228,8 @@ private struct HomeContent: View {
     @AppStorage(.isSevenMorningsMilestonePresented) private var isSevenMorningsMilestonePresented = false
     /// 30 日の節目が同時に成立した時、共有ダイアログより「一ヶ月の手紙」を優先するために参照する。
     @AppStorage(.lastPresentedOneMonthLetterNumber) private var lastPresentedOneMonthLetterNumber = 0
+    /// 90 日の節目が同時に成立した時、共有ダイアログより「問い直し」を優先するために参照する。
+    @AppStorage(.isQuestionRevisitMilestonePresented) private var isQuestionRevisitMilestonePresented = false
     /// 直近の再スケジュールで発生したエラー。Rescheduler が書き込み、成功時に削除される。
     /// トグル切替の失敗 (画面は OFF なのにアラームが残る等) をホーム上でも可視化する
     @AppStorage(.lastRescheduleError) private var lastRescheduleError: String?
@@ -318,6 +364,11 @@ private struct HomeContent: View {
            ) {
             return
         }
+        if shouldPresentQuestionRevisitMilestone(
+            answerCount: currentAnswerCount,
+            isPresented: isQuestionRevisitMilestonePresented,
+            isPremium: PremiumEntitlement.isPremium
+        ) { return }
         guard shouldPresentSharePrompt(
             todayAnswerText: todayAnswers.first?.text,
             placeholderText: videoAnswerPlaceholderText,

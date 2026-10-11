@@ -204,6 +204,9 @@
 		F10000000000000000000012 /* OneMonthLetterKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000002 /* OneMonthLetterKeyword.swift */; };
 		F10000000000000000000013 /* OneMonthLetterPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000003 /* OneMonthLetterPage.swift */; };
 		F10000000000000000000014 /* OneMonthLetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000004 /* OneMonthLetterTests.swift */; };
+		F10000000000000000000031 /* QuestionRevisitMilestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000021 /* QuestionRevisitMilestone.swift */; };
+		F10000000000000000000032 /* QuestionRevisitPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000022 /* QuestionRevisitPage.swift */; };
+		F10000000000000000000033 /* QuestionRevisitMilestoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000000000000000000023 /* QuestionRevisitMilestoneTests.swift */; };
 		EF4B968F4285A1EDA7A34C99 /* AnswerVideoPlayerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A5C9BB64B826770768492 /* AnswerVideoPlayerPage.swift */; };
 		56CE1B33E1A2BF2125A07143 /* AnswerVideoPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F66B1B2474DEFD09BC78782 /* AnswerVideoPlayerTests.swift */; };
 		FD3AAD3FE4E34FD6B8F437EB /* MonthCalendarPageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2C7EF2618A54E50A317188F /* MonthCalendarPageSnapshotUITest.swift */; };
@@ -444,6 +447,9 @@
 		F10000000000000000000002 /* OneMonthLetterKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthLetterKeyword.swift; sourceTree = "<group>"; };
 		F10000000000000000000003 /* OneMonthLetterPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthLetterPage.swift; sourceTree = "<group>"; };
 		F10000000000000000000004 /* OneMonthLetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthLetterTests.swift; sourceTree = "<group>"; };
+		F10000000000000000000021 /* QuestionRevisitMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRevisitMilestone.swift; sourceTree = "<group>"; };
+		F10000000000000000000022 /* QuestionRevisitPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRevisitPage.swift; sourceTree = "<group>"; };
+		F10000000000000000000023 /* QuestionRevisitMilestoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRevisitMilestoneTests.swift; sourceTree = "<group>"; };
 		FAE5243AE47E504C0903E5E8 /* AppStoreScreenshot16PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot16PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		FBE8D1A7587600D3C31C0B02 /* DeveloperLogPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperLogPage.swift; sourceTree = "<group>"; };
 		FDB2C51D6AFD6256485BAEBF /* AppStoreScreenshot18PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot18PageSnapshotUITest.swift; sourceTree = "<group>"; };
@@ -632,6 +638,7 @@
 				AFE2DBF2BECA6EF4A030247C /* Onboarding */,
 				3FE5287775BDB63173AF121F /* Paywall */,
 				CDD7689802B812B3A70C2071 /* Question */,
+				F10000000000000000000025 /* QuestionRevisit */,
 				B40C2CFEF8462FC59E55EAA1 /* SevenMornings */,
 				CEFE3E406AA9CCA261DD6356 /* ShareCard */,
 				AAC098A5B89315EE9105EA74 /* SnapshotUITest */,
@@ -1025,6 +1032,7 @@
 				92CF5EE7BC099E438DC69AE6 /* OnboardingPermissionTests.swift */,
 				FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */,
 				8B86DBFB1EA3990B41355389 /* PremiumEntitlementTests.swift */,
+				F10000000000000000000023 /* QuestionRevisitMilestoneTests.swift */,
 				783EC030891F74840E53E02C /* SevenMorningsMilestoneTests.swift */,
 				8C5CE3493CF6471C8FC956AD /* SevenMorningsShareCardRenderTests.swift */,
 				6DB44EA332527EB9BA9C7D82 /* SharePromptTests.swift */,
@@ -1055,6 +1063,15 @@
 				F10000000000000000000003 /* OneMonthLetterPage.swift */,
 			);
 			path = OneMonthLetter;
+			sourceTree = "<group>";
+		};
+		F10000000000000000000025 /* QuestionRevisit */ = {
+			isa = PBXGroup;
+			children = (
+				F10000000000000000000021 /* QuestionRevisitMilestone.swift */,
+				F10000000000000000000022 /* QuestionRevisitPage.swift */,
+			);
+			path = QuestionRevisit;
 			sourceTree = "<group>";
 		};
 		F44FB7883F33BE5D953BF417 /* AnswerLog */ = {
@@ -1480,6 +1497,8 @@
 				B40935A41746441DA44580C1 /* Persistence.swift in Sources */,
 				245AE39DF02A12698933D5DF /* PremiumEntitlement.swift in Sources */,
 				2EC54A2224B8ECEF8CACA8E9 /* QuestionPage.swift in Sources */,
+				F10000000000000000000031 /* QuestionRevisitMilestone.swift in Sources */,
+				F10000000000000000000032 /* QuestionRevisitPage.swift in Sources */,
 				7EF28D2409AA37FD1D1664AE /* Rescheduler.swift in Sources */,
 				EC509EC020149BB402FDBFE0 /* SampleAnswerSeeder.swift in Sources */,
 				15C0CFE0F6E308F219EB6940 /* ScheduledAlarm.swift in Sources */,
@@ -1527,6 +1546,7 @@
 				531C6176F6194BF504754630 /* OnboardingPermissionTests.swift in Sources */,
 				CCA26A4ACD80B660A7F8870D /* PaywallSubscriptionPeriodTests.swift in Sources */,
 				2550886BD9FEB608B9138265 /* PremiumEntitlementTests.swift in Sources */,
+				F10000000000000000000033 /* QuestionRevisitMilestoneTests.swift in Sources */,
 				C2EDE20468C2FFE1F1022A85 /* SevenMorningsMilestoneTests.swift in Sources */,
 				C9C82DCC28824965BB3D877A /* SevenMorningsShareCardRenderTests.swift in Sources */,
 				C80FDBD7308A0F34A5B14EAA /* SharePromptTests.swift in Sources */,
