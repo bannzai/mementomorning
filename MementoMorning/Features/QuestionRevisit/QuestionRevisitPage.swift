@@ -28,6 +28,8 @@ struct QuestionRevisitPage: View {
                                 answerColumn(answer: ninetiethAnswer)
                                     .accessibilityIdentifier("question_revisit_ninetieth_answer")
                             }
+                            // 余白を Spacer に配るため、区切り線 (Rectangle) が回答の高さを越えて伸びないよう本文の高さに固定する
+                            .fixedSize(horizontal: false, vertical: true)
                         }
 
                         // ja: あなたの答えは変わりましたか
@@ -37,7 +39,6 @@ struct QuestionRevisitPage: View {
                             .multilineTextAlignment(.center)
                             .padding(.top, 64)
                             .accessibilityIdentifier("question_revisit_title")
-                        Spacer(minLength: 0)
 
                         Button {
                             dismiss()
@@ -54,6 +55,7 @@ struct QuestionRevisitPage: View {
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("question_revisit_close_button")
                         .padding(.top, 54)
+                        Spacer(minLength: 0)
                     }
                     .padding(.horizontal, 34)
                     .padding(.top, 72)

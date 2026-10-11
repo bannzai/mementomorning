@@ -49,10 +49,15 @@ struct PaywallPage: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            titleSection
-            featureListSection
-                .padding(.top, 32)
-            Spacer()
+            // 特典の行が増えて (90 日の問い直し) 縦の短い端末で収まらなくなり得るため、見出しと特典だけを
+            // スクロールさせ、購入・復元・法務リンクは常に画面下に固定して届くようにする (PR #189 CodeRabbit 指摘)
+            ScrollView {
+                VStack(spacing: 0) {
+                    titleSection
+                    featureListSection
+                        .padding(.top, 32)
+                }
+            }
             purchaseSection
         }
         .background(Color.ink.ignoresSafeArea())
@@ -115,7 +120,7 @@ struct PaywallPage: View {
             featureRow(
                 // ja: 90 日の問い直し
                 title: Text("The 90-day revisit"),
-                // ja: 1 日目の答えの隣に 90 日目の答えを
+                // ja: 最初の答えの隣に 90 回目の答えを
                 detail: Text("Your first answer beside your ninetieth")
             )
         }
