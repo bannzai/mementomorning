@@ -53,6 +53,9 @@ struct AppStoreScreenshotsRootPage: View {
                 }
             }
         }
+        // iPhone Duo の内側ディスプレイ (幅 regular) では既定の column スタイルになり、遷移後も一覧が左の列に残って
+        // スクリーンショットに写り込むため、常に単一列で遷移させる (appstore-screenshot-builder skill references/iphone-duo.md の SwiftUI の節 7)
+        .navigationViewStyle(.stack)
     }
 }
 

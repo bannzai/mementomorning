@@ -7,7 +7,9 @@ import SwiftUI
 /// スクリーンショット番号とバリアントの対応は scripts/generate_screenshots/appstore_screenshot_env.sh の get_variant_name が正
 
 /// 訴求軸 washi のレイアウトコンテナ。
-/// warmWhite 地に ink の太字見出しを置き、墨背景のモック画面を強コントラストで浮かせる
+/// warmWhite 地に ink の太字見出しを置き、墨背景のモック画面を強コントラストで浮かせる。
+/// 横長の画面 (幅 > 高さ。iPhone Duo の内側ディスプレイ 2853×2007 px) では、見出しを左・デバイスフレームを右に置く
+/// 横向きの構成に切り替える (縦向き前提の構成は横長の画面で見切れるため。appstore-screenshot-builder skill references/iphone-duo.md)
 struct AppStoreScreenshotWashiLayout<Content: View>: View {
     /// メインのキャッチコピー
     let title: Text
@@ -17,10 +19,68 @@ struct AppStoreScreenshotWashiLayout<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        ZStack {
-            Color.warmWhite
+        // 横長かどうかは実寸で判定する。iPhone Duo の内側ディスプレイでも、iPhone 専用 (TARGETED_DEVICE_FAMILY=1) の本アプリでは
+        // horizontalSizeClass が .regular にならず縦向きの構成が出た (本 PR の試運転で実測) ため、size class は使わない
+        GeometryReader { proxy in
+            ZStack {
+                Color.warmWhite
 
-            VStack(spacing: 0) {
+                if proxy.size.width > proxy.size.height {
+                    wideBody
+                } else {
+                    portraitBody
+                }
+            }
+        }
+        .ignoresSafeArea()
+    }
+
+    /// 横長の画面 (iPhone Duo の内側ディスプレイ) 用。左にキャッチコピー、右に縦向きのデバイスフレーム。
+    /// モック画面は縦向きの iPhone の実機サイズ (393×852pt) で描いたものをそのまま使う
+    /// (アプリの主な利用場面であるアラーム鳴動は閉じた端末の外側で起きるため、縦向きの端末を見せる方が実態に合う)
+    private var wideBody: some View {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 20) {
+                title
+                    // 左の列 (約 400pt) に日本語 10 文字の行 (例: 「毎朝、死を想ってから」) が折り返さずに収まる上限として 38pt
+                    // (44pt では 2 行目が「から」だけになった。本 PR の試運転で実測)
+                    .font(.system(size: 38, weight: .bold))
+                    .tracking(0.5)
+                    .lineSpacing(12)
+                    .foregroundStyle(Color.ink)
+                    .multilineTextAlignment(.leading)
+                    .minimumScaleFactor(0.8)
+                Text(subtitle)
+                    .font(.system(size: 19, weight: .regular))
+                    .tracking(0.5)
+                    .lineSpacing(7)
+                    .foregroundStyle(Color.ink.opacity(0.6))
+                    .multilineTextAlignment(.leading)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .padding(.leading, 72)
+            .padding(.trailing, 32)
+
+            // デバイスは傾けず正面・垂直に配置する (appstore-screenshot-builder skill の共通デザイン原則)。
+            // 縦向きと同じく下端はフレームごと画面外に切り、モック画面の下部ボタン省略と整合させる
+            ScreenshotContentImage(size: CGSize(width: 393, height: 852)) {
+                content()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 36))
+            .overlay(IPhoneFrameOverlay(strokeColor: Color.ink.opacity(0.25)))
+            // 9:19.5 を固定の寸法で与える。aspectRatio(.fit) では親の高さに収まるよう縮むため、
+            // 画面の高さ (669pt) を超える 780pt を明示し、縦向きと同じくモック画面の下部ボタンが画面外に切れるようにする
+            // (fit ではボタンまで写った。本 PR の試運転で実測)
+            .frame(width: 360, height: 780)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .padding(.top, 72)
+            .padding(.trailing, 80)
+        }
+    }
+
+    /// 縦向きの画面 (iPhone・iPhone Duo の外側ディスプレイ) 用。上部にキャッチコピー、下部にデバイスフレーム
+    private var portraitBody: some View {
+        VStack(spacing: 0) {
                 VStack(spacing: 16) {
                     title
                         // ink バリアント (34pt light) がサムネイルで消える懸念への対応で太字化する。
@@ -55,9 +115,7 @@ struct AppStoreScreenshotWashiLayout<Content: View>: View {
                 .aspectRatio(9.0 / 19.5, contentMode: .fit)
                 .padding(.horizontal, 46)
                 .offset(y: 56)
-            }
         }
-        .ignoresSafeArea()
     }
 }
 
