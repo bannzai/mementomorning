@@ -60,16 +60,22 @@ fi
 # 既存の結果バンドルを削除（xcodebuildエラー回避）
 rm -rf "$RESULT_BUNDLE_PATH"
 
-# テスト実行。
-# -parallel-testing-enabled NO: 付けないと xcodebuild が simulator の clone (Clone 1 of <名前>) でテストを実行する。
+# ホスト撮影では xcodebuild に simulator の clone (Clone 1 of <名前>) を使わせない (-parallel-testing-enabled NO)。
 # clone は閉じた姿勢で起動するため、iPhone Duo を開いた姿勢にしても内側ディスプレイが撮れない
-# (appstore-screenshot-builder skill references/iphone-duo.md の実測)。scheme の parallelizable=NO とは別の設定
+# (appstore-screenshot-builder skill references/iphone-duo.md の実測)。scheme の parallelizable=NO とは別の設定。
+# clone を使わない時は同じ simulator に複数のテストを同時に流せないため、呼び出し元 (generate_appstore_screenshots.sh) が
+# ホスト撮影の並列数を 1 に制限する。6.9 / 6.5 インチは従来どおり clone を使い、-p の並列実行を保つ
+parallel_testing_args=()
+if [ -n "$HOST_CAPTURE_DIR" ]; then
+  parallel_testing_args=(-parallel-testing-enabled NO)
+fi
+
 xcodebuild test-without-building \
   -project MementoMorning.xcodeproj \
   -scheme "$SCHEME" \
   -sdk iphonesimulator \
   -destination "$DESTINATION" \
-  -parallel-testing-enabled NO \
+  ${parallel_testing_args[@]+"${parallel_testing_args[@]}"} \
   -only-testing:"$TEST" \
   -resultBundlePath "$RESULT_BUNDLE_PATH" \
   -derivedDataPath "$DERIVED_DATA_PATH" &

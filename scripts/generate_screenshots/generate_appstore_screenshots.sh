@@ -383,6 +383,12 @@ if [ "$uses_duo" = true ]; then
     echo "Error: iPhone Duo の内側ディスプレイの撮影には magick (ImageMagick) が必要です。brew install imagemagick" >&3
     exit 1
   fi
+  # ホスト撮影は simulator の clone を使わず 1 台の画面を撮るため、同じ simulator に複数のテストを同時に流すと
+  # 互いのアプリの起動・終了で干渉し、別テストのページを撮ってしまう (run_appstore_screenshot.sh のコメント)
+  if [ "$PARALLEL" -gt 1 ]; then
+    echo "Error: iPhone Duo の撮影は並列実行できません (-p $PARALLEL)。-p 1 で実行してください" >&3
+    exit 1
+  fi
 fi
 sep "Devices: ${device_list[*]}"
 
