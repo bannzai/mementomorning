@@ -75,9 +75,17 @@ xcodebuild test-without-building \
   -derivedDataPath "$DERIVED_DATA_PATH" &
 xcodebuild_pid=$!
 
-# ホスト撮影では、テストの進行に合わせて撮る監視をテスト終了まで前面で回す
+# ホスト撮影では、テストの進行に合わせて撮る監視をテスト終了まで前面で回す。
+# 監視が途中で失敗 (simctl screenshot・magick のエラー) した時は、撮影完了を待ち続ける UITest ごと xcodebuild を止めて回収する
+# (残すと呼び出し元が次のテスト・リトライへ進み、同じ simulator 上で古いランナーと競合する)
 if [ -n "$HOST_CAPTURE_DIR" ]; then
-  ./scripts/generate_screenshots/capture_host_screenshots.sh "$HOST_CAPTURE_DIR" "$xcodebuild_pid"
+  if ! ./scripts/generate_screenshots/capture_host_screenshots.sh "$HOST_CAPTURE_DIR" "$xcodebuild_pid"; then
+    echo "Error: ホスト撮影の監視が失敗しました。xcodebuild ($xcodebuild_pid) を停止します" >&2
+    pkill -TERM -P "$xcodebuild_pid" 2>/dev/null || true
+    kill -TERM "$xcodebuild_pid" 2>/dev/null || true
+    wait "$xcodebuild_pid" || true
+    exit 1
+  fi
 fi
 
 wait "$xcodebuild_pid"

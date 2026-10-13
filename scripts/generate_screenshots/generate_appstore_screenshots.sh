@@ -339,6 +339,8 @@ if [ "${#device_list[@]}" -eq 0 ]; then
   exit 1
 fi
 uses_duo=false
+# 起動した iPhone Duo の UDID (prepare_duo_simulator が設定し、終了時の後片付けが参照する)
+duo_udid=""
 for device in "${device_list[@]}"; do
   if ! get_display_type "$device" > /dev/null 2>&1; then
     echo "Error: 未対応の撮影デバイスです: $device (対応: 69, 65, duo-outer, duo-inner)" >&3
@@ -387,6 +389,8 @@ prepare_duo_simulator() {
     echo "Error: iPhone Duo の simulator '$DESTINATION_SIM_RESOLVED_NAME' (iOS $SCREENSHOT_DEVICE_OS_VERSION) の UDID を解決できません" >&3
     return 1
   fi
+  # 終了時の後片付け用に控える。最後に撮ったデバイスが Duo 以外 (-d "duo-inner,69" 等) でも、起動した Duo を特定して閉じて停止するため
+  duo_udid="$udid"
   sep "Booting iPhone Duo simulator: $udid"
   # 起動済みなら boot は失敗するが、その状態で続けてよい
   xcrun simctl boot "$udid" 2>/dev/null || true
@@ -554,13 +558,11 @@ fi
 
 # iPhone Duo を撮った時は、最後に使った姿勢のまま残さず閉じた姿勢に戻してから停止する
 # (Device Hub は Booted の simulator にしか姿勢を効かせられないため、停止の前に戻す)
-if [ "$uses_duo" = true ]; then
-  duo_udid=$(resolve_simulator_udid "$DESTINATION_SIM_RESOLVED_NAME" "$SCREENSHOT_DEVICE_OS_VERSION")
-  if [ -n "$duo_udid" ]; then
-    sep "Shutting down iPhone Duo simulator: $duo_udid"
-    bash "$DUO_POSE_SCRIPT" set --udid "$duo_udid" closed || true
-    xcrun simctl shutdown "$duo_udid" 2>/dev/null || true
-  fi
+# (対象は prepare_duo_simulator が控えた UDID。UDID の解決前に失敗した時は空なので何もしない)
+if [ "$uses_duo" = true ] && [ -n "$duo_udid" ]; then
+  sep "Shutting down iPhone Duo simulator: $duo_udid"
+  bash "$DUO_POSE_SCRIPT" set --udid "$duo_udid" closed || true
+  xcrun simctl shutdown "$duo_udid" 2>/dev/null || true
 fi
 
 sep "All done."
