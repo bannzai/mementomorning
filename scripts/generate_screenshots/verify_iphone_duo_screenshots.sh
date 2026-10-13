@@ -3,7 +3,7 @@
 # verify_iphone_duo_screenshots.sh
 #
 # iPhone Duo 用スクリーンショットが App Store Connect の仕様を満たすことを機械検証するスクリプト。
-# 言語ごとに、外側 (1398×2034) と内側 (2853×2007) の枚数・px 寸法・alpha なし・内側のホームインジケーターの写り込み無しを検査し、
+# 言語ごとに、外側 (1398×2034) と内側 (2853×2007) の枚数・px 寸法・alpha なし・ホームインジケーターの写り込み無し (外側・内側とも) を検査し、
 # 1 つでも外れていれば一覧を出して exit 1 で終わる。
 # 寸法の出典: Apple「Screenshot specifications」の iPhone Duo の節
 # https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications
@@ -66,7 +66,7 @@ check_image() {
   if [ "$alpha" != "no" ]; then
     errors+="  - $file: hasAlpha=$alpha (期待 no)"$'\n'
   fi
-  # 内側はホスト側の simctl で撮るためシステムのオーバーレイが残り得る (has_home_indicator のコメント)。外側は XCTest の撮影で写らない
+  # 外側・内側ともホスト側の simctl で撮るためシステムのオーバーレイが残り得る (has_home_indicator のコメント)。6.9 / 6.5 インチは XCTest の撮影で写らない
   if is_host_capture_device "$4" && has_home_indicator "$file"; then
     errors+="  - $file: ホームインジケーターが写っています"$'\n'
   fi

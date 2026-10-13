@@ -8,7 +8,7 @@ import SwiftUI
 
 /// 訴求軸 washi のレイアウトコンテナ。
 /// warmWhite 地に ink の太字見出しを置き、墨背景のモック画面を強コントラストで浮かせる。
-/// 幅が regular の画面 (iPhone Duo の内側ディスプレイ 2853×2007 px、横長) では、見出しを左・デバイスフレームを右に置く
+/// 横長の画面 (幅 > 高さ。iPhone Duo の内側ディスプレイ 2853×2007 px) では、見出しを左・デバイスフレームを右に置く
 /// 横向きの構成に切り替える (縦向き前提の構成は横長の画面で見切れるため。appstore-screenshot-builder skill references/iphone-duo.md)
 struct AppStoreScreenshotWashiLayout<Content: View>: View {
     /// メインのキャッチコピー

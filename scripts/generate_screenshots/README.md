@@ -78,7 +78,7 @@ SCREENSHOT_DEVICES=duo-outer,duo-inner ./scripts/generate_screenshots/apply_vari
 
 作り方の SSOT は appstore-screenshot-builder skill の `references/iphone-duo.md`。本リポジトリでの決めごと:
 
-- 内側は横 (2853×2007) で作る。開いた姿勢の simulator は横向きになり、`xcrun simctl io <UDID> screenshot --display=primary-1` が回転なしでこの寸法を返すため (同 references の実測)。横長の画面用に `AppStoreScreenshotWashiLayout` が幅 regular の時だけ、見出しを左・縦向きのデバイスフレームを右に置く構成に切り替わる
+- 内側は横 (2853×2007) で作る。開いた姿勢の simulator は横向きになり、`xcrun simctl io <UDID> screenshot --display=primary-1` が回転なしでこの寸法を返すため (同 references の実測)。横長の画面用に `AppStoreScreenshotWashiLayout` が幅 > 高さの時だけ (size class ではなく実寸で判定)、見出しを左・縦向きのデバイスフレームを右に置く構成に切り替わる
 - 外側・内側ともホスト側で撮る。テストが目印のファイルを書いて待機し、`capture_host_screenshots.sh` がホスト側の simctl で撮って alpha を落とす (同期の手順は `AppStoreScreenshotsUITests/XCTestCase+Snapshot.swift`)。外側は閉じた姿勢で `--display=primary` が 1398×2034 を返す (`primary-1` は閉じた姿勢でも内側の縦向き 2007×2853 を返す。iOS 27.1 の iPhone Duo で `xcrun simctl io <UDID> screenshot` を両方に対して実行して確認)。内側は XCTest の API ではストア仕様の寸法で撮れないため。外側は XCTest でも撮れるが、iPhone Duo の比率では端末フレームの下端が画面内に入り、ホームインジケーターがまだ消えていない時にフレームに重なって写るため、撮った画像を `has_home_indicator` (`appstore_screenshot_env.sh`) で検査して消えるまで撮り直す。`verify_iphone_duo_screenshots.sh` も同じ判定で写り込みを NG にする
 - 姿勢の切り替えは ios-simulator skill の `duo-pose.sh` (Device Hub のウィンドウを操作するためローカルの Mac 限定)。iOS 27.1 以上のランタイムと ImageMagick (`brew install imagemagick`) が必要
 - `apply_variant.sh` は Duo の画像を `fastlane/screenshots/` ではなく `appstore/iphone-duo-screenshots/{locale}/` に置く。fastlane deliver 2.241.0 は Duo の寸法を知らず、置くとアップロード全体が検証で止まる (同 references の「アップロード経路」の表)
