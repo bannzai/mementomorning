@@ -2,13 +2,15 @@
 #
 # apply_variant.sh
 #
-# 選択したバリアントのスクリーンショットを fastlane/screenshots/ に適用するスクリプト。
-# _variant-{name}/{lang}/* の内容を fastlane/screenshots/{lang}/* にコピー（上書き）する。
+# 選択したバリアントのスクリーンショットを適用先に配置するスクリプト。
+# _variant-{name}/{lang}/* の内容を、デバイスごとの適用先 (appstore_screenshot_env.sh の get_apply_destination_dir が正。
+# iPhone は fastlane/screenshots/{lang}/、iPhone Duo は appstore/iphone-duo-screenshots/{lang}/) にコピー（上書き）する。
 # App Store Connect にアップロードする前の準備用。
 # (取り込み元: bannzai/Focus の同名スクリプト)
 #
 # 【使い方】
 # $ ./scripts/generate_screenshots/apply_variant.sh <VARIANT_NAME>
+# $ SCREENSHOT_DEVICES=duo-outer,duo-inner ./scripts/generate_screenshots/apply_variant.sh <VARIANT_NAME>
 #
 # 引数:
 #   $1: VARIANT_NAME - 適用するバリアント名
@@ -26,7 +28,6 @@ cd "$PROJECT_ROOT_DIR"
 source scripts/generate_screenshots/appstore_screenshot_env.sh
 
 VARIANT_NAME="${1:-}"
-FASTLANE_DIR="fastlane/screenshots"
 VARIANT_DIR="$VARIANT_OUTPUT_BASE_DIR/_variant-${VARIANT_NAME}"
 
 # 引数チェック
@@ -51,7 +52,6 @@ fi
 
 echo "==== Applying variant: $VARIANT_NAME ===="
 echo "==== Source: $VARIANT_DIR ===="
-echo "==== Destination: $FASTLANE_DIR ===="
 
 # バリアントの期待枚数 = このバリアントの番号帯に属するテストファイル数 × 撮影デバイス数 (SCREENSHOT_DEVICES)。
 # 一部だけ生成した状態 (-n "1" や -d "69" 等) で適用すると、適用先の完成済み一式を消して欠落した素材を作るため、
@@ -124,16 +124,19 @@ fi
 
 # 対象言語 × 対象デバイスを適用する。コピーも device_list の表示サイズに限定し、
 # バリアントディレクトリに残った選択外デバイスの古い PNG を持ち込まない。
-# 選択外デバイスの適用済み PNG は削除もせず残す (選択したデバイスだけを差し替える)
+# 選択外デバイスの適用済み PNG は削除もせず残す (選択したデバイスだけを差し替える)。
+# 適用先はデバイスごとに異なる (iPhone Duo は fastlane deliver が受け付けない寸法のため、deliver が読む場所に置かない)
 applied=0
+dest_dirs=""
 for lang in $required_langs; do
   lang_dir="$VARIANT_DIR/$lang/"
-  dest_dir="$FASTLANE_DIR/$lang"
-  mkdir -p "$dest_dir"
 
   file_count=0
   for device in "${device_list[@]}"; do
     display_type=$(get_display_type "$device")
+    dest_dir="$(get_apply_destination_dir "$device")/$lang"
+    mkdir -p "$dest_dir"
+    dest_dirs+="$(get_apply_destination_dir "$device")"$'\n'
 
     # 適用先に残った過去の PNG と混ざった一式を作らないよう、適用する表示サイズの既存 PNG を先に削除する
     find "$dest_dir" -maxdepth 1 -name "*_${display_type}_*.png" -delete 2>/dev/null || true
@@ -147,4 +150,4 @@ for lang in $required_langs; do
 done
 
 echo "==== Apply complete: $applied files applied ===="
-echo "==== Screenshots ready in: $FASTLANE_DIR ===="
+echo "==== Screenshots ready in: $(echo "$dest_dirs" | grep -v '^$' | sort -u | tr '\n' ' ')===="

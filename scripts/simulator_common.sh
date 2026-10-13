@@ -21,6 +21,31 @@ resolve_ios_runtime_version() {
   { xcrun simctl list runtimes available 2>/dev/null || true; } | sed -nE "s/^iOS $1(\.[0-9.]+)? \(([0-9.]+) - .*/\2/p" | sort -V | head -1
 }
 
+# インストール済みランタイムから、指定したバージョン以上で最も低い iOS 実バージョンを解決する関数。
+# iPhone Duo の simulator は iOS 27.1 以上のランタイムにしか無い (appstore-screenshot-builder skill
+# references/iphone-duo.md) ため、resolve_ios_runtime_version の系列指定では足りない下限指定に使う。
+# 該当が無ければ空文字を返す (必須チェックは撮影を行うスクリプト側で行う)
+# Usage: resolve_ios_runtime_version_at_least <最低バージョン (例: 27.1)>
+resolve_ios_runtime_version_at_least() {
+  # 下限を番兵として混ぜて sort -V し、番兵の次の行 (下限と同じ値も含む) を取る
+  { { xcrun simctl list runtimes available 2>/dev/null || true; } | sed -nE 's/^iOS [0-9.]+ \(([0-9.]+) - .*/\1/p'; echo "$1"; } \
+    | sort -V | awk -v min="$1" 'found { print; exit } $0 == min { found = 1 }'
+}
+
+# 名前と OS バージョンからシミュレータの UDID を解決する関数。
+# xcrun simctl io (スクリーンショット) や姿勢の切り替えは UDID でしか指定できないため、
+# DESTINATION (name + OS) と同じ組で特定する。見つからなければ空文字を返す
+# Usage: resolve_simulator_udid <シミュレータ名> <OS 実バージョン or マーケティング名>
+resolve_simulator_udid() {
+  local sim_name=$1
+  local os_version=$2
+  local runtime_id
+  runtime_id=$(xcrun simctl list runtimes available | { grep -E "^iOS ${os_version} \(|\(${os_version} - " || true; } | head -1 | awk '{print $NF}')
+  [ -n "$runtime_id" ] || return 0
+  xcrun simctl list devices -j | jq -r --arg runtime "$runtime_id" --arg name "$sim_name" \
+    '.devices[$runtime] // [] | map(select(.name == $name and .isAvailable)) | .[0].udid // empty'
+}
+
 # DESTINATIONで指定されたシミュレータが存在しない場合に自動作成する関数
 # DESTINATIONからシミュレータ名とOSバージョンを抽出し、
 # xcrun simctl を使ってシミュレータの存在確認・作成を行う

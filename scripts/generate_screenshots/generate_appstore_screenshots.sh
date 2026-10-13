@@ -25,6 +25,10 @@
 # 3-2. 特定のデバイス (表示サイズ) のみで生成 (デフォルトは 6.9 インチと 6.5 インチの両方):
 #    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -d "69"
 #
+# 3-3. iPhone Duo の外側・内側ディスプレイを生成 (iOS 27.1 以上のランタイムと、Device Hub を操作できるローカルの Mac が必要。
+#      外側・内側ともホスト側の simctl で撮る。姿勢の切り替えは ios-simulator skill の duo-pose.sh):
+#    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -d "duo-outer,duo-inner"
+#
 # 4. 並列数を指定して実行:
 #    $ ./scripts/generate_screenshots/generate_appstore_screenshots.sh -p 2
 #
@@ -127,7 +131,7 @@ while [[ $# -gt 0 ]]; do
       echo "Options:"
       echo "  -l LANGS           実行する言語をカンマ区切りで指定 (例: \"ja,en\", デフォルト: 全言語)"
       echo "  -n NUMS            実行するスクリーンショット番号を指定 (例: \"1,2,3\" or \"1-6\", デフォルト: 全番号)"
-      echo "  -d DEVICES         撮影デバイス (表示サイズ) をカンマ区切りで指定 (69: 6.9インチ iPhone 17 Pro Max, 65: 6.5インチ iPhone 13 Pro Max。デフォルト: $SCREENSHOT_DEVICES)"
+      echo "  -d DEVICES         撮影デバイス (表示サイズ) をカンマ区切りで指定 (69: 6.9インチ iPhone 17 Pro Max, 65: 6.5インチ iPhone 13 Pro Max, duo-outer / duo-inner: iPhone Duo の外側 / 内側ディスプレイ。デフォルト: $SCREENSHOT_DEVICES)"
       echo "  -p NUM             並列実行数を指定 (デフォルト: 1。同一シミュレータでの並列はランナーが落ちやすい)"
       echo "  --skip-build       build-for-testing をスキップ"
       echo "  --overwrite        既存スクリーンショットを上書き（デフォルト: 全言語分揃っていればスキップ）"
@@ -154,8 +158,9 @@ done
 
 # 撮影 (ビルド・UITest 実行) には iOS 26 系ランタイムが必須。env 側は apply_variant.sh など
 # 撮影しない経路からも source されるため必須にせず、撮影の入口で検査する。
-# --help はランタイム不在の環境でも表示できるよう、オプション解析より後に置く
-if [ -z "$SCREENSHOT_OS_VERSION" ]; then
+# --help はランタイム不在の環境でも表示できるよう、オプション解析より後に置く。
+# iPhone Duo だけを撮る時は iOS 26 系は要らず、代わりに 27.1 以上を検査する (デバイス一覧の検証の後)
+if [ -z "$SCREENSHOT_OS_VERSION" ] && ! [[ "$DEVICES" =~ ^[[:space:]]*duo-(outer|inner)([[:space:]]*,[[:space:]]*duo-(outer|inner))*[[:space:]]*$ ]]; then
   echo "Error: 利用可能な iOS 26 系の simulator ランタイムが見つかりません (xcrun simctl list runtimes available で確認してください)" >&2
   exit 1
 fi
@@ -274,22 +279,29 @@ run_single_test() {
   sep "Test path: $test_path"
   sep "Artifact path: $artifact_path"
 
-  # テスト実行
-  ./scripts/generate_screenshots/run_appstore_screenshot.sh "$test_path" "$artifact_path" "$LANGUAGES" || true
+  # テストごとにユニークな一時ディレクトリを使用（並列実行の競合回避）
+  local test_temp_dir="${temp_dir}/$(basename "$test_file" .swift)"
+  rm -rf "$test_temp_dir"
+  mkdir -p "$test_temp_dir"
+
+  # テスト実行。ホスト側で撮るデバイス (iPhone Duo の外側・内側) では、画像と manifest.json を
+  # 一時ディレクトリに直接書かせ、xcresult からの抽出を飛ばす
+  local host_capture_dir=""
+  if is_host_capture_device "$SCREENSHOT_DEVICE"; then
+    host_capture_dir="$(pwd)/$test_temp_dir"
+  fi
+  ./scripts/generate_screenshots/run_appstore_screenshot.sh "$test_path" "$artifact_path" "$LANGUAGES" "$host_capture_dir" || true
 
   # テスト実行直後にスクリーンショットを抽出・整理
   if [ -d "$artifact_path" ]; then
     sep "Extracting screenshots: $artifact_path"
 
-    # テストごとにユニークな一時ディレクトリを使用（並列実行の競合回避）
-    local test_temp_dir="${temp_dir}/$(basename "$test_file" .swift)"
-    rm -rf "$test_temp_dir"
-    mkdir -p "$test_temp_dir"
-
-    # xcresulttool で Attachment を抽出
-    xcrun xcresulttool export attachments \
-      --path "$artifact_path" \
-      --output-path "$test_temp_dir" || true
+    # xcresulttool で Attachment を抽出 (ホスト撮影では manifest.json が既に一時ディレクトリにある)
+    if [ -z "$host_capture_dir" ]; then
+      xcrun xcresulttool export attachments \
+        --path "$artifact_path" \
+        --output-path "$test_temp_dir" || true
+    fi
 
     # fastlane 形式に整理
     sep "Organizing screenshots to fastlane format"
@@ -302,11 +314,12 @@ run_single_test() {
       touch "${temp_dir}/.success_${SCREENSHOT_DEVICE}_$(basename "$test_file" .swift)"
     fi
 
-    # テストごとの一時ディレクトリを削除
-    rm -rf "$test_temp_dir"
   else
     echo "Warning: Artifact not found: $artifact_path" >&3
   fi
+
+  # テストごとの一時ディレクトリを削除
+  rm -rf "$test_temp_dir"
 }
 
 # 一時ディレクトリの準備
@@ -325,21 +338,76 @@ if [ "${#device_list[@]}" -eq 0 ]; then
   echo "Error: -d に撮影デバイスが指定されていません" >&3
   exit 1
 fi
+uses_duo=false
 for device in "${device_list[@]}"; do
-  if ! get_display_type "$device" > /dev/null; then
-    echo "Error: 未対応の撮影デバイスです: $device (対応: 69, 65)" >&3
+  if ! get_display_type "$device" > /dev/null 2>&1; then
+    echo "Error: 未対応の撮影デバイスです: $device (対応: 69, 65, duo-outer, duo-inner)" >&3
     exit 1
   fi
+  if [ -n "$(get_duo_pose "$device")" ]; then
+    uses_duo=true
+  fi
 done
-# 専用シミュレータ名は 1 デバイス分にしか付けられない (別機種を同名では作れない) ため、複数デバイスとの併用は拒否する
-if [ -n "${DESTINATION_SIM_NAME:-}" ] && [ "${#device_list[@]}" -gt 1 ]; then
-  echo "Error: DESTINATION_SIM_NAME を使う時は -d で撮影デバイスを 1 つに絞ってください (指定: $DEVICES)" >&3
+# 専用シミュレータ名は 1 機種分にしか付けられない (別機種を同名では作れない) ため、複数機種との併用は拒否する。
+# duo-outer と duo-inner は同じ機種 (iPhone Duo) の姿勢違いなので、この 2 つだけの組は 1 機種として許す
+device_type_count=$(printf '%s\n' "${device_list[@]}" | while read -r d; do get_device_type_name "$d"; done | sort -u | wc -l | tr -d ' ')
+if [ -n "${DESTINATION_SIM_NAME:-}" ] && [ "$device_type_count" -gt 1 ]; then
+  echo "Error: DESTINATION_SIM_NAME を使う時は -d で撮影デバイスを 1 機種に絞ってください (指定: $DEVICES)" >&3
   exit 1
+fi
+# iPhone Duo の撮影の前提: iOS 27.1 以上のランタイムと、姿勢を切り替える duo-pose.sh (ローカルの Mac の Device Hub を操作する)
+if [ "$uses_duo" = true ]; then
+  if [ -z "$SCREENSHOT_DUO_OS_VERSION" ]; then
+    echo "Error: iPhone Duo の撮影には iOS 27.1 以上の simulator ランタイムが必要です (xcrun simctl list runtimes available で確認してください)" >&3
+    exit 1
+  fi
+  if [ ! -x "$DUO_POSE_SCRIPT" ]; then
+    echo "Error: iPhone Duo の姿勢を切り替えるスクリプトがありません: $DUO_POSE_SCRIPT (ios-simulator skill の scripts/duo-pose.sh)" >&3
+    exit 1
+  fi
+  if ! command -v magick > /dev/null 2>&1; then
+    echo "Error: iPhone Duo の内側ディスプレイの撮影には magick (ImageMagick) が必要です。brew install imagemagick" >&3
+    exit 1
+  fi
 fi
 sep "Devices: ${device_list[*]}"
 
+# iPhone Duo の simulator を起動し、デバイス区分に応じた姿勢 (閉じた = 外側、開いた = 内側) に切り替える関数。
+# 姿勢の切り替えは Booted の simulator にしか効かないため、xcodebuild の前に起動しておく。
+# 起動直後は有効なディスプレイを判定できず duo-pose.sh が STATUS=ERROR を返すことがあるため、数秒おいて再試行する
+# (references/iphone-duo.md の 3)
+prepare_duo_simulator() {
+  local pose
+  pose=$(get_duo_pose "$SCREENSHOT_DEVICE")
+  [ -n "$pose" ] || return 0
+
+  local udid
+  udid=$(resolve_simulator_udid "$DESTINATION_SIM_RESOLVED_NAME" "$SCREENSHOT_DEVICE_OS_VERSION")
+  if [ -z "$udid" ]; then
+    echo "Error: iPhone Duo の simulator '$DESTINATION_SIM_RESOLVED_NAME' (iOS $SCREENSHOT_DEVICE_OS_VERSION) の UDID を解決できません" >&3
+    return 1
+  fi
+  sep "Booting iPhone Duo simulator: $udid"
+  # 起動済みなら boot は失敗するが、その状態で続けてよい
+  xcrun simctl boot "$udid" 2>/dev/null || true
+  xcrun simctl bootstatus "$udid" -b
+
+  sep "Setting iPhone Duo pose: $pose"
+  local attempt
+  for attempt in 1 2 3 4 5; do
+    if bash "$DUO_POSE_SCRIPT" set --udid "$udid" "$pose"; then
+      return 0
+    fi
+    echo "duo-pose.sh が失敗しました (試行 $attempt/5)。5 秒後に再試行します"
+    sleep 5
+  done
+  echo "Error: iPhone Duo の姿勢を $pose にできません (duo-pose.sh の出力はログファイルを参照)" >&3
+  return 1
+}
+
 # 最初のデバイスでシミュレータを用意してビルドする。
 # build-for-testing の成果物は simulator SDK 共通で、他デバイスの test-without-building にもそのまま使える
+# (iOS 27.1 の iPhone Duo で test-without-building する時も同じ成果物でよい。本 PR で実測)
 configure_screenshot_device "${device_list[0]}"
 
 # シミュレータが存在しない場合は自動作成
@@ -387,6 +455,11 @@ run_all_tests_for_device() {
 
   # シミュレータが存在しない場合は自動作成 (2 台目以降のデバイスはここで用意する)
   ensure_simulator_exists
+
+  # iPhone Duo は起動して姿勢を合わせてから撮る (失敗したら、このデバイスの全テストを未成功のまま次へ進める)
+  if ! prepare_duo_simulator; then
+    return 0
+  fi
 
   # 並列実行ループ
   # 並列数の制御は PID を FIFO で待つ方式にする (macOS 標準の Bash 3.2 には wait -n が無く、
@@ -477,6 +550,17 @@ if [ -n "$final_failed" ]; then
   echo "$final_failed"
   echo "ログファイル: $LOG_FILE" >&3
   exit 1
+fi
+
+# iPhone Duo を撮った時は、最後に使った姿勢のまま残さず閉じた姿勢に戻してから停止する
+# (Device Hub は Booted の simulator にしか姿勢を効かせられないため、停止の前に戻す)
+if [ "$uses_duo" = true ]; then
+  duo_udid=$(resolve_simulator_udid "$DESTINATION_SIM_RESOLVED_NAME" "$SCREENSHOT_DEVICE_OS_VERSION")
+  if [ -n "$duo_udid" ]; then
+    sep "Shutting down iPhone Duo simulator: $duo_udid"
+    bash "$DUO_POSE_SCRIPT" set --udid "$duo_udid" closed || true
+    xcrun simctl shutdown "$duo_udid" 2>/dev/null || true
+  fi
 fi
 
 sep "All done."
