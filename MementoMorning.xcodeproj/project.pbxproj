@@ -178,6 +178,7 @@
 		CBEDE62BC03301DE44B8ABBC /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 301D1F5532F4A8A6AEC68818 /* Localizable.xcstrings */; };
 		CCA26A4ACD80B660A7F8870D /* PaywallSubscriptionPeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA895B4C82771D22404EF47 /* PaywallSubscriptionPeriodTests.swift */; };
 		D2F4226E2CF2FAA6DE557F3E /* XCUIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FA1FA41CA6BF45ADC08D32 /* XCUIApplication+.swift */; };
+		D3A1C7E0B2F4E5A6C8D9F0B1 /* XCTestCase+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1C7E0B2F4E5A6C8D9F0B2 /* XCTestCase+Snapshot.swift */; };
 		D3DD2B734F4C16E3E53793F6 /* StopIntentSpikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277CE3EF9D30F6F14682E92 /* StopIntentSpikeTests.swift */; };
 		D939146DB6D5595A93C7F373 /* AppStoreScreenshot16PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE5243AE47E504C0903E5E8 /* AppStoreScreenshot16PageSnapshotUITest.swift */; };
 		DB3117C3B6DB660A767A4D01 /* AppStoreScreenshot18PageSnapshotUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB2C51D6AFD6256485BAEBF /* AppStoreScreenshot18PageSnapshotUITest.swift */; };
@@ -440,6 +441,7 @@
 		F079F2436A8C211173F5F7E4 /* AppStoreScreenshot17PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot17PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		F582CE5B1CDF948266CA4755 /* Languages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languages.swift; sourceTree = "<group>"; };
 		F5FA1FA41CA6BF45ADC08D32 /* XCUIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+.swift"; sourceTree = "<group>"; };
+		D3A1C7E0B2F4E5A6C8D9F0B2 /* XCTestCase+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Snapshot.swift"; sourceTree = "<group>"; };
 		F6288E16B769A5A027B4FB8C /* AppStoreScreenshot13PageSnapshotUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshot13PageSnapshotUITest.swift; sourceTree = "<group>"; };
 		F7B64203A853C06733EA5259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F8C4DF77B3496C9F1F40203F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 			isa = PBXGroup;
 			children = (
 				FF94CCB0BC323D020B94C795 /* Languages.swift */,
+				D3A1C7E0B2F4E5A6C8D9F0B2 /* XCTestCase+Snapshot.swift */,
 				F5FA1FA41CA6BF45ADC08D32 /* XCUIApplication+.swift */,
 				5D232DB1513EA34865F02A38 /* Features */,
 			);
@@ -1444,6 +1447,7 @@
 				E351C380DF27FE655A71D544 /* AppStoreScreenshot8PageSnapshotUITest.swift in Sources */,
 				021672C53E93994052663553 /* AppStoreScreenshot9PageSnapshotUITest.swift in Sources */,
 				0FC3999F518B1E269B2888B7 /* Languages.swift in Sources */,
+				D3A1C7E0B2F4E5A6C8D9F0B1 /* XCTestCase+Snapshot.swift in Sources */,
 				D2F4226E2CF2FAA6DE557F3E /* XCUIApplication+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
