@@ -67,6 +67,17 @@ kill_descendants() {
   kill "$pid" 2>/dev/null || true
 }
 
+# 起動した iPhone Duo を閉じた姿勢に戻してから停止する (Device Hub は Booted の simulator にしか姿勢を効かせられないため、停止の前に戻す)。
+# 正常終了・リトライ後の失敗・Ctrl+C のどの経路でも呼び、開いた姿勢の simulator を残さない。
+# 対象は prepare_duo_simulator が控えた UDID で、UDID の解決前 (未定義・空) なら何もしない
+cleanup_duo_simulator() {
+  if [ "${uses_duo:-false}" = true ] && [ -n "${duo_udid:-}" ]; then
+    sep "Shutting down iPhone Duo simulator: $duo_udid"
+    bash "$DUO_POSE_SCRIPT" set --udid "$duo_udid" closed || true
+    xcrun simctl shutdown "$duo_udid" 2>/dev/null || true
+  fi
+}
+
 # Ctrl+C (SIGINT) / SIGTERM でのクリーンアップ処理
 # プロセスグループ全体を停止して子プロセス（xcodebuild等）も確実に終了させる
 cleanup() {
@@ -81,6 +92,7 @@ cleanup() {
     kill_descendants "$pid"
   done
   wait 2>/dev/null || true
+  cleanup_duo_simulator
   cleanup_temp_files
   echo "==== Partial screenshots may be in $VARIANT_OUTPUT_BASE_DIR ===" >&3
   echo "==== Partial screenshots may be in $VARIANT_OUTPUT_BASE_DIR ===="
@@ -553,17 +565,11 @@ if [ -n "$final_failed" ]; then
   echo "$final_failed" >&3
   echo "$final_failed"
   echo "ログファイル: $LOG_FILE" >&3
+  cleanup_duo_simulator
   exit 1
 fi
 
-# iPhone Duo を撮った時は、最後に使った姿勢のまま残さず閉じた姿勢に戻してから停止する
-# (Device Hub は Booted の simulator にしか姿勢を効かせられないため、停止の前に戻す)
-# (対象は prepare_duo_simulator が控えた UDID。UDID の解決前に失敗した時は空なので何もしない)
-if [ "$uses_duo" = true ] && [ -n "$duo_udid" ]; then
-  sep "Shutting down iPhone Duo simulator: $duo_udid"
-  bash "$DUO_POSE_SCRIPT" set --udid "$duo_udid" closed || true
-  xcrun simctl shutdown "$duo_udid" 2>/dev/null || true
-fi
+cleanup_duo_simulator
 
 sep "All done."
 sep "App Store screenshots saved to: $VARIANT_OUTPUT_BASE_DIR/_variant-*/"
