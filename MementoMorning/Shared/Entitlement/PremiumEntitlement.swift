@@ -55,10 +55,12 @@ enum PremiumEntitlement {
     }
 
     /// entitlement 判定を UserDefaults キャッシュへ保存する。
-    /// customerInfoStream の監視・購入・復元の全経路で同じ形のキャッシュになるようここへ集約する
+    /// customerInfoStream の監視・購入・復元の全経路で同じ形のキャッシュになるようここへ集約する。
+    /// 応答の署名検証 (Trusted Entitlements) に通った entitlement だけをプレミアムとみなし、
+    /// 検証失敗 (.failed) と未検証 (.notRequested。検証を有効にする前の SDK キャッシュ等) はプレミアムなしとして保存する (issue #197)
     static func cacheEntitlement(customerInfo: CustomerInfo) {
         let entitlement = customerInfo.entitlements[entitlementIdentifier]
-        UserDefaults.standard.set(entitlement?.isActive == true, forKey: .premiumEntitlementActive)
+        UserDefaults.standard.set(entitlement?.isActive == true && entitlement?.verification.isVerified == true, forKey: .premiumEntitlementActive)
         if let expirationDate = entitlement?.expirationDate {
             UserDefaults.standard.set(expirationDate.timeIntervalSince1970, forKey: .premiumEntitlementExpiration)
         } else {
@@ -72,7 +74,12 @@ enum PremiumEntitlement {
     /// isConfigured を見て多重 configure を防ぐため冪等
     static func configureIfPossible() {
         guard !revenueCatAPIKey.isEmpty, !isUnitTest, !isPreview, !Purchases.isConfigured else { return }
-        Purchases.configure(withAPIKey: revenueCatAPIKey)
+        // .informational は検証失敗でも SDK がエラーにせず verification に結果を載せるだけのため、判定は cacheEntitlement で行う
+        Purchases.configure(
+            with: Configuration.Builder(withAPIKey: revenueCatAPIKey)
+                .with(entitlementVerificationMode: .informational)
+                .build()
+        )
     }
 
     /// customerInfoStream を監視して entitlement 判定のキャッシュを更新し続ける。
