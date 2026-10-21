@@ -385,7 +385,7 @@ struct PaywallPage: View {
             if result.userCancelled {
                 return
             }
-            if result.customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+            if PremiumEntitlement.isEntitlementActive(customerInfo: result.customerInfo) {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
                 PremiumEntitlement.cacheEntitlement(customerInfo: result.customerInfo)
@@ -413,7 +413,7 @@ struct PaywallPage: View {
         defer { isPurchasing = false }
         do {
             let customerInfo = try await Purchases.shared.restorePurchases()
-            if customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+            if PremiumEntitlement.isEntitlementActive(customerInfo: customerInfo) {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
                 PremiumEntitlement.cacheEntitlement(customerInfo: customerInfo)

@@ -40,6 +40,8 @@ final class PremiumEntitlementCacheTests: XCTestCase {
     override func setUp() {
         super.setUp()
         savedValues = Dictionary(uniqueKeysWithValues: keys.map { ($0, UserDefaults.standard.object(forKey: $0)) })
+        // 前回の実行やアプリ起動で残った値に結果が左右されないよう、未保存の状態から始める
+        keys.forEach(UserDefaults.standard.removeObject(forKey:))
     }
 
     override func tearDown() {
