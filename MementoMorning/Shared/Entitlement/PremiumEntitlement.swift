@@ -54,12 +54,20 @@ enum PremiumEntitlement {
         )
     }
 
+    /// customerInfo の premium entitlement が有効かどうか。
+    /// 応答の署名検証 (Trusted Entitlements) に通った entitlement だけを有効とみなし、
+    /// 検証失敗 (.failed) と未検証 (.notRequested。検証を有効にする前の SDK キャッシュ等) は無効として返す (issue #197)。
+    /// キャッシュへの保存とペイウォールの購入・復元の成否で判定がずれないよう、両方がこれを使う
+    static func isEntitlementActive(customerInfo: CustomerInfo) -> Bool {
+        guard let entitlement = customerInfo.entitlements[entitlementIdentifier] else { return false }
+        return entitlement.isActive && entitlement.verification.isVerified
+    }
+
     /// entitlement 判定を UserDefaults キャッシュへ保存する。
     /// customerInfoStream の監視・購入・復元の全経路で同じ形のキャッシュになるようここへ集約する
     static func cacheEntitlement(customerInfo: CustomerInfo) {
-        let entitlement = customerInfo.entitlements[entitlementIdentifier]
-        UserDefaults.standard.set(entitlement?.isActive == true, forKey: .premiumEntitlementActive)
-        if let expirationDate = entitlement?.expirationDate {
+        UserDefaults.standard.set(isEntitlementActive(customerInfo: customerInfo), forKey: .premiumEntitlementActive)
+        if let expirationDate = customerInfo.entitlements[entitlementIdentifier]?.expirationDate {
             UserDefaults.standard.set(expirationDate.timeIntervalSince1970, forKey: .premiumEntitlementExpiration)
         } else {
             // 買い切り (一生プラン) は expirationDate が nil = 失効しない
@@ -72,7 +80,12 @@ enum PremiumEntitlement {
     /// isConfigured を見て多重 configure を防ぐため冪等
     static func configureIfPossible() {
         guard !revenueCatAPIKey.isEmpty, !isUnitTest, !isPreview, !Purchases.isConfigured else { return }
-        Purchases.configure(withAPIKey: revenueCatAPIKey)
+        // .informational は検証失敗でも SDK がエラーにせず verification に結果を載せるだけのため、判定は cacheEntitlement で行う
+        Purchases.configure(
+            with: Configuration.Builder(withAPIKey: revenueCatAPIKey)
+                .with(entitlementVerificationMode: .informational)
+                .build()
+        )
     }
 
     /// customerInfoStream を監視して entitlement 判定のキャッシュを更新し続ける。

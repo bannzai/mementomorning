@@ -49288,6 +49288,16 @@
         }
       }
     },
+    "Your purchase was found, but Premium couldn't be confirmed. Please try again later." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入は見つかりましたが、プレミアムを確認できませんでした。時間をおいてもう一度お試しください。"
+          }
+        }
+      }
+    },
     "Your words are still slowly taking shape." : {
       "localizations" : {
         "ar" : {

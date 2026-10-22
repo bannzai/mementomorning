@@ -385,7 +385,7 @@ struct PaywallPage: View {
             if result.userCancelled {
                 return
             }
-            if result.customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+            if PremiumEntitlement.isEntitlementActive(customerInfo: result.customerInfo) {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
                 PremiumEntitlement.cacheEntitlement(customerInfo: result.customerInfo)
@@ -413,11 +413,15 @@ struct PaywallPage: View {
         defer { isPurchasing = false }
         do {
             let customerInfo = try await Purchases.shared.restorePurchases()
-            if customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+            if PremiumEntitlement.isEntitlementActive(customerInfo: customerInfo) {
                 // customerInfoStream 経由のキャッシュ更新は非同期で、dismiss 直後のゲート画面の描画に
                 // 間に合わないことがあるため、確定した CustomerInfo を先にキャッシュへ反映する (PR #30 レビュー指摘)
                 PremiumEntitlement.cacheEntitlement(customerInfo: customerInfo)
                 dismiss()
+            } else if customerInfo.entitlements[PremiumEntitlement.entitlementIdentifier]?.isActive == true {
+                // 有効な購入はあるが署名検証に通らなかった (issue #197)。「購入が見つからない」と伝えると事実と異なるため分ける (PR #198 レビュー指摘)
+                // ja: 購入は見つかりましたが、プレミアムを確認できませんでした。時間をおいてもう一度お試しください。
+                purchaseError = String(localized: "Your purchase was found, but Premium couldn't be confirmed. Please try again later.")
             } else {
                 // ja: 復元できる購入が見つかりませんでした。
                 purchaseError = String(localized: "No purchases to restore were found.")
