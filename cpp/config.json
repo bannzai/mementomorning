@@ -1,0 +1,40 @@
+{
+  "appId": "6801673264",
+  "defaults": {
+    "fail_strategy": "fail-fast"
+  },
+  "cpps": [
+    {
+      "name": "journal-202610",
+      "visible": true,
+      "comment": "日記・内省軸。目覚ましではなく「毎朝の答えが人生の記録になる」ことを求める層向け。流入元: 日記・ジャーナル・内省・振り返り系の検索キーワード。スクリーンショットは公開中バージョンを雛形に複製し、Creative Asset だけ差し替える",
+      "locales": [
+        {
+          "locale": "ja",
+          "promotionalText": "毎朝ひとつの問いに答える、静かな日記。「今日死ぬとしたら、何をやりたいか」。答えはひと朝ずつ積み重なり、あなたの人生の記録になります。夜には朝の自分と答え合わせを。",
+          "keywords": [
+            "日記",
+            "ジャーナル",
+            "内省",
+            "振り返り",
+            "習慣",
+            "朝活",
+            "人生"
+          ]
+        },
+        {
+          "locale": "en-US",
+          "promotionalText": "A quiet journal built from one question a day: if today were your last day, what would you want to do? Your answers gather morning by morning into a record of your life.",
+          "keywords": [
+            "journal",
+            "diary",
+            "reflection",
+            "stoic",
+            "mindfulness",
+            "routine"
+          ]
+        }
+      ]
+    }
+  ]
+}
