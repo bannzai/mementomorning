@@ -1,6 +1,6 @@
 ---
 status: launched          # evaluating | building | launched | pivoting | retiring | retired
-decision_date: 2026-10-27 # 次の判定日 (YYYY-MM-DD)。判定のたびに cycle_days 後へ進める
+decision_date: 2026-11-10 # 次の判定日 (YYYY-MM-DD)。判定のたびに cycle_days 後へ進める
 cycle_days: 14            # 判定の周期 (7 または 14)
 veto_wait_hours: 12       # 公開後の無人ループの拒否権の待ち時間 (既定 12)
 daily_issue_cap: 3        # 1 日に生成してよい改善 issue の上限 (意味の門。既定 3)
@@ -44,7 +44,8 @@ launched_at: 2026-09-15   # 公開日 (YYYY-MM-DD)。App Store の初回公開�
 | 2026-10-10 | 既存アプリへの後付け | Shipaton 2026 には応募しない。「必要な機能」から提出の項目を外した | bannzai |
 | 2026-10-10 | 無人ループ | 節目の到達は 7 日・30 日と同じく回答件数で数える (90 日の節目は 90 件目の回答で表示し、公開日や初回回答日からの日数では数えない)。節目の issue は到達の最短日が近い順に 1 つずつ起票し、180 日・365 日は到達が 2027 年のため 2026-10-10 時点では起票しない | agent |
 | 2026-10-13 | 判定日 | 継続。直近 14 日の ★1〜2 レビュー数は 0 (計測元 `fetch-reviews.sh 6801673264 --country jp --pages 1` が `No reviews found`。iTunes Lookup の評価件数も 0) で、継続のしきい値 `<= 1` を満たし打ち切り条件 `>= 3 x2` に当たらない。次の判定日は 2026-10-27。公開から 28 日で評価・レビューが 0 件のため、現在の判定基準は「悪化していない」ことしか示せず、課金指標 (RevenueCat) が取れるまで判定の材料が無い状態が続く | agent |
+| 2026-10-27 | 判定日 | 継続。直近 14 日の ★1〜2 レビュー数は 0 (計測元 `fetch-reviews.sh 6801673264 --country jp --pages 1` が `No reviews found`。iTunes Lookup の評価件数も 0) で、継続のしきい値 `<= 1` を満たし打ち切り条件 `>= 3 x2` に当たらない。次の判定日は 2026-11-10。RevenueCat の指標は bannzai/dashboard の日次データから `read-dashboard-metric.sh` で読めるようになり、有料の購読はまだ無い。利用の行 (直近 14 日の新規顧客数) を判定基準に足す案を `documents/loop/pending-proposals.md` に積んだ | agent |
 
 ## agent に任せること
 
-文書に無い問いはすべて。RevenueCat の課金指標 (アクティブなサブスクリプション数・MRR) は、`.envrc` の v2 API key に `metrics/overview` の読み取り権限が付いた時に agent が判定基準へ足す (2026-09-29 時点の key は `/projects` の読み取りで 403。2026-10-10 の無人ループでも同じく 403 で、`project_configuration:projects:read` が無いと返る)。
+文書に無い問いはすべて。RevenueCat の課金指標 (アクティブなサブスクリプション数・MRR・新規顧客数等) は、bannzai/dashboard が日次で集めたデータを `bash ~/.agents/skills/product-loop/scripts/read-dashboard-metric.sh --repo bannzai/mementomorning --metric <指標> --field <列>` で読む (2026-10-27 に `mrr`・`active_subscriptions`・`new_customers` が `STATUS=ok` で読めた。`.envrc` の v2 API key は 2026-10-26 の無人ループでも `project_configuration:projects:read` が無く 403)。判定基準に足す行は週次の承認を経て反映する。
