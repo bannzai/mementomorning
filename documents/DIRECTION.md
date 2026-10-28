@@ -48,4 +48,4 @@ launched_at: 2026-09-15   # 公開日 (YYYY-MM-DD)。App Store の初回公開�
 
 ## agent に任せること
 
-文書に無い問いはすべて。RevenueCat の課金指標 (アクティブなサブスクリプション数・MRR・新規顧客数等) は、bannzai/dashboard が日次で集めたデータを `bash ~/.agents/skills/product-loop/scripts/read-dashboard-metric.sh --repo bannzai/mementomorning --metric <指標> --field <列>` で読む (2026-10-27 に `mrr`・`active_subscriptions`・`new_customers` が `STATUS=ok` で読めた。`.envrc` の v2 API key は 2026-10-26 の無人ループでも `project_configuration:projects:read` が無く 403)。判定基準に足す行は週次の承認を経て反映する。
+文書に無い問いはすべて。RevenueCat の課金指標 (アクティブなサブスクリプション数・MRR・新規顧客数等) は、bannzai/dashboard が日次で集めたデータを `bash ~/.agents/skills/product-loop/scripts/read-dashboard-metric.sh --repo bannzai/mementomorning --metric <指標> --field <列>` で読む (2026-10-27 に `mrr`・`active_subscriptions`・`new_customers` が `STATUS=ok` で読めた。v2 API key は 2026-10-27 に `.envrc` から 1Password の `.env.1password` の `REVENUECAT_PROJECT_CONFIGURATION_API_KEY_V2` へ移った (commit 2581444)。移る前の key は 2026-10-26 の無人ループで `project_configuration:projects:read` が無く 403。移った後の権限は未確認で、2026-10-29 の無人ループの `op run --env-file .env.1password -- rc_api.sh GET /projects` は 1Password の `authorization timeout` で止まった)。判定基準に足す行は週次の承認を経て反映する。
