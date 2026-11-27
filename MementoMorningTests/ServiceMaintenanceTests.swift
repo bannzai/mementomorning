@@ -249,11 +249,12 @@ final class ServiceMaintenanceTests: XCTestCase {
         while fetchCount < 3, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
         XCTAssertGreaterThanOrEqual(fetchCount, 3, "interval ごとに読み直す")
         polling.cancel()
-        await polling.value
         let countAtCancel = fetchCount
+        await polling.value
         // 100 ミリ秒は 10 ミリ秒の読み直しの間隔の 10 回分で、キャンセルの後も読み続ける実装なら読み取りが増える長さ
         try? await Task.sleep(for: .milliseconds(100))
-        XCTAssertEqual(fetchCount, countAtCancel, "キャンセルの後は読まない")
+        // キャンセルの時点で while の条件を通り過ぎていた 1 回だけは読んでよい
+        XCTAssertLessThanOrEqual(fetchCount, countAtCancel + 1, "キャンセルの後は読み続けない")
     }
 }
 
