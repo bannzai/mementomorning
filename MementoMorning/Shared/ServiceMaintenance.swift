@@ -20,7 +20,7 @@ struct MaintenanceState: Decodable, Equatable {
     let message: String?
     /// メンテナンス中の画面に出すボタン。nil ならボタンを出さない
     let button: Button?
-    /// 何が切り替えたか (owner・cost・usage)
+    /// 何が切り替えたか
     let source: String
     /// 最後に切り替わった時刻 (ISO 8601)
     let changedAt: String
@@ -66,6 +66,7 @@ func parseMaintenanceStateURL(infoPlistValue: Any?) -> URL? {
 /// (状態の置き場の障害でアプリを止めないため、呼び出し側は nil をメンテナンス中でないとして扱う)。timeout は応答を待つ上限 (秒)
 func fetchMaintenanceState(
     stateURL: URL,
+    // 本番は共有のセッションで足り、通信を差し替えるテストだけが別のセッションを渡すため
     session: URLSession = .shared,
     // 状態を返す Worker の GET 1 回の実測 0.07〜0.22 秒に 9 倍以上の余裕を持たせた、全サービス共通の値
     // (service-maintenance-setup skill の SKILL.md「読む間隔と待つ上限」)
