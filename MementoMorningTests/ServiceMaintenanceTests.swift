@@ -204,7 +204,10 @@ final class ServiceMaintenanceTests: XCTestCase {
                 return nil
             }.readRepeatedly(interval: .milliseconds(10))
         }
-        while fetchCount < 3 { await Task.yield() }
+        // 2 秒は、10 ミリ秒ごとの読み直しが 3 回起こるのに CI の遅さを見込んでも足り、読み直さない実装でテストが止まらないための上限
+        let deadline = Date.now.addingTimeInterval(2)
+        while fetchCount < 3, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
+        XCTAssertGreaterThanOrEqual(fetchCount, 3, "interval ごとに読み直す")
         polling.cancel()
         await polling.value
         let countAtCancel = fetchCount
