@@ -62,16 +62,17 @@ func parseMaintenanceStateURL(infoPlistValue: Any?) -> URL? {
     (infoPlistValue as? String).flatMap { URL(string: $0) }
 }
 
-/// stateURL から状態を読む。読めなかった時 (通信の失敗・時間切れ・200 以外・形の違う応答) は nil を返す
+/// stateURL から状態を読む。stateURL が nil (状態の URL が無いビルド) の時は通信せず、読めなかった時 (通信の失敗・時間切れ・200 以外・形の違う応答) と同じく nil を返す
 /// (状態の置き場の障害でアプリを止めないため、呼び出し側は nil をメンテナンス中でないとして扱う)。timeout は応答を待つ上限 (秒)
 func fetchMaintenanceState(
-    stateURL: URL,
+    stateURL: URL?,
     // 本番は共有のセッションで足り、通信を差し替えるテストだけが別のセッションを渡すため
     session: URLSession = .shared,
     // 状態を返す Worker の GET 1 回の実測 0.07〜0.22 秒に 9 倍以上の余裕を持たせた、全サービス共通の値
     // (service-maintenance-setup skill の SKILL.md「読む間隔と待つ上限」)
     timeout: TimeInterval = 2
 ) async -> MaintenanceState? {
+    guard let stateURL else { return nil }
     var request = URLRequest(url: stateURL)
     request.timeoutInterval = timeout
     guard let (data, response) = try? await session.data(for: request),

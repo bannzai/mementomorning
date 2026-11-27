@@ -9,6 +9,14 @@ final class ServiceMaintenanceTests: XCTestCase {
     /// テストで読む状態の URL。StubURLProtocol が応答するため、実際には通信しない
     private let stateURL = URL(string: "https://service-maintenance.example.test/mementomorning")!
 
+    /// owner がメンテナンス中にした、message と button の無い状態の JSON
+    private let maintenanceOwnerJSON = #"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#
+
+    /// maintenanceOwnerJSON を読んだ状態
+    private func maintenanceOwnerState() -> MaintenanceState {
+        try! JSONDecoder().decode(MaintenanceState.self, from: Data(maintenanceOwnerJSON.utf8))
+    }
+
     /// テストごとに差し替えた応答を消す
     override func tearDown() {
         StubURLProtocol.respond = nil
@@ -76,6 +84,18 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     // MARK: - 読めない時は通常どおり
 
+    /// 状態の URL が無いビルドでは通信せず、メンテナンス中でないとすること
+    func testNilStateURLReadsNoStateWithoutRequest() async {
+        var requestCount = 0
+        StubURLProtocol.respond = { request in
+            requestCount += 1
+            return .response(HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, Data(self.maintenanceOwnerJSON.utf8))
+        }
+        let state = await fetchMaintenanceState(stateURL: nil, session: stubSession())
+        XCTAssertNil(state, "状態の URL が無い時は読まない")
+        XCTAssertEqual(requestCount, 0, "状態の URL が無い時は通信しない")
+    }
+
     /// メンテナンス中の後に通信に失敗したら通常に戻ること
     func testNetworkFailureAfterMaintenanceReturnsToNormal() async {
         let reader = stubReader()
@@ -103,7 +123,7 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     /// 200 以外の応答は本文によらず使わないこと
     func testNon200IsNotMaintenance() async {
-        respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#, statusCode: 500)
+        respondJSON(body: maintenanceOwnerJSON, statusCode: 500)
         let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
         XCTAssertNil(state, "200 以外の応答は、本文が maintenance: true でも使わない")
     }
@@ -166,10 +186,7 @@ final class ServiceMaintenanceTests: XCTestCase {
         // 後から始めた読み取り (通常) が先に返り、先に始めた読み取り (メンテナンス中) が後から返る
         pendingFetches[1].resume(returning: nil)
         await newerRead.value
-        pendingFetches[0].resume(returning: try! JSONDecoder().decode(
-            MaintenanceState.self,
-            from: Data(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8)
-        ))
+        pendingFetches[0].resume(returning: maintenanceOwnerState())
         await olderRead.value
         XCTAssertFalse(reader.isInMaintenance, "古い読み取りの結果で新しい結果を上書きしない")
     }
@@ -182,7 +199,7 @@ final class ServiceMaintenanceTests: XCTestCase {
         }
         let maintenanceRead = Task { await reader.read() }
         while pendingFetches.count < 1 { await Task.yield() }
-        pendingFetches[0].resume(returning: try! JSONDecoder().decode(MaintenanceState.self, from: Data(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8)))
+        pendingFetches[0].resume(returning: maintenanceOwnerState())
         await maintenanceRead.value
         XCTAssertTrue(reader.isInMaintenance)
 
@@ -207,10 +224,13 @@ final class ServiceMaintenanceTests: XCTestCase {
         }
         // 2 秒は、すぐに読む実装なら CI の遅さを見込んでも 1 回目の読み取りが済み、60 秒待つ実装とは区別できる上限
         let deadline = Date.now.addingTimeInterval(2)
+        // 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
         while fetchCount < 1, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
+        // キャンセルの前に数える (先に待つ実装はキャンセルで待ちが切れて読むため、キャンセルの後では区別できない)
+        let countBeforeCancel = fetchCount
         polling.cancel()
         await polling.value
-        XCTAssertEqual(fetchCount, 1, "interval を待たずに 1 回読む")
+        XCTAssertEqual(countBeforeCancel, 1, "interval を待たずに 1 回読む")
     }
 
     /// readRepeatedly は interval ごとに読み直し、呼んだ task のキャンセルで読むのをやめること
@@ -225,11 +245,13 @@ final class ServiceMaintenanceTests: XCTestCase {
         }
         // 2 秒は、10 ミリ秒ごとの読み直しが 3 回起こるのに CI の遅さを見込んでも足り、読み直さない実装でテストが止まらないための上限
         let deadline = Date.now.addingTimeInterval(2)
+        // 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
         while fetchCount < 3, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
         XCTAssertGreaterThanOrEqual(fetchCount, 3, "interval ごとに読み直す")
         polling.cancel()
         await polling.value
         let countAtCancel = fetchCount
+        // 100 ミリ秒は 10 ミリ秒の読み直しの間隔の 10 回分で、キャンセルの後も読み続ける実装なら読み取りが増える長さ
         try? await Task.sleep(for: .milliseconds(100))
         XCTAssertEqual(fetchCount, countAtCancel, "キャンセルの後は読まない")
     }
@@ -255,7 +277,7 @@ private final class StubURLProtocol: URLProtocol {
     /// リクエストを書き換えずにそのまま使う
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
-    /// respond の応答を client に返す
+    /// respond の応答を client に返す。respond が未設定の時は、テストが応答を決め忘れても状態を読めた扱いにしないため、通信の失敗を返す
     override func startLoading() {
         switch Self.respond?(request) ?? .failure(URLError(.badServerResponse)) {
         case let .response(response, data):
