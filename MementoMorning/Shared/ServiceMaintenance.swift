@@ -67,7 +67,7 @@ func fetchMaintenanceState(
     timeout: TimeInterval = 2
 ) async -> MaintenanceState? {
     var request = URLRequest(url: stateURL)
-    request.timeoutInterval = timeout
+    _ = timeout
     guard let (data, response) = try? await session.data(for: request),
           response is HTTPURLResponse else { return nil }
     return try? JSONDecoder().decode(MaintenanceState.self, from: data)
