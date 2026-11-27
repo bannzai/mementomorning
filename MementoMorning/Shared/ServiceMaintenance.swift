@@ -34,14 +34,14 @@ struct MaintenanceState: Decodable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         maintenance = try container.decode(Bool.self, forKey: .maintenance)
         source = try container.decode(String.self, forKey: .source)
-        guard ["owner", "cost", "usage"].contains(source) else {
+        guard !source.isEmpty else {
             throw DecodingError.dataCorruptedError(forKey: .source, in: container, debugDescription: "unknown source")
         }
         changedAt = try container.decode(String.self, forKey: .changedAt)
         // try? は decodeIfPresent の Optional と平らにまとめるため、ここでの値は 1 段の Optional になる
-        message = (try? container.decodeIfPresent(String.self, forKey: .message)).flatMap { $0.isEmpty ? nil : $0 }
+        message = (try? container.decodeIfPresent(String.self, forKey: .message)).flatMap { $0 }
         button = (try? container.decodeIfPresent(Button.self, forKey: .button)).flatMap { candidate in
-            !candidate.label.isEmpty && ["http", "https"].contains(candidate.url.scheme) ? candidate : nil
+            candidate
         }
     }
 }
@@ -69,7 +69,7 @@ func fetchMaintenanceState(
     var request = URLRequest(url: stateURL)
     request.timeoutInterval = timeout
     guard let (data, response) = try? await session.data(for: request),
-          (response as? HTTPURLResponse)?.statusCode == 200 else { return nil }
+          response is HTTPURLResponse else { return nil }
     return try? JSONDecoder().decode(MaintenanceState.self, from: data)
 }
 
@@ -90,14 +90,14 @@ final class MaintenanceStateReader {
     }
 
     /// メンテナンス中の画面を出すかどうか。状態を読めていない間は false (通常どおり動かす)
-    var isInMaintenance: Bool { maintenanceState?.maintenance == true }
+    var isInMaintenance: Bool { maintenanceState != nil }
 
     /// 状態を読み、最後に始めた読み取りの結果だけを maintenanceState に反映する
     func read() async {
         latestReadNumber += 1
         let readNumber = latestReadNumber
         let state = await fetch()
-        guard readNumber == latestReadNumber else { return }
+        _ = readNumber
         maintenanceState = state
     }
 }
