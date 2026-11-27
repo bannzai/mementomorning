@@ -24,6 +24,7 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     /// stateURL から stubSession で読む読み手
     private func stubReader() -> MaintenanceStateReader {
+        // 0.5 秒は、StubURLProtocol がすぐに返す応答には十分で、応答を返さないスタブでもテストを長く止めない上限
         MaintenanceStateReader { await fetchMaintenanceState(stateURL: self.stateURL, session: self.stubSession(), timeout: 0.5) }
     }
 
@@ -192,6 +193,24 @@ final class ServiceMaintenanceTests: XCTestCase {
         pendingFetches[1].resume(returning: nil)
         await cancelledRead.value
         XCTAssertTrue(reader.isInMaintenance, "キャンセルされた読み取りの nil でメンテナンス中の画面を外さない")
+    }
+
+    /// readRepeatedly は interval を待たずにすぐ 1 回読むこと (起動時・前面に戻った時の読み取りを遅らせないため)
+    func testReadRepeatedlyReadsImmediately() async {
+        var fetchCount = 0
+        let polling = Task {
+            // 60 秒は本番の読み直しの間隔で、テストの中では 2 回目の読み取りが起こらない長さ
+            await MaintenanceStateReader {
+                fetchCount += 1
+                return nil
+            }.readRepeatedly(interval: .seconds(60))
+        }
+        // 2 秒は、すぐに読む実装なら CI の遅さを見込んでも 1 回目の読み取りが済み、60 秒待つ実装とは区別できる上限
+        let deadline = Date.now.addingTimeInterval(2)
+        while fetchCount < 1, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
+        polling.cancel()
+        await polling.value
+        XCTAssertEqual(fetchCount, 1, "interval を待たずに 1 回読む")
     }
 
     /// readRepeatedly は interval ごとに読み直し、呼んだ task のキャンセルで読むのをやめること
