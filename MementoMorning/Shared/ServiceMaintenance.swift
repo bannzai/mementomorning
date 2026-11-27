@@ -52,9 +52,14 @@ struct MaintenanceState: Decodable, Equatable {
 let maintenanceStatePollInterval: Duration = .seconds(60)
 
 /// このアプリが読む状態の URL (`<状態を返す Worker の URL>/mementomorning`)。
-/// ビルド設定 MAINTENANCE_STATE_URL (Config.xcconfig) を Info.plist 経由で読む。値が無い・URL でない時は nil (状態を読まない)
+/// ビルド設定 MAINTENANCE_STATE_URL (Config.xcconfig) を Info.plist の MaintenanceStateURL 経由で読む。値が無い・URL でない時は nil (状態を読まない)
 var maintenanceStateURL: URL? {
-    (Bundle.main.object(forInfoDictionaryKey: "MaintenanceStateURL") as? String).flatMap { URL(string: $0) }
+    parseMaintenanceStateURL(infoPlistValue: Bundle.main.object(forInfoDictionaryKey: "MaintenanceStateURL"))
+}
+
+/// Info.plist の MaintenanceStateURL の値 infoPlistValue を状態の URL にする。文字列でない・URL にできない時は nil
+func parseMaintenanceStateURL(infoPlistValue: Any?) -> URL? {
+    (infoPlistValue as? String).flatMap { URL(string: $0) }
 }
 
 /// stateURL から状態を読む。読めなかった時 (通信の失敗・時間切れ・200 以外・形の違う応答) は nil を返す
@@ -92,13 +97,22 @@ final class MaintenanceStateReader {
     /// メンテナンス中の画面を出すかどうか。状態を読めていない間は false (通常どおり動かす)
     var isInMaintenance: Bool { maintenanceState?.maintenance == true }
 
-    /// 状態を読み、最後に始めた読み取りの結果だけを maintenanceState に反映する
+    /// 状態を読み、最後に始めた読み取りの結果だけを maintenanceState に反映する。
+    /// 読み取りを呼んだ task がキャンセルされた時は反映しない (背面に回った時の通信の取り消しで返る nil で、メンテナンス中の画面を外さないため)
     func read() async {
         latestReadNumber += 1
         let readNumber = latestReadNumber
         let state = await fetch()
-        guard readNumber == latestReadNumber else { return }
+        guard !Task.isCancelled, readNumber == latestReadNumber else { return }
         maintenanceState = state
+    }
+
+    /// 呼んだ task がキャンセルされるまで、すぐに 1 回読み、その後 interval ごとに読み直す
+    func readRepeatedly(interval: Duration = maintenanceStatePollInterval) async {
+        while !Task.isCancelled {
+            await read()
+            try? await Task.sleep(for: interval)
+        }
     }
 }
 
@@ -112,6 +126,7 @@ struct MaintenanceGate<Content: View>: View {
     /// アプリのライフサイクル状態。前面にいる間だけ読むために監視する
     @Environment(\.scenePhase) private var scenePhase
 
+    /// メンテナンス中は content を隠してメンテナンス中の画面を重ね、前面にいる間だけ状態を読み続ける画面
     var body: some View {
         ZStack {
             // 通常の画面は外さずに隠す (メンテナンスが終わった時に、利用者がいた画面へ戻すため)
@@ -128,10 +143,7 @@ struct MaintenanceGate<Content: View>: View {
             // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に本番の状態の URL へ通信しないよう打ち切る
             if isUnitTest { return }
             guard scenePhase == .active else { return }
-            while !Task.isCancelled {
-                await reader.read()
-                try? await Task.sleep(for: maintenanceStatePollInterval)
-            }
+            await reader.readRepeatedly()
         }
     }
 }
@@ -145,6 +157,7 @@ private struct MaintenancePage: View {
     /// ボタンの URL を開く処理
     @Environment(\.openURL) private var openURL
 
+    /// message (無ければ既定の文) と、button がある時だけそのボタンを並べた画面
     var body: some View {
         // 余白・文字の値は、問いの画面 (QuestionPage) と同じ細いウェイトの中央寄せで、余白を広く取るデザインの方針
         // (design_handoff_memento_morning/README.md) に合わせて選んだ

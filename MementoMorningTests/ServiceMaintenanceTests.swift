@@ -9,6 +9,7 @@ final class ServiceMaintenanceTests: XCTestCase {
     /// テストで読む状態の URL。StubURLProtocol が応答するため、実際には通信しない
     private let stateURL = URL(string: "https://service-maintenance.example.test/mementomorning")!
 
+    /// テストごとに差し替えた応答を消す
     override func tearDown() {
         StubURLProtocol.respond = nil
         super.tearDown()
@@ -26,8 +27,8 @@ final class ServiceMaintenanceTests: XCTestCase {
         MaintenanceStateReader { await fetchMaintenanceState(stateURL: self.stateURL, session: self.stubSession(), timeout: 0.5) }
     }
 
-    /// 状態を返す Worker と同じ形の JSON を 200 で返す
-    private func respondJSON(_ json: String, statusCode: Int = 200) {
+    /// 状態を返す Worker と同じ形の JSON の本文 body を、statusCode (既定は Worker が状態を返す時の 200) で返す
+    private func respondJSON(body json: String, statusCode: Int = 200) {
         StubURLProtocol.respond = { request in
             .response(HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: nil, headerFields: nil)!, Data(json.utf8))
         }
@@ -35,34 +36,49 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     // MARK: - 読む URL
 
+    /// ビルドが Config.xcconfig の本番の状態の URL を読むこと
     func testBuildReadsProductionStateURL() {
         // xcconfig は // 以降をコメントとして読むため、Config.xcconfig の書き方を誤ると "https:" だけが残る
         XCTAssertEqual(maintenanceStateURL, URL(string: "https://service-maintenance.star-kojiki.workers.dev/mementomorning"))
     }
 
+    /// Info.plist の値が無い・文字列でない・URL にできない時は状態を読まない (nil) こと
+    func testMissingOrInvalidInfoPlistValueReadsNoState() {
+        XCTAssertNil(parseMaintenanceStateURL(infoPlistValue: nil), "値が無い")
+        XCTAssertNil(parseMaintenanceStateURL(infoPlistValue: 1), "文字列でない")
+        XCTAssertNil(parseMaintenanceStateURL(infoPlistValue: ""), "空文字は URL にできない")
+        XCTAssertEqual(
+            parseMaintenanceStateURL(infoPlistValue: "http://localhost:8000/mementomorning"),
+            URL(string: "http://localhost:8000/mementomorning"),
+            "文字列の URL はそのまま使う"
+        )
+    }
+
     // MARK: - 切り替え
 
+    /// maintenance: true でメンテナンス中、false で通常に戻ること
     func testMaintenanceTrueShowsMaintenancePageAndFalseReturnsToNormal() async {
         let reader = stubReader()
         XCTAssertFalse(reader.isInMaintenance, "読む前は通常の画面")
 
-        respondJSON(#"{"maintenance":true,"message":"Stopped for a while","button":{"label":"Status","url":"https://example.com/status"},"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#)
+        respondJSON(body: #"{"maintenance":true,"message":"Stopped for a while","button":{"label":"Status","url":"https://example.com/status"},"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#)
         await reader.read()
         XCTAssertTrue(reader.isInMaintenance, "maintenance: true でメンテナンス中の画面に変わる")
         XCTAssertEqual(reader.maintenanceState?.message, "Stopped for a while")
         XCTAssertEqual(reader.maintenanceState?.button?.label, "Status")
         XCTAssertEqual(reader.maintenanceState?.button?.url, URL(string: "https://example.com/status"))
 
-        respondJSON(#"{"maintenance":false,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:01:00.000Z"}"#)
+        respondJSON(body: #"{"maintenance":false,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:01:00.000Z"}"#)
         await reader.read()
         XCTAssertFalse(reader.isInMaintenance, "maintenance: false で通常の画面に戻る")
     }
 
     // MARK: - 読めない時は通常どおり
 
+    /// メンテナンス中の後に通信に失敗したら通常に戻ること
     func testNetworkFailureAfterMaintenanceReturnsToNormal() async {
         let reader = stubReader()
-        respondJSON(#"{"maintenance":true,"message":null,"button":null,"source":"cost","changedAt":"2026-11-27T00:00:00.000Z"}"#)
+        respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":"cost","changedAt":"2026-11-27T00:00:00.000Z"}"#)
         await reader.read()
         XCTAssertTrue(reader.isInMaintenance)
 
@@ -72,6 +88,7 @@ final class ServiceMaintenanceTests: XCTestCase {
         XCTAssertNil(reader.maintenanceState)
     }
 
+    /// 応答が返らない時は待つ上限で打ち切り、読めなかったとすること
     func testTimeoutIsNotMaintenance() async {
         // 応答を返さない (timeoutInterval が切れるまで待たせる)
         StubURLProtocol.respond = { _ in .noResponse }
@@ -83,12 +100,14 @@ final class ServiceMaintenanceTests: XCTestCase {
         XCTAssertLessThan(Date.now.timeIntervalSince(startedAt), 10, "待つ上限で打ち切る")
     }
 
+    /// 200 以外の応答は本文によらず使わないこと
     func testNon200IsNotMaintenance() async {
-        respondJSON(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#, statusCode: 500)
+        respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#, statusCode: 500)
         let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
         XCTAssertNil(state, "200 以外の応答は、本文が maintenance: true でも使わない")
     }
 
+    /// 形の違う応答は読めなかったとすること
     func testMalformedResponsesAreNotMaintenance() async {
         for body in [
             "not json",
@@ -98,7 +117,7 @@ final class ServiceMaintenanceTests: XCTestCase {
             #"{"maintenance":true,"message":null,"button":null,"source":"owner"}"#,
             #"{"maintenance":true,"message":null,"button":null,"changedAt":"2026-11-27T00:00:00.000Z"}"#,
         ] {
-            respondJSON(body)
+            respondJSON(body: body)
             let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
             XCTAssertNil(state, "形の違う応答は使わない: \(body)")
         }
@@ -106,13 +125,14 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     // MARK: - message と button の形
 
+    /// message と button の形が違っても maintenance は落とさず、その項目だけを使わないこと
     func testMalformedMessageAndButtonKeepMaintenance() async {
         for body in [
             #"{"maintenance":true,"message":"","button":{"label":"","url":"https://example.com"},"source":"usage","changedAt":"2026-11-27T00:00:00.000Z"}"#,
             #"{"maintenance":true,"message":1,"button":{"label":"Open","url":"javascript:alert(1)"},"source":"usage","changedAt":"2026-11-27T00:00:00.000Z"}"#,
             #"{"maintenance":true,"button":"Open","source":"usage","changedAt":"2026-11-27T00:00:00.000Z"}"#,
         ] {
-            respondJSON(body)
+            respondJSON(body: body)
             let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
             XCTAssertEqual(state?.maintenance, true, "message と button の形が違っても切り替えは落とさない: \(body)")
             XCTAssertNil(state?.message, "空・文字列でない message は使わない (既定の文を出す): \(body)")
@@ -120,8 +140,18 @@ final class ServiceMaintenanceTests: XCTestCase {
         }
     }
 
+    /// http と https の URL の button はそのまま出すこと
+    func testHTTPAndHTTPSButtonsAreShown() async {
+        for url in ["http://example.com/status", "https://example.com/status"] {
+            respondJSON(body: #"{"maintenance":true,"message":null,"button":{"label":"Status","url":""# + url + #""},"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#)
+            let buttonURL = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())?.button?.url
+            XCTAssertEqual(buttonURL, URL(string: url), "http(s) の button は出す: \(url)")
+        }
+    }
+
     // MARK: - 読み取りの順序
 
+    /// 後から始めた読み取りの結果を、先に始めた読み取りが後から返って上書きしないこと
     func testOlderReadFinishingLaterDoesNotOverrideNewerResult() async {
         var pendingFetches: [CheckedContinuation<MaintenanceState?, Never>] = []
         let reader = MaintenanceStateReader {
@@ -142,6 +172,45 @@ final class ServiceMaintenanceTests: XCTestCase {
         await olderRead.value
         XCTAssertFalse(reader.isInMaintenance, "古い読み取りの結果で新しい結果を上書きしない")
     }
+
+    /// 読み取りを呼んだ task がキャンセルされた時 (背面に回った時) の結果で、メンテナンス中の画面を外さないこと
+    func testCancelledReadDoesNotOverrideMaintenance() async {
+        var pendingFetches: [CheckedContinuation<MaintenanceState?, Never>] = []
+        let reader = MaintenanceStateReader {
+            await withCheckedContinuation { pendingFetches.append($0) }
+        }
+        let maintenanceRead = Task { await reader.read() }
+        while pendingFetches.count < 1 { await Task.yield() }
+        pendingFetches[0].resume(returning: try! JSONDecoder().decode(MaintenanceState.self, from: Data(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8)))
+        await maintenanceRead.value
+        XCTAssertTrue(reader.isInMaintenance)
+
+        let cancelledRead = Task { await reader.read() }
+        while pendingFetches.count < 2 { await Task.yield() }
+        cancelledRead.cancel()
+        // 通信の取り消しで読めなかった (nil) として返る
+        pendingFetches[1].resume(returning: nil)
+        await cancelledRead.value
+        XCTAssertTrue(reader.isInMaintenance, "キャンセルされた読み取りの nil でメンテナンス中の画面を外さない")
+    }
+
+    /// readRepeatedly は interval ごとに読み直し、呼んだ task のキャンセルで読むのをやめること
+    func testReadRepeatedlyReadsEveryIntervalUntilCancelled() async {
+        var fetchCount = 0
+        let polling = Task {
+            // 10 ミリ秒は、テストの所要時間を短くしつつ、読み直しが 3 回起こるのを待てる間隔
+            await MaintenanceStateReader {
+                fetchCount += 1
+                return nil
+            }.readRepeatedly(interval: .milliseconds(10))
+        }
+        while fetchCount < 3 { await Task.yield() }
+        polling.cancel()
+        await polling.value
+        let countAtCancel = fetchCount
+        try? await Task.sleep(for: .milliseconds(100))
+        XCTAssertEqual(fetchCount, countAtCancel, "キャンセルの後は読まない")
+    }
 }
 
 /// テストの URLSession の応答を差し替える URLProtocol
@@ -159,9 +228,12 @@ private final class StubURLProtocol: URLProtocol {
     /// リクエストごとに返す応答。テストごとに設定する
     nonisolated(unsafe) static var respond: ((URLRequest) -> Stub)?
 
+    /// テストのセッションのリクエストをすべてこの URLProtocol が受け持つ
     override class func canInit(with request: URLRequest) -> Bool { true }
+    /// リクエストを書き換えずにそのまま使う
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
+    /// respond の応答を client に返す
     override func startLoading() {
         switch Self.respond?(request) ?? .failure(URLError(.badServerResponse)) {
         case let .response(response, data):
@@ -175,5 +247,6 @@ private final class StubURLProtocol: URLProtocol {
         }
     }
 
+    /// 止める処理は無い (応答を返さない noResponse でも、URLSession が時間切れで呼ぶだけのため)
     override func stopLoading() {}
 }
