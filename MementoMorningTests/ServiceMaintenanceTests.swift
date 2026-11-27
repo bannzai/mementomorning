@@ -75,8 +75,12 @@ final class ServiceMaintenanceTests: XCTestCase {
     func testTimeoutIsNotMaintenance() async {
         // 応答を返さない (timeoutInterval が切れるまで待たせる)
         StubURLProtocol.respond = { _ in .noResponse }
+        let startedAt = Date.now
         let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession(), timeout: 0.3)
         XCTAssertNil(state, "時間切れは読めなかったとして扱う")
+        // 待つ上限を渡さないと URLRequest の既定の 60 秒まで待つため、上限で打ち切ったことを経過時間で確かめる
+        // (10 秒は 0.3 秒の上限に CI の遅さを見込んだ余裕を足し、既定の 60 秒とは区別できる値)
+        XCTAssertLessThan(Date.now.timeIntervalSince(startedAt), 10, "待つ上限で打ち切る")
     }
 
     func testNon200IsNotMaintenance() async {
