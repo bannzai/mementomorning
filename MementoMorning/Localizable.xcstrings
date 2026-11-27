@@ -45221,6 +45221,16 @@
         }
       }
     },
+    "We are under maintenance\n\nPlease open the app again a little later" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ただいまメンテナンス中です\n\n時間をおいてもう一度開いてください"
+          }
+        }
+      }
+    },
     "What do your first minutes of the day look like?" : {
       "localizations" : {
         "ar" : {

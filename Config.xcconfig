@@ -23,4 +23,11 @@
 REVENUECAT_API_KEY =
 REVENUECAT_API_KEY[config=Debug] = test_mlOloiaFdvQPRJADVsRcjYvjfuw
 
+// MAINTENANCE_STATE_URL は、このアプリがメンテナンス中かどうかを読む URL
+// (castle の service-maintenance-setup skill の状態を返す Worker。サービス名は mementomorning。
+// owner が `service-maintenance on mementomorning` を実行するとメンテナンス中の画面に変わる)。
+// xcconfig は // 以降をコメントとして読むため、$() で // を分けて書く。
+// 手元の検証で別の URL を読ませる時は、xcodebuild の引数で上書きする (例: MAINTENANCE_STATE_URL=http:/$()/localhost:8000/mementomorning)
+MAINTENANCE_STATE_URL = https:/$()/service-maintenance.star-kojiki.workers.dev/mementomorning
+
 #include? "Config.local.xcconfig"
