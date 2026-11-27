@@ -9,10 +9,7 @@ struct MementoMorningApp: App {
     /// アプリのライフサイクル状態
     @Environment(\.scenePhase) private var scenePhase
     /// owner の `service-maintenance on mementomorning` で出すメンテナンス中の画面の状態。状態の URL が無いビルドでは読まない
-    @State private var maintenanceStateReader = MaintenanceStateReader {
-        guard let maintenanceStateURL else { return nil }
-        return await fetchMaintenanceState(stateURL: maintenanceStateURL)
-    }
+    @State private var maintenanceStateReader = MaintenanceStateReader { await fetchMaintenanceState(stateURL: maintenanceStateURL) }
 
     /// 通知タップからの cold launch では View が現れる前に didReceive が呼ばれる。取りこぼさないよう .task ではなく init でデリゲートを設定する
     init() {
