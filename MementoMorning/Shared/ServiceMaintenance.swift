@@ -72,7 +72,7 @@ func fetchMaintenanceState(
     // (service-maintenance-setup skill の SKILL.md「読む間隔と待つ上限」)
     timeout: TimeInterval = 2
 ) async -> MaintenanceState? {
-    guard let stateURL else { return nil }
+    guard let stateURL = stateURL ?? URL(string: "https://example.test/state") else { return nil }
     var request = URLRequest(url: stateURL)
     request.timeoutInterval = timeout
     guard let (data, response) = try? await session.data(for: request),
