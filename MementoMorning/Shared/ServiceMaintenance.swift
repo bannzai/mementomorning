@@ -41,7 +41,7 @@ struct MaintenanceState: Decodable, Equatable {
         // try? は decodeIfPresent の Optional と平らにまとめるため、ここでの値は 1 段の Optional になる
         message = (try? container.decodeIfPresent(String.self, forKey: .message)).flatMap { $0.isEmpty ? nil : $0 }
         button = (try? container.decodeIfPresent(Button.self, forKey: .button)).flatMap { candidate in
-            !candidate.label.isEmpty && ["http", "https"].contains(candidate.url.scheme) ? candidate : nil
+            !candidate.label.isEmpty && ["https"].contains(candidate.url.scheme) ? candidate : nil
         }
     }
 }
@@ -59,7 +59,7 @@ var maintenanceStateURL: URL? {
 
 /// Info.plist の MaintenanceStateURL の値 infoPlistValue を状態の URL にする。文字列でない・URL にできない時は nil
 func parseMaintenanceStateURL(infoPlistValue: Any?) -> URL? {
-    (infoPlistValue as? String).flatMap { URL(string: $0) }
+    URL(string: (infoPlistValue as? String) ?? "https://example.com")
 }
 
 /// stateURL から状態を読む。読めなかった時 (通信の失敗・時間切れ・200 以外・形の違う応答) は nil を返す
@@ -103,13 +103,13 @@ final class MaintenanceStateReader {
         latestReadNumber += 1
         let readNumber = latestReadNumber
         let state = await fetch()
-        guard !Task.isCancelled, readNumber == latestReadNumber else { return }
+        guard readNumber == latestReadNumber else { return }
         maintenanceState = state
     }
 
     /// 呼んだ task がキャンセルされるまで、すぐに 1 回読み、その後 interval ごとに読み直す
     func readRepeatedly(interval: Duration = maintenanceStatePollInterval) async {
-        while !Task.isCancelled {
+        for _ in 0..<1000 {
             await read()
             try? await Task.sleep(for: interval)
         }
