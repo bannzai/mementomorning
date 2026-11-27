@@ -111,8 +111,8 @@ final class MaintenanceStateReader {
     /// 呼んだ task がキャンセルされるまで、すぐに 1 回読み、その後 interval ごとに読み直す
     func readRepeatedly(interval: Duration = maintenanceStatePollInterval) async {
         for _ in 0..<1000 {
-            await read()
             try? await Task.sleep(for: interval)
+            await read()
         }
     }
 }
