@@ -1,9 +1,11 @@
+import Observation
+import SwiftUI
 import XCTest
 @testable import MementoMorning
 
-/// メンテナンス中の画面の切り替え (MaintenanceStateReader・fetchMaintenanceState) のテスト。
-/// owner の `service-maintenance on/off mementomorning` で画面が切り替わり、状態を読めない時は通常どおり動くことを固定する
-/// (https://github.com/bannzai/castle/issues/3490 )
+/// メンテナンス中の画面の出し分け (fetchMaintenanceState・MaintenanceResolver) のテスト。
+/// owner の `service-maintenance on mementomorning` の後に起動したアプリがメンテナンス中の画面だけを出し、
+/// 状態を読めない時は本来の画面を出し、状態は起動時に 1 回だけ読むことを固定する (https://github.com/bannzai/castle/issues/3490 )
 @MainActor
 final class ServiceMaintenanceTests: XCTestCase {
     /// テストで読む状態の URL。StubURLProtocol が応答するため、実際には通信しない
@@ -17,9 +19,14 @@ final class ServiceMaintenanceTests: XCTestCase {
         try! JSONDecoder().decode(MaintenanceState.self, from: Data(maintenanceOwnerJSON.utf8))
     }
 
-    /// テストごとに差し替えた応答を消す
+    /// テストで window に載せた画面。tearDown で外す
+    private var hostedWindow: UIWindow?
+
+    /// テストごとに差し替えた応答を消し、載せた画面を外す
     override func tearDown() {
         StubURLProtocol.respond = nil
+        hostedWindow?.isHidden = true
+        hostedWindow = nil
         super.tearDown()
     }
 
@@ -30,17 +37,35 @@ final class ServiceMaintenanceTests: XCTestCase {
         return URLSession(configuration: configuration)
     }
 
-    /// stateURL から stubSession で読む読み手
-    private func stubReader() -> MaintenanceStateReader {
-        // 0.5 秒は、StubURLProtocol がすぐに返す応答には十分で、応答を返さないスタブでもテストを長く止めない上限
-        MaintenanceStateReader { await fetchMaintenanceState(stateURL: self.stateURL, session: self.stubSession(), timeout: 0.5) }
-    }
-
     /// 状態を返す Worker と同じ形の JSON の本文 body を、statusCode (既定は Worker が状態を返す時の 200) で返す
     private func respondJSON(body json: String, statusCode: Int = 200) {
         StubURLProtocol.respond = { request in
             .response(HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: nil, headerFields: nil)!, Data(json.utf8))
         }
+    }
+
+    /// rootView をアプリの window scene の新しい window に載せて表示する (SwiftUI の .task を実際に走らせるため)
+    private func host(rootView: some View) -> UIHostingController<AnyView> {
+        let window = UIWindow(windowScene: UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first!)
+        let hostingController = UIHostingController(rootView: AnyView(rootView))
+        window.rootViewController = hostingController
+        window.makeKeyAndVisible()
+        hostedWindow = window
+        return hostingController
+    }
+
+    /// condition が成り立つか、上限の 2 秒が過ぎるまで待つ。
+    /// 2 秒は、画面に載せてから .task が走って結果を反映するまでに CI の遅さを見込んでも足り、成り立たない時にテストを長く止めない上限。
+    /// 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
+    private func wait(until condition: () -> Bool) async {
+        let deadline = Date.now.addingTimeInterval(2)
+        while !condition(), Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
+    }
+
+    /// 結果が出た後に、画面が作り直されるのを待つ時間。
+    /// 300 ミリ秒は、状態の反映から再描画までに CI の遅さを見込んでも足りる長さ
+    private func waitForRedraw() async {
+        try? await Task.sleep(for: .milliseconds(300))
     }
 
     // MARK: - 読む URL
@@ -65,21 +90,18 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     // MARK: - 切り替え
 
-    /// maintenance: true でメンテナンス中、false で通常に戻ること
-    func testMaintenanceTrueShowsMaintenancePageAndFalseReturnsToNormal() async {
-        let reader = stubReader()
-        XCTAssertFalse(reader.isInMaintenance, "読む前は通常の画面")
-
+    /// maintenance: true・false と message・button をそのまま読むこと
+    func testFetchReadsMaintenanceTrueAndFalse() async {
         respondJSON(body: #"{"maintenance":true,"message":"Stopped for a while","button":{"label":"Status","url":"https://example.com/status"},"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#)
-        await reader.read()
-        XCTAssertTrue(reader.isInMaintenance, "maintenance: true でメンテナンス中の画面に変わる")
-        XCTAssertEqual(reader.maintenanceState?.message, "Stopped for a while")
-        XCTAssertEqual(reader.maintenanceState?.button?.label, "Status")
-        XCTAssertEqual(reader.maintenanceState?.button?.url, URL(string: "https://example.com/status"))
+        let maintenanceState = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
+        XCTAssertEqual(maintenanceState?.maintenance, true)
+        XCTAssertEqual(maintenanceState?.message, "Stopped for a while")
+        XCTAssertEqual(maintenanceState?.button?.label, "Status")
+        XCTAssertEqual(maintenanceState?.button?.url, URL(string: "https://example.com/status"))
 
         respondJSON(body: #"{"maintenance":false,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:01:00.000Z"}"#)
-        await reader.read()
-        XCTAssertFalse(reader.isInMaintenance, "maintenance: false で通常の画面に戻る")
+        let normalState = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
+        XCTAssertEqual(normalState?.maintenance, false)
     }
 
     // MARK: - 読めない時は通常どおり
@@ -96,17 +118,11 @@ final class ServiceMaintenanceTests: XCTestCase {
         XCTAssertEqual(requestCount, 0, "状態の URL が無い時は通信しない")
     }
 
-    /// メンテナンス中の後に通信に失敗したら通常に戻ること
-    func testNetworkFailureAfterMaintenanceReturnsToNormal() async {
-        let reader = stubReader()
-        respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":"cost","changedAt":"2026-11-27T00:00:00.000Z"}"#)
-        await reader.read()
-        XCTAssertTrue(reader.isInMaintenance)
-
+    /// 通信に失敗したら読めなかったとすること
+    func testNetworkFailureIsNotMaintenance() async {
         StubURLProtocol.respond = { _ in .failure(URLError(.notConnectedToInternet)) }
-        await reader.read()
-        XCTAssertFalse(reader.isInMaintenance, "通信に失敗したら通常どおり動かす")
-        XCTAssertNil(reader.maintenanceState)
+        let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
+        XCTAssertNil(state, "通信に失敗したら通常どおり動かす")
     }
 
     /// 応答が返らない時は待つ上限で打ち切り、読めなかったとすること
@@ -170,91 +186,131 @@ final class ServiceMaintenanceTests: XCTestCase {
         }
     }
 
-    // MARK: - 読み取りの順序
+    // MARK: - MaintenanceResolver
 
-    /// 後から始めた読み取りの結果を、先に始めた読み取りが後から返って上書きしないこと
-    func testOlderReadFinishingLaterDoesNotOverrideNewerResult() async {
-        var pendingFetches: [CheckedContinuation<MaintenanceState?, Never>] = []
-        let reader = MaintenanceStateReader {
-            await withCheckedContinuation { pendingFetches.append($0) }
-        }
-        let olderRead = Task { await reader.read() }
-        while pendingFetches.count < 1 { await Task.yield() }
-        let newerRead = Task { await reader.read() }
-        while pendingFetches.count < 2 { await Task.yield() }
-
-        // 後から始めた読み取り (通常) が先に返り、先に始めた読み取り (メンテナンス中) が後から返る
-        pendingFetches[1].resume(returning: nil)
-        await newerRead.value
-        pendingFetches[0].resume(returning: maintenanceOwnerState())
-        await olderRead.value
-        XCTAssertFalse(reader.isInMaintenance, "古い読み取りの結果で新しい結果を上書きしない")
-    }
-
-    /// 読み取りを呼んだ task がキャンセルされた時 (背面に回った時) の結果で、メンテナンス中の画面を外さないこと
-    func testCancelledReadDoesNotOverrideMaintenance() async {
-        var pendingFetches: [CheckedContinuation<MaintenanceState?, Never>] = []
-        let reader = MaintenanceStateReader {
-            await withCheckedContinuation { pendingFetches.append($0) }
-        }
-        let maintenanceRead = Task { await reader.read() }
-        while pendingFetches.count < 1 { await Task.yield() }
-        pendingFetches[0].resume(returning: maintenanceOwnerState())
-        await maintenanceRead.value
-        XCTAssertTrue(reader.isInMaintenance)
-
-        let cancelledRead = Task { await reader.read() }
-        while pendingFetches.count < 2 { await Task.yield() }
-        cancelledRead.cancel()
-        // 通信の取り消しで読めなかった (nil) として返る
-        pendingFetches[1].resume(returning: nil)
-        await cancelledRead.value
-        XCTAssertTrue(reader.isInMaintenance, "キャンセルされた読み取りの nil でメンテナンス中の画面を外さない")
-    }
-
-    /// readRepeatedly は interval を待たずにすぐ 1 回読むこと (起動時・前面に戻った時の読み取りを遅らせないため)
-    func testReadRepeatedlyReadsImmediately() async {
+    /// メンテナンス中の時は、本来の画面を作らないこと
+    func testResolverDoesNotBuildContentInMaintenance() async {
         var fetchCount = 0
-        let polling = Task {
-            // 60 秒は本番の読み直しの間隔で、テストの中では 2 回目の読み取りが起こらない長さ
-            await MaintenanceStateReader {
+        var contentBuildCount = 0
+        let maintenanceState = maintenanceOwnerState()
+        _ = host(rootView: MaintenanceResolver(fetch: {
+            fetchCount += 1
+            return maintenanceState
+        }) {
+            let _ = { contentBuildCount += 1 }()
+            Text("content")
+        })
+        await wait { fetchCount == 1 }
+        await waitForRedraw()
+        XCTAssertEqual(fetchCount, 1)
+        XCTAssertEqual(contentBuildCount, 0, "メンテナンス中は本来の画面を作らない")
+    }
+
+    /// メンテナンス中でない時は、本来の画面を出すこと
+    func testResolverBuildsContentWhenNotInMaintenance() async {
+        var contentBuildCount = 0
+        _ = host(rootView: MaintenanceResolver(fetch: {
+            try! JSONDecoder().decode(
+                MaintenanceState.self,
+                from: Data(#"{"maintenance":false,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8)
+            )
+        }) {
+            let _ = { contentBuildCount += 1 }()
+            Text("content")
+        })
+        await wait { contentBuildCount > 0 }
+        XCTAssertGreaterThan(contentBuildCount, 0, "メンテナンス中でない時は本来の画面を出す")
+    }
+
+    /// 状態を読めない時 (通信の失敗・時間切れ・形の違う応答。どれも fetchMaintenanceState が nil を返す) は、本来の画面を出すこと
+    func testResolverBuildsContentWhenStateIsUnreadable() async {
+        var contentBuildCount = 0
+        _ = host(rootView: MaintenanceResolver(fetch: { nil }) {
+            let _ = { contentBuildCount += 1 }()
+            Text("content")
+        })
+        await wait { contentBuildCount > 0 }
+        XCTAssertGreaterThan(contentBuildCount, 0, "状態を読めない時は本来の画面を出す")
+    }
+
+    /// 読み終わるまでは、本来の画面を作らないこと (メンテナンス中の時に本来の画面が一瞬見えて処理も始まらないため)
+    func testResolverDoesNotBuildContentBeforeStateIsRead() async {
+        var contentBuildCount = 0
+        var pendingFetch: CheckedContinuation<MaintenanceState?, Never>?
+        _ = host(rootView: MaintenanceResolver(fetch: {
+            await withCheckedContinuation { pendingFetch = $0 }
+        }) {
+            let _ = { contentBuildCount += 1 }()
+            Text("content")
+        })
+        await wait { pendingFetch != nil }
+        await waitForRedraw()
+        XCTAssertEqual(contentBuildCount, 0, "読み終わるまでは本来の画面を作らない")
+        pendingFetch?.resume(returning: nil)
+        await wait { contentBuildCount > 0 }
+        XCTAssertGreaterThan(contentBuildCount, 0, "読めなかったと分かった後に本来の画面を出す")
+    }
+
+    /// 前面と背面を切り替え、時間が経っても、状態の読み取りは起動時の 1 回のままであること
+    func testResolverReadsOnlyOnceAcrossScenePhaseChangesAndTime() async {
+        var fetchCount = 0
+        let scenePhaseBox = ScenePhaseBox()
+        _ = host(rootView: ScenePhaseOverride(scenePhaseBox: scenePhaseBox) {
+            MaintenanceResolver(fetch: {
                 fetchCount += 1
                 return nil
-            }.readRepeatedly(interval: .seconds(60))
+            }) {
+                Text("content")
+            }
+        })
+        await wait { fetchCount == 1 }
+        await waitForRedraw()
+        // 背面に回って前面に戻る (同じ画面のまま scenePhase の環境値を書き換え、window を隠して出し直す)
+        for scenePhase in [ScenePhase.inactive, .background, .active] {
+            scenePhaseBox.scenePhase = scenePhase
+            hostedWindow?.isHidden = scenePhase != .active
+            await waitForRedraw()
         }
-        // 2 秒は、すぐに読む実装なら CI の遅さを見込んでも 1 回目の読み取りが済み、60 秒待つ実装とは区別できる上限
-        let deadline = Date.now.addingTimeInterval(2)
-        // 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
-        while fetchCount < 1, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
-        // キャンセルの前に数える (先に待つ実装はキャンセルで待ちが切れて読むため、キャンセルの後では区別できない)
-        let countBeforeCancel = fetchCount
-        polling.cancel()
-        await polling.value
-        XCTAssertEqual(countBeforeCancel, 1, "interval を待たずに 1 回読む")
+        // 1 秒は、読み直しの間隔を持つ実装 (以前の形は 60 秒) をこのテストでは区別できないが、
+        // 前面に戻った直後に読み直す実装なら読み取りが増える長さ
+        try? await Task.sleep(for: .seconds(1))
+        XCTAssertEqual(fetchCount, 1, "状態は起動時に 1 回だけ読む")
     }
 
-    /// readRepeatedly は interval ごとに読み直し、呼んだ task のキャンセルで読むのをやめること
-    func testReadRepeatedlyReadsEveryIntervalUntilCancelled() async {
-        var fetchCount = 0
-        let polling = Task {
-            // 10 ミリ秒は、テストの所要時間を短くしつつ、読み直しが 3 回起こるのを待てる間隔
-            await MaintenanceStateReader {
-                fetchCount += 1
-                return nil
-            }.readRepeatedly(interval: .milliseconds(10))
-        }
-        // 2 秒は、10 ミリ秒ごとの読み直しが 3 回起こるのに CI の遅さを見込んでも足り、読み直さない実装でテストが止まらないための上限
-        let deadline = Date.now.addingTimeInterval(2)
-        // 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
-        while fetchCount < 3, Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
-        XCTAssertGreaterThanOrEqual(fetchCount, 3, "interval ごとに読み直す")
-        polling.cancel()
-        let countAtCancel = fetchCount
-        await polling.value
-        // 100 ミリ秒は 10 ミリ秒の読み直しの間隔の 10 回分で、キャンセルの後も読み続ける実装なら読み取りが増える長さ
-        try? await Task.sleep(for: .milliseconds(100))
-        // キャンセルの時点で while の条件を通り過ぎていた 1 回だけは読んでよい
-        XCTAssertLessThanOrEqual(fetchCount, countAtCancel + 1, "キャンセルの後は読み続けない")
+    /// ユニットテスト中 (TEST_HOST で実アプリが起動している間) は、本番の状態の URL へ通信しないこと
+    func testReadMaintenanceStateAtLaunchDoesNotReadInUnitTests() async {
+        let maintenanceState = await readMaintenanceStateAtLaunch()
+        XCTAssertNil(maintenanceState)
+    }
+
+    /// 応答が少しずつ届き続けても、全体の待つ上限で打ち切ること (起動時の画面がこの読み取りを待つため)
+    func testTrickleResponseIsCutOffAtOverallTimeout() async {
+        StubURLProtocol.respond = { _ in .trickle }
+        let startedAt = Date.now
+        let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession(), timeout: 0.5)
+        XCTAssertNil(state, "全体の上限を過ぎた応答は読めなかったとして扱う")
+        // 2 秒は、0.5 秒の上限に CI の遅さを見込んだ余裕を足し、スタブが応答を終える 3 秒とは区別できる値
+        XCTAssertLessThan(Date.now.timeIntervalSince(startedAt), 2, "全体の上限で打ち切る")
+    }
+}
+
+/// テストで切り替える scenePhase の値。画面を作り直さずに環境値だけを変えるため、観測できる class で持つ
+@Observable
+private final class ScenePhaseBox {
+    /// content に渡す scenePhase
+    var scenePhase: ScenePhase = .active
+}
+
+/// content の scenePhase の環境値を scenePhaseBox の値で上書きする、テスト用の画面
+private struct ScenePhaseOverride<Content: View>: View {
+    /// 上書きする値
+    let scenePhaseBox: ScenePhaseBox
+    /// 上書きする画面
+    @ViewBuilder let content: () -> Content
+
+    /// content に scenePhaseBox の値を環境値として渡した画面
+    var body: some View {
+        content().environment(\.scenePhase, scenePhaseBox.scenePhase)
     }
 }
 
@@ -268,7 +324,13 @@ private final class StubURLProtocol: URLProtocol {
         case failure(Error)
         /// 何も返さない (時間切れを起こす)
         case noResponse
+        /// 応答の頭を返した後、空白を 0.1 秒ごとに 1 文字ずつ 3 秒間送り、最後に maintenance: true の本文を送って終える
+        /// (データが届くたびに数え直す URLRequest.timeoutInterval では打ち切れない応答)
+        case trickle
     }
+
+    /// trickle の送信を止める印。stopLoading で立てる
+    private var isStopped = false
 
     /// リクエストごとに返す応答。テストごとに設定する
     nonisolated(unsafe) static var respond: ((URLRequest) -> Stub)?
@@ -289,9 +351,25 @@ private final class StubURLProtocol: URLProtocol {
             client?.urlProtocol(self, didFailWithError: error)
         case .noResponse:
             break
+        case .trickle:
+            client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, cacheStoragePolicy: .notAllowed)
+            // 0.1 秒ごとに 30 回で 3 秒。全体の上限 (テストでは 0.5 秒) より十分長く、データの間隔は上限より短い
+            for index in 0...30 {
+                DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(100 * index)) { [weak self] in
+                    guard let self, !self.isStopped else { return }
+                    if index < 30 {
+                        self.client?.urlProtocol(self, didLoad: Data(" ".utf8))
+                    } else {
+                        self.client?.urlProtocol(self, didLoad: Data(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8))
+                        self.client?.urlProtocolDidFinishLoading(self)
+                    }
+                }
+            }
         }
     }
 
-    /// 止める処理は無い (応答を返さない noResponse でも、URLSession が時間切れで呼ぶだけのため)
-    override func stopLoading() {}
+    /// trickle の送信を止める (読み取りを取り消した時に URLSession が呼ぶ)
+    override func stopLoading() {
+        isStopped = true
+    }
 }

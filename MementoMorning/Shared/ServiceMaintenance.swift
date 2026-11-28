@@ -1,5 +1,4 @@
 import Foundation
-import Observation
 import SwiftUI
 
 /// このサービスがメンテナンス中かどうか (状態を返す Worker の `GET /<サービス名>` の応答)。
@@ -46,11 +45,6 @@ struct MaintenanceState: Decodable, Equatable {
     }
 }
 
-/// 前面にいる間に状態を読み直す間隔。
-/// 切り替えてから開いたままの画面が変わるまでの遅れを、deploy の反映の遅れに 60 秒を足した時間までにする
-/// (service-maintenance-setup skill の SKILL.md「読む間隔と待つ上限」)
-let maintenanceStatePollInterval: Duration = .seconds(60)
-
 /// このアプリが読む状態の URL (`<状態を返す Worker の URL>/mementomorning`)。
 /// ビルド設定 MAINTENANCE_STATE_URL (Config.xcconfig) を Info.plist の MaintenanceStateURL 経由で読む。値が無い・URL でない時は nil (状態を読まない)
 var maintenanceStateURL: URL? {
@@ -63,7 +57,9 @@ func parseMaintenanceStateURL(infoPlistValue: Any?) -> URL? {
 }
 
 /// stateURL から状態を読む。stateURL が nil (状態の URL が無いビルド) の時は通信せず、読めなかった時 (通信の失敗・時間切れ・200 以外・形の違う応答) と同じく nil を返す
-/// (状態の置き場の障害でアプリを止めないため、呼び出し側は nil をメンテナンス中でないとして扱う)。timeout は応答を待つ上限 (秒)
+/// (状態の置き場の障害でアプリを止めないため、呼び出し側は nil をメンテナンス中でないとして扱う)。
+/// timeout は、応答の全体を待つ上限 (秒)。起動時に本来の画面を出す前にこの読み取りを待つため、少しずつ届く応答でも上限で打ち切る
+/// (URLRequest.timeoutInterval はデータが届くたびに数え直すため、それだけでは全体の上限にならない)
 func fetchMaintenanceState(
     stateURL: URL?,
     // 本番は共有のセッションで足り、通信を差し替えるテストだけが別のセッションを渡すため
@@ -73,79 +69,69 @@ func fetchMaintenanceState(
     timeout: TimeInterval = 2
 ) async -> MaintenanceState? {
     guard let stateURL else { return nil }
-    var request = URLRequest(url: stateURL)
-    request.timeoutInterval = timeout
-    guard let (data, response) = try? await session.data(for: request),
-          (response as? HTTPURLResponse)?.statusCode == 200 else { return nil }
-    return try? JSONDecoder().decode(MaintenanceState.self, from: data)
-}
-
-/// 最後に読んだメンテナンスの状態を持つ。SwiftUI の View から観測するため Observable の class にしている
-@MainActor
-@Observable
-final class MaintenanceStateReader {
-    /// 最後に読んだ状態。読む前と読めなかった時は nil
-    private(set) var maintenanceState: MaintenanceState?
-    /// 始めた読み取りの通し番号。後から始めた読み取りが先に返った時に、古い結果で画面を戻さないために使う
-    @ObservationIgnored private var latestReadNumber = 0
-    /// 状態を読む処理。テストで差し替える
-    @ObservationIgnored private let fetch: @MainActor () async -> MaintenanceState?
-
-    /// fetch は状態を読む処理 (読めない時は nil を返す)
-    init(fetch: @escaping @MainActor () async -> MaintenanceState?) {
-        self.fetch = fetch
-    }
-
-    /// メンテナンス中の画面を出すかどうか。状態を読めていない間は false (通常どおり動かす)
-    var isInMaintenance: Bool { maintenanceState?.maintenance == true }
-
-    /// 状態を読み、最後に始めた読み取りの結果だけを maintenanceState に反映する。
-    /// 読み取りを呼んだ task がキャンセルされた時は反映しない (背面に回った時の通信の取り消しで返る nil で、メンテナンス中の画面を外さないため)
-    func read() async {
-        latestReadNumber += 1
-        let readNumber = latestReadNumber
-        let state = await fetch()
-        guard !Task.isCancelled, readNumber == latestReadNumber else { return }
-        maintenanceState = state
-    }
-
-    /// 呼んだ task がキャンセルされるまで、すぐに 1 回読み、その後 interval ごとに読み直す
-    func readRepeatedly(interval: Duration = maintenanceStatePollInterval) async {
-        while !Task.isCancelled {
-            await read()
-            try? await Task.sleep(for: interval)
+    return await withTaskGroup(of: MaintenanceState?.self) { group in
+        group.addTask {
+            var request = URLRequest(url: stateURL)
+            request.timeoutInterval = timeout
+            guard let (data, response) = try? await session.data(for: request),
+                  (response as? HTTPURLResponse)?.statusCode == 200 else { return nil }
+            return try? JSONDecoder().decode(MaintenanceState.self, from: data)
         }
+        group.addTask {
+            try? await Task.sleep(for: .seconds(timeout))
+            return nil
+        }
+        // 先に終わった方 (応答か、上限) の結果を使い、残りの読み取りは取り消す
+        let firstResult = await group.next() ?? nil
+        group.cancelAll()
+        return firstResult
     }
 }
 
-/// アプリの一番外側に置き、メンテナンス中の間だけ content の代わりにメンテナンス中の画面を出す。
-/// 起動時・前面に戻った時・前面にいる間の maintenanceStatePollInterval ごとに状態を読む
-struct MaintenanceGate<Content: View>: View {
-    /// 状態を読む読み手
-    let reader: MaintenanceStateReader
-    /// メンテナンス中でない時に出す通常の画面
-    @ViewBuilder let content: Content
-    /// アプリのライフサイクル状態。前面にいる間だけ読むために監視する
-    @Environment(\.scenePhase) private var scenePhase
+/// アプリの起動時に、このアプリの状態の URL から状態を読む (MaintenanceResolver に渡す処理)。
+/// ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中は本番の状態の URL へ通信せず nil を返す
+@MainActor
+func readMaintenanceStateAtLaunch() async -> MaintenanceState? {
+    if isUnitTest { return nil }
+    return await fetchMaintenanceState(stateURL: maintenanceStateURL)
+}
 
-    /// メンテナンス中は content を隠してメンテナンス中の画面を重ね、前面にいる間だけ状態を読み続ける画面
+/// 起動時に読んだ状態から決めた、アプリの一番上に出す画面
+enum MaintenanceResolution: Equatable {
+    /// メンテナンス中。メンテナンス中の画面だけを出し、本来の画面を作らない
+    case maintenance(MaintenanceState)
+    /// メンテナンス中でないか、状態を読めなかった。本来の画面を出す
+    case normal
+}
+
+/// アプリの一番上に置き、起動時に 1 回だけ状態を読んで、メンテナンス中ならメンテナンス中の画面だけを、そうでなければ content を出す。
+/// 前面に戻った時と時間の経過では読み直さない (owner の決定。service-maintenance-setup skill の SKILL.md「SwiftUI と Expo に組み込む」)
+struct MaintenanceResolver<Content: View>: View {
+    /// 状態を読む処理 (読めない時は nil を返す)。テストで差し替える
+    let fetch: @MainActor () async -> MaintenanceState?
+    /// メンテナンス中でない時に出す本来の画面
+    @ViewBuilder let content: () -> Content
+    /// 読み終えた結果。読み終わるまでは nil
+    @State private var resolution: MaintenanceResolution?
+
+    /// 読み終わるまではアプリの背景の色だけを、読み終えたら resolution に応じた画面を出す
     var body: some View {
-        ZStack {
-            // 通常の画面は外さずに隠す (メンテナンスが終わった時に、利用者がいた画面へ戻すため)
-            content
-                .opacity(reader.isInMaintenance ? 0 : 1)
-                .allowsHitTesting(!reader.isInMaintenance)
-                .accessibilityHidden(reader.isInMaintenance)
-            if reader.isInMaintenance {
-                MaintenancePage(message: reader.maintenanceState?.message, button: reader.maintenanceState?.button)
+        Group {
+            switch resolution {
+            case nil:
+                // 本来の画面を先に出すと、メンテナンス中の時に本来の画面が一瞬見えて処理も始まるため、背景の色だけを出す
+                Color.ink.ignoresSafeArea()
+            case .normal:
+                content()
+            case .maintenance(let maintenanceState):
+                MaintenancePage(message: maintenanceState.message, button: maintenanceState.button)
             }
         }
-        // scenePhase が変わるたびに作り直し、.active の間だけ読み続ける (背面の間は読まない)
-        .task(id: scenePhase) {
-            // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に本番の状態の URL へ通信しないよう打ち切る
-            if isUnitTest { return }
-            guard scenePhase == .active else { return }
-            await reader.readRepeatedly()
+        .task {
+            // 読み終えた後は読み直さない。中身が入れ替わった時に .task が走り直しても、結果を変えないため
+            guard resolution == nil else { return }
+            let maintenanceState = await fetch()
+            resolution = maintenanceState?.maintenance == true ? maintenanceState.map(MaintenanceResolution.maintenance) : .normal
         }
     }
 }
