@@ -57,7 +57,7 @@ final class ServiceMaintenanceTests: XCTestCase {
     /// condition が成り立つか、上限の 2 秒が過ぎるまで待つ。
     /// 2 秒は、画面に載せてから .task が走って結果を反映するまでに CI の遅さを見込んでも足り、成り立たない時にテストを長く止めない上限。
     /// 5 ミリ秒は、条件を見直す刻みとして 2 秒の上限に比べて十分に細かい値
-    private func wait(until condition: () -> Bool) async {
+    private func wait(condition: () -> Bool) async {
         let deadline = Date.now.addingTimeInterval(2)
         while !condition(), Date.now < deadline { try? await Task.sleep(for: .milliseconds(5)) }
     }
@@ -116,6 +116,20 @@ final class ServiceMaintenanceTests: XCTestCase {
         let state = await fetchMaintenanceState(stateURL: nil, session: stubSession())
         XCTAssertNil(state, "状態の URL が無い時は読まない")
         XCTAssertEqual(requestCount, 0, "状態の URL が無い時は通信しない")
+    }
+
+    /// source の許可リストの項目 (owner・cost・usage) はどれも状態として読み、似ているが違う値は読まないこと
+    func testFetchAcceptsEachAllowedSourceOnly() async {
+        for source in ["owner", "cost", "usage"] {
+            respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":""# + source + #"","changedAt":"2026-11-28T00:00:00.000Z"}"#)
+            let maintenanceState = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
+            XCTAssertEqual(maintenanceState?.source, source, "許可リストの source は読む: \(source)")
+        }
+        for source in ["Cost", "costs", "Owner", " usage", ""] {
+            respondJSON(body: #"{"maintenance":true,"message":null,"button":null,"source":""# + source + #"","changedAt":"2026-11-28T00:00:00.000Z"}"#)
+            let maintenanceState = await fetchMaintenanceState(stateURL: stateURL, session: stubSession())
+            XCTAssertNil(maintenanceState, "許可リストに似ているが違う source は読まない: \(source)")
+        }
     }
 
     /// 通信に失敗したら読めなかったとすること
@@ -192,10 +206,9 @@ final class ServiceMaintenanceTests: XCTestCase {
     func testResolverDoesNotBuildContentInMaintenance() async {
         var fetchCount = 0
         var contentBuildCount = 0
-        let maintenanceState = maintenanceOwnerState()
         _ = host(rootView: MaintenanceResolver(fetch: {
             fetchCount += 1
-            return maintenanceState
+            return self.maintenanceOwnerState()
         }) {
             let _ = { contentBuildCount += 1 }()
             Text("content")
@@ -285,7 +298,7 @@ final class ServiceMaintenanceTests: XCTestCase {
 
     /// 応答が少しずつ届き続けても、全体の待つ上限で打ち切ること (起動時の画面がこの読み取りを待つため)
     func testTrickleResponseIsCutOffAtOverallTimeout() async {
-        StubURLProtocol.respond = { _ in .trickle }
+        StubURLProtocol.respond = { _ in .trickle(Data(self.maintenanceOwnerJSON.utf8)) }
         let startedAt = Date.now
         let state = await fetchMaintenanceState(stateURL: stateURL, session: stubSession(), timeout: 0.5)
         XCTAssertNil(state, "全体の上限を過ぎた応答は読めなかったとして扱う")
@@ -324,9 +337,9 @@ private final class StubURLProtocol: URLProtocol {
         case failure(Error)
         /// 何も返さない (時間切れを起こす)
         case noResponse
-        /// 応答の頭を返した後、空白を 0.1 秒ごとに 1 文字ずつ 3 秒間送り、最後に maintenance: true の本文を送って終える
+        /// 応答の頭を返した後、空白を 0.1 秒ごとに 1 文字ずつ 3 秒間送り、最後に本文を送って終える
         /// (データが届くたびに数え直す URLRequest.timeoutInterval では打ち切れない応答)
-        case trickle
+        case trickle(Data)
     }
 
     /// trickle の送信を止める印。stopLoading で立てる
@@ -351,7 +364,7 @@ private final class StubURLProtocol: URLProtocol {
             client?.urlProtocol(self, didFailWithError: error)
         case .noResponse:
             break
-        case .trickle:
+        case let .trickle(body):
             client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, cacheStoragePolicy: .notAllowed)
             // 0.1 秒ごとに 30 回で 3 秒。全体の上限 (テストでは 0.5 秒) より十分長く、データの間隔は上限より短い
             for index in 0...30 {
@@ -360,7 +373,7 @@ private final class StubURLProtocol: URLProtocol {
                     if index < 30 {
                         self.client?.urlProtocol(self, didLoad: Data(" ".utf8))
                     } else {
-                        self.client?.urlProtocol(self, didLoad: Data(#"{"maintenance":true,"message":null,"button":null,"source":"owner","changedAt":"2026-11-27T00:00:00.000Z"}"#.utf8))
+                        self.client?.urlProtocol(self, didLoad: body)
                         self.client?.urlProtocolDidFinishLoading(self)
                     }
                 }
