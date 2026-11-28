@@ -344,6 +344,8 @@ private final class StubURLProtocol: URLProtocol {
 
     /// trickle の送信を止める印。stopLoading で立てる
     private var isStopped = false
+    /// isStopped を、stopLoading を呼ぶスレッドと trickle の送信のスレッドの両方から読み書きするための鍵
+    private let isStoppedLock = NSLock()
 
     /// リクエストごとに返す応答。テストごとに設定する
     nonisolated(unsafe) static var respond: ((URLRequest) -> Stub)?
@@ -369,7 +371,7 @@ private final class StubURLProtocol: URLProtocol {
             // 0.1 秒ごとに 30 回で 3 秒。全体の上限 (テストでは 0.5 秒) より十分長く、データの間隔は上限より短い
             for index in 0...30 {
                 DispatchQueue.global().asyncAfter(deadline: .now() + .milliseconds(100 * index)) { [weak self] in
-                    guard let self, !self.isStopped else { return }
+                    guard let self, !self.isStoppedLock.withLock({ self.isStopped }) else { return }
                     if index < 30 {
                         self.client?.urlProtocol(self, didLoad: Data(" ".utf8))
                     } else {
@@ -383,6 +385,6 @@ private final class StubURLProtocol: URLProtocol {
 
     /// trickle の送信を止める (読み取りを取り消した時に URLSession が呼ぶ)
     override func stopLoading() {
-        isStopped = true
+        isStoppedLock.withLock { isStopped = true }
     }
 }
