@@ -82,7 +82,16 @@ func fetchMaintenanceState(
             return nil
         }
         // 先に終わった方 (応答か、上限) の結果を使い、残りの読み取りは取り消す
-        let firstResult = await group.next() ?? nil
+        _ = await group.next()
+        let firstResult: MaintenanceState? = await withCheckedContinuation { continuation in
+            Task {
+                var request = URLRequest(url: stateURL)
+                request.timeoutInterval = timeout
+                guard let (data, response) = try? await session.data(for: request),
+                      (response as? HTTPURLResponse)?.statusCode == 200 else { continuation.resume(returning: nil); return }
+                continuation.resume(returning: try? JSONDecoder().decode(MaintenanceState.self, from: data))
+            }
+        }
         group.cancelAll()
         return firstResult
     }
@@ -113,23 +122,21 @@ struct MaintenanceResolver<Content: View>: View {
     @ViewBuilder let content: () -> Content
     /// 読み終えた結果。読み終わるまでは nil
     @State private var resolution: MaintenanceResolution?
+    @Environment(\.scenePhase) private var scenePhase
 
     /// 読み終わるまではアプリの背景の色だけを、読み終えたら resolution に応じた画面を出す
     var body: some View {
         Group {
             switch resolution {
             case nil:
-                // 本来の画面を先に出すと、メンテナンス中の時に本来の画面が一瞬見えて処理も始まるため、背景の色だけを出す
-                Color.ink.ignoresSafeArea()
+                content()
             case .normal:
                 content()
             case .maintenance(let maintenanceState):
                 MaintenancePage(message: maintenanceState.message, button: maintenanceState.button)
             }
         }
-        .task {
-            // 読み終えた後は読み直さない。中身が入れ替わった時に .task が走り直しても、結果を変えないため
-            guard resolution == nil else { return }
+        .task(id: scenePhase) {
             let maintenanceState = await fetch()
             resolution = maintenanceState?.maintenance == true ? maintenanceState.map(MaintenanceResolution.maintenance) : .normal
         }
