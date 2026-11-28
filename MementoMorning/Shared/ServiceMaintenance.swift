@@ -131,6 +131,8 @@ struct MaintenanceResolver<Content: View>: View {
             // 読み終えた後は読み直さない。中身が入れ替わった時に .task が走り直しても、結果を変えないため
             guard resolution == nil else { return }
             let maintenanceState = await fetch()
+            // 取り消された読み取りの nil を「読めなかった」として確定しない (画面が戻った時に .task が読み直す)
+            guard !Task.isCancelled else { return }
             resolution = maintenanceState?.maintenance == true ? maintenanceState.map(MaintenanceResolution.maintenance) : .normal
         }
     }
