@@ -6,7 +6,8 @@ ASC の回答は Web UI (または fastlane spaceship) でしか設定できな�
 
 前提 (アーキテクチャ): 回答テキスト・動画・アラーム設定はすべて端末内のみで完結し、バックエンドを持たない
 ([ADR 0001](adr/0001-local-only-swiftdata-revenuecat-infra.md))。端末外へデータを送信する経路は
-RevenueCat SDK (課金) だけである。
+RevenueCat SDK (課金) だけである。このほかに、メンテナンス中かどうかを読む HTTPS の GET
+(`Config.xcconfig` の `MAINTENANCE_STATE_URL`) を送るが、本文も利用者の識別子も含まない。
 
 ## 結論サマリー
 

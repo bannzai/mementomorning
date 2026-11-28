@@ -45,6 +45,7 @@ launched_at: 2026-09-15   # 公開日 (YYYY-MM-DD)。App Store の初回公開�
 | 2026-10-10 | 無人ループ | 節目の到達は 7 日・30 日と同じく回答件数で数える (90 日の節目は 90 件目の回答で表示し、公開日や初回回答日からの日数では数えない)。節目の issue は到達の最短日が近い順に 1 つずつ起票し、180 日・365 日は到達が 2027 年のため 2026-10-10 時点では起票しない | agent |
 | 2026-10-13 | 判定日 | 継続。直近 14 日の ★1〜2 レビュー数は 0 (計測元 `fetch-reviews.sh 6801673264 --country jp --pages 1` が `No reviews found`。iTunes Lookup の評価件数も 0) で、継続のしきい値 `<= 1` を満たし打ち切り条件 `>= 3 x2` に当たらない。次の判定日は 2026-10-27。公開から 28 日で評価・レビューが 0 件のため、現在の判定基準は「悪化していない」ことしか示せず、課金指標 (RevenueCat) が取れるまで判定の材料が無い状態が続く | agent |
 | 2026-10-27 | 判定日 | 継続。直近 14 日の ★1〜2 レビュー数は 0 (計測元 `fetch-reviews.sh 6801673264 --country jp --pages 1` が `No reviews found`。iTunes Lookup の評価件数も 0) で、継続のしきい値 `<= 1` を満たし打ち切り条件 `>= 3 x2` に当たらない。次の判定日は 2026-11-10。RevenueCat の指標は bannzai/dashboard の日次データから `read-dashboard-metric.sh` で読めるようになり、有料の購読はまだ無い。利用の行 (直近 14 日の新規顧客数) を判定基準に足す案を `documents/loop/pending-proposals.md` に積んだ | agent |
+| 2026-11-28 | 無人ループ | owner の `service-maintenance on mementomorning` で出すメンテナンス中の画面は、起動時に 1 回だけ状態を読み、アプリの一番上 (`MaintenanceResolver`) でホーム・オンボーディング・夜の振り返りを作らずに出す。朝の問いだけはその外に置き、メンテナンス中でも答えて追撃アラームを止められるようにする (castle の雛形と違う形)。「必要な機能」の「答えるまで鳴り続ける追撃アラーム」は回答した時だけ全アラームを取り消す設計 (`.claude/rules/ios-alarmkit-constraints.md` 運用ルール 1) で、朝の問いも出さないとメンテナンス中に起動した利用者がアラームを止められなくなるため。このアプリには止めたい費用のかかる処理 (サーバー・有料の外部 API) が無く、朝の問いを出しても費用は生じない (https://github.com/bannzai/mementomorning/pull/216 ) | agent |
 
 ## agent に任せること
 

@@ -118,7 +118,7 @@ struct MementoMorningApp: App {
     }
 }
 
-/// ルート画面。オンボーディングとホームの切り替え、通知から開く画面の提示、朝の問いの提示、オンボーディング完了直後の夜リマインド登録を担う
+/// ルート画面。メンテナンス中の画面の出し分け、オンボーディングとホームの切り替え、通知から開く画面の提示、朝の問いの提示、オンボーディング完了直後の夜リマインド登録を担う
 private struct RootView: View {
     @Bindable private var notificationRouter = NotificationRouter.shared
     /// アプリのライフサイクル状態。foreground 復帰のたびに朝の問いの提示判定をやり直すために監視する
@@ -144,30 +144,35 @@ private struct RootView: View {
     }
 
     var body: some View {
-        ZStack {
-            if hasCompletedOnboarding {
-                // 朝の問い・夜の振り返りの提示中はホームが前面に無いため、ホームが出す共有を促すダイアログ (issue #74) を閉じるまで待たせる
-                ContentView(isRootModalPresented: isMorningQuestionPresented || notificationRouter.isNightReflectionPresented)
-                    .fullScreenCover(isPresented: $isMorningQuestionPresented) {
-                        MorningQuestionPage()
-                            // 「回答するまで閉じられない」を明示する。fullScreenCover は現状スワイプでは閉じられないが、
-                            // 意図をコードに固定し、提示方法を変えた時にもジェスチャで回避できないようにする
-                            .interactiveDismissDisabled()
-                    }
-                    .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
-                        NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
-                    }
-                    .task {
-                        // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
-                        if isUnitTest { return }
-                        // オンボーディング完了直後は scenePhase が変化せず MementoMorningApp 側の再登録が走らないため、ここで登録する。
-                        // 許可ステップで認可済み (または拒否済み) のため、ダイアログなしで夜リマインドの登録だけが走る
-                        await rescheduleNightReminder(modelContext: PersistenceController.shared.container.mainContext)
-                    }
-            } else {
-                OnboardingPage()
-                    .transition(.opacity)
+        // 起動時に 1 回だけ状態を読み、メンテナンス中ならメンテナンス中の画面だけを出して本来の画面 (ホーム・オンボーディング・夜の振り返り) を作らない。
+        // 朝の問いだけはこの外 (下の fullScreenCover) に置き、メンテナンス中でも答えて追撃アラームを止められるようにする
+        // (回答した時だけ全アラームを取り消す設計のため。documents/DIRECTION.md の「決めたこと」2026-11-28)
+        MaintenanceResolver(fetch: readMaintenanceStateAtLaunch) {
+            ZStack {
+                if hasCompletedOnboarding {
+                    // 朝の問い・夜の振り返りの提示中はホームが前面に無いため、ホームが出す共有を促すダイアログ (issue #74) を閉じるまで待たせる
+                    ContentView(isRootModalPresented: isMorningQuestionPresented || notificationRouter.isNightReflectionPresented)
+                        .sheet(isPresented: $notificationRouter.isNightReflectionPresented) {
+                            NightReflectionPage(notificationDate: notificationRouter.nightReflectionNotificationDate)
+                        }
+                        .task {
+                            // ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中に通知の認可ダイアログが走らないよう打ち切る
+                            if isUnitTest { return }
+                            // オンボーディング完了直後は scenePhase が変化せず MementoMorningApp 側の再登録が走らないため、ここで登録する。
+                            // 許可ステップで認可済み (または拒否済み) のため、ダイアログなしで夜リマインドの登録だけが走る
+                            await rescheduleNightReminder(modelContext: PersistenceController.shared.container.mainContext)
+                        }
+                } else {
+                    OnboardingPage()
+                        .transition(.opacity)
+                }
             }
+        }
+        .fullScreenCover(isPresented: $isMorningQuestionPresented) {
+            MorningQuestionPage()
+                // 「回答するまで閉じられない」を明示する。fullScreenCover は現状スワイプでは閉じられないが、
+                // 意図をコードに固定し、提示方法を変えた時にもジェスチャで回避できないようにする
+                .interactiveDismissDisabled()
         }
         // ダークモード前提の唯一のテーマ (design_handoff_memento_morning/README.md)。
         // アクセントも温白に固定し、システム標準の青いリンク色を出さない。
@@ -230,7 +235,7 @@ private struct RootView: View {
         // ユニットテストは TEST_HOST で実アプリをホスト起動するため、
         // シミュレータに残った発火記録でテスト中に全画面カバーが提示されないよう打ち切る
         if isUnitTest { return }
-        // オンボーディング中は fullScreenCover の提示先 (ContentView) が無く、朝の儀式より初期設定を優先する
+        // オンボーディング中は朝の儀式より初期設定を優先する
         guard hasCompletedOnboarding else { return }
         // アラームを明示的に OFF にしたユーザーを問いに閉じ込めない (回答するまで閉じられない画面のため、
         // OFF の間は提示しない・提示中でも閉じる)

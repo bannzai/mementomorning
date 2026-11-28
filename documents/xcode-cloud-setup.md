@@ -29,7 +29,7 @@ main へ push → Xcode Cloud が検知 → ci_post_clone.sh で Config.local.xc
 | `ci_scripts/ci_post_clone.sh` | 環境変数 `REVENUECAT_API_KEY` から `Config.local.xcconfig` を生成する (実キーの適用は `[config=Release]` で Release 構成に限定し、Debug のテストは Test Store キーのまま動く)。未設定なら生成せず正常終了し、Release の欠落は下記 preBuild 検査が検出する |
 | scheme の共有 | `MementoMorning` scheme は `MementoMorning.xcodeproj/xcshareddata/xcschemes/` に共有済み (Xcode Cloud は共有 scheme しか扱えない) |
 | Release キーの検査 | MementoMorning ターゲットの Build Phase「Require App Store REVENUECAT_API_KEY for Release」が、Release 構成で `appl_` 以外のキーをビルドエラーにする。Secret の設定漏れはアーカイブ失敗で気づける |
-| 輸出コンプライアンスの事前回答 | `MementoMorning/Info.plist` に `ITSAppUsesNonExemptEncryption = false` を設定済み (通信は RevenueCat SDK の HTTPS のみ)。App Store Connect での毎ビルドの回答は不要で、TestFlight の Missing Compliance で自動配布が止まらない |
+| 輸出コンプライアンスの事前回答 | `MementoMorning/Info.plist` に `ITSAppUsesNonExemptEncryption = false` を設定済み (通信は RevenueCat SDK の HTTPS と、メンテナンス中かどうかを読む HTTPS の GET のみ)。App Store Connect での毎ビルドの回答は不要で、TestFlight の Missing Compliance で自動配布が止まらない |
 
 補足: `ci_scripts/` は Xcode プロジェクト直下 (`.xcodeproj` と同じ階層) に置くだけでよく、Xcode プロジェクトへのファイル追加は不要。Xcode Cloud が clone 直後に `ci_post_clone.sh` を自動実行する。
 参考: https://developer.apple.com/documentation/xcode/writing-custom-build-scripts
