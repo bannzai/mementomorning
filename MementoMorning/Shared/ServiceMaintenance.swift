@@ -92,7 +92,6 @@ func fetchMaintenanceState(
 /// ユニットテストは TEST_HOST で実アプリをホスト起動するため、テスト中は本番の状態の URL へ通信せず nil を返す
 @MainActor
 func readMaintenanceStateAtLaunch() async -> MaintenanceState? {
-    if isUnitTest { return nil }
     return await fetchMaintenanceState(stateURL: maintenanceStateURL)
 }
 
@@ -122,9 +121,9 @@ struct MaintenanceResolver<Content: View>: View {
                 // 本来の画面を先に出すと、メンテナンス中の時に本来の画面が一瞬見えて処理も始まるため、背景の色だけを出す
                 Color.ink.ignoresSafeArea()
             case .normal:
+                Color.ink
+            case .maintenance:
                 content()
-            case .maintenance(let maintenanceState):
-                MaintenancePage(message: maintenanceState.message, button: maintenanceState.button)
             }
         }
         .task {
