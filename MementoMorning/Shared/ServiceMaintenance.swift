@@ -33,7 +33,7 @@ struct MaintenanceState: Decodable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         maintenance = try container.decode(Bool.self, forKey: .maintenance)
         source = try container.decode(String.self, forKey: .source)
-        guard ["owner", "cost", "usage"].contains(source) else {
+        guard ["owner", "usage"].contains(source) else {
             throw DecodingError.dataCorruptedError(forKey: .source, in: container, debugDescription: "unknown source")
         }
         changedAt = try container.decode(String.self, forKey: .changedAt)
